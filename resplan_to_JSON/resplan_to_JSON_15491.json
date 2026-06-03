@@ -1,0 +1,2130 @@
+{
+  "schema_version": "1.2",
+  "metadata": {
+    "plan_id": "plan_15491",
+    "plan_index": 15491,
+    "source_dataset": "ResPlan",
+    "unit": "resplan_source_unit"
+  },
+  "coordinate_system": {
+    "input_coordinates": "source",
+    "origin": "resplan_source",
+    "x_axis": "right",
+    "y_axis": "up",
+    "normalization_method": "none",
+    "scale_to_mm": 1,
+    "x_range": [
+      -1.3689839572192568,
+      257.36898395721926
+    ],
+    "y_range": [
+      10.951871657753998,
+      245.04812834224597
+    ],
+    "source_bbox": {
+      "min_x": -1.3689839572192568,
+      "min_y": 10.951871657753998,
+      "max_x": 257.36898395721926,
+      "max_y": 245.04812834224597
+    },
+    "source_span": 258.7379679144385,
+    "target_coordinate_system": {
+      "origin": "model_origin",
+      "x_axis": "right",
+      "y_axis": "up",
+      "z_axis": "up"
+    }
+  },
+  "rooms": [
+    {
+      "room_id": "living_0",
+      "room_name": "Living 1"
+    },
+    {
+      "room_id": "bedroom_0",
+      "room_name": "Bedroom 1"
+    },
+    {
+      "room_id": "bedroom_1",
+      "room_name": "Bedroom 2"
+    },
+    {
+      "room_id": "bedroom_2",
+      "room_name": "Bedroom 3"
+    },
+    {
+      "room_id": "bathroom_0",
+      "room_name": "Bathroom 1"
+    },
+    {
+      "room_id": "bathroom_1",
+      "room_name": "Bathroom 2"
+    },
+    {
+      "room_id": "bathroom_2",
+      "room_name": "Bathroom 3"
+    },
+    {
+      "room_id": "bathroom_3",
+      "room_name": "Bathroom 4"
+    },
+    {
+      "room_id": "kitchen_0",
+      "room_name": "Kitchen 1"
+    }
+  ],
+  "walls": [
+    {
+      "wall_id": "ws_0014",
+      "geometry": {
+        "start": [
+          4.449198,
+          165.647059
+        ],
+        "end": [
+          4.449198,
+          245.048128
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "kitchen_0",
+          "room_type": "kitchen",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "window_6",
+          "opening_type": "window",
+          "host_wall_id": "ws_0014",
+          "insertion_point": [
+            4.449198,
+            193.368984
+          ],
+          "opening_geometry": {
+            "start": [
+              4.449198,
+              185.497326
+            ],
+            "end": [
+              4.449198,
+              201.240642
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.25,
+            "end_ratio": 0.448276,
+            "center_ratio": 0.349138
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0015",
+      "geometry": {
+        "start": [
+          4.449198,
+          245.048128
+        ],
+        "end": [
+          79.058824,
+          245.048128
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "kitchen_0",
+          "room_type": "kitchen",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0018",
+      "geometry": {
+        "start": [
+          79.058824,
+          245.048128
+        ],
+        "end": [
+          79.058824,
+          216.641711
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "kitchen_0",
+          "room_type": "kitchen",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0016",
+      "geometry": {
+        "start": [
+          134.160428,
+          245.048128
+        ],
+        "end": [
+          257.368984,
+          245.048128
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_3",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bedroom_0",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "window_9",
+          "opening_type": "window",
+          "host_wall_id": "ws_0016",
+          "insertion_point": [
+            164.106952,
+            245.048128
+          ],
+          "opening_geometry": {
+            "start": [
+              158.802139,
+              245.048128
+            ],
+            "end": [
+              169.411765,
+              245.048128
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.2,
+            "end_ratio": 0.286111,
+            "center_ratio": 0.243056
+          }
+        },
+        {
+          "opening_id": "window_8",
+          "opening_type": "window",
+          "host_wall_id": "ws_0016",
+          "insertion_point": [
+            203.636364,
+            245.048128
+          ],
+          "opening_geometry": {
+            "start": [
+              194.053476,
+              245.048128
+            ],
+            "end": [
+              213.219251,
+              245.048128
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.486111,
+            "end_ratio": 0.641667,
+            "center_ratio": 0.563889
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": true
+      },
+      "merged_from": [
+        "ws_0016",
+        "ws_0017"
+      ]
+    },
+    {
+      "wall_id": "ws_0021",
+      "geometry": {
+        "start": [
+          134.160428,
+          216.641711
+        ],
+        "end": [
+          134.160428,
+          245.048128
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_3",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0024",
+      "geometry": {
+        "start": [
+          257.368984,
+          10.951872
+        ],
+        "end": [
+          257.368984,
+          245.048128
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_1",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bedroom_0",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "front_door_0",
+          "opening_type": "front_door",
+          "host_wall_id": "ws_0024",
+          "insertion_point": [
+            257.368984,
+            147.679145
+          ],
+          "opening_geometry": {
+            "start": [
+              257.368984,
+              139.636364
+            ],
+            "end": [
+              257.368984,
+              155.721925
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.549708,
+            "end_ratio": 0.618421,
+            "center_ratio": 0.584064
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 3,
+        "has_openings": true
+      },
+      "merged_from": [
+        "ws_0024",
+        "ws_0023",
+        "ws_0022"
+      ]
+    },
+    {
+      "wall_id": "ws_0019",
+      "geometry": {
+        "start": [
+          79.058824,
+          216.641711
+        ],
+        "end": [
+          134.160428,
+          216.641711
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "window_7",
+          "opening_type": "window",
+          "host_wall_id": "ws_0019",
+          "insertion_point": [
+            102.84492,
+            216.641711
+          ],
+          "opening_geometry": {
+            "start": [
+              84.877005,
+              216.641711
+            ],
+            "end": [
+              120.812834,
+              216.641711
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.10559,
+            "end_ratio": 0.757764,
+            "center_ratio": 0.431677
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0013",
+      "geometry": {
+        "start": [
+          18.823529,
+          165.647059
+        ],
+        "end": [
+          4.449198,
+          165.647059
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "kitchen_0",
+          "room_type": "kitchen",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0009",
+      "geometry": {
+        "start": [
+          18.823529,
+          91.379679
+        ],
+        "end": [
+          18.823529,
+          165.647059
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "window_5",
+          "opening_type": "window",
+          "host_wall_id": "ws_0009",
+          "insertion_point": [
+            18.823529,
+            130.224599
+          ],
+          "opening_geometry": {
+            "start": [
+              18.823529,
+              111.229947
+            ],
+            "end": [
+              18.823529,
+              149.219251
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.267281,
+            "end_ratio": 0.778802,
+            "center_ratio": 0.523041
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0004",
+      "geometry": {
+        "start": [
+          -1.368984,
+          10.951872
+        ],
+        "end": [
+          -1.368984,
+          91.379679
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_2",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "window_4",
+          "opening_type": "window",
+          "host_wall_id": "ws_0004",
+          "insertion_point": [
+            -1.368984,
+            51.165776
+          ],
+          "opening_geometry": {
+            "start": [
+              -1.368984,
+              13.005348
+            ],
+            "end": [
+              -1.368984,
+              89.326203
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.025532,
+            "end_ratio": 0.974468,
+            "center_ratio": 0.5
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0005",
+      "geometry": {
+        "start": [
+          -1.368984,
+          91.379679
+        ],
+        "end": [
+          18.823529,
+          91.379679
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_2",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0003",
+      "geometry": {
+        "start": [
+          -1.368984,
+          10.951872
+        ],
+        "end": [
+          257.368984,
+          10.951872
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "exterior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_2",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bathroom_2",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bathroom_0",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bathroom_1",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bedroom_1",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "window_3",
+          "opening_type": "window",
+          "host_wall_id": "ws_0003",
+          "insertion_point": [
+            71.529412,
+            10.951872
+          ],
+          "opening_geometry": {
+            "start": [
+              62.28877,
+              10.951872
+            ],
+            "end": [
+              80.770053,
+              10.951872
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.246032,
+            "end_ratio": 0.31746,
+            "center_ratio": 0.281746
+          }
+        },
+        {
+          "opening_id": "window_2",
+          "opening_type": "window",
+          "host_wall_id": "ws_0003",
+          "insertion_point": [
+            110.032085,
+            10.951872
+          ],
+          "opening_geometry": {
+            "start": [
+              103.358289,
+              10.951872
+            ],
+            "end": [
+              116.705882,
+              10.951872
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.404762,
+            "end_ratio": 0.456349,
+            "center_ratio": 0.430556
+          }
+        },
+        {
+          "opening_id": "window_1",
+          "opening_type": "window",
+          "host_wall_id": "ws_0003",
+          "insertion_point": [
+            164.962567,
+            10.951872
+          ],
+          "opening_geometry": {
+            "start": [
+              158.802139,
+              10.951872
+            ],
+            "end": [
+              171.122995,
+              10.951872
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.619048,
+            "end_ratio": 0.666667,
+            "center_ratio": 0.642857
+          }
+        },
+        {
+          "opening_id": "window_0",
+          "opening_type": "window",
+          "host_wall_id": "ws_0003",
+          "insertion_point": [
+            213.903744,
+            10.951872
+          ],
+          "opening_geometry": {
+            "start": [
+              204.663102,
+              10.951872
+            ],
+            "end": [
+              223.144385,
+              10.951872
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.796296,
+            "end_ratio": 0.867725,
+            "center_ratio": 0.832011
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 5,
+        "has_openings": true
+      },
+      "merged_from": [
+        "ws_0003",
+        "ws_0002",
+        "ws_0001",
+        "ws_0000"
+      ]
+    },
+    {
+      "wall_id": "ws_0031",
+      "geometry": {
+        "start": [
+          173.176471,
+          245.048128
+        ],
+        "end": [
+          173.176471,
+          165.647059
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_0",
+          "room_type": "bedroom",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "door_2",
+          "opening_type": "door",
+          "host_wall_id": "ws_0031",
+          "insertion_point": [
+            173.176471,
+            184.128343
+          ],
+          "opening_geometry": {
+            "start": [
+              171.465241,
+              175.229947
+            ],
+            "end": [
+              171.465241,
+              193.026738
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.655172,
+            "end_ratio": 0.87931,
+            "center_ratio": 0.767241
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": false,
+        "room_count": 1,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0020",
+      "geometry": {
+        "start": [
+          134.160428,
+          165.647059
+        ],
+        "end": [
+          134.160428,
+          216.641711
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_3",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0012",
+      "geometry": {
+        "start": [
+          81.112299,
+          165.647059
+        ],
+        "end": [
+          18.823529,
+          165.647059
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "kitchen_0",
+          "room_type": "kitchen",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0011",
+      "geometry": {
+        "start": [
+          173.176471,
+          165.647059
+        ],
+        "end": [
+          134.160428,
+          165.647059
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_3",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0010",
+      "geometry": {
+        "start": [
+          257.368984,
+          165.647059
+        ],
+        "end": [
+          173.176471,
+          165.647059
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_0",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "door_0",
+          "opening_type": "door",
+          "host_wall_id": "ws_0010",
+          "insertion_point": [
+            221.262032,
+            165.647059
+          ],
+          "opening_geometry": {
+            "start": [
+              213.219251,
+              165.647059
+            ],
+            "end": [
+              229.304813,
+              165.647059
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.333333,
+            "end_ratio": 0.52439,
+            "center_ratio": 0.428862
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0006",
+      "geometry": {
+        "start": [
+          18.823529,
+          91.379679
+        ],
+        "end": [
+          98.566845,
+          91.379679
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_2",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "door_5",
+          "opening_type": "door",
+          "host_wall_id": "ws_0006",
+          "insertion_point": [
+            68.278075,
+            91.379679
+          ],
+          "opening_geometry": {
+            "start": [
+              59.550802,
+              91.379679
+            ],
+            "end": [
+              77.005348,
+              91.379679
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.51073,
+            "end_ratio": 0.729614,
+            "center_ratio": 0.620172
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0007",
+      "geometry": {
+        "start": [
+          98.566845,
+          91.379679
+        ],
+        "end": [
+          137.925134,
+          91.379679
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_2",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0030",
+      "geometry": {
+        "start": [
+          98.566845,
+          10.951872
+        ],
+        "end": [
+          98.566845,
+          91.379679
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_2",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bedroom_2",
+          "room_type": "bedroom",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "door_4",
+          "opening_type": "door",
+          "host_wall_id": "ws_0030",
+          "insertion_point": [
+            98.566845,
+            75.807487
+          ],
+          "opening_geometry": {
+            "start": [
+              98.566845,
+              67.764706
+            ],
+            "end": [
+              98.566845,
+              83.850267
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.706383,
+            "end_ratio": 0.906383,
+            "center_ratio": 0.806383
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0028",
+      "geometry": {
+        "start": [
+          137.925134,
+          91.379679
+        ],
+        "end": [
+          137.925134,
+          65.71123
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_2",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": false
+      }
+    },
+    {
+      "wall_id": "ws_0008",
+      "geometry": {
+        "start": [
+          257.368984,
+          91.379679
+        ],
+        "end": [
+          173.176471,
+          91.379679
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_1",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": false
+      },
+      "adjustments": [
+        {
+          "type": "oriented_t_junction_wall_from_host_centerline",
+          "original_start": [
+            173.176471,
+            91.379679
+          ],
+          "original_end": [
+            257.368984,
+            91.379679
+          ],
+          "adjusted_start": [
+            257.368984,
+            91.379679
+          ],
+          "adjusted_end": [
+            173.176471,
+            91.379679
+          ],
+          "host_wall_id": "ws_0024"
+        }
+      ]
+    },
+    {
+      "wall_id": "ws_0027",
+      "geometry": {
+        "start": [
+          173.176471,
+          65.71123
+        ],
+        "end": [
+          173.176471,
+          91.379679
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bedroom_1",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "door_1",
+          "opening_type": "door",
+          "host_wall_id": "ws_0027",
+          "insertion_point": [
+            173.176471,
+            79.914439
+          ],
+          "opening_geometry": {
+            "start": [
+              173.176471,
+              70.502674
+            ],
+            "end": [
+              173.176471,
+              89.326203
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.186667,
+            "end_ratio": 0.92,
+            "center_ratio": 0.553333
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 2,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0025",
+      "geometry": {
+        "start": [
+          137.925134,
+          65.71123
+        ],
+        "end": [
+          173.176471,
+          65.71123
+        ],
+        "angle_deg": 0.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_0",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bathroom_1",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "living_0",
+          "room_type": "living",
+          "side": "left",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [
+        {
+          "opening_id": "door_3",
+          "opening_type": "door",
+          "host_wall_id": "ws_0025",
+          "insertion_point": [
+            158.459893,
+            65.71123
+          ],
+          "opening_geometry": {
+            "start": [
+              150.245989,
+              65.71123
+            ],
+            "end": [
+              166.673797,
+              65.71123
+            ]
+          },
+          "position_on_wall": {
+            "start_ratio": 0.349515,
+            "end_ratio": 0.815534,
+            "center_ratio": 0.582524
+          }
+        }
+      ],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 3,
+        "has_openings": true
+      }
+    },
+    {
+      "wall_id": "ws_0029",
+      "geometry": {
+        "start": [
+          137.925134,
+          10.951872
+        ],
+        "end": [
+          137.925134,
+          65.71123
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_0",
+          "room_type": "bathroom",
+          "side": "left",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bathroom_1",
+          "room_type": "bathroom",
+          "side": "left",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bathroom_2",
+          "room_type": "bathroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 3,
+        "has_openings": false
+      },
+      "adjustments": [
+        {
+          "type": "oriented_t_junction_wall_from_host_centerline",
+          "original_start": [
+            137.925134,
+            65.71123
+          ],
+          "original_end": [
+            137.925134,
+            10.951872
+          ],
+          "adjusted_start": [
+            137.925134,
+            10.951872
+          ],
+          "adjusted_end": [
+            137.925134,
+            65.71123
+          ],
+          "host_wall_id": "ws_0003"
+        }
+      ]
+    },
+    {
+      "wall_id": "ws_0026",
+      "geometry": {
+        "start": [
+          173.176471,
+          10.951872
+        ],
+        "end": [
+          173.176471,
+          65.71123
+        ],
+        "angle_deg": 90.0
+      },
+      "physical": {
+        "wall_location": "interior"
+      },
+      "room_membership": [
+        {
+          "room_id": "bathroom_0",
+          "room_type": "bathroom",
+          "side": "left",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bathroom_1",
+          "room_type": "bathroom",
+          "side": "left",
+          "relation": "bounds_room"
+        },
+        {
+          "room_id": "bedroom_1",
+          "room_type": "bedroom",
+          "side": "right",
+          "relation": "bounds_room"
+        }
+      ],
+      "openings": [],
+      "quality_check": {
+        "shared_by_multiple_rooms": true,
+        "room_count": 3,
+        "has_openings": false
+      }
+    }
+  ],
+  "openings_index": [
+    {
+      "opening_id": "window_6",
+      "opening_type": "window",
+      "host_wall_id": "ws_0014"
+    },
+    {
+      "opening_id": "window_9",
+      "opening_type": "window",
+      "host_wall_id": "ws_0016"
+    },
+    {
+      "opening_id": "window_8",
+      "opening_type": "window",
+      "host_wall_id": "ws_0016"
+    },
+    {
+      "opening_id": "front_door_0",
+      "opening_type": "front_door",
+      "host_wall_id": "ws_0024"
+    },
+    {
+      "opening_id": "window_7",
+      "opening_type": "window",
+      "host_wall_id": "ws_0019"
+    },
+    {
+      "opening_id": "window_5",
+      "opening_type": "window",
+      "host_wall_id": "ws_0009"
+    },
+    {
+      "opening_id": "window_4",
+      "opening_type": "window",
+      "host_wall_id": "ws_0004"
+    },
+    {
+      "opening_id": "window_3",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003"
+    },
+    {
+      "opening_id": "window_2",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003"
+    },
+    {
+      "opening_id": "window_1",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003"
+    },
+    {
+      "opening_id": "window_0",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003"
+    },
+    {
+      "opening_id": "door_2",
+      "opening_type": "door",
+      "host_wall_id": "ws_0031"
+    },
+    {
+      "opening_id": "door_0",
+      "opening_type": "door",
+      "host_wall_id": "ws_0010"
+    },
+    {
+      "opening_id": "door_5",
+      "opening_type": "door",
+      "host_wall_id": "ws_0006"
+    },
+    {
+      "opening_id": "door_4",
+      "opening_type": "door",
+      "host_wall_id": "ws_0030"
+    },
+    {
+      "opening_id": "door_1",
+      "opening_type": "door",
+      "host_wall_id": "ws_0027"
+    },
+    {
+      "opening_id": "door_3",
+      "opening_type": "door",
+      "host_wall_id": "ws_0025"
+    }
+  ],
+  "slab_generate_point": [
+    173.176471,
+    205.347594
+  ],
+  "quality_check": {
+    "ok": true,
+    "segmentation_report": {
+      "segment_count": 32,
+      "split_by_opening_count": 0,
+      "split_intersection_part_count": 0,
+      "endpoint_repaired_count": 0,
+      "dangling_wall_count": 1,
+      "opening_count": 17,
+      "unattached_openings": [],
+      "too_short_segments": [],
+      "unsplit_intersections": [],
+      "ok": true
+    },
+    "opening_attachment": {
+      "source_opening_count": 17,
+      "attached_opening_count": 17,
+      "exported_opening_count": 17,
+      "unattached_opening_ids": [],
+      "unexported_attached_opening_ids": [],
+      "unexported_source_opening_ids": [],
+      "host_wall_mismatches": []
+    },
+    "node_consistency": {
+      "source": "same split_wall_segments output used by debug plot and JSON export",
+      "segment_node_count": 26,
+      "json_node_count": 26,
+      "missing_json_nodes": [],
+      "extra_json_nodes": [],
+      "absorbed_missing_json_nodes": [],
+      "absorbed_extra_json_nodes": [],
+      "merge_adjusted": true,
+      "ok": true
+    },
+    "coordinate_range": {
+      "x_range": [
+        -1.3689839572192568,
+        257.36898395721926
+      ],
+      "y_range": [
+        10.951871657753998,
+        245.04812834224597
+      ],
+      "point_count": 103,
+      "min_x": -1.368984,
+      "max_x": 257.368984,
+      "min_y": 10.951872,
+      "max_y": 245.048128,
+      "outside_points": [],
+      "ok": true
+    },
+    "exterior_closure": {
+      "enabled": true,
+      "source": "exterior_dangling_endpoint_pairing",
+      "exterior_endpoint_count": 36,
+      "dangling_endpoint_count_before": 0,
+      "added_count": 0,
+      "absorbed_count": 0,
+      "absorbed_closures": [],
+      "unpaired_dangling_endpoint_count": 0,
+      "max_gap": 10.26738,
+      "axis_tolerance": 2.053476,
+      "ok": true
+    },
+    "geometry_guarantees": {
+      "ok": true,
+      "axis_aligned": {
+        "ok": true,
+        "tolerance": 1e-06,
+        "non_axis_aligned_walls": []
+      },
+      "exterior_axis_aligned": {
+        "ok": true,
+        "tolerance": 1e-06,
+        "non_axis_aligned_exterior_walls": []
+      },
+      "collinear_coordinates": {
+        "ok": true,
+        "tolerance": 1e-06,
+        "issues": []
+      },
+      "opening_insertions_on_wall_edge": {
+        "ok": true,
+        "tolerance": 1e-06,
+        "expected_offset": 0.0,
+        "issues": []
+      }
+    },
+    "axis_alignment": {
+      "enabled": true,
+      "tolerance": 3.080214,
+      "adjusted_endpoint_tolerance": 4.106952,
+      "pass_count": 1,
+      "snapped_count": 0,
+      "passes": [
+        {
+          "pass": 1,
+          "enabled": true,
+          "tolerance": 3.080214,
+          "adjusted_endpoint_tolerance": 4.106952,
+          "snapped_count": 0,
+          "snapped_walls": []
+        }
+      ]
+    },
+    "endpoint_propagation": {
+      "enabled": true,
+      "pass_count": 1,
+      "propagated_count": 0,
+      "passes": [
+        {
+          "pass": 1,
+          "enabled": true,
+          "propagated_count": 0,
+          "propagated_endpoints": []
+        }
+      ]
+    },
+    "interior_centerline_snap": {
+      "enabled": true,
+      "tolerance": 2.053476,
+      "adjusted_count": 0,
+      "adjusted_walls": []
+    },
+    "exterior_centerline_snap": {
+      "enabled": true,
+      "tolerance": 6.160428,
+      "adjusted_count": 0,
+      "adjusted_walls": []
+    },
+    "post_exterior_snap_axis_alignment": {
+      "enabled": true,
+      "tolerance": 3.080214,
+      "adjusted_endpoint_tolerance": 6.160428,
+      "pass_count": 1,
+      "snapped_count": 0,
+      "passes": [
+        {
+          "pass": 1,
+          "enabled": true,
+          "tolerance": 3.080214,
+          "adjusted_endpoint_tolerance": 6.160428,
+          "snapped_count": 0,
+          "snapped_walls": []
+        }
+      ]
+    },
+    "post_exterior_snap_endpoint_propagation": {
+      "enabled": true,
+      "pass_count": 1,
+      "propagated_count": 0,
+      "passes": [
+        {
+          "pass": 1,
+          "enabled": true,
+          "propagated_count": 0,
+          "propagated_endpoints": []
+        }
+      ]
+    },
+    "collinear_centerline_snap": {
+      "enabled": true,
+      "tolerance": 1.026738,
+      "adjusted_count": 0,
+      "adjusted_walls": []
+    },
+    "t_junction_orientation": {
+      "enabled": true,
+      "tolerance": 1.026738,
+      "oriented_count": 2,
+      "oriented_walls": [
+        {
+          "wall_id": "ws_0008",
+          "host_wall_id": "ws_0024"
+        },
+        {
+          "wall_id": "ws_0029",
+          "host_wall_id": "ws_0003"
+        }
+      ]
+    },
+    "t_junctions": {
+      "enabled": true,
+      "tolerance": 1.026738,
+      "junction_count": 6,
+      "junctions": [
+        {
+          "host_wall_id": "ws_0024",
+          "connector_wall_id": "ws_0008",
+          "connector_endpoint": "start",
+          "centerline_point": [
+            257.368984,
+            91.379679
+          ],
+          "junction_point": [
+            259.42246,
+            91.379679
+          ],
+          "edge_offset": 2.053476
+        },
+        {
+          "host_wall_id": "ws_0024",
+          "connector_wall_id": "ws_0010",
+          "connector_endpoint": "start",
+          "centerline_point": [
+            257.368984,
+            165.647059
+          ],
+          "junction_point": [
+            259.42246,
+            165.647059
+          ],
+          "edge_offset": 2.053476
+        },
+        {
+          "host_wall_id": "ws_0003",
+          "connector_wall_id": "ws_0026",
+          "connector_endpoint": "start",
+          "centerline_point": [
+            173.176471,
+            10.951872
+          ],
+          "junction_point": [
+            173.176471,
+            8.898396
+          ],
+          "edge_offset": 2.053476
+        },
+        {
+          "host_wall_id": "ws_0003",
+          "connector_wall_id": "ws_0029",
+          "connector_endpoint": "start",
+          "centerline_point": [
+            137.925134,
+            10.951872
+          ],
+          "junction_point": [
+            137.925134,
+            8.898396
+          ],
+          "edge_offset": 2.053476
+        },
+        {
+          "host_wall_id": "ws_0003",
+          "connector_wall_id": "ws_0030",
+          "connector_endpoint": "start",
+          "centerline_point": [
+            98.566845,
+            10.951872
+          ],
+          "junction_point": [
+            98.566845,
+            8.898396
+          ],
+          "edge_offset": 2.053476
+        },
+        {
+          "host_wall_id": "ws_0016",
+          "connector_wall_id": "ws_0031",
+          "connector_endpoint": "start",
+          "centerline_point": [
+            173.176471,
+            245.048128
+          ],
+          "junction_point": [
+            173.176471,
+            247.101604
+          ],
+          "edge_offset": 2.053476
+        }
+      ]
+    },
+    "opening_alignment": {
+      "enabled": true,
+      "method": "opening_midpoint_on_centerline",
+      "insertion_offset": 0.0,
+      "adjusted_count": 10,
+      "max_offset": 1e-06,
+      "adjusted_openings": [
+        {
+          "wall_id": "ws_0016",
+          "opening_id": "window_8",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                203.636364,
+                245.048128
+              ],
+              "adjusted": [
+                203.636364,
+                245.048128
+              ],
+              "offset": 0.0,
+              "centerline_point": [
+                203.636364,
+                245.048128
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0024",
+          "opening_id": "front_door_0",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                257.368984,
+                147.679144
+              ],
+              "adjusted": [
+                257.368984,
+                147.679145
+              ],
+              "offset": 0.0,
+              "centerline_point": [
+                257.368984,
+                147.679145
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0019",
+          "opening_id": "window_7",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                102.84492,
+                216.641711
+              ],
+              "adjusted": [
+                102.84492,
+                216.641711
+              ],
+              "offset": 0.0,
+              "centerline_point": [
+                102.84492,
+                216.641711
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0004",
+          "opening_id": "window_4",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                -1.368984,
+                51.165775
+              ],
+              "adjusted": [
+                -1.368984,
+                51.165776
+              ],
+              "offset": 1e-06,
+              "centerline_point": [
+                -1.368984,
+                51.165776
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0003",
+          "opening_id": "window_3",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                71.529412,
+                10.951872
+              ],
+              "adjusted": [
+                71.529412,
+                10.951872
+              ],
+              "offset": 0.0,
+              "centerline_point": [
+                71.529412,
+                10.951872
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0003",
+          "opening_id": "window_2",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                110.032086,
+                10.951872
+              ],
+              "adjusted": [
+                110.032085,
+                10.951872
+              ],
+              "offset": 1e-06,
+              "centerline_point": [
+                110.032085,
+                10.951872
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0003",
+          "opening_id": "window_0",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                213.903743,
+                10.951872
+              ],
+              "adjusted": [
+                213.903744,
+                10.951872
+              ],
+              "offset": 1e-06,
+              "centerline_point": [
+                213.903744,
+                10.951872
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0031",
+          "opening_id": "door_2",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                173.176471,
+                184.128342
+              ],
+              "adjusted": [
+                173.176471,
+                184.128343
+              ],
+              "offset": 0.0,
+              "centerline_point": [
+                173.176471,
+                184.128343
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0030",
+          "opening_id": "door_4",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                98.566845,
+                75.807487
+              ],
+              "adjusted": [
+                98.566845,
+                75.807487
+              ],
+              "offset": 0.0,
+              "centerline_point": [
+                98.566845,
+                75.807487
+              ]
+            }
+          ]
+        },
+        {
+          "wall_id": "ws_0027",
+          "opening_id": "door_1",
+          "adjustments": [
+            {
+              "field": "insertion_point",
+              "original": [
+                173.176471,
+                79.914439
+              ],
+              "adjusted": [
+                173.176471,
+                79.914439
+              ],
+              "offset": 0.0,
+              "centerline_point": [
+                173.176471,
+                79.914439
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "interior_wall_direction": {
+      "enabled": false,
+      "reason": "preserve_current_start_end_order"
+    },
+    "wall_merge": {
+      "enabled": true,
+      "tolerance": 0.410695,
+      "merged_count": 3,
+      "merged_runs": [
+        {
+          "wall_id": "ws_0003",
+          "merged_from": [
+            "ws_0003",
+            "ws_0002",
+            "ws_0001",
+            "ws_0000"
+          ]
+        },
+        {
+          "wall_id": "ws_0016",
+          "merged_from": [
+            "ws_0016",
+            "ws_0017"
+          ]
+        },
+        {
+          "wall_id": "ws_0024",
+          "merged_from": [
+            "ws_0024",
+            "ws_0023",
+            "ws_0022"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "run_id": "plan_2147",
+  "plan_path": "outputs/bim_sequences/resplan_to_JSON_2147_bim_sequence/primitive_plan.json",
+  "calibration_path": "configs/vectorworks_grounding_template.json",
+  "log_path": "outputs/runs/plan_2147/primitive_actions.jsonl",
+  "imitation_trajectory_path": "outputs/runs/plan_2147/imitation_trajectory.jsonl",
+  "screenshots_dir": "outputs/runs/plan_2147/screenshots",
+  "screenshot_policy": "training_keyframes_click_double_click_hotkey_press_key_plus_sleep_attached_to_previous_keyframe",
+  "primitive_count": 189,
+  "dry_run": false,
+  "aborted": false,
+  "abort_reason": null,
+  "user_input_abort_enabled": true
+}

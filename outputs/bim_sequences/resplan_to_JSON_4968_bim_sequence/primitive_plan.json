@@ -1,0 +1,2696 @@
+{
+  "schema_name": "primitive_plan",
+  "schema_version": "0.1",
+  "source_gui_sequence": {
+    "source_json": "resplan_to_JSON/resplan_to_JSON_4968.json",
+    "source_schema_version": "1.2",
+    "plan_id": "plan_4968",
+    "source_dataset": "ResPlan"
+  },
+  "execution_policy": {
+    "capture_mode": "screenshot_after_each_key_mouse_primitive",
+    "screen_recording": "not_required",
+    "coordinate_source": "runtime_grounding_calibration",
+    "wall_geometry_input_mode": "screen_start_end",
+    "skip_create_file": false,
+    "model_point_axis_compression": {
+      "enabled": true,
+      "reason": "keep all primitive model points inside the calibrated operating range after scale_multiplier",
+      "safe_abs_limit": [
+        0.431034,
+        0.431034
+      ],
+      "original_max_abs": [
+        0.503868,
+        0.416256
+      ],
+      "scale": [
+        0.855451,
+        1.0
+      ]
+    }
+  },
+  "primitive_action_count": 203,
+  "primitive_action_space": [
+    "MOVE_TO",
+    "CLICK",
+    "DOUBLE_CLICK",
+    "HOTKEY",
+    "PRESS_KEY",
+    "SLEEP"
+  ],
+  "primitives": [
+    {
+      "primitive_id": "p_00000",
+      "type": "HOTKEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CREATE_NEW_FILE",
+      "capture_after": true,
+      "keys": [
+        "ctrl",
+        "n"
+      ]
+    },
+    {
+      "primitive_id": "p_00001",
+      "type": "SLEEP",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CREATE_NEW_FILE",
+      "capture_after": true,
+      "duration_ms": 2000,
+      "point_role": "pause_after_new_file_hotkey"
+    },
+    {
+      "primitive_id": "p_00002",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CONFIRM_CREATE_FILE",
+      "capture_after": true,
+      "key": "enter"
+    },
+    {
+      "primitive_id": "p_00003",
+      "type": "SLEEP",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CONFIRM_CREATE_FILE",
+      "capture_after": true,
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00004",
+      "type": "HOTKEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CONFIRM_CREATE_FILE",
+      "capture_after": true,
+      "keys": [
+        "ctrl",
+        "2"
+      ],
+      "point_role": "zoom_out_view"
+    },
+    {
+      "primitive_id": "p_00005",
+      "type": "HOTKEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CONFIRM_CREATE_FILE",
+      "capture_after": true,
+      "keys": [
+        "ctrl",
+        "2"
+      ],
+      "point_role": "zoom_out_view_repeat"
+    },
+    {
+      "primitive_id": "p_00006",
+      "type": "HOTKEY",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0022",
+      "parent_gui_action": "ACTIVATE_WALL_TOOL",
+      "capture_after": true,
+      "keys": [
+        "9"
+      ]
+    },
+    {
+      "primitive_id": "p_00007",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0022",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0022",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.087442,
+        0.227833
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00008",
+      "type": "CLICK",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0022",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00009",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0022",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0022",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.087442,
+        0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00010",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0022",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00011",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 2,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0023",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0023",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.087442,
+        0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00012",
+      "type": "CLICK",
+      "parent_high_level_index": 2,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0023",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00013",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 2,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0023",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0023",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.317107,
+        0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00014",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 2,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0023",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00015",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 3,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0024",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0024",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.317107,
+        0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00016",
+      "type": "CLICK",
+      "parent_high_level_index": 3,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0024",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00017",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 3,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0024",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0024",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.317107,
+        0.359606
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00018",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 3,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0024",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00019",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 4,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0026",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0026",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.317107,
+        0.359606
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00020",
+      "type": "CLICK",
+      "parent_high_level_index": 4,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0026",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00021",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 4,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0026",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0026",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.427726,
+        0.359606
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00022",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 4,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0026",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00023",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 5,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0028",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0028",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.427726,
+        0.359606
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00024",
+      "type": "CLICK",
+      "parent_high_level_index": 5,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0028",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00025",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 5,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0028",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0028",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.427726,
+        -0.211823
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00026",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 5,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0028",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00027",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 6,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0029",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0029",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.427726,
+        -0.211823
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00028",
+      "type": "CLICK",
+      "parent_high_level_index": 6,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0029",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00029",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 6,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0029",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0029",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.19806,
+        -0.211823
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00030",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 6,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0029",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00031",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 7,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0031",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0031",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.19806,
+        -0.211823
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00032",
+      "type": "CLICK",
+      "parent_high_level_index": 7,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0031",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00033",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 7,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0031",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0031",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.19806,
+        -0.32266
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00034",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 7,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0031",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00035",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 8,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0032",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0032",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.19806,
+        -0.32266
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00036",
+      "type": "CLICK",
+      "parent_high_level_index": 8,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0032",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00037",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 8,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0032",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0032",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.087442,
+        -0.32266
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00038",
+      "type": "CLICK",
+      "parent_high_level_index": 8,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0032",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left",
+      "point_role": "continue_exterior_wall_chain_to_ws_0021"
+    },
+    {
+      "primitive_id": "p_00039",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 9,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0021",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0021",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.087442,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00040",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 9,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0021",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00041",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 10,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0001",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0001",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.087442,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00042",
+      "type": "CLICK",
+      "parent_high_level_index": 10,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0001",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00043",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 10,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0001",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0001",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.244414,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00044",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 10,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0001",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00045",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 11,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0004",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0004",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.244414,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00046",
+      "type": "CLICK",
+      "parent_high_level_index": 11,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0004",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00047",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 11,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0004",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0004",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.244414,
+        -0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00048",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 11,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0004",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00049",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 12,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0005",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0005",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.244414,
+        -0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00050",
+      "type": "CLICK",
+      "parent_high_level_index": 12,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0005",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00051",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 12,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0005",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0005",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.427726,
+        -0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00052",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 12,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0005",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00053",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 13,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0006",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0006",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.427726,
+        -0.416256
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00054",
+      "type": "CLICK",
+      "parent_high_level_index": 13,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0006",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00055",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 13,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0006",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0006",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.427726,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00056",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 13,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0006",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00057",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0003",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0003",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.427726,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00058",
+      "type": "CLICK",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0003",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00059",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0003",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0003",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.363462,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00060",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0003",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00061",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 15,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0007",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0007",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.363462,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00062",
+      "type": "CLICK",
+      "parent_high_level_index": 15,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0007",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00063",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 15,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0007",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0007",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.363462,
+        -0.152709
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00064",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 15,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0007",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00065",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 16,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0009",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0009",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.363462,
+        -0.152709
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00066",
+      "type": "CLICK",
+      "parent_high_level_index": 16,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0009",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00067",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 16,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0009",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0009",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.320267,
+        -0.152709
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00068",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 16,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0009",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00069",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 17,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0010",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0010",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.320267,
+        -0.152709
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00070",
+      "type": "CLICK",
+      "parent_high_level_index": 17,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0010",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00071",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 17,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0010",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0010",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.320267,
+        0.147783
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00072",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 17,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0010",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00073",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 18,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0013",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0013",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.320267,
+        0.147783
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00074",
+      "type": "CLICK",
+      "parent_high_level_index": 18,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0013",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00075",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 18,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0013",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0013",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.363462,
+        0.147783
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00076",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 18,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0013",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00077",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 19,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0008",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0008",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.363462,
+        0.147783
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00078",
+      "type": "CLICK",
+      "parent_high_level_index": 19,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0008",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00079",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 19,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0008",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0008",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.363462,
+        0.295567
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00080",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 19,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0008",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00081",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 20,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0014",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0014",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.363462,
+        0.295567
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00082",
+      "type": "CLICK",
+      "parent_high_level_index": 20,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0014",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00083",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 20,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0014",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0014",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.012642,
+        0.295567
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00084",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 20,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0014",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00085",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 21,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0016",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0016",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.012642,
+        0.295567
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00086",
+      "type": "CLICK",
+      "parent_high_level_index": 21,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0016",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00087",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 21,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0016",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0016",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.012642,
+        0.227833
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00088",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 21,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0016",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00089",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 22,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0018",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0018",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.012642,
+        0.227833
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00090",
+      "type": "CLICK",
+      "parent_high_level_index": 22,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0018",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00091",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 22,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0018",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0018",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.087442,
+        0.227833
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00092",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 22,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0018",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00093",
+      "type": "HOTKEY",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "ACTIVATE_SLAB_TOOL",
+      "capture_after": true,
+      "keys": [
+        "s"
+      ]
+    },
+    {
+      "primitive_id": "p_00094",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "SWITCH_SLAB_INNER_BOUNDARY_MODE",
+      "capture_after": true,
+      "screen_point": [
+        292,
+        100
+      ],
+      "point_role": "slab_inner_boundary_mode_button",
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00095",
+      "type": "CLICK",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "SWITCH_SLAB_INNER_BOUNDARY_MODE",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00096",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "GENERATE_SLAB_FROM_POINT",
+      "capture_after": true,
+      "target_entity": "slab_0000",
+      "point_role": "slab_generate_point",
+      "model_point_mm": [
+        0.317107,
+        0.293719
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00097",
+      "type": "CLICK",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "GENERATE_SLAB_FROM_POINT",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00098",
+      "type": "HOTKEY",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "ACTIVATE_WALL_TOOL",
+      "capture_after": true,
+      "keys": [
+        "9"
+      ]
+    },
+    {
+      "primitive_id": "p_00099",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0025",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.317107,
+        0.359606
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00100",
+      "type": "CLICK",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00101",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0025",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.317107,
+        0.227833
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00102",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00103",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00104",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0037",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0037",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.097977,
+        0.295567
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00105",
+      "type": "CLICK",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0037",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00106",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0037",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0037",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.097977,
+        0.102217
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00107",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0037",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00108",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0037",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00109",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0017",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.012642,
+        0.227833
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00110",
+      "type": "CLICK",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00111",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0017",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.012642,
+        0.102217
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00112",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00113",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00114",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0019",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.225452,
+        0.227833
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00115",
+      "type": "CLICK",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00116",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0019",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.317107,
+        0.227833
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00117",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00118",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00119",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0036",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0036",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.097977,
+        0.020936
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00120",
+      "type": "CLICK",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0036",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00121",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0036",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0036",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.097977,
+        0.102217
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00122",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0036",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00123",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0036",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00124",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0038",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0038",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.097977,
+        0.102217
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00125",
+      "type": "CLICK",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0038",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00126",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0038",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0038",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.012642,
+        0.102217
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00127",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0038",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00128",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0038",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00129",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0039",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0039",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.097977,
+        0.020936
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00130",
+      "type": "CLICK",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0039",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00131",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0039",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0039",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.041087,
+        0.020936
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00132",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0039",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00133",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0039",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00134",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0035",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.320267,
+        0.006158
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00135",
+      "type": "CLICK",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00136",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0035",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.01791,
+        0.006158
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00137",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00138",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00139",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 32,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0033",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.01791,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00140",
+      "type": "CLICK",
+      "parent_high_level_index": 32,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00141",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 32,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0033",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.01791,
+        0.006158
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00142",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 32,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00143",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 32,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00144",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 33,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0034",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.19806,
+        0.006158
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00145",
+      "type": "CLICK",
+      "parent_high_level_index": 33,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00146",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 33,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0034",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.01791,
+        0.006158
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00147",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 33,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00148",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 33,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00149",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 34,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0030",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        0.19806,
+        0.006158
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00150",
+      "type": "CLICK",
+      "parent_high_level_index": 34,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00151",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 34,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0030",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        0.19806,
+        -0.211823
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00152",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 34,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00153",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 34,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00154",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 35,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0002",
+      "point_role": "start_mm",
+      "model_point_mm": [
+        -0.244414,
+        -0.277094
+      ],
+      "duration_ms": 80
+    },
+    {
+      "primitive_id": "p_00155",
+      "type": "CLICK",
+      "parent_high_level_index": 35,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "button": "left"
+    },
+    {
+      "primitive_id": "p_00156",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 35,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "target_entity": "ws_0002",
+      "point_role": "end_mm",
+      "model_point_mm": [
+        -0.363462,
+        -0.277094
+      ],
+      "duration_ms": 500
+    },
+    {
+      "primitive_id": "p_00157",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 35,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_1"
+    },
+    {
+      "primitive_id": "p_00158",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 35,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "capture_after": true,
+      "key": "enter",
+      "point_role": "interior_wall_end_enter_confirm_2"
+    },
+    {
+      "primitive_id": "p_00159",
+      "type": "HOTKEY",
+      "parent_high_level_index": 36,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_8",
+      "parent_gui_action": "ACTIVATE_WINDOW_TOOL",
+      "capture_after": true,
+      "keys": [
+        "shift",
+        "d"
+      ]
+    },
+    {
+      "primitive_id": "p_00160",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 36,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_8",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_8",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.092404,
+        0.352217
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00161",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 36,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_8",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00162",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 37,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_6",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_6",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.132742,
+        0.289765
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00163",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 37,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_6",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00164",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 38,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_7",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_7",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.01633,
+        0.289765
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00165",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 38,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_7",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00166",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 39,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_5",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_5",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.050042,
+        0.222031
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00167",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 39,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_5",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00168",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 40,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_4",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_4",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.315305,
+        0.113916
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00169",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 40,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_4",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00170",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 41,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_1",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_1",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.329222,
+        -0.206021
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00171",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 41,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_1",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00172",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 42,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_3",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_3",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.110092,
+        -0.282895
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00173",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 42,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_3",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00174",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 43,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_2",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_2",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.066898,
+        -0.282895
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00175",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 43,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_2",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00176",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 44,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_0",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "target_entity": "window_0",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.399808,
+        -0.410455
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00177",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 44,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_0",
+      "parent_gui_action": "INSERT_WINDOW",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00178",
+      "type": "HOTKEY",
+      "parent_high_level_index": 45,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "front_door_0",
+      "parent_gui_action": "ACTIVATE_DOOR_TOOL",
+      "capture_after": true,
+      "keys": [
+        "alt",
+        "shift",
+        "d"
+      ]
+    },
+    {
+      "primitive_id": "p_00179",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 45,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "front_door_0",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "front_door_0",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.431034,
+        0.30665
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00180",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 45,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "front_door_0",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00181",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 46,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_8",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_8",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.316958,
+        -0.067118
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00182",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 46,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_8",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00183",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 47,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_7",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_7",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.316958,
+        0.046798
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00184",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 47,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_7",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00185",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 48,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_0",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_0",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.2402,
+        -0.207955
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00186",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 48,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_0",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00187",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 49,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_1",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_1",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.012116,
+        -0.280961
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00188",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 49,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_1",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00189",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 50,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_5",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_5",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.094668,
+        0.061576
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00190",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 50,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_5",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00191",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 51,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_3",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_3",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.021071,
+        0.098349
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00192",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 51,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_3",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00193",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 52,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_4",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_4",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.05847,
+        0.00229
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00194",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 52,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_4",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00195",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 53,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_2",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_2",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        0.020544,
+        0.010025
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00196",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 53,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_2",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00197",
+      "type": "MOVE_TO",
+      "parent_high_level_index": 54,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_6",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "target_entity": "door_6",
+      "point_role": "intersection_point",
+      "model_point_mm": [
+        -0.282341,
+        -0.273226
+      ],
+      "duration_ms": 1000
+    },
+    {
+      "primitive_id": "p_00198",
+      "type": "DOUBLE_CLICK",
+      "parent_high_level_index": 54,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_6",
+      "parent_gui_action": "INSERT_DOOR",
+      "capture_after": true,
+      "button": "left",
+      "stable_position": true,
+      "interval_s": 0.5
+    },
+    {
+      "primitive_id": "p_00199",
+      "type": "HOTKEY",
+      "parent_high_level_index": 55,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "SELECT_ALL_ELEMENTS",
+      "capture_after": true,
+      "keys": [
+        "ctrl",
+        "a"
+      ]
+    },
+    {
+      "primitive_id": "p_00200",
+      "type": "HOTKEY",
+      "parent_high_level_index": 55,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "ACTIVATE_ROOF_TOOL",
+      "capture_after": true,
+      "keys": [
+        "ctrl",
+        "alt",
+        "1"
+      ]
+    },
+    {
+      "primitive_id": "p_00201",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 55,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "CONFIRM_ROOF",
+      "capture_after": true,
+      "key": "enter"
+    },
+    {
+      "primitive_id": "p_00202",
+      "type": "PRESS_KEY",
+      "parent_high_level_index": 55,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "CONFIRM_ROOF",
+      "capture_after": true,
+      "key": "enter"
+    }
+  ]
+}

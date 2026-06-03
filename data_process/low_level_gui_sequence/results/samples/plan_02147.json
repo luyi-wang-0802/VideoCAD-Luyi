@@ -1,0 +1,5769 @@
+{
+  "sample_id": "plan_02147",
+  "raw_plan_id": "plan_2147",
+  "source_json": "resplan_to_JSON/resplan_to_JSON_2147.json",
+  "high_level_sequence_path": "outputs/bim_sequences/resplan_to_JSON_2147_bim_sequence/high_level_sequence.json",
+  "gui_action_sequence_path": "outputs/bim_sequences/resplan_to_JSON_2147_bim_sequence/gui_action_sequence.json",
+  "trajectory_path": "outputs/runs/plan_2147/imitation_trajectory.jsonl",
+  "compact_plan": {
+    "metadata": {
+      "plan_id": "plan_2147",
+      "plan_index": 2147,
+      "source_dataset": "ResPlan",
+      "unit": "resplan_source_unit"
+    },
+    "coordinate_system": {
+      "input_coordinates": "source",
+      "origin": "resplan_source",
+      "x_axis": "right",
+      "y_axis": "up",
+      "normalization_method": "none",
+      "scale_to_mm": 1,
+      "x_range": [
+        -1.4321678321678348,
+        257.4321678321678
+      ],
+      "y_range": [
+        15.93286713286713,
+        240.06713286713287
+      ],
+      "source_bbox": {
+        "min_x": -1.4321678321678348,
+        "min_y": 15.93286713286713,
+        "max_x": 257.4321678321678,
+        "max_y": 240.06713286713287
+      },
+      "source_span": 258.8643356643356,
+      "target_coordinate_system": {
+        "origin": "model_origin",
+        "x_axis": "right",
+        "y_axis": "up",
+        "z_axis": "up"
+      }
+    },
+    "quality_ok": false,
+    "walls": [
+      {
+        "wall_id": "ws_0006",
+        "wall_location": "exterior",
+        "start": [
+          -1.432168,
+          19.513286
+        ],
+        "end": [
+          -1.432168,
+          238.097902
+        ]
+      },
+      {
+        "wall_id": "ws_0009",
+        "wall_location": "exterior",
+        "start": [
+          -1.432168,
+          238.097902
+        ],
+        "end": [
+          134.981818,
+          238.097902
+        ]
+      },
+      {
+        "wall_id": "ws_0011",
+        "wall_location": "exterior",
+        "start": [
+          134.981818,
+          238.097902
+        ],
+        "end": [
+          134.981818,
+          217.51049
+        ]
+      },
+      {
+        "wall_id": "ws_0013",
+        "wall_location": "exterior",
+        "start": [
+          134.981818,
+          217.51049
+        ],
+        "end": [
+          257.432168,
+          217.51049
+        ]
+      },
+      {
+        "wall_id": "ws_0014",
+        "wall_location": "exterior",
+        "start": [
+          257.432168,
+          217.51049
+        ],
+        "end": [
+          257.432168,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0015",
+        "wall_location": "exterior",
+        "start": [
+          257.432168,
+          110.455944
+        ],
+        "end": [
+          235.94965,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0022",
+        "wall_location": "exterior",
+        "start": [
+          235.94965,
+          110.455944
+        ],
+        "end": [
+          235.94965,
+          23.093706
+        ]
+      },
+      {
+        "wall_id": "ws_0025",
+        "wall_location": "exterior",
+        "start": [
+          132.475524,
+          72.861538
+        ],
+        "end": [
+          102.758042,
+          72.861538
+        ]
+      },
+      {
+        "wall_id": "ws_0028",
+        "wall_location": "exterior",
+        "start": [
+          102.758042,
+          19.513286
+        ],
+        "end": [
+          102.758042,
+          72.861538
+        ]
+      },
+      {
+        "wall_id": "ws_0023",
+        "wall_location": "exterior",
+        "start": [
+          132.475524,
+          20.945455
+        ],
+        "end": [
+          132.475524,
+          72.861538
+        ]
+      },
+      {
+        "wall_id": "ws_0004",
+        "wall_location": "exterior",
+        "start": [
+          150.01958,
+          23.093706
+        ],
+        "end": [
+          235.94965,
+          23.093706
+        ]
+      },
+      {
+        "wall_id": "ws_0005",
+        "wall_location": "exterior",
+        "start": [
+          -1.432168,
+          19.513286
+        ],
+        "end": [
+          102.758042,
+          19.513286
+        ]
+      },
+      {
+        "wall_id": "ws_0002",
+        "wall_location": "interior",
+        "start": [
+          67.311888,
+          238.097902
+        ],
+        "end": [
+          67.311888,
+          139.099301
+        ]
+      },
+      {
+        "wall_id": "ws_0012",
+        "wall_location": "interior",
+        "start": [
+          134.981818,
+          217.51049
+        ],
+        "end": [
+          134.981818,
+          139.099301
+        ]
+      },
+      {
+        "wall_id": "ws_0031",
+        "wall_location": "interior",
+        "start": [
+          -1.432168,
+          145.902098
+        ],
+        "end": [
+          43.323077,
+          145.902098
+        ]
+      },
+      {
+        "wall_id": "ws_0032",
+        "wall_location": "interior",
+        "start": [
+          43.323077,
+          139.099301
+        ],
+        "end": [
+          43.323077,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0033",
+        "wall_location": "interior",
+        "start": [
+          43.323077,
+          139.099301
+        ],
+        "end": [
+          67.311888,
+          139.099301
+        ]
+      },
+      {
+        "wall_id": "ws_0034",
+        "wall_location": "interior",
+        "start": [
+          67.311888,
+          139.099301
+        ],
+        "end": [
+          134.981818,
+          139.099301
+        ]
+      },
+      {
+        "wall_id": "ws_0021",
+        "wall_location": "interior",
+        "start": [
+          -1.432168,
+          110.455944
+        ],
+        "end": [
+          43.323077,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0020",
+        "wall_location": "interior",
+        "start": [
+          67.311888,
+          110.455944
+        ],
+        "end": [
+          43.323077,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0001",
+        "wall_location": "interior",
+        "start": [
+          67.311888,
+          63.194406
+        ],
+        "end": [
+          67.311888,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0019",
+        "wall_location": "interior",
+        "start": [
+          102.758042,
+          110.455944
+        ],
+        "end": [
+          67.311888,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0018",
+        "wall_location": "interior",
+        "start": [
+          132.475524,
+          110.455944
+        ],
+        "end": [
+          102.758042,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0026",
+        "wall_location": "interior",
+        "start": [
+          102.758042,
+          110.455944
+        ],
+        "end": [
+          102.758042,
+          72.861538
+        ]
+      },
+      {
+        "wall_id": "ws_0024",
+        "wall_location": "interior",
+        "start": [
+          132.475524,
+          72.861538
+        ],
+        "end": [
+          132.475524,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0017",
+        "wall_location": "interior",
+        "start": [
+          195.848951,
+          110.455944
+        ],
+        "end": [
+          179.379021,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0016",
+        "wall_location": "interior",
+        "start": [
+          205.158042,
+          110.455944
+        ],
+        "end": [
+          195.848951,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0035",
+        "wall_location": "interior",
+        "start": [
+          195.848951,
+          23.093706
+        ],
+        "end": [
+          195.848951,
+          110.455944
+        ]
+      },
+      {
+        "wall_id": "ws_0000",
+        "wall_location": "interior",
+        "start": [
+          67.311888,
+          19.513286
+        ],
+        "end": [
+          67.311888,
+          63.194406
+        ]
+      },
+      {
+        "wall_id": "ws_0030",
+        "wall_location": "interior",
+        "start": [
+          102.758042,
+          63.194406
+        ],
+        "end": [
+          67.311888,
+          63.194406
+        ]
+      }
+    ],
+    "insertions": [
+      {
+        "opening_id": "window_5",
+        "opening_type": "window",
+        "host_wall_id": "ws_0006",
+        "insertion_point": [
+          -1.432168,
+          137.846154
+        ]
+      },
+      {
+        "opening_id": "window_7",
+        "opening_type": "window",
+        "host_wall_id": "ws_0009",
+        "insertion_point": [
+          32.93986,
+          238.097902
+        ]
+      },
+      {
+        "opening_id": "window_6",
+        "opening_type": "window",
+        "host_wall_id": "ws_0009",
+        "insertion_point": [
+          94.165035,
+          238.097902
+        ]
+      },
+      {
+        "opening_id": "door_6",
+        "opening_type": "door",
+        "host_wall_id": "ws_0013",
+        "insertion_point": [
+          202.830769,
+          217.51049
+        ]
+      },
+      {
+        "opening_id": "front_door_0",
+        "opening_type": "door",
+        "host_wall_id": "ws_0022",
+        "insertion_point": [
+          235.94965,
+          35.446154
+        ]
+      },
+      {
+        "opening_id": "window_3",
+        "opening_type": "window",
+        "host_wall_id": "ws_0023",
+        "insertion_point": [
+          132.475524,
+          53.169231
+        ]
+      },
+      {
+        "opening_id": "window_1",
+        "opening_type": "window",
+        "host_wall_id": "ws_0005",
+        "insertion_point": [
+          56.391608,
+          19.513286
+        ]
+      },
+      {
+        "opening_id": "window_2",
+        "opening_type": "window",
+        "host_wall_id": "ws_0005",
+        "insertion_point": [
+          12.173426,
+          19.513286
+        ]
+      },
+      {
+        "opening_id": "window_0",
+        "opening_type": "window",
+        "host_wall_id": "ws_0005",
+        "insertion_point": [
+          76.441958,
+          19.513286
+        ]
+      },
+      {
+        "opening_id": "door_5",
+        "opening_type": "door",
+        "host_wall_id": "ws_0031",
+        "insertion_point": [
+          32.402797,
+          145.902098
+        ]
+      },
+      {
+        "opening_id": "door_4",
+        "opening_type": "door",
+        "host_wall_id": "ws_0033",
+        "insertion_point": [
+          56.391608,
+          139.099301
+        ]
+      },
+      {
+        "opening_id": "door_1",
+        "opening_type": "door",
+        "host_wall_id": "ws_0034",
+        "insertion_point": [
+          78.053147,
+          139.099301
+        ]
+      },
+      {
+        "opening_id": "door_3",
+        "opening_type": "door",
+        "host_wall_id": "ws_0020",
+        "insertion_point": [
+          56.391608,
+          110.455944
+        ]
+      },
+      {
+        "opening_id": "door_0",
+        "opening_type": "door",
+        "host_wall_id": "ws_0019",
+        "insertion_point": [
+          78.053147,
+          110.455944
+        ]
+      },
+      {
+        "opening_id": "window_4",
+        "opening_type": "window",
+        "host_wall_id": "ws_0024",
+        "insertion_point": [
+          132.475524,
+          83.602797
+        ]
+      },
+      {
+        "opening_id": "door_2",
+        "opening_type": "door",
+        "host_wall_id": "ws_0000",
+        "insertion_point": [
+          67.311888,
+          44.397203
+        ]
+      }
+    ],
+    "counts": {
+      "walls": 30,
+      "insertions": 16,
+      "doors": 8,
+      "windows": 8
+    }
+  },
+  "high_level_sequence": [
+    {
+      "index": 0,
+      "type": "CREATE_FILE",
+      "entity": null
+    },
+    {
+      "index": 1,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0006"
+    },
+    {
+      "index": 2,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0009"
+    },
+    {
+      "index": 3,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0011"
+    },
+    {
+      "index": 4,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0013"
+    },
+    {
+      "index": 5,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0014"
+    },
+    {
+      "index": 6,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0015"
+    },
+    {
+      "index": 7,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0022"
+    },
+    {
+      "index": 8,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0004"
+    },
+    {
+      "index": 9,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0023"
+    },
+    {
+      "index": 10,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0025"
+    },
+    {
+      "index": 11,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0028"
+    },
+    {
+      "index": 12,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0005"
+    },
+    {
+      "index": 13,
+      "type": "CREATE_SLAB",
+      "entity": "slab_0000"
+    },
+    {
+      "index": 14,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0002"
+    },
+    {
+      "index": 15,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0012"
+    },
+    {
+      "index": 16,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0031"
+    },
+    {
+      "index": 17,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0032"
+    },
+    {
+      "index": 18,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0033"
+    },
+    {
+      "index": 19,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0034"
+    },
+    {
+      "index": 20,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0021"
+    },
+    {
+      "index": 21,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0020"
+    },
+    {
+      "index": 22,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0001"
+    },
+    {
+      "index": 23,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0019"
+    },
+    {
+      "index": 24,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0018"
+    },
+    {
+      "index": 25,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0026"
+    },
+    {
+      "index": 26,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0024"
+    },
+    {
+      "index": 27,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0017"
+    },
+    {
+      "index": 28,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0016"
+    },
+    {
+      "index": 29,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0035"
+    },
+    {
+      "index": 30,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0000"
+    },
+    {
+      "index": 31,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0030"
+    },
+    {
+      "index": 32,
+      "type": "CREATE_WINDOW",
+      "entity": "window_5"
+    },
+    {
+      "index": 33,
+      "type": "CREATE_WINDOW",
+      "entity": "window_7"
+    },
+    {
+      "index": 34,
+      "type": "CREATE_WINDOW",
+      "entity": "window_6"
+    },
+    {
+      "index": 35,
+      "type": "CREATE_WINDOW",
+      "entity": "window_3"
+    },
+    {
+      "index": 36,
+      "type": "CREATE_WINDOW",
+      "entity": "window_1"
+    },
+    {
+      "index": 37,
+      "type": "CREATE_WINDOW",
+      "entity": "window_2"
+    },
+    {
+      "index": 38,
+      "type": "CREATE_WINDOW",
+      "entity": "window_0"
+    },
+    {
+      "index": 39,
+      "type": "CREATE_WINDOW",
+      "entity": "window_4"
+    },
+    {
+      "index": 40,
+      "type": "CREATE_DOOR",
+      "entity": "door_6"
+    },
+    {
+      "index": 41,
+      "type": "CREATE_DOOR",
+      "entity": "front_door_0"
+    },
+    {
+      "index": 42,
+      "type": "CREATE_DOOR",
+      "entity": "door_5"
+    },
+    {
+      "index": 43,
+      "type": "CREATE_DOOR",
+      "entity": "door_4"
+    },
+    {
+      "index": 44,
+      "type": "CREATE_DOOR",
+      "entity": "door_1"
+    },
+    {
+      "index": 45,
+      "type": "CREATE_DOOR",
+      "entity": "door_3"
+    },
+    {
+      "index": 46,
+      "type": "CREATE_DOOR",
+      "entity": "door_0"
+    },
+    {
+      "index": 47,
+      "type": "CREATE_DOOR",
+      "entity": "door_2"
+    },
+    {
+      "index": 48,
+      "type": "CREATE_ROOF",
+      "entity": "roof_0000"
+    },
+    {
+      "index": 49,
+      "type": "FINAL_VIEW",
+      "entity": null
+    }
+  ],
+  "gui_sequence": [
+    {
+      "index": 0,
+      "type": "CREATE_FILE",
+      "entity": null,
+      "gui_action_sequence": [
+        {
+          "type": "CREATE_NEW_FILE",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Ctrl+N"
+          }
+        },
+        {
+          "type": "CONFIRM_CREATE_FILE",
+          "grounding_target": {
+            "target_type": "keyboard_key",
+            "target_name": "Enter"
+          }
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0006",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0006",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0009",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0009",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0011",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0011",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0013",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0013",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0014",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0014",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0015",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0015",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0022",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0022",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0004",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0004",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0023",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0023",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0025",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0025",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0028",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0028",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0005",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0005",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "type": "CREATE_SLAB",
+      "entity": "slab_0000",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_SLAB_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "s"
+          }
+        },
+        {
+          "type": "SWITCH_SLAB_INNER_BOUNDARY_MODE",
+          "screen_point": [
+            292,
+            100
+          ],
+          "grounding_target": {
+            "target_type": "screen_point",
+            "target_name": "slab_inner_boundary_mode_button"
+          }
+        },
+        {
+          "type": "GENERATE_SLAB_FROM_POINT",
+          "entity": "slab_0000",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "slab_generate_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0002",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0002",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0012",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0012",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0031",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0031",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 17,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0032",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0032",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0033",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0033",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 19,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0034",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0034",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0021",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0021",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 21,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0020",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0020",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 22,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0001",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0001",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 23,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0019",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0019",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0018",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0018",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0026",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0026",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0024",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0024",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0017",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0017",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 28,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0016",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0016",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0035",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0035",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 30,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0000",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0000",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 31,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0030",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WALL_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "w"
+          }
+        },
+        {
+          "type": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+          "entity": "ws_0030",
+          "grounding_target": {
+            "target_type": "canvas_point_pair",
+            "target_name": "wall_start_end_points"
+          }
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "type": "CREATE_WINDOW",
+      "entity": "window_5",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_5",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 33,
+      "type": "CREATE_WINDOW",
+      "entity": "window_7",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_7",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 34,
+      "type": "CREATE_WINDOW",
+      "entity": "window_6",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_6",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 35,
+      "type": "CREATE_WINDOW",
+      "entity": "window_3",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_3",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 36,
+      "type": "CREATE_WINDOW",
+      "entity": "window_1",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_1",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 37,
+      "type": "CREATE_WINDOW",
+      "entity": "window_2",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_2",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 38,
+      "type": "CREATE_WINDOW",
+      "entity": "window_0",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_0",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 39,
+      "type": "CREATE_WINDOW",
+      "entity": "window_4",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_WINDOW_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+W"
+          }
+        },
+        {
+          "type": "INSERT_WINDOW",
+          "entity": "window_4",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 40,
+      "type": "CREATE_DOOR",
+      "entity": "door_6",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "door_6",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 41,
+      "type": "CREATE_DOOR",
+      "entity": "front_door_0",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "front_door_0",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 42,
+      "type": "CREATE_DOOR",
+      "entity": "door_5",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "door_5",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 43,
+      "type": "CREATE_DOOR",
+      "entity": "door_4",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "door_4",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 44,
+      "type": "CREATE_DOOR",
+      "entity": "door_1",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "door_1",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 45,
+      "type": "CREATE_DOOR",
+      "entity": "door_3",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "door_3",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 46,
+      "type": "CREATE_DOOR",
+      "entity": "door_0",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "door_0",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 47,
+      "type": "CREATE_DOOR",
+      "entity": "door_2",
+      "gui_action_sequence": [
+        {
+          "type": "ACTIVATE_DOOR_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Shift+D"
+          }
+        },
+        {
+          "type": "INSERT_DOOR",
+          "entity": "door_2",
+          "grounding_target": {
+            "target_type": "canvas_point",
+            "target_name": "intersection_point"
+          }
+        }
+      ]
+    },
+    {
+      "index": 48,
+      "type": "CREATE_ROOF",
+      "entity": "roof_0000",
+      "gui_action_sequence": [
+        {
+          "type": "SELECT_ALL_ELEMENTS",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Ctrl+A"
+          }
+        },
+        {
+          "type": "ACTIVATE_ROOF_TOOL",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "Ctrl+Alt+1"
+          }
+        },
+        {
+          "type": "CONFIRM_ROOF",
+          "grounding_target": {
+            "target_type": "keyboard_key",
+            "target_name": "Enter"
+          }
+        }
+      ]
+    },
+    {
+      "index": 49,
+      "type": "FINAL_VIEW",
+      "entity": null,
+      "gui_action_sequence": [
+        {
+          "type": "CHANGE_VIEW",
+          "grounding_target": {
+            "target_type": "keyboard_shortcut",
+            "target_name": "1"
+          }
+        }
+      ]
+    }
+  ],
+  "low_level_actions": [
+    {
+      "primitive_id": "p_00000",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CREATE_NEW_FILE",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00000.png",
+      "time_s_after": 0.447284,
+      "keys": [
+        "ctrl",
+        "n"
+      ],
+      "step_index": 0,
+      "observation_before": {
+        "screenshot_path": null,
+        "source": "not_recorded"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00000.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY ctrl+n"
+    },
+    {
+      "primitive_id": "p_00002",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CONFIRM_CREATE_FILE",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00002.png",
+      "time_s_after": 3.107136,
+      "key": "enter",
+      "step_index": 1,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00000.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00002.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00004",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CONFIRM_CREATE_FILE",
+      "point_role": "zoom_out_view",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00004.png",
+      "time_s_after": 4.849177,
+      "keys": [
+        "ctrl",
+        "2"
+      ],
+      "step_index": 2,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00002.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00004.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY ctrl+2"
+    },
+    {
+      "primitive_id": "p_00005",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 0,
+      "parent_high_level_type": "CREATE_FILE",
+      "parent_entity": null,
+      "parent_gui_action": "CONFIRM_CREATE_FILE",
+      "point_role": "zoom_out_view_repeat",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00005.png",
+      "time_s_after": 5.259145,
+      "keys": [
+        "ctrl",
+        "2"
+      ],
+      "step_index": 3,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00004.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00005.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY ctrl+2"
+    },
+    {
+      "primitive_id": "p_00006",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0006",
+      "parent_gui_action": "ACTIVATE_WALL_TOOL",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00006.png",
+      "time_s_after": 5.680059,
+      "keys": [
+        "9"
+      ],
+      "step_index": 4,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00005.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00006.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY 9"
+    },
+    {
+      "primitive_id": "p_00008",
+      "action_type": "CLICK",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0006",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00008.png",
+      "time_s_after": 6.349703,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0006",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.431034,
+          -0.419087
+        ],
+        "screen_point": [
+          605,
+          932
+        ],
+        "window_point": [
+          605,
+          932
+        ],
+        "window_norm": [
+          0.315104,
+          0.862963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 5,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00006.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00008.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.431034, -0.419087]"
+    },
+    {
+      "primitive_id": "p_00010",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 1,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0006",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00010.png",
+      "time_s_after": 7.029619,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0006",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.431034,
+          0.425311
+        ],
+        "screen_point": [
+          605,
+          225
+        ],
+        "window_point": [
+          605,
+          225
+        ],
+        "window_norm": [
+          0.315104,
+          0.208333
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 6,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00008.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00010.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.431034, 0.425311]"
+    },
+    {
+      "primitive_id": "p_00012",
+      "action_type": "CLICK",
+      "parent_high_level_index": 2,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0009",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00012.png",
+      "time_s_after": 7.698568,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0009",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.431034,
+          0.425311
+        ],
+        "screen_point": [
+          605,
+          225
+        ],
+        "window_point": [
+          605,
+          225
+        ],
+        "window_norm": [
+          0.315104,
+          0.208333
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 7,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00010.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00012.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.431034, 0.425311]"
+    },
+    {
+      "primitive_id": "p_00014",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 2,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0009",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00014.png",
+      "time_s_after": 8.370518,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0009",
+        "point_role": "end_mm",
+        "model_point": [
+          0.023251,
+          0.425311
+        ],
+        "screen_point": [
+          985,
+          225
+        ],
+        "window_point": [
+          985,
+          225
+        ],
+        "window_norm": [
+          0.513021,
+          0.208333
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 8,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00012.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00014.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.023251, 0.425311]"
+    },
+    {
+      "primitive_id": "p_00016",
+      "action_type": "CLICK",
+      "parent_high_level_index": 3,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0011",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00016.png",
+      "time_s_after": 9.043226,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0011",
+        "point_role": "start_mm",
+        "model_point": [
+          0.023251,
+          0.425311
+        ],
+        "screen_point": [
+          985,
+          225
+        ],
+        "window_point": [
+          985,
+          225
+        ],
+        "window_norm": [
+          0.513021,
+          0.208333
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 9,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00014.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00016.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.023251, 0.425311]"
+    },
+    {
+      "primitive_id": "p_00018",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 3,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0011",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00018.png",
+      "time_s_after": 9.686949,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0011",
+        "point_role": "end_mm",
+        "model_point": [
+          0.023251,
+          0.345781
+        ],
+        "screen_point": [
+          985,
+          291
+        ],
+        "window_point": [
+          985,
+          291
+        ],
+        "window_norm": [
+          0.513021,
+          0.269444
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 10,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00016.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00018.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.023251, 0.345781]"
+    },
+    {
+      "primitive_id": "p_00020",
+      "action_type": "CLICK",
+      "parent_high_level_index": 4,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0013",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00020.png",
+      "time_s_after": 10.359485,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0013",
+        "point_role": "start_mm",
+        "model_point": [
+          0.023251,
+          0.345781
+        ],
+        "screen_point": [
+          985,
+          291
+        ],
+        "window_point": [
+          985,
+          291
+        ],
+        "window_norm": [
+          0.513021,
+          0.269444
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 11,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00018.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00020.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.023251, 0.345781]"
+    },
+    {
+      "primitive_id": "p_00022",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 4,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0013",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00022.png",
+      "time_s_after": 11.045159,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0013",
+        "point_role": "end_mm",
+        "model_point": [
+          0.431034,
+          0.345781
+        ],
+        "screen_point": [
+          1327,
+          291
+        ],
+        "window_point": [
+          1327,
+          291
+        ],
+        "window_norm": [
+          0.691146,
+          0.269444
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 12,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00020.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00022.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.431034, 0.345781]"
+    },
+    {
+      "primitive_id": "p_00024",
+      "action_type": "CLICK",
+      "parent_high_level_index": 5,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0014",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00024.png",
+      "time_s_after": 11.73092,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0014",
+        "point_role": "start_mm",
+        "model_point": [
+          0.431034,
+          0.345781
+        ],
+        "screen_point": [
+          1327,
+          291
+        ],
+        "window_point": [
+          1327,
+          291
+        ],
+        "window_norm": [
+          0.691146,
+          0.269444
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 13,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00022.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00024.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.431034, 0.345781]"
+    },
+    {
+      "primitive_id": "p_00026",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 5,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0014",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00026.png",
+      "time_s_after": 12.386187,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0014",
+        "point_role": "end_mm",
+        "model_point": [
+          0.431034,
+          -0.067773
+        ],
+        "screen_point": [
+          1327,
+          638
+        ],
+        "window_point": [
+          1327,
+          638
+        ],
+        "window_norm": [
+          0.691146,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 14,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00024.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00026.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.431034, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00028",
+      "action_type": "CLICK",
+      "parent_high_level_index": 6,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0015",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00028.png",
+      "time_s_after": 13.068598,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0015",
+        "point_role": "start_mm",
+        "model_point": [
+          0.431034,
+          -0.067773
+        ],
+        "screen_point": [
+          1327,
+          638
+        ],
+        "window_point": [
+          1327,
+          638
+        ],
+        "window_norm": [
+          0.691146,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 15,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00026.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00028.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.431034, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00030",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 6,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0015",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00030.png",
+      "time_s_after": 13.74538,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0015",
+        "point_role": "end_mm",
+        "model_point": [
+          0.359493,
+          -0.067773
+        ],
+        "screen_point": [
+          1267,
+          638
+        ],
+        "window_point": [
+          1267,
+          638
+        ],
+        "window_norm": [
+          0.659896,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 16,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00028.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00030.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.359493, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00032",
+      "action_type": "CLICK",
+      "parent_high_level_index": 7,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0022",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00032.png",
+      "time_s_after": 14.39942,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0022",
+        "point_role": "start_mm",
+        "model_point": [
+          0.359493,
+          -0.067773
+        ],
+        "screen_point": [
+          1267,
+          638
+        ],
+        "window_point": [
+          1267,
+          638
+        ],
+        "window_norm": [
+          0.659896,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 17,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00030.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00032.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.359493, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00034",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 7,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0022",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00034.png",
+      "time_s_after": 15.070142,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0022",
+        "point_role": "end_mm",
+        "model_point": [
+          0.359493,
+          -0.405256
+        ],
+        "screen_point": [
+          1267,
+          920
+        ],
+        "window_point": [
+          1267,
+          920
+        ],
+        "window_norm": [
+          0.659896,
+          0.851852
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 18,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00032.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00034.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.359493, -0.405256]"
+    },
+    {
+      "primitive_id": "p_00036",
+      "action_type": "CLICK",
+      "parent_high_level_index": 8,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0004",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00036.png",
+      "time_s_after": 15.734359,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0004",
+        "point_role": "start_mm",
+        "model_point": [
+          0.359493,
+          -0.405256
+        ],
+        "screen_point": [
+          1267,
+          920
+        ],
+        "window_point": [
+          1267,
+          920
+        ],
+        "window_norm": [
+          0.659896,
+          0.851852
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 19,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00034.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00036.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.359493, -0.405256]"
+    },
+    {
+      "primitive_id": "p_00038",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 8,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0004",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00038.png",
+      "time_s_after": 16.433352,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0004",
+        "point_role": "end_mm",
+        "model_point": [
+          0.073329,
+          -0.405256
+        ],
+        "screen_point": [
+          1027,
+          920
+        ],
+        "window_point": [
+          1027,
+          920
+        ],
+        "window_norm": [
+          0.534896,
+          0.851852
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 20,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00036.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00038.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.073329, -0.405256]"
+    },
+    {
+      "primitive_id": "p_00040",
+      "action_type": "CLICK",
+      "parent_high_level_index": 9,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0023",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00040.png",
+      "time_s_after": 17.107738,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0023",
+        "point_role": "start_mm",
+        "model_point": [
+          0.073329,
+          -0.405256
+        ],
+        "screen_point": [
+          1027,
+          920
+        ],
+        "window_point": [
+          1027,
+          920
+        ],
+        "window_norm": [
+          0.534896,
+          0.851852
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 21,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00038.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00040.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.073329, -0.405256]"
+    },
+    {
+      "primitive_id": "p_00042",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 9,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0023",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00042.png",
+      "time_s_after": 17.778209,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0023",
+        "point_role": "end_mm",
+        "model_point": [
+          0.014904,
+          -0.213001
+        ],
+        "screen_point": [
+          978,
+          759
+        ],
+        "window_point": [
+          978,
+          759
+        ],
+        "window_norm": [
+          0.509375,
+          0.702778
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 22,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00040.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00042.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.014904, -0.213001]"
+    },
+    {
+      "primitive_id": "p_00044",
+      "action_type": "CLICK",
+      "parent_high_level_index": 10,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00044.png",
+      "time_s_after": 18.451355,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0025",
+        "point_role": "start_mm",
+        "model_point": [
+          0.014904,
+          -0.213001
+        ],
+        "screen_point": [
+          978,
+          759
+        ],
+        "window_point": [
+          978,
+          759
+        ],
+        "window_norm": [
+          0.509375,
+          0.702778
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 23,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00042.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00044.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.014904, -0.213001]"
+    },
+    {
+      "primitive_id": "p_00046",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 10,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0025",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00046.png",
+      "time_s_after": 19.123875,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0025",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.08406,
+          -0.213001
+        ],
+        "screen_point": [
+          896,
+          759
+        ],
+        "window_point": [
+          896,
+          759
+        ],
+        "window_norm": [
+          0.466667,
+          0.702778
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 24,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00044.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00046.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.08406, -0.213001]"
+    },
+    {
+      "primitive_id": "p_00048",
+      "action_type": "CLICK",
+      "parent_high_level_index": 11,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0028",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00048.png",
+      "time_s_after": 19.788808,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0028",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.08406,
+          -0.213001
+        ],
+        "screen_point": [
+          896,
+          759
+        ],
+        "window_point": [
+          896,
+          759
+        ],
+        "window_norm": [
+          0.466667,
+          0.702778
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 25,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00046.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00048.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.08406, -0.213001]"
+    },
+    {
+      "primitive_id": "p_00050",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 11,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0028",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00050.png",
+      "time_s_after": 20.475242,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0028",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.08406,
+          -0.419087
+        ],
+        "screen_point": [
+          896,
+          932
+        ],
+        "window_point": [
+          896,
+          932
+        ],
+        "window_norm": [
+          0.466667,
+          0.862963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 26,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00048.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00050.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.08406, -0.419087]"
+    },
+    {
+      "primitive_id": "p_00052",
+      "action_type": "CLICK",
+      "parent_high_level_index": 12,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0005",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00052.png",
+      "time_s_after": 21.12903,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0005",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.08406,
+          -0.419087
+        ],
+        "screen_point": [
+          896,
+          932
+        ],
+        "window_point": [
+          896,
+          932
+        ],
+        "window_norm": [
+          0.466667,
+          0.862963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 27,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00050.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00052.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.08406, -0.419087]"
+    },
+    {
+      "primitive_id": "p_00054",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 12,
+      "parent_high_level_type": "CREATE_EXTERIOR_WALL",
+      "parent_entity": "ws_0005",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00054.png",
+      "time_s_after": 21.809647,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0005",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.431034,
+          -0.419087
+        ],
+        "screen_point": [
+          605,
+          932
+        ],
+        "window_point": [
+          605,
+          932
+        ],
+        "window_norm": [
+          0.315104,
+          0.862963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 28,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00052.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00054.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.431034, -0.419087]"
+    },
+    {
+      "primitive_id": "p_00055",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 13,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "ACTIVATE_SLAB_TOOL",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00055.png",
+      "time_s_after": 22.224971,
+      "keys": [
+        "s"
+      ],
+      "step_index": 29,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00054.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00055.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY s"
+    },
+    {
+      "primitive_id": "p_00057",
+      "action_type": "CLICK",
+      "parent_high_level_index": 13,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "SWITCH_SLAB_INNER_BOUNDARY_MODE",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00057.png",
+      "time_s_after": 23.974315,
+      "button": "left",
+      "target": {
+        "point_role": "slab_inner_boundary_mode_button",
+        "screen_point": [
+          292,
+          100
+        ],
+        "window_point": [
+          292,
+          100
+        ],
+        "window_norm": [
+          0.152083,
+          0.092593
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 30,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00055.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00057.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.152083, 0.092593]"
+    },
+    {
+      "primitive_id": "p_00059",
+      "action_type": "CLICK",
+      "parent_high_level_index": 13,
+      "parent_high_level_type": "CREATE_SLAB",
+      "parent_entity": "slab_0000",
+      "parent_gui_action": "GENERATE_SLAB_FROM_POINT",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00059.png",
+      "time_s_after": 25.71552,
+      "button": "left",
+      "target": {
+        "target_entity": "slab_0000",
+        "point_role": "slab_generate_point",
+        "model_point": [
+          -0.202103,
+          0.234094
+        ],
+        "screen_point": [
+          797,
+          385
+        ],
+        "window_point": [
+          797,
+          385
+        ],
+        "window_norm": [
+          0.415104,
+          0.356481
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 31,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00057.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00059.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.202103, 0.234094]"
+    },
+    {
+      "primitive_id": "p_00060",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "ACTIVATE_WALL_TOOL",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00060.png",
+      "time_s_after": 26.131515,
+      "keys": [
+        "9"
+      ],
+      "step_index": 32,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00059.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00060.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY 9"
+    },
+    {
+      "primitive_id": "p_00062",
+      "action_type": "CLICK",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00062.png",
+      "time_s_after": 26.816073,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0002",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.202103,
+          0.425311
+        ],
+        "screen_point": [
+          797,
+          225
+        ],
+        "window_point": [
+          797,
+          225
+        ],
+        "window_norm": [
+          0.415104,
+          0.208333
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 33,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00060.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00062.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.202103, 0.425311]"
+    },
+    {
+      "primitive_id": "p_00064",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00064.png",
+      "time_s_after": 28.064832,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0002",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.23444,
+          0.042877
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 34,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00062.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00064.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.23444, 0.042877]"
+    },
+    {
+      "primitive_id": "p_00065",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 14,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0002",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00065.png",
+      "time_s_after": 28.480926,
+      "key": "enter",
+      "step_index": 35,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00064.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00065.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00067",
+      "action_type": "CLICK",
+      "parent_high_level_index": 15,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0012",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00067.png",
+      "time_s_after": 29.158664,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0012",
+        "point_role": "start_mm",
+        "model_point": [
+          0.023251,
+          0.345781
+        ],
+        "screen_point": [
+          985,
+          291
+        ],
+        "window_point": [
+          985,
+          291
+        ],
+        "window_norm": [
+          0.513021,
+          0.269444
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 36,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00065.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00067.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.023251, 0.345781]"
+    },
+    {
+      "primitive_id": "p_00069",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 15,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0012",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00069.png",
+      "time_s_after": 30.422002,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0012",
+        "point_role": "end_mm",
+        "model_point": [
+          0.026971,
+          0.042877
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 37,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00067.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00069.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [0.026971, 0.042877]"
+    },
+    {
+      "primitive_id": "p_00070",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 15,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0012",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00070.png",
+      "time_s_after": 30.842996,
+      "key": "enter",
+      "step_index": 38,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00069.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00070.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00072",
+      "action_type": "CLICK",
+      "parent_high_level_index": 16,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0031",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00072.png",
+      "time_s_after": 31.510765,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0031",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.431034,
+          0.069156
+        ],
+        "screen_point": [
+          605,
+          523
+        ],
+        "window_point": [
+          605,
+          523
+        ],
+        "window_norm": [
+          0.315104,
+          0.484259
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 39,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00070.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00072.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.431034, 0.069156]"
+    },
+    {
+      "primitive_id": "p_00074",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 16,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0031",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00074.png",
+      "time_s_after": 32.740272,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0031",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.327109,
+          0.069156
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 40,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00072.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00074.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.327109, 0.069156]"
+    },
+    {
+      "primitive_id": "p_00075",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 16,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0031",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00075.png",
+      "time_s_after": 33.163215,
+      "key": "enter",
+      "step_index": 41,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00074.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00075.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00077",
+      "action_type": "CLICK",
+      "parent_high_level_index": 17,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0032",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00077.png",
+      "time_s_after": 33.846853,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0032",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.281991,
+          0.042877
+        ],
+        "screen_point": [
+          730,
+          545
+        ],
+        "window_point": [
+          730,
+          545
+        ],
+        "window_norm": [
+          0.380208,
+          0.50463
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 42,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00075.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00077.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.281991, 0.042877]"
+    },
+    {
+      "primitive_id": "p_00079",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 17,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0032",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00079.png",
+      "time_s_after": 35.075418,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0032",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.327109,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 43,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00077.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00079.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.327109, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00080",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 17,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0032",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00080.png",
+      "time_s_after": 35.507238,
+      "key": "enter",
+      "step_index": 44,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00079.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00080.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00082",
+      "action_type": "CLICK",
+      "parent_high_level_index": 18,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00082.png",
+      "time_s_after": 36.184836,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0033",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.281991,
+          0.042877
+        ],
+        "screen_point": [
+          730,
+          545
+        ],
+        "window_point": [
+          730,
+          545
+        ],
+        "window_norm": [
+          0.380208,
+          0.50463
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 45,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00080.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00082.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.281991, 0.042877]"
+    },
+    {
+      "primitive_id": "p_00084",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 18,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00084.png",
+      "time_s_after": 37.420418,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0033",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.23444,
+          0.042877
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 46,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00082.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00084.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.23444, 0.042877]"
+    },
+    {
+      "primitive_id": "p_00085",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 18,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0033",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00085.png",
+      "time_s_after": 37.842782,
+      "key": "enter",
+      "step_index": 47,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00084.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00085.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00087",
+      "action_type": "CLICK",
+      "parent_high_level_index": 19,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00087.png",
+      "time_s_after": 38.523434,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0034",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.202103,
+          0.042877
+        ],
+        "screen_point": [
+          797,
+          545
+        ],
+        "window_point": [
+          797,
+          545
+        ],
+        "window_norm": [
+          0.415104,
+          0.50463
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 48,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00085.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00087.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.202103, 0.042877]"
+    },
+    {
+      "primitive_id": "p_00089",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 19,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00089.png",
+      "time_s_after": 39.760615,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0034",
+        "point_role": "end_mm",
+        "model_point": [
+          0.026971,
+          0.042877
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 49,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00087.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00089.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [0.026971, 0.042877]"
+    },
+    {
+      "primitive_id": "p_00090",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 19,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0034",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00090.png",
+      "time_s_after": 40.185369,
+      "key": "enter",
+      "step_index": 50,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00089.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00090.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00092",
+      "action_type": "CLICK",
+      "parent_high_level_index": 20,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0021",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00092.png",
+      "time_s_after": 40.847143,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0021",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.431034,
+          -0.067773
+        ],
+        "screen_point": [
+          605,
+          638
+        ],
+        "window_point": [
+          605,
+          638
+        ],
+        "window_norm": [
+          0.315104,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 51,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00090.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00092.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.431034, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00094",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 20,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0021",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00094.png",
+      "time_s_after": 42.048078,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0021",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.327109,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 52,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00092.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00094.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.327109, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00095",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 20,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0021",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00095.png",
+      "time_s_after": 42.458025,
+      "key": "enter",
+      "step_index": 53,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00094.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00095.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00097",
+      "action_type": "CLICK",
+      "parent_high_level_index": 21,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0020",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00097.png",
+      "time_s_after": 43.133135,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0020",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.202103,
+          -0.067773
+        ],
+        "screen_point": [
+          797,
+          638
+        ],
+        "window_point": [
+          797,
+          638
+        ],
+        "window_norm": [
+          0.415104,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 54,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00095.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00097.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.202103, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00099",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 21,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0020",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00099.png",
+      "time_s_after": 44.363995,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0020",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.327109,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 55,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00097.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00099.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.327109, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00100",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 21,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0020",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00100.png",
+      "time_s_after": 44.790753,
+      "key": "enter",
+      "step_index": 56,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00099.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00100.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00102",
+      "action_type": "CLICK",
+      "parent_high_level_index": 22,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0001",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00102.png",
+      "time_s_after": 45.453784,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0001",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.202103,
+          -0.250346
+        ],
+        "screen_point": [
+          797,
+          791
+        ],
+        "window_point": [
+          797,
+          791
+        ],
+        "window_norm": [
+          0.415104,
+          0.732407
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 57,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00100.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00102.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.202103, -0.250346]"
+    },
+    {
+      "primitive_id": "p_00104",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 22,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0001",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00104.png",
+      "time_s_after": 46.677471,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0001",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.23444,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 58,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00102.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00104.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.23444, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00105",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 22,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0001",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00105.png",
+      "time_s_after": 47.095918,
+      "key": "enter",
+      "step_index": 59,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00104.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00105.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00107",
+      "action_type": "CLICK",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00107.png",
+      "time_s_after": 47.776404,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0019",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.08406,
+          -0.067773
+        ],
+        "screen_point": [
+          896,
+          638
+        ],
+        "window_point": [
+          896,
+          638
+        ],
+        "window_norm": [
+          0.466667,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 60,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00105.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00107.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.08406, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00109",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00109.png",
+      "time_s_after": 49.017426,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0019",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.23444,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 61,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00107.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00109.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.23444, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00110",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 23,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0019",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00110.png",
+      "time_s_after": 49.446036,
+      "key": "enter",
+      "step_index": 62,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00109.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00110.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00112",
+      "action_type": "CLICK",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0018",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00112.png",
+      "time_s_after": 50.132854,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0018",
+        "point_role": "start_mm",
+        "model_point": [
+          0.014904,
+          -0.067773
+        ],
+        "screen_point": [
+          978,
+          638
+        ],
+        "window_point": [
+          978,
+          638
+        ],
+        "window_norm": [
+          0.509375,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 63,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00110.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00112.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.014904, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00114",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0018",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00114.png",
+      "time_s_after": 51.36961,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0018",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.09751,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 64,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00112.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00114.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.09751, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00115",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 24,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0018",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00115.png",
+      "time_s_after": 51.755137,
+      "key": "enter",
+      "step_index": 65,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00114.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00115.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00117",
+      "action_type": "CLICK",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0026",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00117.png",
+      "time_s_after": 52.441113,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0026",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.08406,
+          -0.067773
+        ],
+        "screen_point": [
+          896,
+          638
+        ],
+        "window_point": [
+          896,
+          638
+        ],
+        "window_norm": [
+          0.466667,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 66,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00115.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00117.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.08406, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00119",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0026",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00119.png",
+      "time_s_after": 53.681514,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0026",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.09751,
+          -0.213001
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 67,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00117.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00119.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.09751, -0.213001]"
+    },
+    {
+      "primitive_id": "p_00120",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 25,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0026",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00120.png",
+      "time_s_after": 54.059197,
+      "key": "enter",
+      "step_index": 68,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00119.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00120.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00122",
+      "action_type": "CLICK",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0024",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00122.png",
+      "time_s_after": 54.720409,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0024",
+        "point_role": "start_mm",
+        "model_point": [
+          0.014904,
+          -0.213001
+        ],
+        "screen_point": [
+          978,
+          759
+        ],
+        "window_point": [
+          978,
+          759
+        ],
+        "window_norm": [
+          0.509375,
+          0.702778
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 69,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00120.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00122.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.014904, -0.213001]"
+    },
+    {
+      "primitive_id": "p_00124",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0024",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00124.png",
+      "time_s_after": 55.945988,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0024",
+        "point_role": "end_mm",
+        "model_point": [
+          0.017289,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 70,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00122.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00124.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [0.017289, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00125",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 26,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0024",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00125.png",
+      "time_s_after": 56.380969,
+      "key": "enter",
+      "step_index": 71,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00124.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00125.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00127",
+      "action_type": "CLICK",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00127.png",
+      "time_s_after": 57.0693,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0017",
+        "point_role": "start_mm",
+        "model_point": [
+          0.22595,
+          -0.067773
+        ],
+        "screen_point": [
+          1155,
+          638
+        ],
+        "window_point": [
+          1155,
+          638
+        ],
+        "window_norm": [
+          0.601562,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 72,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00125.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00127.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.22595, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00129",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00129.png",
+      "time_s_after": 58.311339,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0017",
+        "point_role": "end_mm",
+        "model_point": [
+          0.198479,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 73,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00127.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00129.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [0.198479, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00130",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 27,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0017",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00130.png",
+      "time_s_after": 58.727321,
+      "key": "enter",
+      "step_index": 74,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00129.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00130.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00132",
+      "action_type": "CLICK",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0016",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00132.png",
+      "time_s_after": 59.405227,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0016",
+        "point_role": "start_mm",
+        "model_point": [
+          0.256952,
+          -0.067773
+        ],
+        "screen_point": [
+          1181,
+          638
+        ],
+        "window_point": [
+          1181,
+          638
+        ],
+        "window_norm": [
+          0.615104,
+          0.590741
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 75,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00130.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00132.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.256952, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00134",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0016",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00134.png",
+      "time_s_after": 60.663482,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0016",
+        "point_role": "end_mm",
+        "model_point": [
+          0.262102,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 76,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00132.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00134.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [0.262102, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00135",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 28,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0016",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00135.png",
+      "time_s_after": 61.082744,
+      "key": "enter",
+      "step_index": 77,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00134.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00135.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00137",
+      "action_type": "CLICK",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00137.png",
+      "time_s_after": 61.753658,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0035",
+        "point_role": "start_mm",
+        "model_point": [
+          0.22595,
+          -0.405256
+        ],
+        "screen_point": [
+          1155,
+          920
+        ],
+        "window_point": [
+          1155,
+          920
+        ],
+        "window_norm": [
+          0.601562,
+          0.851852
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 78,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00135.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00137.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [0.22595, -0.405256]"
+    },
+    {
+      "primitive_id": "p_00139",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00139.png",
+      "time_s_after": 62.994835,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0035",
+        "point_role": "end_mm",
+        "model_point": [
+          0.262102,
+          -0.067773
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 79,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00137.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00139.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [0.262102, -0.067773]"
+    },
+    {
+      "primitive_id": "p_00140",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 29,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0035",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00140.png",
+      "time_s_after": 63.433004,
+      "key": "enter",
+      "step_index": 80,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00139.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00140.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00142",
+      "action_type": "CLICK",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0000",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00142.png",
+      "time_s_after": 64.094714,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0000",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.202103,
+          -0.419087
+        ],
+        "screen_point": [
+          797,
+          932
+        ],
+        "window_point": [
+          797,
+          932
+        ],
+        "window_norm": [
+          0.415104,
+          0.862963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 81,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00140.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00142.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.202103, -0.419087]"
+    },
+    {
+      "primitive_id": "p_00144",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0000",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00144.png",
+      "time_s_after": 65.321099,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0000",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.23444,
+          -0.250346
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 82,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00142.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00144.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.23444, -0.250346]"
+    },
+    {
+      "primitive_id": "p_00145",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 30,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0000",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00145.png",
+      "time_s_after": 65.717757,
+      "key": "enter",
+      "step_index": 83,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00144.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00145.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00147",
+      "action_type": "CLICK",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00147.png",
+      "time_s_after": 66.393127,
+      "button": "left",
+      "target": {
+        "target_entity": "ws_0030",
+        "point_role": "start_mm",
+        "model_point": [
+          -0.08406,
+          -0.250346
+        ],
+        "screen_point": [
+          896,
+          791
+        ],
+        "window_point": [
+          896,
+          791
+        ],
+        "window_norm": [
+          0.466667,
+          0.732407
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 84,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00145.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00147.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "CLICK at [-0.08406, -0.250346]"
+    },
+    {
+      "primitive_id": "p_00149",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_1",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00149.png",
+      "time_s_after": 67.616074,
+      "key": "enter",
+      "target": {
+        "target_entity": "ws_0030",
+        "point_role": "end_mm",
+        "model_point": [
+          -0.23444,
+          -0.250346
+        ]
+      },
+      "executor_note": "move_to_target_before_press_key",
+      "step_index": 85,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00147.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00149.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter at [-0.23444, -0.250346]"
+    },
+    {
+      "primitive_id": "p_00150",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 31,
+      "parent_high_level_type": "CREATE_INTERIOR_WALL",
+      "parent_entity": "ws_0030",
+      "parent_gui_action": "DRAW_WALL_FROM_ENTITY_GEOMETRY",
+      "point_role": "interior_wall_end_enter_confirm_2",
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00150.png",
+      "time_s_after": 68.036267,
+      "key": "enter",
+      "step_index": 86,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00149.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00150.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00151",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 32,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_5",
+      "parent_gui_action": "ACTIVATE_WINDOW_TOOL",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00151.png",
+      "time_s_after": 68.454152,
+      "keys": [
+        "shift",
+        "d"
+      ],
+      "step_index": 87,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00150.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00151.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY shift+d"
+    },
+    {
+      "primitive_id": "p_00153",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 32,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_5",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00153.png",
+      "time_s_after": 71.236944,
+      "button": "left",
+      "target": {
+        "target_entity": "window_5",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.426039,
+          0.038036
+        ],
+        "screen_point": [
+          609,
+          549
+        ],
+        "window_point": [
+          609,
+          549
+        ],
+        "window_norm": [
+          0.317188,
+          0.508333
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 88,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00151.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00153.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.426039, 0.038036]"
+    },
+    {
+      "primitive_id": "p_00155",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 33,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_7",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00155.png",
+      "time_s_after": 74.004201,
+      "button": "left",
+      "target": {
+        "target_entity": "window_7",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.316569,
+          0.419517
+        ],
+        "screen_point": [
+          701,
+          230
+        ],
+        "window_point": [
+          701,
+          230
+        ],
+        "window_norm": [
+          0.365104,
+          0.212963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 89,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00153.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00155.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.316569, 0.419517]"
+    },
+    {
+      "primitive_id": "p_00157",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 34,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_6",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00157.png",
+      "time_s_after": 76.752569,
+      "button": "left",
+      "target": {
+        "target_entity": "window_6",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.112677,
+          0.419517
+        ],
+        "screen_point": [
+          872,
+          230
+        ],
+        "window_point": [
+          872,
+          230
+        ],
+        "window_norm": [
+          0.454167,
+          0.212963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 90,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00155.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00157.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.112677, 0.419517]"
+    },
+    {
+      "primitive_id": "p_00159",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 35,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_3",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00159.png",
+      "time_s_after": 79.512131,
+      "button": "left",
+      "target": {
+        "target_entity": "window_3",
+        "point_role": "intersection_point",
+        "model_point": [
+          0.0199,
+          -0.289073
+        ],
+        "screen_point": [
+          983,
+          823
+        ],
+        "window_point": [
+          983,
+          823
+        ],
+        "window_norm": [
+          0.511979,
+          0.762037
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 91,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00157.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00159.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.0199, -0.289073]"
+    },
+    {
+      "primitive_id": "p_00161",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 36,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_1",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00161.png",
+      "time_s_after": 82.274955,
+      "button": "left",
+      "target": {
+        "target_entity": "window_1",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.23847,
+          -0.424882
+        ],
+        "screen_point": [
+          766,
+          937
+        ],
+        "window_point": [
+          766,
+          937
+        ],
+        "window_norm": [
+          0.398958,
+          0.867593
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 92,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00159.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00161.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.23847, -0.424882]"
+    },
+    {
+      "primitive_id": "p_00163",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 37,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_2",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00163.png",
+      "time_s_after": 85.027321,
+      "button": "left",
+      "target": {
+        "target_entity": "window_2",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.385725,
+          -0.424882
+        ],
+        "screen_point": [
+          643,
+          937
+        ],
+        "window_point": [
+          643,
+          937
+        ],
+        "window_norm": [
+          0.334896,
+          0.867593
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 93,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00161.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00163.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.385725, -0.424882]"
+    },
+    {
+      "primitive_id": "p_00165",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 38,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_0",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00165.png",
+      "time_s_after": 87.791705,
+      "button": "left",
+      "target": {
+        "target_entity": "window_0",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.171698,
+          -0.424882
+        ],
+        "screen_point": [
+          822,
+          937
+        ],
+        "window_point": [
+          822,
+          937
+        ],
+        "window_norm": [
+          0.428125,
+          0.867593
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 94,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00163.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00165.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.171698, -0.424882]"
+    },
+    {
+      "primitive_id": "p_00167",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 39,
+      "parent_high_level_type": "CREATE_WINDOW",
+      "parent_entity": "window_4",
+      "parent_gui_action": "INSERT_WINDOW",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00167.png",
+      "time_s_after": 90.548721,
+      "button": "left",
+      "target": {
+        "target_entity": "window_4",
+        "point_role": "intersection_point",
+        "model_point": [
+          0.0199,
+          -0.171508
+        ],
+        "screen_point": [
+          983,
+          725
+        ],
+        "window_point": [
+          983,
+          725
+        ],
+        "window_norm": [
+          0.511979,
+          0.671296
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 95,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00165.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00167.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.0199, -0.171508]"
+    },
+    {
+      "primitive_id": "p_00168",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 40,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_6",
+      "parent_gui_action": "ACTIVATE_DOOR_TOOL",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00168.png",
+      "time_s_after": 90.968125,
+      "keys": [
+        "alt",
+        "shift",
+        "d"
+      ],
+      "step_index": 96,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00167.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00168.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY alt+shift+d"
+    },
+    {
+      "primitive_id": "p_00170",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 40,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_6",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00170.png",
+      "time_s_after": 93.714774,
+      "button": "left",
+      "target": {
+        "target_entity": "door_6",
+        "point_role": "intersection_point",
+        "model_point": [
+          0.249201,
+          0.341918
+        ],
+        "screen_point": [
+          1175,
+          295
+        ],
+        "window_point": [
+          1175,
+          295
+        ],
+        "window_norm": [
+          0.611979,
+          0.273148
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 97,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00168.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00170.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.249201, 0.341918]"
+    },
+    {
+      "primitive_id": "p_00172",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 41,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "front_door_0",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00172.png",
+      "time_s_after": 96.485815,
+      "button": "left",
+      "target": {
+        "target_entity": "front_door_0",
+        "point_role": "intersection_point",
+        "model_point": [
+          0.356163,
+          -0.357538
+        ],
+        "screen_point": [
+          1264,
+          880
+        ],
+        "window_point": [
+          1264,
+          880
+        ],
+        "window_norm": [
+          0.658333,
+          0.814815
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 98,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00170.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00172.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [0.356163, -0.357538]"
+    },
+    {
+      "primitive_id": "p_00174",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 42,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_5",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00174.png",
+      "time_s_after": 99.279025,
+      "button": "left",
+      "target": {
+        "target_entity": "door_5",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.318358,
+          0.065293
+        ],
+        "screen_point": [
+          699,
+          526
+        ],
+        "window_point": [
+          699,
+          526
+        ],
+        "window_norm": [
+          0.364063,
+          0.487037
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 99,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00172.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00174.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.318358, 0.065293]"
+    },
+    {
+      "primitive_id": "p_00176",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 43,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_4",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00176.png",
+      "time_s_after": 102.039176,
+      "button": "left",
+      "target": {
+        "target_entity": "door_4",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.23847,
+          0.039014
+        ],
+        "screen_point": [
+          766,
+          548
+        ],
+        "window_point": [
+          766,
+          548
+        ],
+        "window_norm": [
+          0.398958,
+          0.507407
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 100,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00174.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00176.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.23847, 0.039014]"
+    },
+    {
+      "primitive_id": "p_00178",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 44,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_1",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00178.png",
+      "time_s_after": 104.792834,
+      "button": "left",
+      "target": {
+        "target_entity": "door_1",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.166333,
+          0.039014
+        ],
+        "screen_point": [
+          827,
+          548
+        ],
+        "window_point": [
+          827,
+          548
+        ],
+        "window_norm": [
+          0.430729,
+          0.507407
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 101,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00176.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00178.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.166333, 0.039014]"
+    },
+    {
+      "primitive_id": "p_00180",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 45,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_3",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00180.png",
+      "time_s_after": 107.549469,
+      "button": "left",
+      "target": {
+        "target_entity": "door_3",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.23847,
+          -0.06391
+        ],
+        "screen_point": [
+          766,
+          635
+        ],
+        "window_point": [
+          766,
+          635
+        ],
+        "window_norm": [
+          0.398958,
+          0.587963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 102,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00178.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00180.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.23847, -0.06391]"
+    },
+    {
+      "primitive_id": "p_00182",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 46,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_0",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00182.png",
+      "time_s_after": 110.297545,
+      "button": "left",
+      "target": {
+        "target_entity": "door_0",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.166333,
+          -0.06391
+        ],
+        "screen_point": [
+          827,
+          635
+        ],
+        "window_point": [
+          827,
+          635
+        ],
+        "window_norm": [
+          0.430729,
+          0.587963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 103,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00180.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00182.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.166333, -0.06391]"
+    },
+    {
+      "primitive_id": "p_00184",
+      "action_type": "DOUBLE_CLICK",
+      "parent_high_level_index": 47,
+      "parent_high_level_type": "CREATE_DOOR",
+      "parent_entity": "door_2",
+      "parent_gui_action": "INSERT_DOOR",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00184.png",
+      "time_s_after": 113.023099,
+      "button": "left",
+      "target": {
+        "target_entity": "door_2",
+        "point_role": "intersection_point",
+        "model_point": [
+          -0.198773,
+          -0.32296
+        ],
+        "screen_point": [
+          800,
+          851
+        ],
+        "window_point": [
+          800,
+          851
+        ],
+        "window_norm": [
+          0.416667,
+          0.787963
+        ],
+        "clamped_to_canvas": false
+      },
+      "step_index": 104,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00182.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00184.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "DOUBLE_CLICK at [-0.198773, -0.32296]"
+    },
+    {
+      "primitive_id": "p_00185",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 48,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "SELECT_ALL_ELEMENTS",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00185.png",
+      "time_s_after": 113.448544,
+      "keys": [
+        "ctrl",
+        "a"
+      ],
+      "step_index": 105,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00184.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00185.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY ctrl+a"
+    },
+    {
+      "primitive_id": "p_00186",
+      "action_type": "HOTKEY",
+      "parent_high_level_index": 48,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "ACTIVATE_ROOF_TOOL",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00186.png",
+      "time_s_after": 113.922416,
+      "keys": [
+        "ctrl",
+        "alt",
+        "1"
+      ],
+      "step_index": 106,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00185.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00186.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "HOTKEY ctrl+alt+1"
+    },
+    {
+      "primitive_id": "p_00187",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 48,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "CONFIRM_ROOF",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00187.png",
+      "time_s_after": 114.328366,
+      "key": "enter",
+      "step_index": 107,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00186.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00187.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    },
+    {
+      "primitive_id": "p_00188",
+      "action_type": "PRESS_KEY",
+      "parent_high_level_index": 48,
+      "parent_high_level_type": "CREATE_ROOF",
+      "parent_entity": "roof_0000",
+      "parent_gui_action": "CONFIRM_ROOF",
+      "point_role": null,
+      "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00188.png",
+      "time_s_after": 114.783502,
+      "key": "enter",
+      "step_index": 108,
+      "observation_before": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00187.png",
+        "source": "previous_action_after_screenshot"
+      },
+      "observation_after": {
+        "screenshot_path": "outputs/runs/plan_2147/screenshots/p_00188.png",
+        "source": "current_action_after_screenshot"
+      },
+      "label_text": "PRESS_KEY enter"
+    }
+  ],
+  "split": "train"
+}

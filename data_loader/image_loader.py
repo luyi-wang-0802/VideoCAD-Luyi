@@ -1,69 +1,60 @@
-import os
-import cv2
-import random
-from collections import defaultdict
+"""Image loading helpers for collected Vectorworks screenshots."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import numpy as np
+import torch
+from PIL import Image
 
 
-class ImageLoader:
+class ScreenshotImageLoader:
+    """Load action-aligned screenshots as normalized tensors."""
 
-    def __init__(self, image_dir, randomize_images=False):
-        self.image_dir = image_dir
-        self.randomize_images = randomize_images
+    def __init__(
+        self,
+        repo_root: str | Path = ".",
+        image_size: tuple[int, int] = (224, 224),
+        load_images: bool = True,
+        normalize: bool = True,
+        channels: int = 1,
+    ) -> None:
+        self.repo_root = Path(repo_root).resolve()
+        self.image_size = image_size
+        self.load_images = load_images
+        self.normalize = normalize
+        self.channels = channels
+        if channels not in {1, 3}:
+            raise ValueError("channels must be 1 or 3")
 
-    def __len__(self):
-        return len(os.listdir(self.image_dir))
-    
-    def get_image_id(self, image_id):
-        return f"{image_id[:4]}/{image_id}"
-    
-    def check_exists(self, image_id):
-        id_path = self.get_image_path(image_id)
-        return os.path.exists(id_path)
-    
-    def get_image_path(self, image_id):
-        raise NotImplementedError("Subclasses must implement this method")
-    
-    
-    def _get_item(self, image_id):
-        raise NotImplementedError("Subclasses must implement this method")
-    
+    def resolve(self, path: str | Path | None) -> Path | None:
+        if not path:
+            return None
+        resolved = Path(path)
+        if resolved.is_absolute():
+            return resolved
+        return self.repo_root / resolved
 
-class DefaultImageLoader(ImageLoader):
-    """ Image loader with previous directory structure (all data in one directory) """
-    def __init__(self, image_dir):
-        self.image_dir = image_dir
-        super().__init__(image_dir, randomize_images=False)
+    def empty(self) -> torch.Tensor:
+        width, height = self.image_size
+        return torch.zeros((self.channels, height, width), dtype=torch.float32)
 
-    def get_image_path(self, image_id):
-        id_path = os.path.join(self.image_dir, self.get_image_id(image_id))
-        id_path = f"{id_path}_frame.png"
-        return id_path
-    
-    def get_image(self, image_id):
-        id_path = self.get_image_path(image_id)
-        return cv2.imread(id_path)
-    
-class NewImageLoader(ImageLoader):
-    """ Image loader with new directory structure (cad image in one directory, frames in another) """
-    def __init__(self, image_dir, enable_random=False):
-        self.image_dir = image_dir
-        super().__init__(image_dir, randomize_images=enable_random)
-        image_mapping = defaultdict(list)
-        for root, dirs, files in os.walk(self.image_dir):
-            for file in files:
-                if file.endswith('.png'):
-                    image_mapping[file.split('_')[0]].append(os.path.join(root, file))
-        self.image_mapping = image_mapping
+    def load(self, path: str | Path | None) -> tuple[torch.Tensor, bool]:
+        if not self.load_images:
+            return self.empty(), False
 
-    def get_image_path(self, image_id):
-        id_base = os.path.join(self.image_dir, self.get_image_id(image_id))
-        if self.randomize_images:
-            samples = self.image_mapping[image_id]
-            return random.choice(samples)
+        resolved = self.resolve(path)
+        if resolved is None or not resolved.exists():
+            return self.empty(), False
+
+        mode = "L" if self.channels == 1 else "RGB"
+        image = Image.open(resolved).convert(mode).resize(self.image_size, Image.Resampling.BILINEAR)
+        array = np.asarray(image, dtype=np.float32) / 255.0
+        if self.channels == 1:
+            tensor = torch.from_numpy(array).unsqueeze(0)
         else:
-            id_path = f"{id_base}_0.png"
-        return id_path
-
-    def get_image(self, image_id):
-        id_path = self.get_image_path(image_id)
-        return cv2.imread(id_path)
+            tensor = torch.from_numpy(array).permute(2, 0, 1)
+        if self.normalize:
+            tensor = (tensor - 0.5) / 0.5
+        return tensor, True

@@ -1,0 +1,1048 @@
+{
+  "schema_name": "bim_authoring_sequence_demo",
+  "schema_version": "0.5",
+  "source": {
+    "source_json": "resplan_to_JSON/resplan_to_JSON_15491.json",
+    "source_schema_version": "1.2",
+    "plan_id": "plan_15491",
+    "source_dataset": "ResPlan"
+  },
+  "entities": {
+    "ws_0014": {
+      "type": "Wall",
+      "source_id": "ws_0014",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.477513,
+          0.145503
+        ],
+        "end_mm": [
+          -0.477513,
+          0.452381
+        ]
+      }
+    },
+    "ws_0015": {
+      "type": "Wall",
+      "source_id": "ws_0015",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.477513,
+          0.452381
+        ],
+        "end_mm": [
+          -0.189153,
+          0.452381
+        ]
+      }
+    },
+    "ws_0018": {
+      "type": "Wall",
+      "source_id": "ws_0018",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.189153,
+          0.452381
+        ],
+        "end_mm": [
+          -0.189153,
+          0.342593
+        ]
+      }
+    },
+    "ws_0019": {
+      "type": "Wall",
+      "source_id": "ws_0019",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.189153,
+          0.342593
+        ],
+        "end_mm": [
+          0.02381,
+          0.342593
+        ]
+      }
+    },
+    "ws_0021": {
+      "type": "Wall",
+      "source_id": "ws_0021",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          0.02381,
+          0.342593
+        ],
+        "end_mm": [
+          0.02381,
+          0.452381
+        ]
+      }
+    },
+    "ws_0016": {
+      "type": "Wall",
+      "source_id": "ws_0016",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          0.02381,
+          0.452381
+        ],
+        "end_mm": [
+          0.5,
+          0.452381
+        ]
+      }
+    },
+    "ws_0024": {
+      "type": "Wall",
+      "source_id": "ws_0024",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          0.5,
+          0.452381
+        ],
+        "end_mm": [
+          0.5,
+          -0.452381
+        ]
+      }
+    },
+    "ws_0003": {
+      "type": "Wall",
+      "source_id": "ws_0003",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          0.5,
+          -0.452381
+        ],
+        "end_mm": [
+          -0.5,
+          -0.452381
+        ]
+      }
+    },
+    "ws_0004": {
+      "type": "Wall",
+      "source_id": "ws_0004",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.5,
+          -0.452381
+        ],
+        "end_mm": [
+          -0.5,
+          -0.141534
+        ]
+      }
+    },
+    "ws_0005": {
+      "type": "Wall",
+      "source_id": "ws_0005",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.5,
+          -0.141534
+        ],
+        "end_mm": [
+          -0.421958,
+          -0.141534
+        ]
+      }
+    },
+    "ws_0009": {
+      "type": "Wall",
+      "source_id": "ws_0009",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.421958,
+          -0.141534
+        ],
+        "end_mm": [
+          -0.421958,
+          0.145503
+        ]
+      }
+    },
+    "ws_0013": {
+      "type": "Wall",
+      "source_id": "ws_0013",
+      "wall_location": "exterior",
+      "geometry": {
+        "start_mm": [
+          -0.421958,
+          0.145503
+        ],
+        "end_mm": [
+          -0.477513,
+          0.145503
+        ]
+      }
+    },
+    "ws_0031": {
+      "type": "Wall",
+      "source_id": "ws_0031",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.174603,
+          0.452381
+        ],
+        "end_mm": [
+          0.174603,
+          0.145503
+        ]
+      }
+    },
+    "ws_0020": {
+      "type": "Wall",
+      "source_id": "ws_0020",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.02381,
+          0.145503
+        ],
+        "end_mm": [
+          0.02381,
+          0.342593
+        ]
+      }
+    },
+    "ws_0012": {
+      "type": "Wall",
+      "source_id": "ws_0012",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          -0.181217,
+          0.145503
+        ],
+        "end_mm": [
+          -0.421958,
+          0.145503
+        ]
+      }
+    },
+    "ws_0011": {
+      "type": "Wall",
+      "source_id": "ws_0011",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.174603,
+          0.145503
+        ],
+        "end_mm": [
+          0.02381,
+          0.145503
+        ]
+      }
+    },
+    "ws_0010": {
+      "type": "Wall",
+      "source_id": "ws_0010",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.5,
+          0.145503
+        ],
+        "end_mm": [
+          0.174603,
+          0.145503
+        ]
+      }
+    },
+    "ws_0006": {
+      "type": "Wall",
+      "source_id": "ws_0006",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          -0.421958,
+          -0.141534
+        ],
+        "end_mm": [
+          -0.113757,
+          -0.141534
+        ]
+      }
+    },
+    "ws_0007": {
+      "type": "Wall",
+      "source_id": "ws_0007",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          -0.113757,
+          -0.141534
+        ],
+        "end_mm": [
+          0.03836,
+          -0.141534
+        ]
+      }
+    },
+    "ws_0030": {
+      "type": "Wall",
+      "source_id": "ws_0030",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          -0.113757,
+          -0.452381
+        ],
+        "end_mm": [
+          -0.113757,
+          -0.141534
+        ]
+      }
+    },
+    "ws_0028": {
+      "type": "Wall",
+      "source_id": "ws_0028",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.03836,
+          -0.141534
+        ],
+        "end_mm": [
+          0.03836,
+          -0.240741
+        ]
+      }
+    },
+    "ws_0008": {
+      "type": "Wall",
+      "source_id": "ws_0008",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.5,
+          -0.141534
+        ],
+        "end_mm": [
+          0.174603,
+          -0.141534
+        ]
+      }
+    },
+    "ws_0027": {
+      "type": "Wall",
+      "source_id": "ws_0027",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.174603,
+          -0.240741
+        ],
+        "end_mm": [
+          0.174603,
+          -0.141534
+        ]
+      }
+    },
+    "ws_0025": {
+      "type": "Wall",
+      "source_id": "ws_0025",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.03836,
+          -0.240741
+        ],
+        "end_mm": [
+          0.174603,
+          -0.240741
+        ]
+      }
+    },
+    "ws_0029": {
+      "type": "Wall",
+      "source_id": "ws_0029",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.03836,
+          -0.452381
+        ],
+        "end_mm": [
+          0.03836,
+          -0.240741
+        ]
+      }
+    },
+    "ws_0026": {
+      "type": "Wall",
+      "source_id": "ws_0026",
+      "wall_location": "interior",
+      "geometry": {
+        "start_mm": [
+          0.174603,
+          -0.452381
+        ],
+        "end_mm": [
+          0.174603,
+          -0.240741
+        ]
+      }
+    },
+    "slab_0000": {
+      "type": "Slab",
+      "source_id": "slab_0000",
+      "generation_rule": "activate_slab_tool_then_switch_inner_boundary_mode_then_click_generate_point",
+      "boundary_source": "exterior_walls",
+      "boundary_wall_ids": [
+        "ws_0014",
+        "ws_0015",
+        "ws_0018",
+        "ws_0019",
+        "ws_0021",
+        "ws_0016",
+        "ws_0024",
+        "ws_0003",
+        "ws_0004",
+        "ws_0005",
+        "ws_0009",
+        "ws_0013"
+      ],
+      "slab_generate_point": [
+        0.174603,
+        0.298942
+      ],
+      "source_slab_generate_point": [
+        173.176471,
+        205.347594
+      ],
+      "slab_generate_point_source": "json"
+    },
+    "roof_0000": {
+      "type": "Roof",
+      "source_id": "roof_0000",
+      "generation_rule": "select_exterior_walls_with_ctrl_a_then_create_roof"
+    },
+    "window_6": {
+      "type": "Window",
+      "source_id": "window_6",
+      "opening_type": "window",
+      "host_wall_id": "ws_0014",
+      "intersection_point": [
+        -0.471716,
+        0.252646
+      ],
+      "source_insertion_point": [
+        4.449198,
+        193.368984
+      ],
+      "source_click_point": [
+        5.949198,
+        193.368984
+      ]
+    },
+    "window_9": {
+      "type": "Window",
+      "source_id": "window_9",
+      "opening_type": "window",
+      "host_wall_id": "ws_0016",
+      "intersection_point": [
+        0.13955,
+        0.446584
+      ],
+      "source_insertion_point": [
+        164.106952,
+        245.048128
+      ],
+      "source_click_point": [
+        164.106952,
+        243.548128
+      ]
+    },
+    "window_8": {
+      "type": "Window",
+      "source_id": "window_8",
+      "opening_type": "window",
+      "host_wall_id": "ws_0016",
+      "intersection_point": [
+        0.292328,
+        0.446584
+      ],
+      "source_insertion_point": [
+        203.636364,
+        245.048128
+      ],
+      "source_click_point": [
+        203.636364,
+        243.548128
+      ]
+    },
+    "front_door_0": {
+      "type": "Door",
+      "source_id": "front_door_0",
+      "opening_type": "front_door",
+      "host_wall_id": "ws_0024",
+      "intersection_point": [
+        0.503865,
+        0.076058
+      ],
+      "source_insertion_point": [
+        257.368984,
+        147.679145
+      ],
+      "source_click_point": [
+        258.368984,
+        147.679145
+      ]
+    },
+    "window_7": {
+      "type": "Window",
+      "source_id": "window_7",
+      "opening_type": "window",
+      "host_wall_id": "ws_0019",
+      "intersection_point": [
+        -0.097222,
+        0.336795
+      ],
+      "source_insertion_point": [
+        102.84492,
+        216.641711
+      ],
+      "source_click_point": [
+        102.84492,
+        215.141711
+      ]
+    },
+    "window_5": {
+      "type": "Window",
+      "source_id": "window_5",
+      "opening_type": "window",
+      "host_wall_id": "ws_0009",
+      "intersection_point": [
+        -0.41616,
+        0.008598
+      ],
+      "source_insertion_point": [
+        18.823529,
+        130.224599
+      ],
+      "source_click_point": [
+        20.323529,
+        130.224599
+      ]
+    },
+    "window_4": {
+      "type": "Window",
+      "source_id": "window_4",
+      "opening_type": "window",
+      "host_wall_id": "ws_0004",
+      "intersection_point": [
+        -0.494203,
+        -0.296958
+      ],
+      "source_insertion_point": [
+        -1.368984,
+        51.165776
+      ],
+      "source_click_point": [
+        0.131016,
+        51.165776
+      ]
+    },
+    "window_3": {
+      "type": "Window",
+      "source_id": "window_3",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003",
+      "intersection_point": [
+        -0.218254,
+        -0.458178
+      ],
+      "source_insertion_point": [
+        71.529412,
+        10.951872
+      ],
+      "source_click_point": [
+        71.529412,
+        9.451872
+      ]
+    },
+    "window_2": {
+      "type": "Window",
+      "source_id": "window_2",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003",
+      "intersection_point": [
+        -0.069444,
+        -0.458178
+      ],
+      "source_insertion_point": [
+        110.032085,
+        10.951872
+      ],
+      "source_click_point": [
+        110.032085,
+        9.451872
+      ]
+    },
+    "window_1": {
+      "type": "Window",
+      "source_id": "window_1",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003",
+      "intersection_point": [
+        0.142857,
+        -0.458178
+      ],
+      "source_insertion_point": [
+        164.962567,
+        10.951872
+      ],
+      "source_click_point": [
+        164.962567,
+        9.451872
+      ]
+    },
+    "window_0": {
+      "type": "Window",
+      "source_id": "window_0",
+      "opening_type": "window",
+      "host_wall_id": "ws_0003",
+      "intersection_point": [
+        0.332011,
+        -0.458178
+      ],
+      "source_insertion_point": [
+        213.903744,
+        10.951872
+      ],
+      "source_click_point": [
+        213.903744,
+        9.451872
+      ]
+    },
+    "door_2": {
+      "type": "Door",
+      "source_id": "door_2",
+      "opening_type": "door",
+      "host_wall_id": "ws_0031",
+      "intersection_point": [
+        0.170738,
+        0.216931
+      ],
+      "source_insertion_point": [
+        173.176471,
+        184.128343
+      ],
+      "source_click_point": [
+        172.176471,
+        184.128343
+      ]
+    },
+    "door_0": {
+      "type": "Door",
+      "source_id": "door_0",
+      "opening_type": "door",
+      "host_wall_id": "ws_0010",
+      "intersection_point": [
+        0.36045,
+        0.149368
+      ],
+      "source_insertion_point": [
+        221.262032,
+        165.647059
+      ],
+      "source_click_point": [
+        221.262032,
+        166.647059
+      ]
+    },
+    "door_5": {
+      "type": "Door",
+      "source_id": "door_5",
+      "opening_type": "door",
+      "host_wall_id": "ws_0006",
+      "intersection_point": [
+        -0.23082,
+        -0.145399
+      ],
+      "source_insertion_point": [
+        68.278075,
+        91.379679
+      ],
+      "source_click_point": [
+        68.278075,
+        90.379679
+      ]
+    },
+    "door_4": {
+      "type": "Door",
+      "source_id": "door_4",
+      "opening_type": "door",
+      "host_wall_id": "ws_0030",
+      "intersection_point": [
+        -0.109892,
+        -0.20172
+      ],
+      "source_insertion_point": [
+        98.566845,
+        75.807487
+      ],
+      "source_click_point": [
+        99.566845,
+        75.807487
+      ]
+    },
+    "door_1": {
+      "type": "Door",
+      "source_id": "door_1",
+      "opening_type": "door",
+      "host_wall_id": "ws_0027",
+      "intersection_point": [
+        0.178468,
+        -0.185847
+      ],
+      "source_insertion_point": [
+        173.176471,
+        79.914439
+      ],
+      "source_click_point": [
+        174.176471,
+        79.914439
+      ]
+    },
+    "door_3": {
+      "type": "Door",
+      "source_id": "door_3",
+      "opening_type": "door",
+      "host_wall_id": "ws_0025",
+      "intersection_point": [
+        0.117725,
+        -0.244606
+      ],
+      "source_insertion_point": [
+        158.459893,
+        65.71123
+      ],
+      "source_click_point": [
+        158.459893,
+        64.71123
+      ]
+    }
+  },
+  "properties": {
+    "unit": "mm",
+    "coordinate_system": {
+      "source_input_coordinates": "source",
+      "target_coordinates": "centered_normalized_model",
+      "transform": "source point -> (point - source_bbox_center) / source_span",
+      "target_range": {
+        "x": [
+          -0.5,
+          0.5
+        ],
+        "y": [
+          -0.5,
+          0.5
+        ]
+      },
+      "source_coordinate_system": {
+        "input_coordinates": "source",
+        "origin": "resplan_source",
+        "x_axis": "right",
+        "y_axis": "up",
+        "normalization_method": "none",
+        "scale_to_mm": 1,
+        "x_range": [
+          -1.3689839572192568,
+          257.36898395721926
+        ],
+        "y_range": [
+          10.951871657753998,
+          245.04812834224597
+        ],
+        "source_bbox": {
+          "min_x": -1.3689839572192568,
+          "min_y": 10.951871657753998,
+          "max_x": 257.36898395721926,
+          "max_y": 245.04812834224597
+        },
+        "source_span": 258.7379679144385,
+        "target_coordinate_system": {
+          "origin": "model_origin",
+          "x_axis": "right",
+          "y_axis": "up",
+          "z_axis": "up"
+        }
+      }
+    },
+    "counts": {
+      "entities": 45,
+      "exterior_walls": 12,
+      "interior_walls": 14,
+      "doors": 7,
+      "windows": 10,
+      "sequence_steps": 47
+    },
+    "modeling_principle": [
+      "CREATE_FILE",
+      "CREATE_EXTERIOR_WALL",
+      "CREATE_SLAB",
+      "CREATE_INTERIOR_WALL",
+      "CREATE_WINDOW",
+      "CREATE_DOOR",
+      "CREATE_ROOF"
+    ],
+    "space_generation": "ignored",
+    "contains_gui_action_sequence": false,
+    "sequence_note": "High-level sequence steps keep only index, type, and entity. Vectorworks-ready centered coordinates are stored in entities.",
+    "selection_policy": "For slab, activate the slab tool, switch to Inner Boundary mode at screen point [292, 100], then click slab_generate_point. For roof, use Ctrl+A in the current modeling context.",
+    "exterior_wall_continuity_policy": "Exterior walls are ordered as a closed path by endpoint connectivity; small source gaps are snapped in the output path."
+  },
+  "sequence": [
+    {
+      "index": 0,
+      "type": "CREATE_FILE",
+      "entity": null
+    },
+    {
+      "index": 1,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0014"
+    },
+    {
+      "index": 2,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0015"
+    },
+    {
+      "index": 3,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0018"
+    },
+    {
+      "index": 4,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0019"
+    },
+    {
+      "index": 5,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0021"
+    },
+    {
+      "index": 6,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0016"
+    },
+    {
+      "index": 7,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0024"
+    },
+    {
+      "index": 8,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0003"
+    },
+    {
+      "index": 9,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0004"
+    },
+    {
+      "index": 10,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0005"
+    },
+    {
+      "index": 11,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0009"
+    },
+    {
+      "index": 12,
+      "type": "CREATE_EXTERIOR_WALL",
+      "entity": "ws_0013"
+    },
+    {
+      "index": 13,
+      "type": "CREATE_SLAB",
+      "entity": "slab_0000"
+    },
+    {
+      "index": 14,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0031"
+    },
+    {
+      "index": 15,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0020"
+    },
+    {
+      "index": 16,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0012"
+    },
+    {
+      "index": 17,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0011"
+    },
+    {
+      "index": 18,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0010"
+    },
+    {
+      "index": 19,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0006"
+    },
+    {
+      "index": 20,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0007"
+    },
+    {
+      "index": 21,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0030"
+    },
+    {
+      "index": 22,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0028"
+    },
+    {
+      "index": 23,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0008"
+    },
+    {
+      "index": 24,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0027"
+    },
+    {
+      "index": 25,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0025"
+    },
+    {
+      "index": 26,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0029"
+    },
+    {
+      "index": 27,
+      "type": "CREATE_INTERIOR_WALL",
+      "entity": "ws_0026"
+    },
+    {
+      "index": 28,
+      "type": "CREATE_WINDOW",
+      "entity": "window_6"
+    },
+    {
+      "index": 29,
+      "type": "CREATE_WINDOW",
+      "entity": "window_9"
+    },
+    {
+      "index": 30,
+      "type": "CREATE_WINDOW",
+      "entity": "window_8"
+    },
+    {
+      "index": 31,
+      "type": "CREATE_WINDOW",
+      "entity": "window_7"
+    },
+    {
+      "index": 32,
+      "type": "CREATE_WINDOW",
+      "entity": "window_5"
+    },
+    {
+      "index": 33,
+      "type": "CREATE_WINDOW",
+      "entity": "window_4"
+    },
+    {
+      "index": 34,
+      "type": "CREATE_WINDOW",
+      "entity": "window_3"
+    },
+    {
+      "index": 35,
+      "type": "CREATE_WINDOW",
+      "entity": "window_2"
+    },
+    {
+      "index": 36,
+      "type": "CREATE_WINDOW",
+      "entity": "window_1"
+    },
+    {
+      "index": 37,
+      "type": "CREATE_WINDOW",
+      "entity": "window_0"
+    },
+    {
+      "index": 38,
+      "type": "CREATE_DOOR",
+      "entity": "front_door_0"
+    },
+    {
+      "index": 39,
+      "type": "CREATE_DOOR",
+      "entity": "door_2"
+    },
+    {
+      "index": 40,
+      "type": "CREATE_DOOR",
+      "entity": "door_0"
+    },
+    {
+      "index": 41,
+      "type": "CREATE_DOOR",
+      "entity": "door_5"
+    },
+    {
+      "index": 42,
+      "type": "CREATE_DOOR",
+      "entity": "door_4"
+    },
+    {
+      "index": 43,
+      "type": "CREATE_DOOR",
+      "entity": "door_1"
+    },
+    {
+      "index": 44,
+      "type": "CREATE_DOOR",
+      "entity": "door_3"
+    },
+    {
+      "index": 45,
+      "type": "CREATE_ROOF",
+      "entity": "roof_0000"
+    },
+    {
+      "index": 46,
+      "type": "FINAL_VIEW",
+      "entity": null
+    }
+  ]
+}
