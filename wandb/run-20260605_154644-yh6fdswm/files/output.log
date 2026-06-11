@@ -1,0 +1,8 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai
+Epoch [1/100] started
+epoch 001/100 batch 010/75 loss 8.8954 act 0.425 high 0.675 gui 0.675 load 0.050s step 0.052s
+epoch 001/100 batch 020/75 loss 12.6324 act 0.438 high 0.650 gui 0.650 load 0.049s step 0.036s
+
+Training interrupted by user. Cleaning up...

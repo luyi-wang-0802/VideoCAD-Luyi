@@ -1,0 +1,447 @@
+"""Roll out a trained primitive-action policy."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+import time
+from pathlib import Path
+from typing import Any
+
+import torch
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from data_loader.data_loader import PrimitiveActionDataset, primitive_action_to_param_bins, read_json
+from data_loader.image_loader import ScreenshotImageLoader
+from data_process.transform_dataset import summarize_resplan_for_model
+from executor.vectorworks_executor import VectorworksExecutor
+from model.model_factory import ModelFactory, _strip_wrappers
+
+
+def move_to_device(value: Any, device: torch.device) -> Any:
+    if torch.is_tensor(value):
+        return value.to(device)
+    if isinstance(value, dict):
+        return {key: move_to_device(item, device) for key, item in value.items()}
+    return value
+
+
+def inverse_mapping(mapping: dict[str, int]) -> dict[int, str]:
+    return {int(value): key for key, value in mapping.items()}
+
+
+def load_primitive_model(
+    checkpoint_path: Path,
+    model_config_path: Path,
+    model_name: str,
+    dataset_dir: Path,
+    device: torch.device,
+) -> torch.nn.Module:
+    model_params = read_json(model_config_path)
+    model_config = dict(model_params[model_name])
+    model_config["dataset_path"] = str(dataset_dir)
+    model_config.setdefault("action_vocab_path", str(dataset_dir / "action_vocab.json"))
+
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+    state_dict = checkpoint["model_state_dict"] if "model_state_dict" in checkpoint else checkpoint
+    model, _ = ModelFactory().create_model("primitive_action_policy", model_config, device)
+    model.load_state_dict(_strip_wrappers(state_dict), strict=True)
+    model.eval()
+    return model
+
+
+def make_batch(
+    dataset: PrimitiveActionDataset,
+    sample: dict[str, Any],
+    screenshot_path: str | None,
+    encoded_history: list[dict[str, torch.Tensor]],
+    image_loader: ScreenshotImageLoader,
+    device: torch.device,
+    step_index: int,
+) -> dict[str, Any]:
+    plan = dataset._encode_plan(sample["model_inputs"]["encoded_resplan"])
+    history = dataset._build_history(encoded_history, len(encoded_history))
+    observation, available = image_loader.load(screenshot_path)
+    batch = {
+        "sample_id": [sample["sample_id"]],
+        "step_index": torch.tensor([step_index], dtype=torch.long),
+        "observation": observation.unsqueeze(0),
+        "observation_available": torch.tensor([available], dtype=torch.bool),
+        "observation_before": observation.unsqueeze(0),
+        "observation_before_available": torch.tensor([available], dtype=torch.bool),
+        "plan": {
+            "walls": plan["walls"].unsqueeze(0),
+            "wall_mask": torch.ones((1, plan["walls"].shape[0]), dtype=torch.bool),
+            "insertions": plan["insertions"].unsqueeze(0),
+            "insertion_mask": torch.ones((1, plan["insertions"].shape[0]), dtype=torch.bool),
+        },
+        "history": {key: value.unsqueeze(0) for key, value in history.items()},
+    }
+    return move_to_device(batch, device)
+
+
+def runtime_sample_from_resplan(resplan_json_path: Path, runtime_plan_path: Path | None = None) -> dict[str, Any]:
+    if runtime_plan_path is not None:
+        runtime_plan = read_json(runtime_plan_path)
+        encoded_resplan = runtime_plan.get("encoded_resplan")
+        if not encoded_resplan:
+            raise ValueError(f"{runtime_plan_path} does not contain encoded_resplan")
+        return {
+            "sample_id": runtime_plan.get("sample_id") or resplan_json_path.stem,
+            "model_inputs": {
+                "resplan_json_path": str(resplan_json_path).replace("\\", "/"),
+                "encoded_resplan": encoded_resplan,
+            },
+            "runtime_plan_path": str(runtime_plan_path).replace("\\", "/"),
+            "steps": [],
+        }
+
+    resplan = read_json(resplan_json_path)
+    return {
+        "sample_id": resplan_json_path.stem,
+        "model_inputs": {
+            "resplan_json_path": str(resplan_json_path).replace("\\", "/"),
+            "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan={}),
+        },
+        "runtime_plan_path": None,
+        "steps": [],
+    }
+
+
+def snap_primitive_action_to_entity_role(sample: dict[str, Any], decoded_action: dict[str, Any]) -> dict[str, Any]:
+    primitive_action = list(decoded_action["primitive_action"])
+    if int(round(float(primitive_action[0]))) != 1:
+        return decoded_action
+    entity_name = decoded_action.get("target_entity")
+    point_role = decoded_action.get("point_role")
+    if not entity_name or entity_name == "<none>" or not point_role or point_role == "<none>":
+        return decoded_action
+
+    entity_points = sample["model_inputs"]["encoded_resplan"].get("entity_points", {})
+    point_record = entity_points.get(entity_name)
+    if not point_record:
+        return decoded_action
+    point = point_record.get(point_role)
+    if not isinstance(point, list) or len(point) < 2:
+        return decoded_action
+
+    snapped = dict(decoded_action)
+    primitive_action[1] = round(float(point[0]), 6)
+    primitive_action[2] = round(float(point[1]), 6)
+    snapped["primitive_action"] = [round(float(value), 6) for value in primitive_action]
+    snapped["coordinate_frame"] = "model"
+    snapped["executor_action"] = primitive_action_to_executor_action(
+        primitive_action,
+        None,
+    )
+    snapped["coordinate_snap"] = {
+        "enabled": True,
+        "target_entity": entity_name,
+        "point_role": point_role,
+        "source": "runtime_plan.entity_points",
+    }
+    return snapped
+
+
+def primitive_action_to_executor_action(
+    primitive_action: list[float],
+    key_name: str | None,
+) -> dict[str, Any]:
+    action_type_by_id = {
+        1: "MOVE_TO",
+        2: "CLICK",
+        3: "PRESS_KEY",
+        4: "HOTKEY",
+        5: "DOUBLE_CLICK",
+    }
+    action_type_id = int(round(float(primitive_action[0])))
+    action_type = action_type_by_id.get(action_type_id, "<unknown>")
+    x = float(primitive_action[1])
+    y = float(primitive_action[2])
+    repeat_count = int(round(float(primitive_action[4]))) if primitive_action[4] >= 0 else 1
+    key_interval = float(primitive_action[5]) if primitive_action[5] >= 0 else -1.0
+
+    action: dict[str, Any] = {
+        "action_type": action_type,
+        "coordinate_frame": "model" if action_type == "MOVE_TO" and x != -1 and y != -1 else "none",
+    }
+    if action_type in {"MOVE_TO", "CLICK", "DOUBLE_CLICK"}:
+        if action_type == "MOVE_TO" and x != -1 and y != -1:
+            action["target"] = {"model_point": [round(x, 6), round(y, 6)]}
+        if action_type in {"CLICK", "DOUBLE_CLICK"}:
+            action["button"] = "left"
+    elif action_type == "PRESS_KEY":
+        action["key"] = key_name or "enter"
+        action["repeat_count"] = max(repeat_count, 1)
+        if key_interval >= 0:
+            action["key_interval_ms"] = round(key_interval, 3)
+    elif action_type == "HOTKEY":
+        action["keys"] = (key_name or "").split("+")
+        action["repeat_count"] = max(repeat_count, 2) if key_name == "ctrl+2" else max(repeat_count, 1)
+        if key_name == "ctrl+2":
+            key_interval = max(key_interval, 450.0)
+        if key_interval >= 0:
+            action["key_interval_ms"] = round(key_interval, 3)
+    return action
+
+
+def decode_action(outputs: dict[str, torch.Tensor], model: torch.nn.Module, dataset: PrimitiveActionDataset) -> dict[str, Any]:
+    decoded = model.decode_action(outputs)
+    primitive_action = decoded["primitive_action"][0].detach().cpu().tolist()
+
+    action_type_by_id = inverse_mapping(dataset.action_type_to_id)
+    high_level_by_id = inverse_mapping(dataset.high_level_to_id)
+    gui_action_by_id = inverse_mapping(dataset.gui_action_to_id)
+    key_by_id = inverse_mapping(dataset.key_to_id)
+    frame_by_id = inverse_mapping(dataset.coordinate_frame_to_id)
+    target_entity_by_id = inverse_mapping(dataset.target_entity_to_id)
+    point_role_by_id = inverse_mapping(dataset.point_role_to_id)
+
+    action_type_id = int(decoded["action_type_id"][0].item())
+    high_level_id = int(decoded["high_level_id"][0].item())
+    gui_action_id = int(decoded["gui_action_id"][0].item())
+    frame_id = int(decoded["coordinate_frame_id"][0].item())
+    target_entity_id = int(decoded["target_entity_id"][0].item())
+    point_role_id = int(decoded["point_role_id"][0].item())
+    key_id = int(round(primitive_action[3])) if primitive_action[3] >= 0 else -1
+
+    primitive_action_type_id = int(round(float(primitive_action[0])))
+    action_type = action_type_by_id.get(primitive_action_type_id, "<unknown>")
+    key_name = key_by_id.get(key_id)
+    coordinate_frame = "model" if action_type == "MOVE_TO" and primitive_action[1] != -1 and primitive_action[2] != -1 else "none"
+
+    return {
+        "policy_level": "primitive_action",
+        "high_level_action": high_level_by_id.get(high_level_id, "<unknown>"),
+        "gui_action": gui_action_by_id.get(gui_action_id, "<unknown>"),
+        "coordinate_frame": coordinate_frame,
+        "target_entity": target_entity_by_id.get(target_entity_id, "<unknown>"),
+        "point_role": point_role_by_id.get(point_role_id, "<unknown>"),
+        "primitive_action": [round(float(value), 6) for value in primitive_action],
+        "executor_action": primitive_action_to_executor_action(
+            primitive_action,
+            key_name,
+        ),
+        "raw_prediction": {
+            "action_type_id": action_type_id,
+            "high_level_id": high_level_id,
+            "gui_action_id": gui_action_id,
+            "coordinate_frame_id": frame_id,
+            "target_entity_id": target_entity_id,
+            "point_role_id": point_role_id,
+            "key_id": key_id,
+        },
+    }
+
+
+def encode_decoded_action(dataset: PrimitiveActionDataset, decoded_action: dict[str, Any]) -> dict[str, torch.Tensor]:
+    action = torch.tensor(decoded_action["primitive_action"], dtype=torch.float32)
+    action_type_id = int(action[0].item())
+    key_id = int(action[3].item())
+    repeat_count = int(action[4].item()) if action[4].item() >= 0 else -1
+    raw = decoded_action["raw_prediction"]
+    return {
+        "primitive_action": action,
+        "primitive_param_bins": primitive_action_to_param_bins(action),
+        "action_type_id": torch.tensor(action_type_id, dtype=torch.long),
+        "xy": action[1:3].clone(),
+        "key_id": torch.tensor(key_id, dtype=torch.long),
+        "key_repeat_count": torch.tensor(repeat_count, dtype=torch.long),
+        "key_interval": action[5].clone().to(torch.float32),
+        "high_level_id": torch.tensor(int(raw["high_level_id"]), dtype=torch.long),
+        "gui_action_id": torch.tensor(int(raw["gui_action_id"]), dtype=torch.long),
+        "coordinate_frame_id": torch.tensor(int(raw["coordinate_frame_id"]), dtype=torch.long),
+        "target_entity_id": torch.tensor(int(raw.get("target_entity_id", 0)), dtype=torch.long),
+        "point_role_id": torch.tensor(int(raw.get("point_role_id", 0)), dtype=torch.long),
+        "has_target_entity": torch.tensor(int(raw.get("target_entity_id", 0)) > 0, dtype=torch.bool),
+        "has_point_role": torch.tensor(int(raw.get("point_role_id", 0)) > 0, dtype=torch.bool),
+        "is_move": torch.tensor(action_type_id == 1, dtype=torch.bool),
+        "is_key_action": torch.tensor(action_type_id in {3, 4}, dtype=torch.bool),
+    }
+
+
+def target_from_sample_step(step: dict[str, Any]) -> dict[str, Any]:
+    target = step["supervision_target"]
+    return {
+        "high_level_action": target["high_level_action"],
+        "gui_action": target["gui_action"],
+        "coordinate_frame": target["coordinate_frame"],
+        "target_entity": target.get("target_entity"),
+        "point_role": target.get("point_role"),
+        "primitive_action": target["primitive_action"],
+    }
+
+
+def compare_to_sample(decoded_action: dict[str, Any], sample_step: dict[str, Any]) -> dict[str, Any]:
+    expected = target_from_sample_step(sample_step)
+    pred = decoded_action["primitive_action"]
+    exp = expected["primitive_action"]
+    xy_error = None
+    if exp[1] != -1 and exp[2] != -1 and pred[1] != -1 and pred[2] != -1:
+        xy_error = ((float(pred[1]) - float(exp[1])) ** 2 + (float(pred[2]) - float(exp[2])) ** 2) ** 0.5
+    return {
+        "expected": expected,
+        "action_type_match": int(round(pred[0])) == int(round(exp[0])),
+        "high_level_match": decoded_action["high_level_action"] == expected["high_level_action"],
+        "gui_action_match": decoded_action["gui_action"] == expected["gui_action"],
+        "coordinate_frame_match": decoded_action["coordinate_frame"] == expected["coordinate_frame"],
+        "xy_error": xy_error,
+    }
+
+
+def execute_decoded_action(executor: VectorworksExecutor, decoded_action: dict[str, Any]) -> dict[str, Any]:
+    action = decoded_action["executor_action"]
+    if action["action_type"] == "MOVE_TO":
+        event = {
+            "timestamp_utc_before": None,
+            "action": action,
+            "dry_run": executor.dry_run,
+        }
+        point = executor.resolve_action_point(action)
+        if point is not None:
+            event["resolved_screen_point"] = {"x": point[0], "y": point[1]}
+        if not executor.dry_run:
+            if point is None:
+                raise ValueError("MOVE_TO requires target.model_point for live execution")
+            assert executor.pyautogui is not None
+            executor.pyautogui.moveTo(point[0], point[1], duration=0.08)
+        event["timestamp_utc_after"] = None
+        return event
+    return executor.execute(action)
+
+
+def compact_event(
+    event: dict[str, Any],
+    step_index: int,
+    decoded_action: dict[str, Any],
+    screenshot_before: str | None,
+    screenshot_after: str | None,
+) -> dict[str, Any]:
+    prediction = {
+        "primitive_action": decoded_action["primitive_action"],
+    }
+    if decoded_action.get("coordinate_snap"):
+        prediction["coordinate_snap"] = decoded_action["coordinate_snap"]
+    compact = {
+        "step_index": step_index,
+        "prediction": prediction,
+        "executed_action": event.get("action"),
+        "debug_prediction": {
+            "high_level_action": decoded_action.get("high_level_action"),
+            "gui_action": decoded_action.get("gui_action"),
+            "coordinate_frame": decoded_action.get("coordinate_frame"),
+            "target_entity": decoded_action.get("target_entity"),
+            "point_role": decoded_action.get("point_role"),
+        },
+        "screenshot_before": screenshot_before,
+        "screenshot_after": screenshot_after,
+    }
+    if event.get("resolved_screen_point"):
+        compact["resolved_screen_point"] = event["resolved_screen_point"]
+    if event.get("timestamp_utc_before") or event.get("timestamp_utc_after"):
+        compact["timestamps"] = {
+            "before": event.get("timestamp_utc_before"),
+            "after": event.get("timestamp_utc_after"),
+        }
+    if "sample_comparison" in event:
+        compact["sample_comparison"] = event["sample_comparison"]
+    return compact
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--resplan-json", required=True, type=Path, help="Raw ResPlan JSON used as the global plan input.")
+    parser.add_argument("--runtime-plan", default=None, type=Path, help="Runtime coordinate metadata generated under processed_data/runtime_plans.")
+    parser.add_argument("--sample", default=None, type=Path, help="Optional processed sample JSON for debug comparison only.")
+    parser.add_argument("--checkpoint", required=True, type=Path)
+    parser.add_argument("--dataset-dir", default="processed_data", type=Path)
+    parser.add_argument("--model-config", default="model_configs/primitive_action_policy.json", type=Path)
+    parser.add_argument("--model-name", default="default_params")
+    parser.add_argument("--calibration", default="configs/vectorworks_grounding_template.json", type=Path)
+    parser.add_argument("--run-dir", default="outputs/policy_rollouts/manual_run", type=Path)
+    parser.add_argument("--initial-screenshot", default=None, type=str)
+    parser.add_argument("--max-steps", default=20, type=int)
+    parser.add_argument("--history-length", default=32, type=int)
+    parser.add_argument("--image-size", default=224, type=int)
+    parser.add_argument("--device", default="cuda")
+    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--use-recorded-observations", action="store_true")
+    parser.add_argument("--teacher-force-history", action="store_true")
+    parser.add_argument("--compare-sample", action="store_true")
+    parser.add_argument("--live-primitive-actions", action="store_true")
+    parser.add_argument("--snap-entity-role", action="store_true")
+    parser.add_argument("--countdown", default=5, type=int)
+    args = parser.parse_args()
+
+    if (args.use_recorded_observations or args.teacher_force_history or args.compare_sample) and args.sample is None:
+        raise ValueError("--sample is required when using recorded observations, teacher-forced history, or comparison.")
+
+    device = torch.device(args.device if torch.cuda.is_available() and args.device.startswith("cuda") else "cpu")
+    sample = runtime_sample_from_resplan(args.resplan_json, args.runtime_plan)
+    debug_sample = read_json(args.sample) if args.sample is not None else None
+    dataset = PrimitiveActionDataset(
+        dataset_dir=args.dataset_dir,
+        split=None,
+        image_size=(args.image_size, args.image_size),
+        history_length=args.history_length,
+        load_images=False,
+    )
+    image_loader = ScreenshotImageLoader(image_size=(args.image_size, args.image_size))
+    model = load_primitive_model(args.checkpoint, args.model_config, args.model_name, args.dataset_dir, device)
+    executor = VectorworksExecutor(args.calibration, dry_run=args.dry_run)
+    args.run_dir.mkdir(parents=True, exist_ok=True)
+
+    if not args.dry_run and not args.live_primitive_actions:
+        raise RuntimeError("Refusing live execution without --live-primitive-actions. Run --dry-run first.")
+    if not args.dry_run and args.countdown > 0:
+        print("Switch focus to Vectorworks.")
+        for remaining in range(args.countdown, 0, -1):
+            print(f"Starting in {remaining}...")
+            time.sleep(1)
+
+    screenshot = args.initial_screenshot
+    encoded_history: list[dict[str, torch.Tensor]] = []
+    events = []
+    sample_steps = debug_sample.get("steps", []) if debug_sample is not None else []
+    for step_index in range(args.max_steps):
+        if args.use_recorded_observations and step_index < len(sample_steps):
+            screenshot = sample_steps[step_index]["model_input"].get("observation_screenshot_path")
+        if screenshot is None and not args.dry_run:
+            screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
+
+        batch = make_batch(dataset, sample, screenshot, encoded_history, image_loader, device, step_index)
+        with torch.no_grad():
+            outputs = model(batch)
+        decoded_action = decode_action(outputs, model, dataset)
+        if args.snap_entity_role:
+            decoded_action = snap_primitive_action_to_entity_role(sample, decoded_action)
+        event = execute_decoded_action(executor, decoded_action)
+        event["screenshot_before"] = screenshot
+        if args.compare_sample and step_index < len(sample_steps):
+            event["sample_comparison"] = compare_to_sample(decoded_action, sample_steps[step_index])
+
+        screenshot_after = executor.capture_screenshot(args.run_dir, step_index * 2 + 1)
+        event["screenshot_after"] = screenshot_after
+        compact = compact_event(event, step_index, decoded_action, screenshot, screenshot_after)
+        events.append(compact)
+        print(json.dumps(compact, ensure_ascii=False, indent=2))
+
+        if args.teacher_force_history and step_index < len(sample_steps):
+            encoded_history.append(dataset._encode_step(sample_steps[step_index]))
+        else:
+            encoded_history.append(encode_decoded_action(dataset, decoded_action))
+        screenshot = screenshot_after or screenshot
+
+    log_path = args.run_dir / "policy_events.jsonl"
+    with log_path.open("w", encoding="utf-8") as handle:
+        for event in events:
+            handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+    print(f"Wrote {log_path}")
+
+
+if __name__ == "__main__":
+    main()

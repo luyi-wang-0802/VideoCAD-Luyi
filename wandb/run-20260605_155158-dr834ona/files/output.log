@@ -1,0 +1,1394 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai
+Epoch [1/100] started
+epoch 001/100 batch 010/75 loss 6.6827 act 0.275 high 0.825 gui 0.775 load 0.053s step 0.048s
+epoch 001/100 batch 020/75 loss 6.1968 act 0.388 high 0.800 gui 0.775 load 0.050s step 0.034s
+epoch 001/100 batch 030/75 loss 4.4630 act 0.408 high 0.733 gui 0.675 load 0.050s step 0.029s
+epoch 001/100 batch 040/75 loss 3.1638 act 0.344 high 0.725 gui 0.675 load 0.049s step 0.027s
+epoch 001/100 batch 050/75 loss 2.6679 act 0.360 high 0.725 gui 0.685 load 0.049s step 0.026s
+epoch 001/100 batch 060/75 loss 3.9195 act 0.358 high 0.717 gui 0.679 load 0.049s step 0.026s
+epoch 001/100 batch 070/75 loss 2.7356 act 0.357 high 0.704 gui 0.668 load 0.049s step 0.026s
+epoch 001/100 batch 075/75 loss 18.1474 act 0.359 high 0.688 gui 0.651 load 0.049s step 0.026s
+epoch 001/100 done loss 6.7177 act 0.359 high 0.688 gui 0.651 frame 0.503 lr 0.001
+Saved last checkpoint for epoch 1: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from inf to 6.7177
+Saved best checkpoint for epoch 1: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 1
+Epoch 1 took 5.84 seconds
+Epoch [2/100] started
+epoch 002/100 batch 010/75 loss 2.6156 act 0.350 high 0.800 gui 0.850 load 0.050s step 0.040s
+epoch 002/100 batch 020/75 loss 3.2826 act 0.463 high 0.787 gui 0.812 load 0.050s step 0.033s
+epoch 002/100 batch 030/75 loss 5.6201 act 0.400 high 0.792 gui 0.800 load 0.050s step 0.030s
+epoch 002/100 batch 040/75 loss 1.8828 act 0.375 high 0.775 gui 0.781 load 0.050s step 0.030s
+epoch 002/100 batch 050/75 loss 5.5559 act 0.365 high 0.780 gui 0.780 load 0.049s step 0.029s
+epoch 002/100 batch 060/75 loss 5.1680 act 0.388 high 0.792 gui 0.792 load 0.049s step 0.029s
+epoch 002/100 batch 070/75 loss 11.6933 act 0.379 high 0.793 gui 0.786 load 0.049s step 0.030s
+epoch 002/100 batch 075/75 loss 2.4757 act 0.396 high 0.792 gui 0.785 load 0.049s step 0.029s
+epoch 002/100 done loss 4.5550 act 0.396 high 0.792 gui 0.785 frame 0.507 lr 0.000999754
+Saved last checkpoint for epoch 2: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 6.7177 to 4.5550
+Saved best checkpoint for epoch 2: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 2
+Epoch 2 took 6.05 seconds
+Epoch [3/100] started
+epoch 003/100 batch 010/75 loss 8.9208 act 0.400 high 0.725 gui 0.675 load 0.049s step 0.027s
+epoch 003/100 batch 020/75 loss 2.7449 act 0.338 high 0.713 gui 0.713 load 0.049s step 0.033s
+epoch 003/100 batch 030/75 loss 2.1547 act 0.417 high 0.750 gui 0.750 load 0.050s step 0.031s
+epoch 003/100 batch 040/75 loss 3.2590 act 0.381 high 0.769 gui 0.756 load 0.049s step 0.030s
+epoch 003/100 batch 050/75 loss 3.0931 act 0.375 high 0.785 gui 0.775 load 0.049s step 0.031s
+epoch 003/100 batch 060/75 loss 1.9043 act 0.350 high 0.796 gui 0.796 load 0.049s step 0.030s
+epoch 003/100 batch 070/75 loss 8.3148 act 0.364 high 0.807 gui 0.807 load 0.049s step 0.030s
+epoch 003/100 batch 075/75 loss 2.8543 act 0.369 high 0.809 gui 0.809 load 0.049s step 0.030s
+epoch 003/100 done loss 4.2156 act 0.369 high 0.809 gui 0.809 frame 0.470 lr 0.000999014
+Saved last checkpoint for epoch 3: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 4.5550 to 4.2156
+Saved best checkpoint for epoch 3: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 3
+Epoch 3 took 6.09 seconds
+Epoch [4/100] started
+epoch 004/100 batch 010/75 loss 7.8944 act 0.400 high 0.850 gui 0.800 load 0.048s step 0.033s
+epoch 004/100 batch 020/75 loss 5.5075 act 0.412 high 0.863 gui 0.838 load 0.049s step 0.030s
+epoch 004/100 batch 030/75 loss 1.4583 act 0.417 high 0.867 gui 0.850 load 0.049s step 0.030s
+epoch 004/100 batch 040/75 loss 7.1191 act 0.444 high 0.869 gui 0.850 load 0.049s step 0.030s
+epoch 004/100 batch 050/75 loss 1.8526 act 0.415 high 0.855 gui 0.835 load 0.049s step 0.029s
+epoch 004/100 batch 060/75 loss 1.6525 act 0.425 high 0.850 gui 0.829 load 0.049s step 0.030s
+epoch 004/100 batch 070/75 loss 1.3543 act 0.439 high 0.854 gui 0.836 load 0.049s step 0.030s
+epoch 004/100 batch 075/75 loss 1.1875 act 0.436 high 0.862 gui 0.846 load 0.049s step 0.029s
+epoch 004/100 done loss 3.7489 act 0.436 high 0.862 gui 0.846 frame 0.477 lr 0.000997783
+Saved last checkpoint for epoch 4: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 4.2156 to 3.7489
+Saved best checkpoint for epoch 4: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 4
+Epoch 4 took 6.06 seconds
+Epoch [5/100] started
+epoch 005/100 batch 010/75 loss 6.0388 act 0.550 high 0.775 gui 0.750 load 0.050s step 0.028s
+epoch 005/100 batch 020/75 loss 2.0922 act 0.487 high 0.787 gui 0.787 load 0.049s step 0.033s
+epoch 005/100 batch 030/75 loss 1.7880 act 0.475 high 0.808 gui 0.808 load 0.049s step 0.031s
+epoch 005/100 batch 040/75 loss 2.7995 act 0.419 high 0.806 gui 0.806 load 0.049s step 0.030s
+epoch 005/100 batch 050/75 loss 4.5129 act 0.390 high 0.810 gui 0.800 load 0.049s step 0.031s
+epoch 005/100 batch 060/75 loss 1.8798 act 0.400 high 0.829 gui 0.821 load 0.049s step 0.031s
+epoch 005/100 batch 070/75 loss 2.4006 act 0.429 high 0.829 gui 0.818 load 0.049s step 0.030s
+epoch 005/100 batch 075/75 loss 0.9931 act 0.440 high 0.829 gui 0.815 load 0.049s step 0.030s
+epoch 005/100 done loss 3.7282 act 0.440 high 0.829 gui 0.815 frame 0.534 lr 0.000996061
+Saved last checkpoint for epoch 5: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=3.5692, action_type_acc=0.490, high_level_acc=0.839, gui_action_acc=0.879, coordinate_frame_acc=0.503
+Validation loss improved from 3.7489 to 3.7282
+Saved best checkpoint for epoch 5: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 5
+Epoch 5 took 10.86 seconds
+Epoch [6/100] started
+epoch 006/100 batch 010/75 loss 8.5595 act 0.400 high 0.850 gui 0.775 load 0.049s step 0.045s
+epoch 006/100 batch 020/75 loss 1.5786 act 0.450 high 0.812 gui 0.800 load 0.050s step 0.043s
+epoch 006/100 batch 030/75 loss 8.7744 act 0.417 high 0.750 gui 0.742 load 0.050s step 0.039s
+epoch 006/100 batch 040/75 loss 3.2457 act 0.438 high 0.762 gui 0.756 load 0.050s step 0.036s
+epoch 006/100 batch 050/75 loss 5.1476 act 0.425 high 0.775 gui 0.770 load 0.050s step 0.036s
+epoch 006/100 batch 060/75 loss 1.4390 act 0.412 high 0.779 gui 0.779 load 0.050s step 0.036s
+epoch 006/100 batch 070/75 loss 2.4417 act 0.411 high 0.793 gui 0.793 load 0.049s step 0.034s
+epoch 006/100 batch 075/75 loss 1.2735 act 0.419 high 0.789 gui 0.789 load 0.049s step 0.034s
+epoch 006/100 done loss 4.1521 act 0.419 high 0.789 gui 0.789 frame 0.443 lr 0.00099385
+Saved last checkpoint for epoch 6: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 6 took 6.33 seconds
+Epoch [7/100] started
+epoch 007/100 batch 010/75 loss 1.5771 act 0.450 high 0.750 gui 0.725 load 0.049s step 0.031s
+epoch 007/100 batch 020/75 loss 2.0114 act 0.475 high 0.787 gui 0.787 load 0.049s step 0.028s
+epoch 007/100 batch 030/75 loss 3.0603 act 0.467 high 0.792 gui 0.783 load 0.049s step 0.028s
+epoch 007/100 batch 040/75 loss 8.2548 act 0.475 high 0.794 gui 0.781 load 0.049s step 0.029s
+epoch 007/100 batch 050/75 loss 10.1560 act 0.460 high 0.790 gui 0.780 load 0.049s step 0.029s
+epoch 007/100 batch 060/75 loss 4.2755 act 0.442 high 0.812 gui 0.792 load 0.049s step 0.029s
+epoch 007/100 batch 070/75 loss 5.0615 act 0.443 high 0.821 gui 0.793 load 0.049s step 0.030s
+epoch 007/100 batch 075/75 loss 0.7450 act 0.453 high 0.822 gui 0.792 load 0.049s step 0.030s
+epoch 007/100 done loss 3.8652 act 0.453 high 0.822 gui 0.792 frame 0.483 lr 0.000991152
+Saved last checkpoint for epoch 7: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 7 took 6.00 seconds
+Epoch [8/100] started
+epoch 008/100 batch 010/75 loss 1.3336 act 0.500 high 0.850 gui 0.850 load 0.050s step 0.027s
+epoch 008/100 batch 020/75 loss 2.3941 act 0.463 high 0.850 gui 0.838 load 0.049s step 0.031s
+epoch 008/100 batch 030/75 loss 7.9582 act 0.467 high 0.858 gui 0.833 load 0.050s step 0.029s
+epoch 008/100 batch 040/75 loss 2.9977 act 0.475 high 0.863 gui 0.838 load 0.050s step 0.028s
+epoch 008/100 batch 050/75 loss 2.6195 act 0.420 high 0.850 gui 0.830 load 0.050s step 0.029s
+epoch 008/100 batch 060/75 loss 3.2392 act 0.417 high 0.842 gui 0.821 load 0.050s step 0.028s
+epoch 008/100 batch 070/75 loss 7.1493 act 0.425 high 0.850 gui 0.829 load 0.050s step 0.029s
+epoch 008/100 batch 075/75 loss 1.9234 act 0.430 high 0.849 gui 0.832 load 0.049s step 0.029s
+epoch 008/100 done loss 3.6875 act 0.430 high 0.849 gui 0.832 frame 0.503 lr 0.00098797
+Saved last checkpoint for epoch 8: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 3.7282 to 3.6875
+Saved best checkpoint for epoch 8: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 8
+Epoch 8 took 6.03 seconds
+Epoch [9/100] started
+epoch 009/100 batch 010/75 loss 2.8938 act 0.375 high 0.775 gui 0.850 load 0.051s step 0.027s
+epoch 009/100 batch 020/75 loss 2.1379 act 0.425 high 0.812 gui 0.825 load 0.049s step 0.028s
+epoch 009/100 batch 030/75 loss 2.9390 act 0.425 high 0.825 gui 0.808 load 0.049s step 0.028s
+epoch 009/100 batch 040/75 loss 1.9380 act 0.419 high 0.838 gui 0.812 load 0.050s step 0.027s
+epoch 009/100 batch 050/75 loss 1.9729 act 0.420 high 0.850 gui 0.830 load 0.050s step 0.029s
+epoch 009/100 batch 060/75 loss 2.0241 act 0.442 high 0.850 gui 0.812 load 0.050s step 0.029s
+epoch 009/100 batch 070/75 loss 1.5652 act 0.429 high 0.861 gui 0.829 load 0.050s step 0.029s
+epoch 009/100 batch 075/75 loss 15.7204 act 0.423 high 0.856 gui 0.822 load 0.050s step 0.029s
+epoch 009/100 done loss 3.4640 act 0.423 high 0.856 gui 0.822 frame 0.523 lr 0.000984307
+Saved last checkpoint for epoch 9: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 3.6875 to 3.4640
+Saved best checkpoint for epoch 9: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 9
+Epoch 9 took 6.04 seconds
+Epoch [10/100] started
+epoch 010/100 batch 010/75 loss 1.3660 act 0.525 high 0.875 gui 0.850 load 0.052s step 0.041s
+epoch 010/100 batch 020/75 loss 4.9514 act 0.500 high 0.875 gui 0.825 load 0.052s step 0.035s
+epoch 010/100 batch 030/75 loss 1.9051 act 0.442 high 0.883 gui 0.833 load 0.051s step 0.032s
+epoch 010/100 batch 040/75 loss 2.0794 act 0.419 high 0.887 gui 0.831 load 0.056s step 0.035s
+epoch 010/100 batch 050/75 loss 2.0346 act 0.415 high 0.895 gui 0.850 load 0.057s step 0.037s
+epoch 010/100 batch 060/75 loss 2.2451 act 0.425 high 0.896 gui 0.858 load 0.056s step 0.038s
+epoch 010/100 batch 070/75 loss 8.8063 act 0.429 high 0.896 gui 0.854 load 0.056s step 0.038s
+epoch 010/100 batch 075/75 loss 2.3470 act 0.436 high 0.889 gui 0.849 load 0.055s step 0.038s
+epoch 010/100 done loss 3.4740 act 0.436 high 0.889 gui 0.849 frame 0.520 lr 0.000980167
+Saved last checkpoint for epoch 10: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=3.1710, action_type_acc=0.483, high_level_acc=0.869, gui_action_acc=0.849, coordinate_frame_acc=0.540
+Validation loss did not improve. Patience: 1/20
+Epoch 10 took 12.03 seconds
+Epoch [11/100] started
+epoch 011/100 batch 010/75 loss 1.9772 act 0.325 high 0.975 gui 0.975 load 0.053s step 0.048s
+epoch 011/100 batch 020/75 loss 1.0216 act 0.425 high 0.925 gui 0.912 load 0.053s step 0.045s
+epoch 011/100 batch 030/75 loss 4.9951 act 0.392 high 0.892 gui 0.875 load 0.058s step 0.045s
+epoch 011/100 batch 040/75 loss 2.3001 act 0.362 high 0.887 gui 0.869 load 0.056s step 0.041s
+epoch 011/100 batch 050/75 loss 2.9803 act 0.375 high 0.880 gui 0.860 load 0.055s step 0.039s
+epoch 011/100 batch 060/75 loss 2.1320 act 0.396 high 0.887 gui 0.863 load 0.054s step 0.038s
+epoch 011/100 batch 070/75 loss 2.9479 act 0.400 high 0.896 gui 0.871 load 0.053s step 0.037s
+epoch 011/100 batch 075/75 loss 14.9579 act 0.416 high 0.893 gui 0.869 load 0.053s step 0.036s
+epoch 011/100 done loss 3.3663 act 0.416 high 0.893 gui 0.869 frame 0.473 lr 0.000975553
+Saved last checkpoint for epoch 11: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 3.4640 to 3.3663
+Saved best checkpoint for epoch 11: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 11
+Epoch 11 took 6.86 seconds
+Epoch [12/100] started
+epoch 012/100 batch 010/75 loss 5.6218 act 0.450 high 0.850 gui 0.825 load 0.052s step 0.025s
+epoch 012/100 batch 020/75 loss 2.1411 act 0.450 high 0.900 gui 0.863 load 0.052s step 0.029s
+epoch 012/100 batch 030/75 loss 3.1900 act 0.458 high 0.875 gui 0.833 load 0.051s step 0.029s
+epoch 012/100 batch 040/75 loss 1.7571 act 0.487 high 0.881 gui 0.844 load 0.051s step 0.028s
+epoch 012/100 batch 050/75 loss 1.3772 act 0.485 high 0.875 gui 0.845 load 0.050s step 0.029s
+epoch 012/100 batch 060/75 loss 1.6812 act 0.483 high 0.871 gui 0.842 load 0.051s step 0.029s
+epoch 012/100 batch 070/75 loss 1.8127 act 0.464 high 0.886 gui 0.857 load 0.050s step 0.028s
+epoch 012/100 batch 075/75 loss 2.0146 act 0.450 high 0.886 gui 0.859 load 0.050s step 0.029s
+epoch 012/100 done loss 3.4250 act 0.450 high 0.886 gui 0.859 frame 0.527 lr 0.00097047
+Saved last checkpoint for epoch 12: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 12 took 6.03 seconds
+Epoch [13/100] started
+epoch 013/100 batch 010/75 loss 3.6830 act 0.450 high 0.875 gui 0.875 load 0.049s step 0.027s
+epoch 013/100 batch 020/75 loss 2.4473 act 0.475 high 0.887 gui 0.875 load 0.050s step 0.026s
+epoch 013/100 batch 030/75 loss 1.9071 act 0.475 high 0.900 gui 0.883 load 0.049s step 0.030s
+epoch 013/100 batch 040/75 loss 1.5446 act 0.456 high 0.919 gui 0.887 load 0.049s step 0.029s
+epoch 013/100 batch 050/75 loss 2.6263 act 0.440 high 0.915 gui 0.875 load 0.050s step 0.028s
+epoch 013/100 batch 060/75 loss 1.6498 act 0.467 high 0.917 gui 0.879 load 0.050s step 0.029s
+epoch 013/100 batch 070/75 loss 5.9473 act 0.461 high 0.911 gui 0.868 load 0.050s step 0.029s
+epoch 013/100 batch 075/75 loss 1.8950 act 0.466 high 0.909 gui 0.869 load 0.049s step 0.029s
+epoch 013/100 done loss 3.2165 act 0.466 high 0.909 gui 0.869 frame 0.540 lr 0.000964923
+Saved last checkpoint for epoch 13: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 3.3663 to 3.2165
+Saved best checkpoint for epoch 13: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 13
+Epoch 13 took 6.08 seconds
+Epoch [14/100] started
+epoch 014/100 batch 010/75 loss 1.9707 act 0.550 high 0.925 gui 0.900 load 0.050s step 0.029s
+epoch 014/100 batch 020/75 loss 5.2671 act 0.525 high 0.887 gui 0.850 load 0.051s step 0.027s
+epoch 014/100 batch 030/75 loss 7.2479 act 0.517 high 0.858 gui 0.808 load 0.051s step 0.026s
+epoch 014/100 batch 040/75 loss 1.9649 act 0.519 high 0.838 gui 0.794 load 0.050s step 0.028s
+epoch 014/100 batch 050/75 loss 5.0065 act 0.510 high 0.835 gui 0.795 load 0.050s step 0.027s
+epoch 014/100 batch 060/75 loss 2.1683 act 0.487 high 0.846 gui 0.812 load 0.050s step 0.027s
+epoch 014/100 batch 070/75 loss 1.6924 act 0.471 high 0.857 gui 0.829 load 0.049s step 0.028s
+epoch 014/100 batch 075/75 loss 1.6035 act 0.466 high 0.866 gui 0.836 load 0.049s step 0.028s
+epoch 014/100 done loss 3.6253 act 0.466 high 0.866 gui 0.836 frame 0.591 lr 0.000958918
+Saved last checkpoint for epoch 14: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 14 took 5.89 seconds
+Epoch [15/100] started
+epoch 015/100 batch 010/75 loss 6.7655 act 0.275 high 0.875 gui 0.800 load 0.050s step 0.025s
+epoch 015/100 batch 020/75 loss 4.7287 act 0.400 high 0.900 gui 0.825 load 0.051s step 0.030s
+epoch 015/100 batch 030/75 loss 2.3370 act 0.433 high 0.908 gui 0.858 load 0.051s step 0.030s
+epoch 015/100 batch 040/75 loss 1.8026 act 0.438 high 0.887 gui 0.844 load 0.050s step 0.029s
+epoch 015/100 batch 050/75 loss 12.3650 act 0.425 high 0.900 gui 0.860 load 0.051s step 0.030s
+epoch 015/100 batch 060/75 loss 1.7602 act 0.442 high 0.896 gui 0.858 load 0.050s step 0.031s
+epoch 015/100 batch 070/75 loss 1.6001 act 0.436 high 0.904 gui 0.868 load 0.050s step 0.031s
+epoch 015/100 batch 075/75 loss 1.9907 act 0.430 high 0.906 gui 0.872 load 0.050s step 0.031s
+epoch 015/100 done loss 3.3812 act 0.430 high 0.906 gui 0.872 frame 0.537 lr 0.000952461
+Saved last checkpoint for epoch 15: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=3.5330, action_type_acc=0.309, high_level_acc=0.852, gui_action_acc=0.826, coordinate_frame_acc=0.537
+Validation loss did not improve. Patience: 2/20
+Epoch 15 took 10.98 seconds
+Epoch [16/100] started
+epoch 016/100 batch 010/75 loss 2.0760 act 0.475 high 0.875 gui 0.825 load 0.051s step 0.048s
+epoch 016/100 batch 020/75 loss 4.6890 act 0.525 high 0.875 gui 0.850 load 0.052s step 0.046s
+epoch 016/100 batch 030/75 loss 1.0044 act 0.533 high 0.900 gui 0.883 load 0.051s step 0.046s
+epoch 016/100 batch 040/75 loss 1.9186 act 0.519 high 0.887 gui 0.863 load 0.050s step 0.046s
+epoch 016/100 batch 050/75 loss 1.5245 act 0.495 high 0.895 gui 0.875 load 0.050s step 0.044s
+epoch 016/100 batch 060/75 loss 2.8075 act 0.458 high 0.892 gui 0.867 load 0.050s step 0.042s
+epoch 016/100 batch 070/75 loss 2.1107 act 0.443 high 0.879 gui 0.854 load 0.050s step 0.040s
+epoch 016/100 batch 075/75 loss 1.2385 act 0.446 high 0.883 gui 0.859 load 0.050s step 0.041s
+epoch 016/100 done loss 3.1729 act 0.446 high 0.883 gui 0.859 frame 0.540 lr 0.000945558
+Saved last checkpoint for epoch 16: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 3.2165 to 3.1729
+Saved best checkpoint for epoch 16: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 16
+Epoch 16 took 6.98 seconds
+Epoch [17/100] started
+epoch 017/100 batch 010/75 loss 8.5375 act 0.625 high 0.925 gui 0.825 load 0.050s step 0.044s
+epoch 017/100 batch 020/75 loss 2.4132 act 0.537 high 0.912 gui 0.850 load 0.050s step 0.036s
+epoch 017/100 batch 030/75 loss 1.9368 act 0.517 high 0.892 gui 0.825 load 0.050s step 0.035s
+epoch 017/100 batch 040/75 loss 11.9063 act 0.475 high 0.906 gui 0.856 load 0.051s step 0.036s
+epoch 017/100 batch 050/75 loss 4.4212 act 0.460 high 0.890 gui 0.845 load 0.050s step 0.036s
+epoch 017/100 batch 060/75 loss 2.3971 act 0.450 high 0.892 gui 0.850 load 0.050s step 0.035s
+epoch 017/100 batch 070/75 loss 2.0316 act 0.457 high 0.900 gui 0.857 load 0.050s step 0.035s
+epoch 017/100 batch 075/75 loss 1.9164 act 0.463 high 0.906 gui 0.866 load 0.050s step 0.035s
+epoch 017/100 done loss 3.1139 act 0.463 high 0.906 gui 0.866 frame 0.503 lr 0.000938215
+Saved last checkpoint for epoch 17: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 3.1729 to 3.1139
+Saved best checkpoint for epoch 17: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 17
+Epoch 17 took 6.59 seconds
+Epoch [18/100] started
+epoch 018/100 batch 010/75 loss 1.9060 act 0.375 high 1.000 gui 1.000 load 0.049s step 0.038s
+epoch 018/100 batch 020/75 loss 1.5443 act 0.400 high 0.950 gui 0.950 load 0.049s step 0.035s
+epoch 018/100 batch 030/75 loss 3.5974 act 0.442 high 0.925 gui 0.917 load 0.049s step 0.034s
+epoch 018/100 batch 040/75 loss 13.2150 act 0.438 high 0.900 gui 0.894 load 0.049s step 0.036s
+epoch 018/100 batch 050/75 loss 6.0674 act 0.440 high 0.900 gui 0.890 load 0.049s step 0.038s
+epoch 018/100 batch 060/75 loss 1.5216 act 0.450 high 0.912 gui 0.904 load 0.050s step 0.036s
+epoch 018/100 batch 070/75 loss 2.9695 act 0.446 high 0.921 gui 0.900 load 0.049s step 0.036s
+epoch 018/100 batch 075/75 loss 6.0983 act 0.446 high 0.926 gui 0.903 load 0.049s step 0.036s
+epoch 018/100 done loss 3.1274 act 0.446 high 0.926 gui 0.903 frame 0.527 lr 0.000930441
+Saved last checkpoint for epoch 18: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 18 took 6.47 seconds
+Epoch [19/100] started
+epoch 019/100 batch 010/75 loss 1.4864 act 0.475 high 0.975 gui 0.975 load 0.050s step 0.034s
+epoch 019/100 batch 020/75 loss 2.7644 act 0.500 high 0.950 gui 0.950 load 0.049s step 0.031s
+epoch 019/100 batch 030/75 loss 12.2616 act 0.467 high 0.942 gui 0.925 load 0.049s step 0.033s
+epoch 019/100 batch 040/75 loss 8.6792 act 0.469 high 0.925 gui 0.912 load 0.049s step 0.033s
+epoch 019/100 batch 050/75 loss 1.6216 act 0.450 high 0.920 gui 0.895 load 0.049s step 0.032s
+epoch 019/100 batch 060/75 loss 1.8810 act 0.433 high 0.921 gui 0.892 load 0.049s step 0.032s
+epoch 019/100 batch 070/75 loss 2.3786 act 0.439 high 0.921 gui 0.893 load 0.050s step 0.033s
+epoch 019/100 batch 075/75 loss 1.2221 act 0.450 high 0.916 gui 0.893 load 0.049s step 0.033s
+epoch 019/100 done loss 2.9820 act 0.450 high 0.916 gui 0.893 frame 0.523 lr 0.000922242
+Saved last checkpoint for epoch 19: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 3.1139 to 2.9820
+Saved best checkpoint for epoch 19: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 19
+Epoch 19 took 6.31 seconds
+Epoch [20/100] started
+epoch 020/100 batch 010/75 loss 2.9910 act 0.325 high 0.925 gui 0.900 load 0.050s step 0.027s
+epoch 020/100 batch 020/75 loss 1.5679 act 0.425 high 0.963 gui 0.938 load 0.050s step 0.030s
+epoch 020/100 batch 030/75 loss 1.2813 act 0.467 high 0.967 gui 0.950 load 0.050s step 0.032s
+epoch 020/100 batch 040/75 loss 3.9629 act 0.463 high 0.956 gui 0.931 load 0.050s step 0.031s
+epoch 020/100 batch 050/75 loss 2.2387 act 0.435 high 0.935 gui 0.915 load 0.049s step 0.030s
+epoch 020/100 batch 060/75 loss 1.7010 act 0.417 high 0.942 gui 0.921 load 0.050s step 0.031s
+epoch 020/100 batch 070/75 loss 1.1890 act 0.429 high 0.921 gui 0.904 load 0.049s step 0.031s
+epoch 020/100 batch 075/75 loss 3.9508 act 0.430 high 0.923 gui 0.906 load 0.049s step 0.030s
+epoch 020/100 done loss 2.9319 act 0.430 high 0.923 gui 0.906 frame 0.503 lr 0.000913627
+Saved last checkpoint for epoch 20: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=2.6189, action_type_acc=0.497, high_level_acc=0.936, gui_action_acc=0.913, coordinate_frame_acc=0.503
+Validation loss improved from 2.9820 to 2.9319
+Saved best checkpoint for epoch 20: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 20
+Epoch 20 took 10.84 seconds
+Epoch [21/100] started
+epoch 021/100 batch 010/75 loss 1.3949 act 0.475 high 0.950 gui 0.950 load 0.051s step 0.044s
+epoch 021/100 batch 020/75 loss 3.7552 act 0.512 high 0.912 gui 0.887 load 0.050s step 0.043s
+epoch 021/100 batch 030/75 loss 2.2990 act 0.475 high 0.908 gui 0.892 load 0.050s step 0.041s
+epoch 021/100 batch 040/75 loss 1.5711 act 0.456 high 0.919 gui 0.906 load 0.050s step 0.038s
+epoch 021/100 batch 050/75 loss 1.7008 act 0.445 high 0.905 gui 0.900 load 0.050s step 0.036s
+epoch 021/100 batch 060/75 loss 2.9813 act 0.417 high 0.921 gui 0.900 load 0.050s step 0.037s
+epoch 021/100 batch 070/75 loss 1.3769 act 0.421 high 0.911 gui 0.893 load 0.050s step 0.037s
+epoch 021/100 batch 075/75 loss 2.7371 act 0.440 high 0.913 gui 0.893 load 0.049s step 0.036s
+epoch 021/100 done loss 2.8199 act 0.440 high 0.913 gui 0.893 frame 0.517 lr 0.000904604
+Saved last checkpoint for epoch 21: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.9319 to 2.8199
+Saved best checkpoint for epoch 21: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 21
+Epoch 21 took 6.56 seconds
+Epoch [22/100] started
+epoch 022/100 batch 010/75 loss 10.4173 act 0.425 high 0.850 gui 0.850 load 0.050s step 0.028s
+epoch 022/100 batch 020/75 loss 1.3754 act 0.425 high 0.900 gui 0.887 load 0.050s step 0.032s
+epoch 022/100 batch 030/75 loss 1.4901 act 0.483 high 0.933 gui 0.917 load 0.050s step 0.030s
+epoch 022/100 batch 040/75 loss 1.7913 act 0.500 high 0.931 gui 0.906 load 0.050s step 0.030s
+epoch 022/100 batch 050/75 loss 1.4763 act 0.490 high 0.935 gui 0.895 load 0.049s step 0.031s
+epoch 022/100 batch 060/75 loss 2.2279 act 0.487 high 0.929 gui 0.892 load 0.050s step 0.030s
+epoch 022/100 batch 070/75 loss 3.8296 act 0.489 high 0.921 gui 0.889 load 0.050s step 0.030s
+epoch 022/100 batch 075/75 loss 1.4257 act 0.490 high 0.919 gui 0.889 load 0.049s step 0.031s
+epoch 022/100 done loss 2.8032 act 0.490 high 0.919 gui 0.889 frame 0.550 lr 0.000895182
+Saved last checkpoint for epoch 22: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.8199 to 2.8032
+Saved best checkpoint for epoch 22: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 22
+Epoch 22 took 6.20 seconds
+Epoch [23/100] started
+epoch 023/100 batch 010/75 loss 2.0554 act 0.450 high 0.850 gui 0.825 load 0.050s step 0.027s
+epoch 023/100 batch 020/75 loss 1.2963 act 0.425 high 0.825 gui 0.838 load 0.050s step 0.027s
+epoch 023/100 batch 030/75 loss 1.9342 act 0.433 high 0.850 gui 0.850 load 0.050s step 0.030s
+epoch 023/100 batch 040/75 loss 1.5349 act 0.456 high 0.844 gui 0.844 load 0.050s step 0.029s
+epoch 023/100 batch 050/75 loss 2.0837 act 0.475 high 0.835 gui 0.830 load 0.050s step 0.028s
+epoch 023/100 batch 060/75 loss 1.6803 act 0.504 high 0.838 gui 0.829 load 0.050s step 0.030s
+epoch 023/100 batch 070/75 loss 2.1552 act 0.507 high 0.843 gui 0.839 load 0.050s step 0.029s
+epoch 023/100 batch 075/75 loss 1.5278 act 0.500 high 0.832 gui 0.832 load 0.050s step 0.029s
+epoch 023/100 done loss 3.0695 act 0.500 high 0.832 gui 0.832 frame 0.591 lr 0.000885371
+Saved last checkpoint for epoch 23: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 23 took 6.03 seconds
+Epoch [24/100] started
+epoch 024/100 batch 010/75 loss 1.7133 act 0.375 high 0.975 gui 1.000 load 0.049s step 0.032s
+epoch 024/100 batch 020/75 loss 3.1466 act 0.412 high 0.925 gui 0.925 load 0.050s step 0.031s
+epoch 024/100 batch 030/75 loss 1.9992 act 0.475 high 0.933 gui 0.933 load 0.050s step 0.030s
+epoch 024/100 batch 040/75 loss 1.3171 act 0.481 high 0.938 gui 0.931 load 0.050s step 0.032s
+epoch 024/100 batch 050/75 loss 4.8032 act 0.460 high 0.925 gui 0.910 load 0.049s step 0.032s
+epoch 024/100 batch 060/75 loss 2.0889 act 0.475 high 0.921 gui 0.912 load 0.049s step 0.031s
+epoch 024/100 batch 070/75 loss 1.3299 act 0.500 high 0.918 gui 0.907 load 0.050s step 0.031s
+epoch 024/100 batch 075/75 loss 1.5557 act 0.497 high 0.923 gui 0.909 load 0.049s step 0.032s
+epoch 024/100 done loss 2.6976 act 0.497 high 0.923 gui 0.909 frame 0.668 lr 0.00087518
+Saved last checkpoint for epoch 24: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.8032 to 2.6976
+Saved best checkpoint for epoch 24: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 24
+Epoch 24 took 6.22 seconds
+Epoch [25/100] started
+epoch 025/100 batch 010/75 loss 1.9882 act 0.625 high 0.975 gui 0.975 load 0.050s step 0.027s
+epoch 025/100 batch 020/75 loss 3.6964 act 0.600 high 0.963 gui 0.950 load 0.050s step 0.027s
+epoch 025/100 batch 030/75 loss 1.1844 act 0.600 high 0.958 gui 0.933 load 0.050s step 0.028s
+epoch 025/100 batch 040/75 loss 11.2906 act 0.606 high 0.944 gui 0.925 load 0.050s step 0.028s
+epoch 025/100 batch 050/75 loss 1.3985 act 0.585 high 0.955 gui 0.935 load 0.050s step 0.029s
+epoch 025/100 batch 060/75 loss 0.4724 act 0.592 high 0.946 gui 0.925 load 0.050s step 0.030s
+epoch 025/100 batch 070/75 loss 2.7314 act 0.586 high 0.936 gui 0.907 load 0.050s step 0.029s
+epoch 025/100 batch 075/75 loss 6.5108 act 0.591 high 0.916 gui 0.883 load 0.049s step 0.029s
+epoch 025/100 done loss 2.8592 act 0.591 high 0.916 gui 0.883 frame 0.752 lr 0.00086462
+Saved last checkpoint for epoch 25: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=2.5504, action_type_acc=0.577, high_level_acc=0.913, gui_action_acc=0.879, coordinate_frame_acc=0.745
+Validation loss did not improve. Patience: 1/20
+Epoch 25 took 10.70 seconds
+Epoch [26/100] started
+epoch 026/100 batch 010/75 loss 1.0275 act 0.625 high 0.925 gui 0.875 load 0.051s step 0.045s
+epoch 026/100 batch 020/75 loss 3.4047 act 0.637 high 0.912 gui 0.863 load 0.051s step 0.043s
+epoch 026/100 batch 030/75 loss 3.5205 act 0.533 high 0.900 gui 0.867 load 0.051s step 0.043s
+epoch 026/100 batch 040/75 loss 1.4475 act 0.556 high 0.900 gui 0.875 load 0.050s step 0.041s
+epoch 026/100 batch 050/75 loss 1.6338 act 0.550 high 0.910 gui 0.890 load 0.050s step 0.038s
+epoch 026/100 batch 060/75 loss 1.6794 act 0.542 high 0.908 gui 0.883 load 0.050s step 0.037s
+epoch 026/100 batch 070/75 loss 1.3603 act 0.539 high 0.914 gui 0.896 load 0.050s step 0.037s
+epoch 026/100 batch 075/75 loss 6.8687 act 0.537 high 0.916 gui 0.899 load 0.049s step 0.036s
+epoch 026/100 done loss 2.8273 act 0.537 high 0.916 gui 0.899 frame 0.738 lr 0.0008537
+Saved last checkpoint for epoch 26: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 26 took 6.49 seconds
+Epoch [27/100] started
+epoch 027/100 batch 010/75 loss 2.4473 act 0.675 high 0.900 gui 0.850 load 0.050s step 0.027s
+epoch 027/100 batch 020/75 loss 3.4805 act 0.625 high 0.912 gui 0.875 load 0.050s step 0.032s
+epoch 027/100 batch 030/75 loss 1.6939 act 0.575 high 0.925 gui 0.900 load 0.049s step 0.031s
+epoch 027/100 batch 040/75 loss 1.1619 act 0.575 high 0.925 gui 0.900 load 0.049s step 0.030s
+epoch 027/100 batch 050/75 loss 1.7242 act 0.560 high 0.930 gui 0.895 load 0.050s step 0.031s
+epoch 027/100 batch 060/75 loss 0.9540 act 0.562 high 0.925 gui 0.896 load 0.050s step 0.031s
+epoch 027/100 batch 070/75 loss 1.4066 act 0.564 high 0.932 gui 0.896 load 0.050s step 0.030s
+epoch 027/100 batch 075/75 loss 1.6259 act 0.544 high 0.936 gui 0.903 load 0.049s step 0.030s
+epoch 027/100 done loss 2.3843 act 0.544 high 0.936 gui 0.903 frame 0.742 lr 0.000842431
+Saved last checkpoint for epoch 27: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.6976 to 2.3843
+Saved best checkpoint for epoch 27: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 27
+Epoch 27 took 6.15 seconds
+Epoch [28/100] started
+epoch 028/100 batch 010/75 loss 1.5860 act 0.525 high 0.950 gui 0.925 load 0.049s step 0.027s
+epoch 028/100 batch 020/75 loss 2.2891 act 0.562 high 0.875 gui 0.838 load 0.050s step 0.026s
+epoch 028/100 batch 030/75 loss 1.9753 act 0.567 high 0.875 gui 0.842 load 0.050s step 0.028s
+epoch 028/100 batch 040/75 loss 1.9284 act 0.606 high 0.887 gui 0.850 load 0.050s step 0.028s
+epoch 028/100 batch 050/75 loss 1.6244 act 0.585 high 0.890 gui 0.855 load 0.050s step 0.027s
+epoch 028/100 batch 060/75 loss 1.6888 act 0.567 high 0.871 gui 0.838 load 0.050s step 0.028s
+epoch 028/100 batch 070/75 loss 5.1413 act 0.582 high 0.861 gui 0.829 load 0.050s step 0.028s
+epoch 028/100 batch 075/75 loss 3.2943 act 0.564 high 0.862 gui 0.829 load 0.049s step 0.028s
+epoch 028/100 done loss 2.8881 act 0.564 high 0.862 gui 0.829 frame 0.721 lr 0.000830825
+Saved last checkpoint for epoch 28: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 28 took 5.91 seconds
+Epoch [29/100] started
+epoch 029/100 batch 010/75 loss 2.1859 act 0.550 high 0.875 gui 0.825 load 0.048s step 0.031s
+epoch 029/100 batch 020/75 loss 1.0429 act 0.550 high 0.875 gui 0.825 load 0.049s step 0.028s
+epoch 029/100 batch 030/75 loss 1.8379 act 0.600 high 0.867 gui 0.833 load 0.050s step 0.027s
+epoch 029/100 batch 040/75 loss 2.6050 act 0.581 high 0.881 gui 0.850 load 0.050s step 0.028s
+epoch 029/100 batch 050/75 loss 1.1222 act 0.560 high 0.850 gui 0.830 load 0.050s step 0.027s
+epoch 029/100 batch 060/75 loss 1.6828 act 0.575 high 0.850 gui 0.838 load 0.050s step 0.028s
+epoch 029/100 batch 070/75 loss 1.7262 act 0.582 high 0.850 gui 0.843 load 0.050s step 0.028s
+epoch 029/100 batch 075/75 loss 1.6822 act 0.581 high 0.852 gui 0.839 load 0.050s step 0.028s
+epoch 029/100 done loss 2.5393 act 0.581 high 0.852 gui 0.839 frame 0.715 lr 0.000818893
+Saved last checkpoint for epoch 29: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 29 took 5.89 seconds
+Epoch [30/100] started
+epoch 030/100 batch 010/75 loss 8.3355 act 0.550 high 0.900 gui 0.925 load 0.049s step 0.030s
+epoch 030/100 batch 020/75 loss 1.0702 act 0.600 high 0.912 gui 0.925 load 0.049s step 0.033s
+epoch 030/100 batch 030/75 loss 11.8734 act 0.525 high 0.900 gui 0.908 load 0.050s step 0.030s
+epoch 030/100 batch 040/75 loss 3.7096 act 0.550 high 0.919 gui 0.919 load 0.050s step 0.030s
+epoch 030/100 batch 050/75 loss 4.3460 act 0.535 high 0.925 gui 0.915 load 0.050s step 0.031s
+epoch 030/100 batch 060/75 loss 1.0436 act 0.554 high 0.929 gui 0.912 load 0.050s step 0.030s
+epoch 030/100 batch 070/75 loss 3.3451 act 0.579 high 0.929 gui 0.914 load 0.050s step 0.030s
+epoch 030/100 batch 075/75 loss 1.5365 act 0.577 high 0.923 gui 0.909 load 0.049s step 0.030s
+epoch 030/100 done loss 2.6040 act 0.577 high 0.923 gui 0.909 frame 0.752 lr 0.000806647
+Saved last checkpoint for epoch 30: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=2.2103, action_type_acc=0.621, high_level_acc=0.946, gui_action_acc=0.919, coordinate_frame_acc=0.765
+Validation loss did not improve. Patience: 3/20
+Epoch 30 took 10.75 seconds
+Epoch [31/100] started
+epoch 031/100 batch 010/75 loss 0.7865 act 0.725 high 0.925 gui 0.925 load 0.051s step 0.044s
+epoch 031/100 batch 020/75 loss 0.7025 act 0.662 high 0.950 gui 0.925 load 0.050s step 0.044s
+epoch 031/100 batch 030/75 loss 2.1033 act 0.617 high 0.950 gui 0.925 load 0.050s step 0.039s
+epoch 031/100 batch 040/75 loss 0.8910 act 0.637 high 0.950 gui 0.931 load 0.050s step 0.036s
+epoch 031/100 batch 050/75 loss 0.9219 act 0.640 high 0.950 gui 0.925 load 0.050s step 0.035s
+epoch 031/100 batch 060/75 loss 8.8143 act 0.629 high 0.946 gui 0.917 load 0.050s step 0.035s
+epoch 031/100 batch 070/75 loss 0.7910 act 0.629 high 0.943 gui 0.918 load 0.050s step 0.034s
+epoch 031/100 batch 075/75 loss 10.2976 act 0.617 high 0.943 gui 0.919 load 0.049s step 0.033s
+epoch 031/100 done loss 2.4239 act 0.617 high 0.943 gui 0.919 frame 0.765 lr 0.000794099
+Saved last checkpoint for epoch 31: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 31 took 6.29 seconds
+Epoch [32/100] started
+epoch 032/100 batch 010/75 loss 1.5236 act 0.600 high 0.875 gui 0.875 load 0.049s step 0.040s
+epoch 032/100 batch 020/75 loss 0.8692 act 0.600 high 0.925 gui 0.900 load 0.049s step 0.033s
+epoch 032/100 batch 030/75 loss 6.2123 act 0.608 high 0.917 gui 0.900 load 0.049s step 0.031s
+epoch 032/100 batch 040/75 loss 1.0578 act 0.588 high 0.906 gui 0.894 load 0.049s step 0.033s
+epoch 032/100 batch 050/75 loss 1.3325 act 0.610 high 0.925 gui 0.915 load 0.049s step 0.032s
+epoch 032/100 batch 060/75 loss 0.8363 act 0.596 high 0.925 gui 0.912 load 0.049s step 0.031s
+epoch 032/100 batch 070/75 loss 0.9630 act 0.611 high 0.925 gui 0.907 load 0.049s step 0.032s
+epoch 032/100 batch 075/75 loss 1.0495 act 0.611 high 0.926 gui 0.909 load 0.049s step 0.032s
+epoch 032/100 done loss 2.4898 act 0.611 high 0.926 gui 0.909 frame 0.755 lr 0.000781261
+Saved last checkpoint for epoch 32: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 5/20
+Epoch 32 took 6.21 seconds
+Epoch [33/100] started
+epoch 033/100 batch 010/75 loss 1.0465 act 0.575 high 0.875 gui 0.875 load 0.049s step 0.027s
+epoch 033/100 batch 020/75 loss 1.3156 act 0.562 high 0.887 gui 0.912 load 0.049s step 0.027s
+epoch 033/100 batch 030/75 loss 1.5859 act 0.542 high 0.925 gui 0.942 load 0.049s step 0.030s
+epoch 033/100 batch 040/75 loss 4.2714 act 0.569 high 0.925 gui 0.912 load 0.049s step 0.029s
+epoch 033/100 batch 050/75 loss 2.1150 act 0.605 high 0.930 gui 0.910 load 0.049s step 0.029s
+epoch 033/100 batch 060/75 loss 0.5412 act 0.629 high 0.933 gui 0.917 load 0.049s step 0.029s
+epoch 033/100 batch 070/75 loss 11.6808 act 0.636 high 0.918 gui 0.896 load 0.049s step 0.029s
+epoch 033/100 batch 075/75 loss 1.8427 act 0.617 high 0.916 gui 0.893 load 0.049s step 0.029s
+epoch 033/100 done loss 2.4753 act 0.617 high 0.916 gui 0.893 frame 0.772 lr 0.000768145
+Saved last checkpoint for epoch 33: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 6/20
+Epoch 33 took 5.90 seconds
+Epoch [34/100] started
+epoch 034/100 batch 010/75 loss 3.5869 act 0.525 high 0.875 gui 0.850 load 0.049s step 0.039s
+epoch 034/100 batch 020/75 loss 1.3398 act 0.575 high 0.875 gui 0.887 load 0.049s step 0.034s
+epoch 034/100 batch 030/75 loss 5.7967 act 0.592 high 0.833 gui 0.825 load 0.050s step 0.031s
+epoch 034/100 batch 040/75 loss 0.7464 act 0.581 high 0.825 gui 0.819 load 0.050s step 0.032s
+epoch 034/100 batch 050/75 loss 5.9089 act 0.605 high 0.835 gui 0.825 load 0.050s step 0.031s
+epoch 034/100 batch 060/75 loss 1.3654 act 0.600 high 0.829 gui 0.821 load 0.050s step 0.030s
+epoch 034/100 batch 070/75 loss 2.5316 act 0.596 high 0.832 gui 0.829 load 0.050s step 0.031s
+epoch 034/100 batch 075/75 loss 1.8491 act 0.591 high 0.839 gui 0.836 load 0.049s step 0.031s
+epoch 034/100 done loss 2.7600 act 0.591 high 0.839 gui 0.836 frame 0.708 lr 0.000754766
+Saved last checkpoint for epoch 34: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 7/20
+Epoch 34 took 6.16 seconds
+Epoch [35/100] started
+epoch 035/100 batch 010/75 loss 0.7124 act 0.650 high 0.950 gui 0.950 load 0.050s step 0.026s
+epoch 035/100 batch 020/75 loss 2.0255 act 0.600 high 0.950 gui 0.950 load 0.050s step 0.026s
+epoch 035/100 batch 030/75 loss 2.1224 act 0.583 high 0.933 gui 0.917 load 0.050s step 0.028s
+epoch 035/100 batch 040/75 loss 1.0520 act 0.606 high 0.938 gui 0.912 load 0.050s step 0.028s
+epoch 035/100 batch 050/75 loss 1.1777 act 0.600 high 0.940 gui 0.915 load 0.050s step 0.028s
+epoch 035/100 batch 060/75 loss 3.1385 act 0.621 high 0.933 gui 0.912 load 0.050s step 0.029s
+epoch 035/100 batch 070/75 loss 0.6452 act 0.629 high 0.936 gui 0.921 load 0.050s step 0.028s
+epoch 035/100 batch 075/75 loss 1.6360 act 0.631 high 0.933 gui 0.919 load 0.049s step 0.028s
+epoch 035/100 done loss 2.2076 act 0.631 high 0.933 gui 0.919 frame 0.779 lr 0.000741136
+Saved last checkpoint for epoch 35: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=2.0953, action_type_acc=0.611, high_level_acc=0.946, gui_action_acc=0.933, coordinate_frame_acc=0.765
+Validation loss improved from 2.3843 to 2.2076
+Saved best checkpoint for epoch 35: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 35
+Epoch 35 took 10.71 seconds
+Epoch [36/100] started
+epoch 036/100 batch 010/75 loss 1.7574 act 0.675 high 0.925 gui 0.900 load 0.049s step 0.045s
+epoch 036/100 batch 020/75 loss 1.2257 act 0.650 high 0.950 gui 0.912 load 0.049s step 0.043s
+epoch 036/100 batch 030/75 loss 4.0843 act 0.617 high 0.958 gui 0.917 load 0.049s step 0.039s
+epoch 036/100 batch 040/75 loss 0.7224 act 0.600 high 0.963 gui 0.931 load 0.049s step 0.036s
+epoch 036/100 batch 050/75 loss 1.1915 act 0.590 high 0.955 gui 0.915 load 0.050s step 0.035s
+epoch 036/100 batch 060/75 loss 0.8723 act 0.600 high 0.958 gui 0.925 load 0.050s step 0.034s
+epoch 036/100 batch 070/75 loss 1.7823 act 0.593 high 0.954 gui 0.925 load 0.050s step 0.033s
+epoch 036/100 batch 075/75 loss 0.9195 act 0.607 high 0.956 gui 0.926 load 0.049s step 0.033s
+epoch 036/100 done loss 2.1812 act 0.607 high 0.956 gui 0.926 frame 0.758 lr 0.000727268
+Saved last checkpoint for epoch 36: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.2076 to 2.1812
+Saved best checkpoint for epoch 36: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 36
+Epoch 36 took 6.33 seconds
+Epoch [37/100] started
+epoch 037/100 batch 010/75 loss 0.5535 act 0.550 high 0.900 gui 0.850 load 0.050s step 0.039s
+epoch 037/100 batch 020/75 loss 1.1945 act 0.637 high 0.875 gui 0.850 load 0.050s step 0.036s
+epoch 037/100 batch 030/75 loss 1.3740 act 0.625 high 0.908 gui 0.875 load 0.049s step 0.033s
+epoch 037/100 batch 040/75 loss 1.1677 act 0.619 high 0.912 gui 0.887 load 0.050s step 0.032s
+epoch 037/100 batch 050/75 loss 0.9988 act 0.610 high 0.915 gui 0.895 load 0.050s step 0.032s
+epoch 037/100 batch 060/75 loss 2.2387 act 0.613 high 0.921 gui 0.900 load 0.050s step 0.031s
+epoch 037/100 batch 070/75 loss 2.0066 act 0.618 high 0.929 gui 0.911 load 0.050s step 0.031s
+epoch 037/100 batch 075/75 loss 0.4925 act 0.604 high 0.930 gui 0.913 load 0.049s step 0.031s
+epoch 037/100 done loss 2.3786 act 0.604 high 0.930 gui 0.913 frame 0.752 lr 0.000713177
+Saved last checkpoint for epoch 37: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 37 took 6.11 seconds
+Epoch [38/100] started
+epoch 038/100 batch 010/75 loss 1.1365 act 0.525 high 0.925 gui 0.875 load 0.049s step 0.028s
+epoch 038/100 batch 020/75 loss 0.6274 act 0.550 high 0.938 gui 0.900 load 0.049s step 0.029s
+epoch 038/100 batch 030/75 loss 0.9805 act 0.575 high 0.933 gui 0.908 load 0.049s step 0.030s
+epoch 038/100 batch 040/75 loss 7.1403 act 0.594 high 0.931 gui 0.906 load 0.049s step 0.030s
+epoch 038/100 batch 050/75 loss 1.9851 act 0.590 high 0.945 gui 0.920 load 0.049s step 0.030s
+epoch 038/100 batch 060/75 loss 0.4598 act 0.604 high 0.942 gui 0.917 load 0.049s step 0.030s
+epoch 038/100 batch 070/75 loss 2.6110 act 0.611 high 0.943 gui 0.914 load 0.049s step 0.029s
+epoch 038/100 batch 075/75 loss 11.8272 act 0.624 high 0.943 gui 0.916 load 0.049s step 0.029s
+epoch 038/100 done loss 2.3010 act 0.624 high 0.943 gui 0.916 frame 0.772 lr 0.000698875
+Saved last checkpoint for epoch 38: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 38 took 5.96 seconds
+Epoch [39/100] started
+epoch 039/100 batch 010/75 loss 3.9829 act 0.750 high 0.925 gui 0.925 load 0.049s step 0.042s
+epoch 039/100 batch 020/75 loss 6.6482 act 0.675 high 0.925 gui 0.925 load 0.050s step 0.036s
+epoch 039/100 batch 030/75 loss 1.4897 act 0.642 high 0.925 gui 0.933 load 0.049s step 0.032s
+epoch 039/100 batch 040/75 loss 3.8876 act 0.644 high 0.931 gui 0.938 load 0.050s step 0.032s
+epoch 039/100 batch 050/75 loss 2.3568 act 0.640 high 0.930 gui 0.925 load 0.050s step 0.032s
+epoch 039/100 batch 060/75 loss 2.4753 act 0.625 high 0.925 gui 0.921 load 0.050s step 0.031s
+epoch 039/100 batch 070/75 loss 1.9043 act 0.629 high 0.936 gui 0.929 load 0.050s step 0.031s
+epoch 039/100 batch 075/75 loss 0.3128 act 0.644 high 0.940 gui 0.930 load 0.049s step 0.030s
+epoch 039/100 done loss 2.1049 act 0.644 high 0.940 gui 0.930 frame 0.782 lr 0.000684378
+Saved last checkpoint for epoch 39: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.1812 to 2.1049
+Saved best checkpoint for epoch 39: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 39
+Epoch 39 took 6.17 seconds
+Epoch [40/100] started
+epoch 040/100 batch 010/75 loss 0.5557 act 0.575 high 0.900 gui 0.900 load 0.049s step 0.027s
+epoch 040/100 batch 020/75 loss 0.8092 act 0.550 high 0.938 gui 0.912 load 0.050s step 0.027s
+epoch 040/100 batch 030/75 loss 3.2526 act 0.633 high 0.950 gui 0.925 load 0.050s step 0.027s
+epoch 040/100 batch 040/75 loss 2.4953 act 0.637 high 0.950 gui 0.900 load 0.050s step 0.027s
+epoch 040/100 batch 050/75 loss 0.8593 act 0.630 high 0.945 gui 0.900 load 0.050s step 0.028s
+epoch 040/100 batch 060/75 loss 2.4378 act 0.629 high 0.942 gui 0.900 load 0.050s step 0.028s
+epoch 040/100 batch 070/75 loss 1.4741 act 0.632 high 0.943 gui 0.907 load 0.050s step 0.028s
+epoch 040/100 batch 075/75 loss 0.9117 act 0.628 high 0.943 gui 0.909 load 0.049s step 0.028s
+epoch 040/100 done loss 2.2303 act 0.628 high 0.943 gui 0.909 frame 0.782 lr 0.0006697
+Saved last checkpoint for epoch 40: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.9594, action_type_acc=0.752, high_level_acc=0.953, gui_action_acc=0.940, coordinate_frame_acc=0.819
+Validation loss did not improve. Patience: 1/20
+Epoch 40 took 10.59 seconds
+Epoch [41/100] started
+epoch 041/100 batch 010/75 loss 1.0794 act 0.675 high 1.000 gui 1.000 load 0.050s step 0.045s
+epoch 041/100 batch 020/75 loss 2.5529 act 0.625 high 0.950 gui 0.938 load 0.050s step 0.043s
+epoch 041/100 batch 030/75 loss 0.9468 act 0.650 high 0.950 gui 0.925 load 0.051s step 0.039s
+epoch 041/100 batch 040/75 loss 1.6412 act 0.637 high 0.938 gui 0.919 load 0.050s step 0.036s
+epoch 041/100 batch 050/75 loss 1.5397 act 0.630 high 0.940 gui 0.925 load 0.051s step 0.035s
+epoch 041/100 batch 060/75 loss 1.4746 act 0.642 high 0.946 gui 0.925 load 0.051s step 0.034s
+epoch 041/100 batch 070/75 loss 3.7392 act 0.650 high 0.950 gui 0.929 load 0.050s step 0.033s
+epoch 041/100 batch 075/75 loss 2.6515 act 0.654 high 0.946 gui 0.923 load 0.050s step 0.033s
+epoch 041/100 done loss 2.1384 act 0.654 high 0.946 gui 0.923 frame 0.792 lr 0.000654854
+Saved last checkpoint for epoch 41: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 41 took 6.28 seconds
+Epoch [42/100] started
+epoch 042/100 batch 010/75 loss 4.3806 act 0.650 high 0.900 gui 0.900 load 0.051s step 0.035s
+epoch 042/100 batch 020/75 loss 3.1165 act 0.675 high 0.912 gui 0.900 load 0.049s step 0.032s
+epoch 042/100 batch 030/75 loss 1.8353 act 0.708 high 0.933 gui 0.917 load 0.049s step 0.030s
+epoch 042/100 batch 040/75 loss 0.6444 act 0.713 high 0.938 gui 0.925 load 0.049s step 0.031s
+epoch 042/100 batch 050/75 loss 0.9739 act 0.680 high 0.930 gui 0.920 load 0.049s step 0.031s
+epoch 042/100 batch 060/75 loss 1.3671 act 0.646 high 0.929 gui 0.917 load 0.049s step 0.031s
+epoch 042/100 batch 070/75 loss 1.3254 act 0.650 high 0.936 gui 0.921 load 0.049s step 0.031s
+epoch 042/100 batch 075/75 loss 1.2252 act 0.648 high 0.936 gui 0.923 load 0.049s step 0.031s
+epoch 042/100 done loss 2.2682 act 0.648 high 0.936 gui 0.923 frame 0.779 lr 0.000639856
+Saved last checkpoint for epoch 42: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 42 took 6.11 seconds
+Epoch [43/100] started
+epoch 043/100 batch 010/75 loss 2.1808 act 0.625 high 0.900 gui 0.900 load 0.049s step 0.026s
+epoch 043/100 batch 020/75 loss 10.1777 act 0.637 high 0.925 gui 0.925 load 0.050s step 0.025s
+epoch 043/100 batch 030/75 loss 0.2103 act 0.667 high 0.933 gui 0.933 load 0.050s step 0.027s
+epoch 043/100 batch 040/75 loss 1.7300 act 0.656 high 0.938 gui 0.931 load 0.050s step 0.027s
+epoch 043/100 batch 050/75 loss 9.5393 act 0.640 high 0.925 gui 0.915 load 0.050s step 0.027s
+epoch 043/100 batch 060/75 loss 0.4365 act 0.637 high 0.925 gui 0.917 load 0.050s step 0.027s
+epoch 043/100 batch 070/75 loss 4.7978 act 0.639 high 0.921 gui 0.911 load 0.050s step 0.027s
+epoch 043/100 batch 075/75 loss 0.6241 act 0.651 high 0.926 gui 0.916 load 0.050s step 0.028s
+epoch 043/100 done loss 2.2790 act 0.651 high 0.926 gui 0.916 frame 0.792 lr 0.000624721
+Saved last checkpoint for epoch 43: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 43 took 5.93 seconds
+Epoch [44/100] started
+epoch 044/100 batch 010/75 loss 2.1040 act 0.725 high 0.925 gui 0.900 load 0.052s step 0.040s
+epoch 044/100 batch 020/75 loss 0.2635 act 0.750 high 0.950 gui 0.925 load 0.050s step 0.035s
+epoch 044/100 batch 030/75 loss 1.1240 act 0.725 high 0.958 gui 0.942 load 0.050s step 0.032s
+epoch 044/100 batch 040/75 loss 0.6006 act 0.750 high 0.963 gui 0.938 load 0.050s step 0.033s
+epoch 044/100 batch 050/75 loss 0.9250 act 0.725 high 0.955 gui 0.925 load 0.050s step 0.031s
+epoch 044/100 batch 060/75 loss 0.9705 act 0.713 high 0.950 gui 0.921 load 0.049s step 0.030s
+epoch 044/100 batch 070/75 loss 0.3566 act 0.714 high 0.950 gui 0.925 load 0.049s step 0.030s
+epoch 044/100 batch 075/75 loss 6.0361 act 0.715 high 0.946 gui 0.923 load 0.049s step 0.030s
+epoch 044/100 done loss 2.0839 act 0.715 high 0.946 gui 0.923 frame 0.829 lr 0.000609463
+Saved last checkpoint for epoch 44: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.1049 to 2.0839
+Saved best checkpoint for epoch 44: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 44
+Epoch 44 took 6.10 seconds
+Epoch [45/100] started
+epoch 045/100 batch 010/75 loss 0.6973 act 0.775 high 0.925 gui 0.975 load 0.053s step 0.024s
+epoch 045/100 batch 020/75 loss 7.0655 act 0.688 high 0.912 gui 0.938 load 0.052s step 0.030s
+epoch 045/100 batch 030/75 loss 0.7095 act 0.733 high 0.925 gui 0.925 load 0.051s step 0.031s
+epoch 045/100 batch 040/75 loss 2.1995 act 0.738 high 0.919 gui 0.912 load 0.051s step 0.030s
+epoch 045/100 batch 050/75 loss 0.6322 act 0.765 high 0.930 gui 0.930 load 0.051s step 0.029s
+epoch 045/100 batch 060/75 loss 5.0357 act 0.742 high 0.929 gui 0.929 load 0.051s step 0.031s
+epoch 045/100 batch 070/75 loss 1.9941 act 0.721 high 0.936 gui 0.929 load 0.051s step 0.030s
+epoch 045/100 batch 075/75 loss 4.7857 act 0.718 high 0.933 gui 0.923 load 0.050s step 0.030s
+epoch 045/100 done loss 2.0970 act 0.718 high 0.933 gui 0.923 frame 0.852 lr 0.000594097
+Saved last checkpoint for epoch 45: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.9678, action_type_acc=0.685, high_level_acc=0.936, gui_action_acc=0.933, coordinate_frame_acc=0.852
+Validation loss did not improve. Patience: 1/20
+Epoch 45 took 10.76 seconds
+Epoch [46/100] started
+epoch 046/100 batch 010/75 loss 0.5391 act 0.700 high 0.925 gui 0.925 load 0.049s step 0.047s
+epoch 046/100 batch 020/75 loss 1.4812 act 0.750 high 0.950 gui 0.950 load 0.049s step 0.045s
+epoch 046/100 batch 030/75 loss 7.0657 act 0.725 high 0.933 gui 0.925 load 0.050s step 0.043s
+epoch 046/100 batch 040/75 loss 0.3346 act 0.700 high 0.950 gui 0.944 load 0.050s step 0.039s
+epoch 046/100 batch 050/75 loss 1.9583 act 0.675 high 0.945 gui 0.940 load 0.050s step 0.036s
+epoch 046/100 batch 060/75 loss 8.2360 act 0.675 high 0.946 gui 0.933 load 0.050s step 0.036s
+epoch 046/100 batch 070/75 loss 1.8199 act 0.675 high 0.950 gui 0.929 load 0.050s step 0.035s
+epoch 046/100 batch 075/75 loss 0.3093 act 0.674 high 0.950 gui 0.930 load 0.050s step 0.034s
+epoch 046/100 done loss 2.0933 act 0.674 high 0.950 gui 0.930 frame 0.839 lr 0.000578639
+Saved last checkpoint for epoch 46: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 46 took 6.40 seconds
+Epoch [47/100] started
+epoch 047/100 batch 010/75 loss 2.8328 act 0.750 high 0.900 gui 0.875 load 0.048s step 0.034s
+epoch 047/100 batch 020/75 loss 1.1469 act 0.738 high 0.938 gui 0.925 load 0.049s step 0.031s
+epoch 047/100 batch 030/75 loss 2.4294 act 0.733 high 0.942 gui 0.933 load 0.049s step 0.029s
+epoch 047/100 batch 040/75 loss 0.7174 act 0.700 high 0.938 gui 0.931 load 0.049s step 0.030s
+epoch 047/100 batch 050/75 loss 2.5388 act 0.690 high 0.945 gui 0.935 load 0.050s step 0.030s
+epoch 047/100 batch 060/75 loss 0.3763 act 0.683 high 0.942 gui 0.933 load 0.050s step 0.029s
+epoch 047/100 batch 070/75 loss 0.9179 act 0.689 high 0.946 gui 0.932 load 0.050s step 0.031s
+epoch 047/100 batch 075/75 loss 1.3053 act 0.688 high 0.946 gui 0.933 load 0.049s step 0.031s
+epoch 047/100 done loss 1.9826 act 0.688 high 0.946 gui 0.933 frame 0.829 lr 0.000563104
+Saved last checkpoint for epoch 47: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 2.0839 to 1.9826
+Saved best checkpoint for epoch 47: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 47
+Epoch 47 took 6.14 seconds
+Epoch [48/100] started
+epoch 048/100 batch 010/75 loss 5.8628 act 0.675 high 0.900 gui 0.850 load 0.050s step 0.028s
+epoch 048/100 batch 020/75 loss 7.0840 act 0.650 high 0.900 gui 0.875 load 0.050s step 0.029s
+epoch 048/100 batch 030/75 loss 1.7755 act 0.667 high 0.900 gui 0.883 load 0.050s step 0.030s
+epoch 048/100 batch 040/75 loss 1.9967 act 0.644 high 0.912 gui 0.894 load 0.050s step 0.029s
+epoch 048/100 batch 050/75 loss 0.7362 act 0.675 high 0.930 gui 0.910 load 0.050s step 0.030s
+epoch 048/100 batch 060/75 loss 0.2476 act 0.692 high 0.942 gui 0.925 load 0.050s step 0.031s
+epoch 048/100 batch 070/75 loss 0.5001 act 0.704 high 0.946 gui 0.929 load 0.050s step 0.030s
+epoch 048/100 batch 075/75 loss 0.9269 act 0.705 high 0.950 gui 0.933 load 0.050s step 0.030s
+epoch 048/100 done loss 1.9036 act 0.705 high 0.950 gui 0.933 frame 0.822 lr 0.000547507
+Saved last checkpoint for epoch 48: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.9826 to 1.9036
+Saved best checkpoint for epoch 48: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 48
+Epoch 48 took 6.14 seconds
+Epoch [49/100] started
+epoch 049/100 batch 010/75 loss 0.6866 act 0.800 high 0.925 gui 0.950 load 0.051s step 0.036s
+epoch 049/100 batch 020/75 loss 1.1956 act 0.762 high 0.900 gui 0.925 load 0.050s step 0.036s
+epoch 049/100 batch 030/75 loss 0.7107 act 0.775 high 0.933 gui 0.950 load 0.050s step 0.033s
+epoch 049/100 batch 040/75 loss 4.5070 act 0.756 high 0.925 gui 0.938 load 0.051s step 0.031s
+epoch 049/100 batch 050/75 loss 1.6712 act 0.760 high 0.930 gui 0.940 load 0.051s step 0.032s
+epoch 049/100 batch 060/75 loss 1.6345 act 0.750 high 0.938 gui 0.942 load 0.051s step 0.031s
+epoch 049/100 batch 070/75 loss 2.1397 act 0.729 high 0.929 gui 0.929 load 0.051s step 0.031s
+epoch 049/100 batch 075/75 loss 0.6280 act 0.728 high 0.930 gui 0.926 load 0.051s step 0.031s
+epoch 049/100 done loss 2.0144 act 0.728 high 0.930 gui 0.926 frame 0.852 lr 0.000531864
+Saved last checkpoint for epoch 49: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 49 took 6.24 seconds
+Epoch [50/100] started
+epoch 050/100 batch 010/75 loss 2.9202 act 0.775 high 0.850 gui 0.875 load 0.051s step 0.043s
+epoch 050/100 batch 020/75 loss 0.7096 act 0.762 high 0.900 gui 0.912 load 0.050s step 0.039s
+epoch 050/100 batch 030/75 loss 2.1036 act 0.767 high 0.908 gui 0.908 load 0.050s step 0.035s
+epoch 050/100 batch 040/75 loss 0.7083 act 0.719 high 0.919 gui 0.912 load 0.050s step 0.033s
+epoch 050/100 batch 050/75 loss 6.9409 act 0.700 high 0.925 gui 0.920 load 0.051s step 0.035s
+epoch 050/100 batch 060/75 loss 3.9871 act 0.704 high 0.929 gui 0.921 load 0.051s step 0.035s
+epoch 050/100 batch 070/75 loss 1.6506 act 0.711 high 0.925 gui 0.918 load 0.050s step 0.034s
+epoch 050/100 batch 075/75 loss 0.3036 act 0.718 high 0.926 gui 0.916 load 0.050s step 0.033s
+epoch 050/100 done loss 2.0167 act 0.718 high 0.926 gui 0.916 frame 0.836 lr 0.00051619
+Saved last checkpoint for epoch 50: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=2.2735, action_type_acc=0.758, high_level_acc=0.866, gui_action_acc=0.859, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 2/20
+Epoch 50 took 11.13 seconds
+Epoch [51/100] started
+epoch 051/100 batch 010/75 loss 0.3451 act 0.775 high 0.975 gui 0.975 load 0.052s step 0.045s
+epoch 051/100 batch 020/75 loss 0.6000 act 0.775 high 0.975 gui 0.950 load 0.052s step 0.043s
+epoch 051/100 batch 030/75 loss 1.1050 act 0.750 high 0.950 gui 0.925 load 0.052s step 0.040s
+epoch 051/100 batch 040/75 loss 11.4635 act 0.725 high 0.938 gui 0.919 load 0.052s step 0.036s
+epoch 051/100 batch 050/75 loss 2.5352 act 0.715 high 0.950 gui 0.935 load 0.052s step 0.034s
+epoch 051/100 batch 060/75 loss 1.2459 act 0.708 high 0.950 gui 0.933 load 0.052s step 0.036s
+epoch 051/100 batch 070/75 loss 1.2520 act 0.714 high 0.943 gui 0.925 load 0.052s step 0.034s
+epoch 051/100 batch 075/75 loss 2.8123 act 0.715 high 0.943 gui 0.926 load 0.051s step 0.034s
+epoch 051/100 done loss 2.1206 act 0.715 high 0.943 gui 0.926 frame 0.836 lr 0.0005005
+Saved last checkpoint for epoch 51: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 51 took 6.48 seconds
+Epoch [52/100] started
+epoch 052/100 batch 010/75 loss 3.9485 act 0.800 high 0.950 gui 0.900 load 0.054s step 0.030s
+epoch 052/100 batch 020/75 loss 0.9367 act 0.762 high 0.975 gui 0.950 load 0.053s step 0.035s
+epoch 052/100 batch 030/75 loss 0.5777 act 0.767 high 0.975 gui 0.950 load 0.052s step 0.032s
+epoch 052/100 batch 040/75 loss 1.7460 act 0.769 high 0.956 gui 0.931 load 0.052s step 0.031s
+epoch 052/100 batch 050/75 loss 0.5789 act 0.760 high 0.955 gui 0.930 load 0.052s step 0.032s
+epoch 052/100 batch 060/75 loss 0.4245 act 0.742 high 0.958 gui 0.938 load 0.052s step 0.031s
+epoch 052/100 batch 070/75 loss 1.3734 act 0.721 high 0.950 gui 0.925 load 0.052s step 0.031s
+epoch 052/100 batch 075/75 loss 0.0587 act 0.735 high 0.953 gui 0.930 load 0.051s step 0.031s
+epoch 052/100 done loss 1.9616 act 0.735 high 0.953 gui 0.930 frame 0.866 lr 0.00048481
+Saved last checkpoint for epoch 52: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 52 took 6.31 seconds
+Epoch [53/100] started
+epoch 053/100 batch 010/75 loss 3.8295 act 0.650 high 0.950 gui 0.950 load 0.050s step 0.035s
+epoch 053/100 batch 020/75 loss 3.9739 act 0.700 high 0.938 gui 0.938 load 0.050s step 0.030s
+epoch 053/100 batch 030/75 loss 1.5715 act 0.717 high 0.942 gui 0.942 load 0.051s step 0.030s
+epoch 053/100 batch 040/75 loss 0.8491 act 0.731 high 0.944 gui 0.938 load 0.051s step 0.032s
+epoch 053/100 batch 050/75 loss 0.4028 act 0.730 high 0.950 gui 0.930 load 0.051s step 0.031s
+epoch 053/100 batch 060/75 loss 4.9265 act 0.725 high 0.942 gui 0.929 load 0.051s step 0.030s
+epoch 053/100 batch 070/75 loss 0.7389 act 0.732 high 0.946 gui 0.932 load 0.051s step 0.031s
+epoch 053/100 batch 075/75 loss 0.0407 act 0.745 high 0.946 gui 0.930 load 0.051s step 0.032s
+epoch 053/100 done loss 1.8290 act 0.745 high 0.946 gui 0.930 frame 0.849 lr 0.000469136
+Saved last checkpoint for epoch 53: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.9036 to 1.8290
+Saved best checkpoint for epoch 53: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 53
+Epoch 53 took 6.35 seconds
+Epoch [54/100] started
+epoch 054/100 batch 010/75 loss 0.3430 act 0.775 high 0.925 gui 0.925 load 0.051s step 0.026s
+epoch 054/100 batch 020/75 loss 0.4422 act 0.775 high 0.963 gui 0.963 load 0.051s step 0.026s
+epoch 054/100 batch 030/75 loss 2.7303 act 0.767 high 0.967 gui 0.958 load 0.052s step 0.030s
+epoch 054/100 batch 040/75 loss 0.8925 act 0.769 high 0.938 gui 0.925 load 0.051s step 0.029s
+epoch 054/100 batch 050/75 loss 2.4799 act 0.755 high 0.945 gui 0.930 load 0.051s step 0.029s
+epoch 054/100 batch 060/75 loss 4.7534 act 0.762 high 0.942 gui 0.925 load 0.052s step 0.030s
+epoch 054/100 batch 070/75 loss 1.2206 act 0.768 high 0.943 gui 0.929 load 0.051s step 0.030s
+epoch 054/100 batch 075/75 loss 0.5109 act 0.779 high 0.943 gui 0.933 load 0.051s step 0.030s
+epoch 054/100 done loss 1.9097 act 0.779 high 0.943 gui 0.933 frame 0.839 lr 0.000453493
+Saved last checkpoint for epoch 54: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 54 took 6.25 seconds
+Epoch [55/100] started
+epoch 055/100 batch 010/75 loss 10.6418 act 0.750 high 0.950 gui 0.900 load 0.053s step 0.030s
+epoch 055/100 batch 020/75 loss 11.9467 act 0.662 high 0.912 gui 0.887 load 0.053s step 0.035s
+epoch 055/100 batch 030/75 loss 0.3068 act 0.717 high 0.925 gui 0.908 load 0.052s step 0.036s
+epoch 055/100 batch 040/75 loss 0.2786 act 0.706 high 0.938 gui 0.925 load 0.051s step 0.034s
+epoch 055/100 batch 050/75 loss 0.5978 act 0.705 high 0.940 gui 0.930 load 0.051s step 0.033s
+epoch 055/100 batch 060/75 loss 1.2624 act 0.725 high 0.946 gui 0.938 load 0.051s step 0.035s
+epoch 055/100 batch 070/75 loss 0.3707 act 0.739 high 0.950 gui 0.943 load 0.051s step 0.034s
+epoch 055/100 batch 075/75 loss 0.4764 act 0.738 high 0.943 gui 0.936 load 0.051s step 0.033s
+epoch 055/100 done loss 2.0494 act 0.738 high 0.943 gui 0.936 frame 0.859 lr 0.000437896
+Saved last checkpoint for epoch 55: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.7583, action_type_acc=0.792, high_level_acc=0.953, gui_action_acc=0.933, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 2/20
+Epoch 55 took 11.16 seconds
+Epoch [56/100] started
+epoch 056/100 batch 010/75 loss 0.2176 act 0.850 high 0.975 gui 0.975 load 0.050s step 0.046s
+epoch 056/100 batch 020/75 loss 8.0367 act 0.800 high 0.950 gui 0.950 load 0.049s step 0.045s
+epoch 056/100 batch 030/75 loss 0.4673 act 0.808 high 0.950 gui 0.942 load 0.051s step 0.044s
+epoch 056/100 batch 040/75 loss 4.3340 act 0.756 high 0.938 gui 0.925 load 0.051s step 0.040s
+epoch 056/100 batch 050/75 loss 1.9046 act 0.740 high 0.945 gui 0.925 load 0.051s step 0.036s
+epoch 056/100 batch 060/75 loss 0.7865 act 0.750 high 0.950 gui 0.933 load 0.051s step 0.037s
+epoch 056/100 batch 070/75 loss 0.4557 act 0.746 high 0.950 gui 0.932 load 0.051s step 0.036s
+epoch 056/100 batch 075/75 loss 0.9135 act 0.755 high 0.950 gui 0.930 load 0.050s step 0.036s
+epoch 056/100 done loss 1.9584 act 0.755 high 0.950 gui 0.930 frame 0.846 lr 0.000422361
+Saved last checkpoint for epoch 56: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 56 took 6.57 seconds
+Epoch [57/100] started
+epoch 057/100 batch 010/75 loss 7.4070 act 0.775 high 0.950 gui 0.950 load 0.053s step 0.027s
+epoch 057/100 batch 020/75 loss 2.1292 act 0.762 high 0.963 gui 0.950 load 0.051s step 0.032s
+epoch 057/100 batch 030/75 loss 7.1296 act 0.783 high 0.975 gui 0.958 load 0.051s step 0.029s
+epoch 057/100 batch 040/75 loss 0.2425 act 0.762 high 0.956 gui 0.944 load 0.051s step 0.028s
+epoch 057/100 batch 050/75 loss 0.7076 act 0.760 high 0.950 gui 0.935 load 0.051s step 0.031s
+epoch 057/100 batch 060/75 loss 2.0219 act 0.733 high 0.942 gui 0.921 load 0.051s step 0.030s
+epoch 057/100 batch 070/75 loss 0.6669 act 0.750 high 0.946 gui 0.929 load 0.051s step 0.029s
+epoch 057/100 batch 075/75 loss 0.3962 act 0.745 high 0.943 gui 0.926 load 0.051s step 0.029s
+epoch 057/100 done loss 1.9138 act 0.745 high 0.943 gui 0.926 frame 0.822 lr 0.000406903
+Saved last checkpoint for epoch 57: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 57 took 6.12 seconds
+Epoch [58/100] started
+epoch 058/100 batch 010/75 loss 0.8617 act 0.700 high 0.975 gui 0.950 load 0.049s step 0.027s
+epoch 058/100 batch 020/75 loss 1.1802 act 0.738 high 0.975 gui 0.963 load 0.050s step 0.026s
+epoch 058/100 batch 030/75 loss 0.9151 act 0.758 high 0.950 gui 0.933 load 0.050s step 0.030s
+epoch 058/100 batch 040/75 loss 3.3729 act 0.744 high 0.944 gui 0.931 load 0.051s step 0.030s
+epoch 058/100 batch 050/75 loss 0.5532 act 0.765 high 0.955 gui 0.945 load 0.051s step 0.029s
+epoch 058/100 batch 060/75 loss 0.2077 act 0.750 high 0.950 gui 0.938 load 0.051s step 0.029s
+epoch 058/100 batch 070/75 loss 0.3712 act 0.768 high 0.954 gui 0.939 load 0.051s step 0.030s
+epoch 058/100 batch 075/75 loss 0.8299 act 0.772 high 0.953 gui 0.940 load 0.051s step 0.030s
+epoch 058/100 done loss 1.8095 act 0.772 high 0.953 gui 0.940 frame 0.849 lr 0.000391537
+Saved last checkpoint for epoch 58: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.8290 to 1.8095
+Saved best checkpoint for epoch 58: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 58
+Epoch 58 took 6.20 seconds
+Epoch [59/100] started
+epoch 059/100 batch 010/75 loss 0.9061 act 0.750 high 0.950 gui 0.950 load 0.050s step 0.027s
+epoch 059/100 batch 020/75 loss 3.9128 act 0.738 high 0.938 gui 0.938 load 0.050s step 0.031s
+epoch 059/100 batch 030/75 loss 0.3517 act 0.758 high 0.950 gui 0.933 load 0.049s step 0.030s
+epoch 059/100 batch 040/75 loss 4.0302 act 0.769 high 0.956 gui 0.938 load 0.049s step 0.029s
+epoch 059/100 batch 050/75 loss 1.2912 act 0.780 high 0.965 gui 0.945 load 0.049s step 0.029s
+epoch 059/100 batch 060/75 loss 0.3019 act 0.767 high 0.954 gui 0.938 load 0.050s step 0.028s
+epoch 059/100 batch 070/75 loss 0.6332 act 0.754 high 0.950 gui 0.932 load 0.050s step 0.029s
+epoch 059/100 batch 075/75 loss 0.3421 act 0.745 high 0.946 gui 0.930 load 0.049s step 0.030s
+epoch 059/100 done loss 1.8999 act 0.745 high 0.946 gui 0.930 frame 0.839 lr 0.000376279
+Saved last checkpoint for epoch 59: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 59 took 6.04 seconds
+Epoch [60/100] started
+epoch 060/100 batch 010/75 loss 2.1857 act 0.750 high 0.950 gui 0.950 load 0.051s step 0.026s
+epoch 060/100 batch 020/75 loss 0.3289 act 0.800 high 0.950 gui 0.963 load 0.050s step 0.026s
+epoch 060/100 batch 030/75 loss 0.6562 act 0.800 high 0.950 gui 0.942 load 0.049s step 0.028s
+epoch 060/100 batch 040/75 loss 0.6132 act 0.787 high 0.931 gui 0.925 load 0.050s step 0.027s
+epoch 060/100 batch 050/75 loss 0.3102 act 0.760 high 0.940 gui 0.930 load 0.050s step 0.027s
+epoch 060/100 batch 060/75 loss 0.8648 act 0.771 high 0.938 gui 0.929 load 0.050s step 0.027s
+epoch 060/100 batch 070/75 loss 1.6590 act 0.771 high 0.936 gui 0.929 load 0.050s step 0.027s
+epoch 060/100 batch 075/75 loss 0.4453 act 0.775 high 0.930 gui 0.923 load 0.050s step 0.027s
+epoch 060/100 done loss 1.9390 act 0.775 high 0.930 gui 0.923 frame 0.829 lr 0.000361144
+Saved last checkpoint for epoch 60: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.6652, action_type_acc=0.792, high_level_acc=0.953, gui_action_acc=0.940, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 2/20
+Epoch 60 took 10.64 seconds
+Epoch [61/100] started
+epoch 061/100 batch 010/75 loss 0.6421 act 0.775 high 0.975 gui 0.975 load 0.051s step 0.045s
+epoch 061/100 batch 020/75 loss 0.6859 act 0.750 high 0.963 gui 0.950 load 0.051s step 0.044s
+epoch 061/100 batch 030/75 loss 0.5291 act 0.750 high 0.967 gui 0.950 load 0.051s step 0.040s
+epoch 061/100 batch 040/75 loss 1.2858 act 0.762 high 0.969 gui 0.956 load 0.051s step 0.037s
+epoch 061/100 batch 050/75 loss 1.5274 act 0.755 high 0.960 gui 0.935 load 0.051s step 0.036s
+epoch 061/100 batch 060/75 loss 0.4493 act 0.775 high 0.958 gui 0.938 load 0.051s step 0.035s
+epoch 061/100 batch 070/75 loss 1.8347 act 0.750 high 0.957 gui 0.936 load 0.051s step 0.034s
+epoch 061/100 batch 075/75 loss 1.2833 act 0.752 high 0.953 gui 0.933 load 0.051s step 0.034s
+epoch 061/100 done loss 1.7882 act 0.752 high 0.953 gui 0.933 frame 0.852 lr 0.000346146
+Saved last checkpoint for epoch 61: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.8095 to 1.7882
+Saved best checkpoint for epoch 61: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 61
+Epoch 61 took 6.48 seconds
+Epoch [62/100] started
+epoch 062/100 batch 010/75 loss 0.1622 act 0.800 high 0.950 gui 0.950 load 0.053s step 0.035s
+epoch 062/100 batch 020/75 loss 0.2346 act 0.762 high 0.975 gui 0.963 load 0.052s step 0.031s
+epoch 062/100 batch 030/75 loss 0.6852 act 0.808 high 0.958 gui 0.950 load 0.051s step 0.029s
+epoch 062/100 batch 040/75 loss 12.9772 act 0.781 high 0.944 gui 0.925 load 0.051s step 0.031s
+epoch 062/100 batch 050/75 loss 0.2062 act 0.795 high 0.945 gui 0.930 load 0.051s step 0.030s
+epoch 062/100 batch 060/75 loss 6.8138 act 0.783 high 0.942 gui 0.929 load 0.051s step 0.029s
+epoch 062/100 batch 070/75 loss 1.3268 act 0.786 high 0.943 gui 0.929 load 0.051s step 0.030s
+epoch 062/100 batch 075/75 loss 0.5504 act 0.785 high 0.946 gui 0.933 load 0.050s step 0.030s
+epoch 062/100 done loss 1.8449 act 0.785 high 0.946 gui 0.933 frame 0.849 lr 0.0003313
+Saved last checkpoint for epoch 62: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 62 took 6.12 seconds
+Epoch [63/100] started
+epoch 063/100 batch 010/75 loss 0.7308 act 0.725 high 0.975 gui 0.975 load 0.049s step 0.026s
+epoch 063/100 batch 020/75 loss 2.3251 act 0.688 high 0.925 gui 0.912 load 0.051s step 0.029s
+epoch 063/100 batch 030/75 loss 5.5597 act 0.683 high 0.925 gui 0.917 load 0.051s step 0.029s
+epoch 063/100 batch 040/75 loss 8.5726 act 0.731 high 0.931 gui 0.919 load 0.051s step 0.029s
+epoch 063/100 batch 050/75 loss 2.1399 act 0.765 high 0.945 gui 0.935 load 0.051s step 0.029s
+epoch 063/100 batch 060/75 loss 5.7427 act 0.771 high 0.946 gui 0.933 load 0.051s step 0.030s
+epoch 063/100 batch 070/75 loss 0.5512 act 0.768 high 0.950 gui 0.936 load 0.051s step 0.029s
+epoch 063/100 batch 075/75 loss 0.1526 act 0.772 high 0.953 gui 0.940 load 0.050s step 0.029s
+epoch 063/100 done loss 1.7341 act 0.772 high 0.953 gui 0.940 frame 0.862 lr 0.000316622
+Saved last checkpoint for epoch 63: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.7882 to 1.7341
+Saved best checkpoint for epoch 63: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 63
+Epoch 63 took 6.12 seconds
+Epoch [64/100] started
+epoch 064/100 batch 010/75 loss 0.1991 act 0.875 high 1.000 gui 0.975 load 0.049s step 0.038s
+epoch 064/100 batch 020/75 loss 0.3407 act 0.787 high 0.938 gui 0.900 load 0.050s step 0.033s
+epoch 064/100 batch 030/75 loss 0.7587 act 0.775 high 0.933 gui 0.900 load 0.050s step 0.030s
+epoch 064/100 batch 040/75 loss 0.3052 act 0.806 high 0.944 gui 0.919 load 0.051s step 0.031s
+epoch 064/100 batch 050/75 loss 0.3027 act 0.805 high 0.945 gui 0.925 load 0.051s step 0.032s
+epoch 064/100 batch 060/75 loss 0.6839 act 0.800 high 0.950 gui 0.933 load 0.051s step 0.031s
+epoch 064/100 batch 070/75 loss 0.4319 act 0.800 high 0.954 gui 0.939 load 0.051s step 0.030s
+epoch 064/100 batch 075/75 loss 2.4070 act 0.792 high 0.946 gui 0.933 load 0.050s step 0.031s
+epoch 064/100 done loss 1.7930 act 0.792 high 0.946 gui 0.933 frame 0.856 lr 0.000302125
+Saved last checkpoint for epoch 64: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 64 took 6.17 seconds
+Epoch [65/100] started
+epoch 065/100 batch 010/75 loss 1.5136 act 0.725 high 0.925 gui 0.925 load 0.050s step 0.026s
+epoch 065/100 batch 020/75 loss 1.3660 act 0.713 high 0.912 gui 0.900 load 0.049s step 0.026s
+epoch 065/100 batch 030/75 loss 4.5534 act 0.717 high 0.925 gui 0.917 load 0.049s step 0.031s
+epoch 065/100 batch 040/75 loss 0.8127 act 0.725 high 0.925 gui 0.906 load 0.049s step 0.030s
+epoch 065/100 batch 050/75 loss 0.6274 act 0.755 high 0.935 gui 0.920 load 0.049s step 0.029s
+epoch 065/100 batch 060/75 loss 2.0992 act 0.771 high 0.946 gui 0.929 load 0.050s step 0.030s
+epoch 065/100 batch 070/75 loss 7.7148 act 0.771 high 0.946 gui 0.932 load 0.050s step 0.031s
+epoch 065/100 batch 075/75 loss 0.2867 act 0.779 high 0.950 gui 0.936 load 0.049s step 0.030s
+epoch 065/100 done loss 1.7914 act 0.779 high 0.950 gui 0.936 frame 0.862 lr 0.000287823
+Saved last checkpoint for epoch 65: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.7187, action_type_acc=0.805, high_level_acc=0.953, gui_action_acc=0.943, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 2/20
+Epoch 65 took 10.79 seconds
+Epoch [66/100] started
+epoch 066/100 batch 010/75 loss 6.0604 act 0.825 high 0.925 gui 0.925 load 0.051s step 0.046s
+epoch 066/100 batch 020/75 loss 0.3386 act 0.838 high 0.938 gui 0.925 load 0.050s step 0.044s
+epoch 066/100 batch 030/75 loss 1.0371 act 0.825 high 0.958 gui 0.933 load 0.050s step 0.043s
+epoch 066/100 batch 040/75 loss 0.6095 act 0.806 high 0.956 gui 0.919 load 0.050s step 0.039s
+epoch 066/100 batch 050/75 loss 0.1347 act 0.785 high 0.955 gui 0.925 load 0.050s step 0.036s
+epoch 066/100 batch 060/75 loss 3.2961 act 0.771 high 0.950 gui 0.917 load 0.050s step 0.036s
+epoch 066/100 batch 070/75 loss 1.0860 act 0.768 high 0.954 gui 0.921 load 0.050s step 0.035s
+epoch 066/100 batch 075/75 loss 0.2079 act 0.775 high 0.956 gui 0.926 load 0.050s step 0.034s
+epoch 066/100 done loss 1.6838 act 0.775 high 0.956 gui 0.926 frame 0.836 lr 0.000273732
+Saved last checkpoint for epoch 66: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.7341 to 1.6838
+Saved best checkpoint for epoch 66: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 66
+Epoch 66 took 6.46 seconds
+Epoch [67/100] started
+epoch 067/100 batch 010/75 loss 0.7356 act 0.800 high 1.000 gui 1.000 load 0.051s step 0.031s
+epoch 067/100 batch 020/75 loss 0.2195 act 0.812 high 0.975 gui 0.963 load 0.051s step 0.029s
+epoch 067/100 batch 030/75 loss 0.2892 act 0.800 high 0.967 gui 0.950 load 0.050s step 0.028s
+epoch 067/100 batch 040/75 loss 5.9499 act 0.794 high 0.963 gui 0.950 load 0.050s step 0.030s
+epoch 067/100 batch 050/75 loss 4.0441 act 0.785 high 0.955 gui 0.945 load 0.050s step 0.030s
+epoch 067/100 batch 060/75 loss 0.1842 act 0.775 high 0.946 gui 0.933 load 0.050s step 0.029s
+epoch 067/100 batch 070/75 loss 1.9920 act 0.775 high 0.950 gui 0.936 load 0.050s step 0.030s
+epoch 067/100 batch 075/75 loss 0.0995 act 0.772 high 0.950 gui 0.936 load 0.050s step 0.030s
+epoch 067/100 done loss 1.8089 act 0.772 high 0.950 gui 0.936 frame 0.862 lr 0.000259864
+Saved last checkpoint for epoch 67: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 67 took 6.08 seconds
+Epoch [68/100] started
+epoch 068/100 batch 010/75 loss 2.0551 act 0.800 high 0.925 gui 0.950 load 0.051s step 0.026s
+epoch 068/100 batch 020/75 loss 3.1084 act 0.750 high 0.938 gui 0.950 load 0.051s step 0.027s
+epoch 068/100 batch 030/75 loss 0.8377 act 0.758 high 0.917 gui 0.925 load 0.051s step 0.028s
+epoch 068/100 batch 040/75 loss 1.5309 act 0.762 high 0.931 gui 0.931 load 0.051s step 0.027s
+epoch 068/100 batch 050/75 loss 1.3243 act 0.780 high 0.935 gui 0.935 load 0.051s step 0.028s
+epoch 068/100 batch 060/75 loss 0.4597 act 0.787 high 0.938 gui 0.925 load 0.050s step 0.028s
+epoch 068/100 batch 070/75 loss 0.2088 act 0.789 high 0.946 gui 0.932 load 0.050s step 0.028s
+epoch 068/100 batch 075/75 loss 0.0314 act 0.795 high 0.950 gui 0.933 load 0.050s step 0.027s
+epoch 068/100 done loss 1.8442 act 0.795 high 0.950 gui 0.933 frame 0.842 lr 0.000246234
+Saved last checkpoint for epoch 68: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 68 took 5.94 seconds
+Epoch [69/100] started
+epoch 069/100 batch 010/75 loss 0.2597 act 0.800 high 0.925 gui 0.900 load 0.051s step 0.039s
+epoch 069/100 batch 020/75 loss 4.3873 act 0.775 high 0.925 gui 0.912 load 0.051s step 0.033s
+epoch 069/100 batch 030/75 loss 0.3970 act 0.808 high 0.942 gui 0.933 load 0.052s step 0.031s
+epoch 069/100 batch 040/75 loss 0.2059 act 0.825 high 0.956 gui 0.950 load 0.051s step 0.031s
+epoch 069/100 batch 050/75 loss 1.6419 act 0.810 high 0.945 gui 0.930 load 0.051s step 0.031s
+epoch 069/100 batch 060/75 loss 0.2142 act 0.808 high 0.938 gui 0.925 load 0.051s step 0.030s
+epoch 069/100 batch 070/75 loss 0.3128 act 0.811 high 0.943 gui 0.929 load 0.051s step 0.031s
+epoch 069/100 batch 075/75 loss 8.0918 act 0.802 high 0.940 gui 0.926 load 0.050s step 0.031s
+epoch 069/100 done loss 1.8333 act 0.802 high 0.940 gui 0.926 frame 0.849 lr 0.000232855
+Saved last checkpoint for epoch 69: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 69 took 6.19 seconds
+Epoch [70/100] started
+epoch 070/100 batch 010/75 loss 0.4185 act 0.950 high 1.000 gui 0.975 load 0.054s step 0.025s
+epoch 070/100 batch 020/75 loss 4.6928 act 0.838 high 0.975 gui 0.938 load 0.053s step 0.030s
+epoch 070/100 batch 030/75 loss 0.7865 act 0.783 high 0.958 gui 0.933 load 0.052s step 0.034s
+epoch 070/100 batch 040/75 loss 0.3552 act 0.800 high 0.963 gui 0.938 load 0.051s step 0.033s
+epoch 070/100 batch 050/75 loss 1.0346 act 0.805 high 0.965 gui 0.940 load 0.051s step 0.032s
+epoch 070/100 batch 060/75 loss 3.8946 act 0.800 high 0.954 gui 0.933 load 0.051s step 0.033s
+epoch 070/100 batch 070/75 loss 1.1603 act 0.789 high 0.954 gui 0.929 load 0.051s step 0.033s
+epoch 070/100 batch 075/75 loss 0.3819 act 0.792 high 0.956 gui 0.933 load 0.050s step 0.032s
+epoch 070/100 done loss 1.8027 act 0.792 high 0.956 gui 0.933 frame 0.859 lr 0.000219739
+Saved last checkpoint for epoch 70: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.6148, action_type_acc=0.805, high_level_acc=0.953, gui_action_acc=0.936, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 4/20
+Epoch 70 took 11.09 seconds
+Epoch [71/100] started
+epoch 071/100 batch 010/75 loss 9.9890 act 0.725 high 0.900 gui 0.875 load 0.051s step 0.043s
+epoch 071/100 batch 020/75 loss 0.7743 act 0.775 high 0.938 gui 0.925 load 0.050s step 0.043s
+epoch 071/100 batch 030/75 loss 0.2394 act 0.792 high 0.942 gui 0.933 load 0.052s step 0.040s
+epoch 071/100 batch 040/75 loss 4.0528 act 0.794 high 0.950 gui 0.938 load 0.052s step 0.037s
+epoch 071/100 batch 050/75 loss 0.4867 act 0.790 high 0.945 gui 0.935 load 0.052s step 0.034s
+epoch 071/100 batch 060/75 loss 0.4570 act 0.787 high 0.942 gui 0.933 load 0.052s step 0.034s
+epoch 071/100 batch 070/75 loss 0.7135 act 0.789 high 0.946 gui 0.939 load 0.052s step 0.033s
+epoch 071/100 batch 075/75 loss 3.2688 act 0.785 high 0.946 gui 0.940 load 0.051s step 0.032s
+epoch 071/100 done loss 1.6924 act 0.785 high 0.946 gui 0.940 frame 0.859 lr 0.000206901
+Saved last checkpoint for epoch 71: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 5/20
+Epoch 71 took 6.39 seconds
+Epoch [72/100] started
+epoch 072/100 batch 010/75 loss 0.2664 act 0.775 high 0.950 gui 0.925 load 0.051s step 0.029s
+epoch 072/100 batch 020/75 loss 1.0829 act 0.800 high 0.975 gui 0.950 load 0.050s step 0.028s
+epoch 072/100 batch 030/75 loss 6.5383 act 0.783 high 0.950 gui 0.925 load 0.050s step 0.028s
+epoch 072/100 batch 040/75 loss 0.8871 act 0.775 high 0.950 gui 0.931 load 0.051s step 0.031s
+epoch 072/100 batch 050/75 loss 0.4373 act 0.785 high 0.945 gui 0.925 load 0.051s step 0.030s
+epoch 072/100 batch 060/75 loss 3.4607 act 0.783 high 0.946 gui 0.929 load 0.051s step 0.030s
+epoch 072/100 batch 070/75 loss 1.0891 act 0.775 high 0.943 gui 0.929 load 0.051s step 0.030s
+epoch 072/100 batch 075/75 loss 1.3841 act 0.768 high 0.946 gui 0.930 load 0.051s step 0.030s
+epoch 072/100 done loss 1.7177 act 0.768 high 0.946 gui 0.930 frame 0.849 lr 0.000194353
+Saved last checkpoint for epoch 72: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 6/20
+Epoch 72 took 6.16 seconds
+Epoch [73/100] started
+epoch 073/100 batch 010/75 loss 0.1944 act 0.825 high 0.950 gui 0.950 load 0.052s step 0.024s
+epoch 073/100 batch 020/75 loss 0.6245 act 0.812 high 0.950 gui 0.938 load 0.052s step 0.030s
+epoch 073/100 batch 030/75 loss 3.4851 act 0.783 high 0.950 gui 0.933 load 0.051s step 0.029s
+epoch 073/100 batch 040/75 loss 1.6705 act 0.800 high 0.963 gui 0.950 load 0.051s step 0.028s
+epoch 073/100 batch 050/75 loss 2.7003 act 0.795 high 0.965 gui 0.950 load 0.051s step 0.030s
+epoch 073/100 batch 060/75 loss 4.0883 act 0.792 high 0.954 gui 0.942 load 0.052s step 0.029s
+epoch 073/100 batch 070/75 loss 6.4456 act 0.782 high 0.943 gui 0.929 load 0.053s step 0.030s
+epoch 073/100 batch 075/75 loss 0.8293 act 0.782 high 0.943 gui 0.930 load 0.054s step 0.031s
+epoch 073/100 done loss 1.9237 act 0.782 high 0.943 gui 0.930 frame 0.846 lr 0.000182107
+Saved last checkpoint for epoch 73: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 7/20
+Epoch 73 took 6.47 seconds
+Epoch [74/100] started
+epoch 074/100 batch 010/75 loss 0.7980 act 0.725 high 0.925 gui 0.900 load 0.058s step 0.042s
+epoch 074/100 batch 020/75 loss 4.3649 act 0.775 high 0.938 gui 0.925 load 0.057s step 0.043s
+epoch 074/100 batch 030/75 loss 9.9119 act 0.750 high 0.933 gui 0.925 load 0.056s step 0.044s
+epoch 074/100 batch 040/75 loss 1.7148 act 0.750 high 0.944 gui 0.938 load 0.057s step 0.044s
+epoch 074/100 batch 050/75 loss 3.4953 act 0.770 high 0.945 gui 0.940 load 0.057s step 0.044s
+epoch 074/100 batch 060/75 loss 6.8780 act 0.800 high 0.950 gui 0.942 load 0.056s step 0.043s
+epoch 074/100 batch 070/75 loss 0.6205 act 0.804 high 0.954 gui 0.943 load 0.056s step 0.043s
+epoch 074/100 batch 075/75 loss 9.0316 act 0.799 high 0.950 gui 0.940 load 0.055s step 0.043s
+epoch 074/100 done loss 1.6779 act 0.799 high 0.950 gui 0.940 frame 0.862 lr 0.000170175
+Saved last checkpoint for epoch 74: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.6838 to 1.6779
+Saved best checkpoint for epoch 74: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 74
+Epoch 74 took 7.66 seconds
+Epoch [75/100] started
+epoch 075/100 batch 010/75 loss 0.5154 act 0.750 high 0.975 gui 0.925 load 0.064s step 0.043s
+epoch 075/100 batch 020/75 loss 0.2806 act 0.825 high 0.988 gui 0.963 load 0.061s step 0.043s
+epoch 075/100 batch 030/75 loss 0.6268 act 0.817 high 0.975 gui 0.958 load 0.060s step 0.042s
+epoch 075/100 batch 040/75 loss 4.6782 act 0.762 high 0.969 gui 0.944 load 0.059s step 0.042s
+epoch 075/100 batch 050/75 loss 0.4734 act 0.790 high 0.965 gui 0.945 load 0.058s step 0.039s
+epoch 075/100 batch 060/75 loss 6.9797 act 0.779 high 0.958 gui 0.938 load 0.058s step 0.037s
+epoch 075/100 batch 070/75 loss 2.0314 act 0.768 high 0.957 gui 0.939 load 0.057s step 0.036s
+epoch 075/100 batch 075/75 loss 0.5308 act 0.765 high 0.953 gui 0.936 load 0.056s step 0.037s
+epoch 075/100 done loss 1.6797 act 0.765 high 0.953 gui 0.936 frame 0.872 lr 0.000158569
+Saved last checkpoint for epoch 75: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.5924, action_type_acc=0.812, high_level_acc=0.953, gui_action_acc=0.943, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 1/20
+Epoch 75 took 11.96 seconds
+Epoch [76/100] started
+epoch 076/100 batch 010/75 loss 8.0589 act 0.825 high 0.950 gui 0.950 load 0.052s step 0.044s
+epoch 076/100 batch 020/75 loss 4.1986 act 0.850 high 0.975 gui 0.938 load 0.051s step 0.043s
+epoch 076/100 batch 030/75 loss 3.8556 act 0.800 high 0.958 gui 0.933 load 0.051s step 0.040s
+epoch 076/100 batch 040/75 loss 2.9752 act 0.806 high 0.956 gui 0.931 load 0.056s step 0.038s
+epoch 076/100 batch 050/75 loss 1.1556 act 0.790 high 0.950 gui 0.925 load 0.057s step 0.039s
+epoch 076/100 batch 060/75 loss 2.0570 act 0.779 high 0.950 gui 0.925 load 0.058s step 0.040s
+epoch 076/100 batch 070/75 loss 2.0111 act 0.786 high 0.957 gui 0.936 load 0.058s step 0.040s
+epoch 076/100 batch 075/75 loss 0.9571 act 0.785 high 0.953 gui 0.933 load 0.057s step 0.040s
+epoch 076/100 done loss 1.6661 act 0.785 high 0.953 gui 0.933 frame 0.849 lr 0.0001473
+Saved last checkpoint for epoch 76: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.6779 to 1.6661
+Saved best checkpoint for epoch 76: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 76
+Epoch 76 took 7.48 seconds
+Epoch [77/100] started
+epoch 077/100 batch 010/75 loss 0.2365 act 0.800 high 1.000 gui 1.000 load 0.053s step 0.033s
+epoch 077/100 batch 020/75 loss 0.3033 act 0.825 high 0.975 gui 0.963 load 0.052s step 0.030s
+epoch 077/100 batch 030/75 loss 1.0551 act 0.800 high 0.967 gui 0.933 load 0.052s step 0.030s
+epoch 077/100 batch 040/75 loss 0.1553 act 0.800 high 0.956 gui 0.931 load 0.052s step 0.033s
+epoch 077/100 batch 050/75 loss 0.2733 act 0.795 high 0.940 gui 0.920 load 0.052s step 0.032s
+epoch 077/100 batch 060/75 loss 0.7507 act 0.796 high 0.950 gui 0.929 load 0.052s step 0.031s
+epoch 077/100 batch 070/75 loss 0.5172 act 0.793 high 0.950 gui 0.932 load 0.053s step 0.032s
+epoch 077/100 batch 075/75 loss 2.4280 act 0.789 high 0.950 gui 0.933 load 0.052s step 0.032s
+epoch 077/100 done loss 1.6721 act 0.789 high 0.950 gui 0.933 frame 0.849 lr 0.00013638
+Saved last checkpoint for epoch 77: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 77 took 6.45 seconds
+Epoch [78/100] started
+epoch 078/100 batch 010/75 loss 0.2277 act 0.975 high 0.975 gui 0.975 load 0.050s step 0.028s
+epoch 078/100 batch 020/75 loss 4.7387 act 0.812 high 0.950 gui 0.950 load 0.050s step 0.028s
+epoch 078/100 batch 030/75 loss 2.4743 act 0.817 high 0.950 gui 0.942 load 0.051s step 0.030s
+epoch 078/100 batch 040/75 loss 0.6692 act 0.800 high 0.938 gui 0.925 load 0.051s step 0.030s
+epoch 078/100 batch 050/75 loss 0.1633 act 0.820 high 0.940 gui 0.930 load 0.052s step 0.030s
+epoch 078/100 batch 060/75 loss 1.0502 act 0.812 high 0.946 gui 0.929 load 0.053s step 0.031s
+epoch 078/100 batch 070/75 loss 0.5716 act 0.811 high 0.943 gui 0.925 load 0.053s step 0.033s
+epoch 078/100 batch 075/75 loss 0.1267 act 0.802 high 0.943 gui 0.923 load 0.053s step 0.034s
+epoch 078/100 done loss 1.6688 act 0.802 high 0.943 gui 0.923 frame 0.836 lr 0.00012582
+Saved last checkpoint for epoch 78: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 78 took 6.62 seconds
+Epoch [79/100] started
+epoch 079/100 batch 010/75 loss 6.2261 act 0.775 high 0.975 gui 0.950 load 0.056s step 0.045s
+epoch 079/100 batch 020/75 loss 0.5536 act 0.762 high 0.963 gui 0.938 load 0.058s step 0.046s
+epoch 079/100 batch 030/75 loss 3.9276 act 0.775 high 0.950 gui 0.925 load 0.057s step 0.045s
+epoch 079/100 batch 040/75 loss 0.4749 act 0.769 high 0.950 gui 0.925 load 0.057s step 0.045s
+epoch 079/100 batch 050/75 loss 0.8614 act 0.790 high 0.955 gui 0.935 load 0.060s step 0.045s
+epoch 079/100 batch 060/75 loss 0.1640 act 0.792 high 0.954 gui 0.933 load 0.062s step 0.046s
+epoch 079/100 batch 070/75 loss 4.8268 act 0.796 high 0.954 gui 0.932 load 0.061s step 0.046s
+epoch 079/100 batch 075/75 loss 0.5439 act 0.802 high 0.953 gui 0.933 load 0.061s step 0.046s
+epoch 079/100 done loss 1.7379 act 0.802 high 0.953 gui 0.933 frame 0.856 lr 0.000115629
+Saved last checkpoint for epoch 79: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 79 took 8.09 seconds
+Epoch [80/100] started
+epoch 080/100 batch 010/75 loss 0.4719 act 0.800 high 0.950 gui 0.925 load 0.060s step 0.043s
+epoch 080/100 batch 020/75 loss 3.9536 act 0.775 high 0.938 gui 0.912 load 0.065s step 0.045s
+epoch 080/100 batch 030/75 loss 0.7061 act 0.775 high 0.933 gui 0.917 load 0.064s step 0.045s
+epoch 080/100 batch 040/75 loss 0.8685 act 0.769 high 0.938 gui 0.925 load 0.065s step 0.045s
+epoch 080/100 batch 050/75 loss 1.0081 act 0.770 high 0.945 gui 0.935 load 0.068s step 0.046s
+epoch 080/100 batch 060/75 loss 0.8993 act 0.783 high 0.954 gui 0.938 load 0.069s step 0.047s
+epoch 080/100 batch 070/75 loss 7.6865 act 0.775 high 0.946 gui 0.932 load 0.069s step 0.047s
+epoch 080/100 batch 075/75 loss 0.4017 act 0.785 high 0.950 gui 0.936 load 0.068s step 0.046s
+epoch 080/100 done loss 1.6986 act 0.785 high 0.950 gui 0.936 frame 0.862 lr 0.000105818
+Saved last checkpoint for epoch 80: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.5469, action_type_acc=0.792, high_level_acc=0.953, gui_action_acc=0.943, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 4/20
+Epoch 80 took 14.45 seconds
+Epoch [81/100] started
+epoch 081/100 batch 010/75 loss 0.3176 act 0.800 high 0.975 gui 0.950 load 0.063s step 0.047s
+epoch 081/100 batch 020/75 loss 1.1732 act 0.787 high 0.963 gui 0.963 load 0.058s step 0.046s
+epoch 081/100 batch 030/75 loss 0.7856 act 0.725 high 0.950 gui 0.950 load 0.056s step 0.045s
+epoch 081/100 batch 040/75 loss 0.3583 act 0.762 high 0.956 gui 0.944 load 0.056s step 0.044s
+epoch 081/100 batch 050/75 loss 0.1087 act 0.790 high 0.960 gui 0.950 load 0.055s step 0.044s
+epoch 081/100 batch 060/75 loss 0.3714 act 0.796 high 0.958 gui 0.950 load 0.054s step 0.042s
+epoch 081/100 batch 070/75 loss 3.3406 act 0.796 high 0.950 gui 0.943 load 0.054s step 0.040s
+epoch 081/100 batch 075/75 loss 0.1263 act 0.792 high 0.946 gui 0.933 load 0.054s step 0.040s
+epoch 081/100 done loss 1.7019 act 0.792 high 0.946 gui 0.933 frame 0.856 lr 9.6396e-05
+Saved last checkpoint for epoch 81: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 5/20
+Epoch 81 took 7.12 seconds
+Epoch [82/100] started
+epoch 082/100 batch 010/75 loss 0.6324 act 0.875 high 0.975 gui 0.975 load 0.052s step 0.042s
+epoch 082/100 batch 020/75 loss 1.1870 act 0.738 high 0.963 gui 0.950 load 0.052s step 0.043s
+epoch 082/100 batch 030/75 loss 0.6923 act 0.758 high 0.958 gui 0.950 load 0.052s step 0.039s
+epoch 082/100 batch 040/75 loss 1.4261 act 0.756 high 0.944 gui 0.938 load 0.052s step 0.037s
+epoch 082/100 batch 050/75 loss 0.2814 act 0.765 high 0.935 gui 0.930 load 0.052s step 0.037s
+epoch 082/100 batch 060/75 loss 0.3146 act 0.787 high 0.942 gui 0.938 load 0.053s step 0.036s
+epoch 082/100 batch 070/75 loss 1.1622 act 0.789 high 0.943 gui 0.932 load 0.053s step 0.035s
+epoch 082/100 batch 075/75 loss 0.1021 act 0.789 high 0.946 gui 0.933 load 0.052s step 0.035s
+epoch 082/100 done loss 1.6945 act 0.789 high 0.946 gui 0.933 frame 0.849 lr 8.73733e-05
+Saved last checkpoint for epoch 82: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 6/20
+Epoch 82 took 6.71 seconds
+Epoch [83/100] started
+epoch 083/100 batch 010/75 loss 3.1816 act 0.800 high 0.950 gui 0.925 load 0.052s step 0.043s
+epoch 083/100 batch 020/75 loss 0.3788 act 0.775 high 0.938 gui 0.925 load 0.057s step 0.043s
+epoch 083/100 batch 030/75 loss 1.2878 act 0.758 high 0.942 gui 0.925 load 0.056s step 0.043s
+epoch 083/100 batch 040/75 loss 3.8655 act 0.762 high 0.944 gui 0.912 load 0.055s step 0.041s
+epoch 083/100 batch 050/75 loss 0.5818 act 0.750 high 0.940 gui 0.915 load 0.054s step 0.039s
+epoch 083/100 batch 060/75 loss 0.5803 act 0.750 high 0.946 gui 0.921 load 0.055s step 0.038s
+epoch 083/100 batch 070/75 loss 0.5044 act 0.764 high 0.946 gui 0.921 load 0.056s step 0.039s
+epoch 083/100 batch 075/75 loss 0.1785 act 0.775 high 0.946 gui 0.923 load 0.055s step 0.039s
+epoch 083/100 done loss 1.7035 act 0.775 high 0.946 gui 0.923 frame 0.849 lr 7.87582e-05
+Saved last checkpoint for epoch 83: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 7/20
+Epoch 83 took 7.19 seconds
+Epoch [84/100] started
+epoch 084/100 batch 010/75 loss 0.5594 act 0.775 high 1.000 gui 1.000 load 0.051s step 0.042s
+epoch 084/100 batch 020/75 loss 1.4739 act 0.787 high 0.963 gui 0.950 load 0.051s step 0.036s
+epoch 084/100 batch 030/75 loss 0.3325 act 0.817 high 0.958 gui 0.950 load 0.052s step 0.034s
+epoch 084/100 batch 040/75 loss 1.5506 act 0.825 high 0.950 gui 0.938 load 0.053s step 0.035s
+epoch 084/100 batch 050/75 loss 0.2199 act 0.815 high 0.950 gui 0.940 load 0.053s step 0.037s
+epoch 084/100 batch 060/75 loss 0.3985 act 0.804 high 0.954 gui 0.942 load 0.053s step 0.036s
+epoch 084/100 batch 070/75 loss 0.5745 act 0.800 high 0.954 gui 0.939 load 0.052s step 0.035s
+epoch 084/100 batch 075/75 loss 0.6768 act 0.802 high 0.953 gui 0.940 load 0.052s step 0.036s
+epoch 084/100 done loss 1.5755 act 0.802 high 0.953 gui 0.940 frame 0.859 lr 7.05594e-05
+Saved last checkpoint for epoch 84: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.6661 to 1.5755
+Saved best checkpoint for epoch 84: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 84
+Epoch 84 took 6.76 seconds
+Epoch [85/100] started
+epoch 085/100 batch 010/75 loss 0.1757 act 0.775 high 0.925 gui 0.925 load 0.051s step 0.034s
+epoch 085/100 batch 020/75 loss 1.0633 act 0.787 high 0.950 gui 0.938 load 0.051s step 0.031s
+epoch 085/100 batch 030/75 loss 0.0938 act 0.842 high 0.967 gui 0.958 load 0.052s step 0.031s
+epoch 085/100 batch 040/75 loss 0.5055 act 0.844 high 0.969 gui 0.963 load 0.052s step 0.033s
+epoch 085/100 batch 050/75 loss 2.7686 act 0.820 high 0.960 gui 0.955 load 0.052s step 0.032s
+epoch 085/100 batch 060/75 loss 0.3727 act 0.812 high 0.958 gui 0.954 load 0.052s step 0.032s
+epoch 085/100 batch 070/75 loss 1.1915 act 0.793 high 0.954 gui 0.943 load 0.052s step 0.033s
+epoch 085/100 batch 075/75 loss 1.2909 act 0.789 high 0.953 gui 0.943 load 0.051s step 0.033s
+epoch 085/100 done loss 1.5872 act 0.789 high 0.953 gui 0.943 frame 0.866 lr 6.27848e-05
+Saved last checkpoint for epoch 85: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.5559, action_type_acc=0.799, high_level_acc=0.953, gui_action_acc=0.943, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 1/20
+Epoch 85 took 11.15 seconds
+Epoch [86/100] started
+epoch 086/100 batch 010/75 loss 6.9491 act 0.875 high 0.950 gui 0.925 load 0.052s step 0.047s
+epoch 086/100 batch 020/75 loss 1.6884 act 0.863 high 0.950 gui 0.950 load 0.052s step 0.046s
+epoch 086/100 batch 030/75 loss 0.8122 act 0.842 high 0.942 gui 0.933 load 0.052s step 0.046s
+epoch 086/100 batch 040/75 loss 1.5328 act 0.825 high 0.950 gui 0.944 load 0.052s step 0.045s
+epoch 086/100 batch 050/75 loss 3.8833 act 0.805 high 0.950 gui 0.935 load 0.053s step 0.044s
+epoch 086/100 batch 060/75 loss 0.7563 act 0.796 high 0.946 gui 0.938 load 0.053s step 0.041s
+epoch 086/100 batch 070/75 loss 2.3245 act 0.779 high 0.943 gui 0.932 load 0.054s step 0.041s
+epoch 086/100 batch 075/75 loss 0.2011 act 0.789 high 0.943 gui 0.933 load 0.053s step 0.041s
+epoch 086/100 done loss 1.6879 act 0.789 high 0.943 gui 0.933 frame 0.856 lr 5.54422e-05
+Saved last checkpoint for epoch 86: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 86 took 7.20 seconds
+Epoch [87/100] started
+epoch 087/100 batch 010/75 loss 1.3420 act 0.650 high 0.975 gui 0.925 load 0.051s step 0.040s
+epoch 087/100 batch 020/75 loss 0.2308 act 0.700 high 0.950 gui 0.925 load 0.051s step 0.036s
+epoch 087/100 batch 030/75 loss 0.1136 act 0.733 high 0.958 gui 0.933 load 0.051s step 0.033s
+epoch 087/100 batch 040/75 loss 0.1758 act 0.750 high 0.956 gui 0.938 load 0.051s step 0.034s
+epoch 087/100 batch 050/75 loss 4.4841 act 0.760 high 0.945 gui 0.930 load 0.052s step 0.036s
+epoch 087/100 batch 060/75 loss 0.3088 act 0.775 high 0.946 gui 0.933 load 0.052s step 0.036s
+epoch 087/100 batch 070/75 loss 0.3097 act 0.775 high 0.950 gui 0.939 load 0.052s step 0.035s
+epoch 087/100 batch 075/75 loss 0.2457 act 0.772 high 0.950 gui 0.936 load 0.052s step 0.035s
+epoch 087/100 done loss 1.5865 act 0.772 high 0.950 gui 0.936 frame 0.846 lr 4.85389e-05
+Saved last checkpoint for epoch 87: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 87 took 6.61 seconds
+Epoch [88/100] started
+epoch 088/100 batch 010/75 loss 0.2137 act 0.875 high 1.000 gui 1.000 load 0.052s step 0.030s
+epoch 088/100 batch 020/75 loss 0.2882 act 0.875 high 0.988 gui 0.988 load 0.052s step 0.032s
+epoch 088/100 batch 030/75 loss 0.2274 act 0.875 high 0.983 gui 0.975 load 0.052s step 0.030s
+epoch 088/100 batch 040/75 loss 4.1202 act 0.838 high 0.975 gui 0.969 load 0.052s step 0.031s
+epoch 088/100 batch 050/75 loss 2.3102 act 0.825 high 0.960 gui 0.945 load 0.052s step 0.031s
+epoch 088/100 batch 060/75 loss 10.2366 act 0.804 high 0.950 gui 0.938 load 0.052s step 0.030s
+epoch 088/100 batch 070/75 loss 1.0783 act 0.796 high 0.950 gui 0.939 load 0.052s step 0.031s
+epoch 088/100 batch 075/75 loss 0.2029 act 0.795 high 0.953 gui 0.940 load 0.052s step 0.032s
+epoch 088/100 done loss 1.6695 act 0.795 high 0.953 gui 0.940 frame 0.856 lr 4.20816e-05
+Saved last checkpoint for epoch 88: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 88 took 6.35 seconds
+Epoch [89/100] started
+epoch 089/100 batch 010/75 loss 2.9268 act 0.825 high 0.950 gui 0.925 load 0.054s step 0.041s
+epoch 089/100 batch 020/75 loss 0.6497 act 0.775 high 0.938 gui 0.925 load 0.053s step 0.035s
+epoch 089/100 batch 030/75 loss 3.5787 act 0.783 high 0.933 gui 0.925 load 0.053s step 0.032s
+epoch 089/100 batch 040/75 loss 1.2067 act 0.800 high 0.950 gui 0.938 load 0.052s step 0.034s
+epoch 089/100 batch 050/75 loss 0.1489 act 0.810 high 0.945 gui 0.935 load 0.052s step 0.033s
+epoch 089/100 batch 060/75 loss 0.6710 act 0.817 high 0.954 gui 0.942 load 0.052s step 0.032s
+epoch 089/100 batch 070/75 loss 0.4184 act 0.811 high 0.957 gui 0.943 load 0.052s step 0.033s
+epoch 089/100 batch 075/75 loss 0.1535 act 0.812 high 0.953 gui 0.940 load 0.051s step 0.032s
+epoch 089/100 done loss 1.5700 act 0.812 high 0.953 gui 0.940 frame 0.866 lr 3.60766e-05
+Saved last checkpoint for epoch 89: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.5755 to 1.5700
+Saved best checkpoint for epoch 89: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 89
+Epoch 89 took 6.46 seconds
+Epoch [90/100] started
+epoch 090/100 batch 010/75 loss 7.8266 act 0.650 high 0.850 gui 0.850 load 0.051s step 0.028s
+epoch 090/100 batch 020/75 loss 0.5206 act 0.750 high 0.887 gui 0.900 load 0.051s step 0.032s
+epoch 090/100 batch 030/75 loss 0.2067 act 0.783 high 0.925 gui 0.917 load 0.051s step 0.036s
+epoch 090/100 batch 040/75 loss 3.6824 act 0.787 high 0.925 gui 0.919 load 0.051s step 0.035s
+epoch 090/100 batch 050/75 loss 5.2559 act 0.790 high 0.930 gui 0.915 load 0.051s step 0.034s
+epoch 090/100 batch 060/75 loss 0.8235 act 0.800 high 0.942 gui 0.925 load 0.051s step 0.033s
+epoch 090/100 batch 070/75 loss 2.0562 act 0.793 high 0.946 gui 0.932 load 0.051s step 0.033s
+epoch 090/100 batch 075/75 loss 0.2115 act 0.802 high 0.950 gui 0.936 load 0.051s step 0.033s
+epoch 090/100 done loss 1.5853 act 0.802 high 0.950 gui 0.936 frame 0.846 lr 3.05301e-05
+Saved last checkpoint for epoch 90: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.5211, action_type_acc=0.799, high_level_acc=0.953, gui_action_acc=0.943, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 1/20
+Epoch 90 took 11.22 seconds
+Epoch [91/100] started
+epoch 091/100 batch 010/75 loss 0.9157 act 0.675 high 0.950 gui 0.950 load 0.053s step 0.045s
+epoch 091/100 batch 020/75 loss 1.0930 act 0.738 high 0.963 gui 0.963 load 0.051s step 0.044s
+epoch 091/100 batch 030/75 loss 0.1876 act 0.733 high 0.975 gui 0.958 load 0.052s step 0.040s
+epoch 091/100 batch 040/75 loss 0.2637 act 0.775 high 0.981 gui 0.963 load 0.052s step 0.036s
+epoch 091/100 batch 050/75 loss 6.5137 act 0.770 high 0.965 gui 0.945 load 0.052s step 0.035s
+epoch 091/100 batch 060/75 loss 4.2748 act 0.779 high 0.963 gui 0.946 load 0.052s step 0.035s
+epoch 091/100 batch 070/75 loss 0.8746 act 0.771 high 0.957 gui 0.943 load 0.051s step 0.034s
+epoch 091/100 batch 075/75 loss 0.0927 act 0.772 high 0.953 gui 0.940 load 0.051s step 0.033s
+epoch 091/100 done loss 1.5948 act 0.772 high 0.953 gui 0.940 frame 0.849 lr 2.54473e-05
+Saved last checkpoint for epoch 91: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 91 took 6.44 seconds
+Epoch [92/100] started
+epoch 092/100 batch 010/75 loss 1.3533 act 0.750 high 0.950 gui 0.950 load 0.050s step 0.036s
+epoch 092/100 batch 020/75 loss 0.2501 act 0.787 high 0.938 gui 0.925 load 0.051s step 0.037s
+epoch 092/100 batch 030/75 loss 1.4630 act 0.758 high 0.942 gui 0.933 load 0.051s step 0.035s
+epoch 092/100 batch 040/75 loss 0.1809 act 0.806 high 0.950 gui 0.944 load 0.051s step 0.033s
+epoch 092/100 batch 050/75 loss 0.2848 act 0.800 high 0.950 gui 0.940 load 0.051s step 0.033s
+epoch 092/100 batch 060/75 loss 0.2200 act 0.808 high 0.954 gui 0.946 load 0.051s step 0.032s
+epoch 092/100 batch 070/75 loss 6.5008 act 0.800 high 0.954 gui 0.939 load 0.051s step 0.032s
+epoch 092/100 batch 075/75 loss 0.1347 act 0.805 high 0.956 gui 0.943 load 0.051s step 0.031s
+epoch 092/100 done loss 1.5635 act 0.805 high 0.956 gui 0.943 frame 0.859 lr 2.08333e-05
+Saved last checkpoint for epoch 92: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.5700 to 1.5635
+Saved best checkpoint for epoch 92: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 92
+Epoch 92 took 6.31 seconds
+Epoch [93/100] started
+epoch 093/100 batch 010/75 loss 0.4964 act 0.825 high 0.975 gui 0.975 load 0.050s step 0.026s
+epoch 093/100 batch 020/75 loss 0.5549 act 0.812 high 0.950 gui 0.938 load 0.050s step 0.029s
+epoch 093/100 batch 030/75 loss 4.7513 act 0.800 high 0.958 gui 0.950 load 0.050s step 0.033s
+epoch 093/100 batch 040/75 loss 0.3491 act 0.775 high 0.956 gui 0.944 load 0.050s step 0.032s
+epoch 093/100 batch 050/75 loss 1.5813 act 0.770 high 0.950 gui 0.945 load 0.050s step 0.031s
+epoch 093/100 batch 060/75 loss 0.2059 act 0.775 high 0.950 gui 0.938 load 0.051s step 0.031s
+epoch 093/100 batch 070/75 loss 0.1633 act 0.793 high 0.954 gui 0.939 load 0.050s step 0.031s
+epoch 093/100 batch 075/75 loss 8.3252 act 0.782 high 0.950 gui 0.936 load 0.050s step 0.030s
+epoch 093/100 done loss 1.6713 act 0.782 high 0.950 gui 0.936 frame 0.849 lr 1.66927e-05
+Saved last checkpoint for epoch 93: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 93 took 6.13 seconds
+Epoch [94/100] started
+epoch 094/100 batch 010/75 loss 2.2488 act 0.775 high 1.000 gui 0.950 load 0.051s step 0.033s
+epoch 094/100 batch 020/75 loss 3.9558 act 0.738 high 0.963 gui 0.938 load 0.050s step 0.030s
+epoch 094/100 batch 030/75 loss 0.1877 act 0.775 high 0.967 gui 0.950 load 0.050s step 0.028s
+epoch 094/100 batch 040/75 loss 0.8823 act 0.769 high 0.969 gui 0.956 load 0.050s step 0.030s
+epoch 094/100 batch 050/75 loss 4.2393 act 0.775 high 0.955 gui 0.940 load 0.051s step 0.029s
+epoch 094/100 batch 060/75 loss 0.5271 act 0.792 high 0.958 gui 0.942 load 0.051s step 0.029s
+epoch 094/100 batch 070/75 loss 0.2743 act 0.796 high 0.957 gui 0.943 load 0.051s step 0.029s
+epoch 094/100 batch 075/75 loss 0.2037 act 0.799 high 0.956 gui 0.943 load 0.051s step 0.029s
+epoch 094/100 done loss 1.5319 act 0.799 high 0.956 gui 0.943 frame 0.849 lr 1.30296e-05
+Saved last checkpoint for epoch 94: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss improved from 1.5635 to 1.5319
+Saved best checkpoint for epoch 94: outputs/checkpoints\default_params_2026_06_05_15_51_57\best.pt
+Saved best model checkpoint at epoch 94
+Epoch 94 took 6.16 seconds
+Epoch [95/100] started
+epoch 095/100 batch 010/75 loss 0.1873 act 0.800 high 0.975 gui 0.950 load 0.052s step 0.027s
+epoch 095/100 batch 020/75 loss 5.1667 act 0.775 high 0.938 gui 0.912 load 0.051s step 0.034s
+epoch 095/100 batch 030/75 loss 0.6726 act 0.817 high 0.950 gui 0.925 load 0.051s step 0.032s
+epoch 095/100 batch 040/75 loss 6.1595 act 0.781 high 0.938 gui 0.906 load 0.051s step 0.031s
+epoch 095/100 batch 050/75 loss 0.8825 act 0.805 high 0.945 gui 0.920 load 0.051s step 0.032s
+epoch 095/100 batch 060/75 loss 0.2085 act 0.796 high 0.946 gui 0.921 load 0.051s step 0.032s
+epoch 095/100 batch 070/75 loss 0.5994 act 0.793 high 0.946 gui 0.921 load 0.051s step 0.032s
+epoch 095/100 batch 075/75 loss 0.2344 act 0.805 high 0.950 gui 0.926 load 0.051s step 0.031s
+epoch 095/100 done loss 1.6746 act 0.805 high 0.950 gui 0.926 frame 0.842 lr 9.84752e-06
+Saved last checkpoint for epoch 95: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.5101, action_type_acc=0.812, high_level_acc=0.953, gui_action_acc=0.943, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 1/20
+Epoch 95 took 11.06 seconds
+Epoch [96/100] started
+epoch 096/100 batch 010/75 loss 0.7076 act 0.775 high 0.925 gui 0.925 load 0.052s step 0.046s
+epoch 096/100 batch 020/75 loss 0.7954 act 0.825 high 0.938 gui 0.938 load 0.051s step 0.045s
+epoch 096/100 batch 030/75 loss 3.5362 act 0.792 high 0.917 gui 0.900 load 0.052s step 0.043s
+epoch 096/100 batch 040/75 loss 0.7287 act 0.812 high 0.938 gui 0.925 load 0.052s step 0.040s
+epoch 096/100 batch 050/75 loss 0.1839 act 0.815 high 0.945 gui 0.930 load 0.051s step 0.037s
+epoch 096/100 batch 060/75 loss 4.4665 act 0.783 high 0.946 gui 0.933 load 0.051s step 0.037s
+epoch 096/100 batch 070/75 loss 0.2389 act 0.793 high 0.950 gui 0.939 load 0.051s step 0.036s
+epoch 096/100 batch 075/75 loss 0.9242 act 0.792 high 0.950 gui 0.940 load 0.051s step 0.035s
+epoch 096/100 done loss 1.6761 act 0.792 high 0.950 gui 0.940 frame 0.852 lr 7.14967e-06
+Saved last checkpoint for epoch 96: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 96 took 6.57 seconds
+Epoch [97/100] started
+epoch 097/100 batch 010/75 loss 5.2867 act 0.850 high 0.925 gui 0.925 load 0.052s step 0.027s
+epoch 097/100 batch 020/75 loss 0.6584 act 0.850 high 0.950 gui 0.938 load 0.051s step 0.033s
+epoch 097/100 batch 030/75 loss 3.7710 act 0.808 high 0.958 gui 0.942 load 0.051s step 0.035s
+epoch 097/100 batch 040/75 loss 4.0710 act 0.812 high 0.956 gui 0.944 load 0.051s step 0.033s
+epoch 097/100 batch 050/75 loss 0.2452 act 0.805 high 0.960 gui 0.945 load 0.051s step 0.032s
+epoch 097/100 batch 060/75 loss 1.4273 act 0.804 high 0.958 gui 0.946 load 0.052s step 0.032s
+epoch 097/100 batch 070/75 loss 3.8176 act 0.796 high 0.950 gui 0.936 load 0.051s step 0.033s
+epoch 097/100 batch 075/75 loss 1.0810 act 0.802 high 0.953 gui 0.940 load 0.051s step 0.032s
+epoch 097/100 done loss 1.5423 act 0.802 high 0.953 gui 0.940 frame 0.849 lr 4.93871e-06
+Saved last checkpoint for epoch 97: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 97 took 6.32 seconds
+Epoch [98/100] started
+epoch 098/100 batch 010/75 loss 3.3024 act 0.700 high 0.900 gui 0.900 load 0.049s step 0.026s
+epoch 098/100 batch 020/75 loss 7.4638 act 0.713 high 0.900 gui 0.875 load 0.051s step 0.027s
+epoch 098/100 batch 030/75 loss 1.9093 act 0.767 high 0.933 gui 0.917 load 0.051s step 0.027s
+epoch 098/100 batch 040/75 loss 0.2591 act 0.787 high 0.938 gui 0.925 load 0.051s step 0.027s
+epoch 098/100 batch 050/75 loss 0.1809 act 0.795 high 0.940 gui 0.920 load 0.051s step 0.030s
+epoch 098/100 batch 060/75 loss 0.6629 act 0.792 high 0.946 gui 0.929 load 0.051s step 0.030s
+epoch 098/100 batch 070/75 loss 0.2632 act 0.800 high 0.954 gui 0.939 load 0.051s step 0.029s
+epoch 098/100 batch 075/75 loss 2.4028 act 0.799 high 0.953 gui 0.940 load 0.051s step 0.029s
+epoch 098/100 done loss 1.5334 act 0.799 high 0.953 gui 0.940 frame 0.856 lr 3.2168e-06
+Saved last checkpoint for epoch 98: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 98 took 6.09 seconds
+Epoch [99/100] started
+epoch 099/100 batch 010/75 loss 0.7710 act 0.825 high 0.975 gui 0.950 load 0.050s step 0.033s
+epoch 099/100 batch 020/75 loss 3.1224 act 0.825 high 0.963 gui 0.950 load 0.051s step 0.028s
+epoch 099/100 batch 030/75 loss 7.4182 act 0.817 high 0.967 gui 0.958 load 0.051s step 0.029s
+epoch 099/100 batch 040/75 loss 0.3936 act 0.812 high 0.969 gui 0.963 load 0.051s step 0.030s
+epoch 099/100 batch 050/75 loss 3.7810 act 0.795 high 0.960 gui 0.955 load 0.051s step 0.029s
+epoch 099/100 batch 060/75 loss 0.5883 act 0.796 high 0.954 gui 0.950 load 0.051s step 0.029s
+epoch 099/100 batch 070/75 loss 0.2258 act 0.793 high 0.950 gui 0.939 load 0.051s step 0.030s
+epoch 099/100 batch 075/75 loss 0.2628 act 0.795 high 0.946 gui 0.936 load 0.051s step 0.029s
+epoch 099/100 done loss 1.6874 act 0.795 high 0.946 gui 0.936 frame 0.846 lr 1.98565e-06
+Saved last checkpoint for epoch 99: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation loss did not improve. Patience: 5/20
+Epoch 99 took 6.11 seconds
+Epoch [100/100] started
+epoch 100/100 batch 010/75 loss 1.0097 act 0.800 high 1.000 gui 1.000 load 0.050s step 0.027s
+epoch 100/100 batch 020/75 loss 2.0671 act 0.775 high 0.988 gui 0.963 load 0.050s step 0.033s
+epoch 100/100 batch 030/75 loss 0.9565 act 0.792 high 0.975 gui 0.958 load 0.050s step 0.031s
+epoch 100/100 batch 040/75 loss 1.0198 act 0.800 high 0.975 gui 0.956 load 0.050s step 0.030s
+epoch 100/100 batch 050/75 loss 2.2480 act 0.795 high 0.975 gui 0.955 load 0.051s step 0.031s
+epoch 100/100 batch 060/75 loss 1.3195 act 0.792 high 0.975 gui 0.958 load 0.051s step 0.031s
+epoch 100/100 batch 070/75 loss 1.6173 act 0.779 high 0.971 gui 0.957 load 0.051s step 0.030s
+epoch 100/100 batch 075/75 loss 6.6641 act 0.772 high 0.953 gui 0.940 load 0.050s step 0.030s
+epoch 100/100 done loss 1.6179 act 0.772 high 0.953 gui 0.940 frame 0.852 lr 1.24647e-06
+Saved last checkpoint for epoch 100: outputs/checkpoints\default_params_2026_06_05_15_51_57\last.pt
+Validation: loss=1.5118, action_type_acc=0.812, high_level_acc=0.953, gui_action_acc=0.943, coordinate_frame_acc=0.859
+Validation loss did not improve. Patience: 6/20
+Epoch 100 took 10.91 seconds
+Loaded best model from epoch 94
+Test Results:
+{'loss': 1.5118475653479497, 'loss_action_type': 0.5939938591921314, 'loss_high_level': 0.2043312449686404, 'loss_gui_action': 0.26703549209425864, 'loss_coordinate_frame': 0.34936924358586086, 'loss_xy': 0.026234782088372932, 'loss_key': 0.18051007405648495, 'loss_repeat': 0.1531908187058898, 'loss_interval': 0.00045989982149632436, 'action_type_correct': 242, 'high_level_correct': 284, 'gui_action_correct': 281, 'coordinate_frame_correct': 256, 'count': 298, 'action_type_acc': 0.8120805369127517, 'high_level_acc': 0.9530201342281879, 'gui_action_acc': 0.9429530201342282, 'coordinate_frame_acc': 0.8590604026845637}

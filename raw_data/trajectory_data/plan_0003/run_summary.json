@@ -1,0 +1,23 @@
+{
+  "run_id": "plan_0003",
+  "plan_path": "outputs/bim_sequences/resplan_to_JSON_003_bim_sequence/primitive_plan.json",
+  "calibration_path": "configs/vectorworks_grounding_template.json",
+  "log_path": null,
+  "imitation_trajectory_path": "outputs/runs/plan_0003/imitation_trajectory.jsonl",
+  "screenshots_dir": "outputs/runs/plan_0003/screenshots",
+  "global_floorplan_dir": "outputs/runs/plan_0003/global_floorplan",
+  "global_floorplan_capture": {
+    "screenshot_path": "plan_0003/global_floorplan/floorplan_before_roof.png",
+    "captured_before_primitive_id": "p_00212",
+    "captured_before_parent_high_level_index": 50,
+    "captured_before_parent_gui_action": "ACTIVATE_SELECTION_TOOL",
+    "timestamp_utc": "2026-06-11T12:17:06.838073+00:00"
+  },
+  "trajectory_policy": "low_level_actions_include_move_to_click_double_click_hotkey_press_key_exclude_sleep_key_down_key_up",
+  "screenshot_policy": "screenshots_after_click_double_click_hotkey_press_key_plus_sleep_attached_to_previous_keyframe",
+  "primitive_count": 217,
+  "dry_run": false,
+  "aborted": false,
+  "abort_reason": null,
+  "user_input_abort_enabled": true
+}

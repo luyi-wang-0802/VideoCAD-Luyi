@@ -28,6 +28,17 @@ import time
 torch.set_float32_matmul_precision('high')
 
 
+def str2bool(value):
+    if isinstance(value, bool):
+        return value
+    value = value.lower()
+    if value in {"true", "1", "yes", "y"}:
+        return True
+    if value in {"false", "0", "no", "n"}:
+        return False
+    raise argparse.ArgumentTypeError(f"Expected a boolean value, got {value!r}")
+
+
 def setup(rank, world_size):
     """Initialize the distributed environment."""
     os.environ['MASTER_ADDR'] = 'localhost'
@@ -42,6 +53,7 @@ def cleanup():
 def main(rank=None, world_size=None, gpu_ids=None, args=None): 
     if args is None: # hack to allow for multi gpu training
         raise ValueError("args must be provided")
+    experiment = None
 
     if rank is None or world_size is None:
         # Single GPU or CPU mode
@@ -78,6 +90,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'dataset_path': args.dataset_path,
         'batch_size': args.batch_size,
         'lr': 1e-5,
+        'override_lr': args.lr,
         'num_workers': args.num_workers,
         'save_frequency': 20,
         'checkpoint_dir': args.checkpoint_dir,
@@ -97,7 +110,11 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'rank': rank if distributed else 0,
         'world_size': world_size if distributed else 1,
         'gpu_ids': gpu_ids if distributed else [0],  # Add GPU IDs to config
-        'persistent_workers': False  # Disable persistent workers to avoid the error
+        'persistent_workers': False,  # Disable persistent workers to avoid the error
+        'use_wandb': args.use_wandb,
+        'wandb_project': args.wandb_project,
+        'wandb_entity': args.wandb_entity,
+        'wandb_run_name': args.wandb_run_name,
     }
 
     frame_transform = transforms.Compose([
@@ -123,7 +140,8 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         world_size=world_size if distributed else 1,
         image_dir=args.image_dir,
         enable_random=args.enable_random,
-        sequence_retriever=args.sequence_retriever
+        sequence_retriever=args.sequence_retriever,
+        overfit=args.overfit_data,
     )
     
     experiment = Experiment(
@@ -152,6 +170,13 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
             dist.destroy_process_group()
         raise e
     finally:
+        if experiment is not None:
+            try:
+                import wandb
+                if wandb.run is not None:
+                    wandb.finish()
+            except ImportError:
+                pass
         # Always clean up
         if dist.is_initialized():
             dist.destroy_process_group()
@@ -159,22 +184,29 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--gpu_ids", type=str, default="1", help="Comma-separated list of GPU IDs to use (e.g., '0,1,2,3')")
+    parser.add_argument("--gpu_ids", type=str, default="0", help="Comma-separated list of GPU IDs to use (e.g., '0,1,2,3')")
     parser.add_argument("--dataset_path", type=str, default="data/data_resized")
-    parser.add_argument("--compile", type=bool, default=False)
-    parser.add_argument("--enable_random", type=bool, default=True)
+    parser.add_argument("--compile", type=str2bool, default=False)
+    parser.add_argument("--enable_random", type=str2bool, default=True)
     parser.add_argument("--image_dir", type=str, default="data/data_raw/images")
     parser.add_argument("--sequence_retriever", type=str, default="optimized")
     parser.add_argument("--config_path", type=str, default="data/data_resized/dataset_split.json")
     parser.add_argument("--checkpoint_dir", type=str, default="checkpoints")
     parser.add_argument("--multiview_dir", type=str, default="multi_view_images")
+    parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--epochs", type=int, default=1000)
     parser.add_argument("--view_ids", type=list, default=["05", "09", "20"])
     parser.add_argument("--model_config", type=str, default="model_configs/transformer_experiments.json")
     parser.add_argument("--model_name", type=str, default="cad_past_10_actions_and_states_timestep_embedding")
     parser.add_argument("--num_workers", type=int, default=2)
     parser.add_argument("--batch_size", type=int, default=2)
-    parser.add_argument("--enable_parallel", type=bool, default=True)
+    parser.add_argument("--lr", type=float, default=None, help="Override the initial learning rate from model config.")
+    parser.add_argument("--use_wandb", type=str2bool, default=False)
+    parser.add_argument("--wandb_project", type=str, default="videocad-primitive-action")
+    parser.add_argument("--wandb_entity", type=str, default=None)
+    parser.add_argument("--wandb_run_name", type=str, default=None)
+    parser.add_argument("--enable_parallel", type=str2bool, default=True)
+    parser.add_argument("--overfit_data", type=str2bool, default=False)
     args = parser.parse_args()
 
 
@@ -192,7 +224,8 @@ if __name__ == "__main__":
         main(args=args)
     elif world_size == 1:
         print(f"Using single GPU: {gpu_ids[0]}")
-        main(0, 1, gpu_ids, args)
+        os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_ids[0])
+        main(args=args)
     else:
         print(f"Using {world_size} GPUs: {gpu_ids}")
         mp.spawn(main, args=(world_size, gpu_ids, args), nprocs=world_size, join=True)

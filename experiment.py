@@ -82,6 +82,8 @@ class Experiment:
         if "train_config" in experiment_params:
             for k, v in experiment_params["train_config"].items():
                 training_config[k] = v
+        if training_config.get("override_lr") is not None:
+            training_config["lr"] = training_config["override_lr"]
 
         if not os.path.exists(f"logs/{experiment_name}") and self.rank == 0:
             os.makedirs(f"logs/{experiment_name}")
@@ -119,6 +121,7 @@ class Experiment:
                                 rank=self.rank)
         model = trainer.train(training_config["epochs"])
         results = trainer.evaluate(model)
+        trainer.log_wandb({f"test/{key}": value for key, value in results.items() if isinstance(value, (int, float))})
         if self.rank == 0:
             print("Test Results:")
             print(results)
@@ -129,6 +132,7 @@ class Experiment:
                 print("Sequential Test Results:")
                 print(seq_results)
                 save_json(seq_results, f"logs/{experiment_name}/seq_results.json")
+        trainer.finish_wandb()
 
 
     def run_experiment(self, experiment_params):

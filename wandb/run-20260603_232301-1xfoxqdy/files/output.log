@@ -1,0 +1,353 @@
+Device: cuda
+Train steps: 2139; Val steps: 282
+{
+  "num_action_types": 4,
+  "num_keys": 10,
+  "num_gui_actions": 15,
+  "num_high_level_actions": 8,
+  "num_point_roles": 6,
+  "hidden_size": 256,
+  "action_embed_size": 64,
+  "history_layers": 1,
+  "dropout": 0.1
+}
+epoch 1/20: 100%|██████████████████████| 535/535 [01:00<00:00,  8.87it/s, loss=2.27]
+{
+  "epoch": 1,
+  "train/loss": 2.2744376124233328,
+  "train/loss_action": 0.8505287788783963,
+  "train/loss_key": 0.7391068733882031,
+  "train/loss_point_role": 0.6206824181160779,
+  "train/loss_model_point": 0.035651734965675315,
+  "train/loss_window_norm": 0.028467813908138292,
+  "val/loss": 0.8645473796847865,
+  "val/loss_action": 0.33275432134350985,
+  "val/loss_key": 0.3226449205837351,
+  "val/loss_point_role": 0.1585517958374628,
+  "val/loss_model_point": 0.03527921461995612,
+  "val/loss_window_norm": 0.015317127561024952,
+  "val/action_acc": 0.9184397163120568
+}
+epoch 2/20: 100%|█████████████████████| 535/535 [00:59<00:00,  9.03it/s, loss=0.745]
+{
+  "epoch": 2,
+  "train/loss": 0.7452643076536978,
+  "train/loss_action": 0.3302378522048436,
+  "train/loss_key": 0.2395623888745548,
+  "train/loss_point_role": 0.11317874746588279,
+  "train/loss_model_point": 0.03983401084185307,
+  "train/loss_window_norm": 0.022451309202797972,
+  "val/loss": 0.4942478877756454,
+  "val/loss_action": 0.2509593829464709,
+  "val/loss_key": 0.12298510523004365,
+  "val/loss_point_role": 0.0655350936312519,
+  "val/loss_model_point": 0.03993287632664573,
+  "val/loss_window_norm": 0.014835429571776202,
+  "val/action_acc": 0.9326241134751773
+}
+epoch 3/20: 100%|█████████████████████| 535/535 [00:34<00:00, 15.30it/s, loss=0.527]
+{
+  "epoch": 3,
+  "train/loss": 0.5269885178990209,
+  "train/loss_action": 0.2728392797511471,
+  "train/loss_key": 0.11028560846524299,
+  "train/loss_point_role": 0.08325771487739447,
+  "train/loss_model_point": 0.04021235984476225,
+  "train/loss_window_norm": 0.020393555299498396,
+  "val/loss": 0.44541597249669995,
+  "val/loss_action": 0.23280754449351274,
+  "val/loss_key": 0.11370779473663982,
+  "val/loss_point_role": 0.05129371511218211,
+  "val/loss_model_point": 0.032174676415635976,
+  "val/loss_window_norm": 0.015432245632243864,
+  "val/action_acc": 0.9326241134751773
+}
+epoch 4/20: 100%|█████████████████████| 535/535 [00:35<00:00, 15.02it/s, loss=0.406]
+{
+  "epoch": 4,
+  "train/loss": 0.40614717728107846,
+  "train/loss_action": 0.23425044535541478,
+  "train/loss_key": 0.07813130996403685,
+  "train/loss_point_role": 0.03962011548680484,
+  "train/loss_model_point": 0.03636867870185254,
+  "train/loss_window_norm": 0.017776629304410582,
+  "val/loss": 0.2872177567555906,
+  "val/loss_action": 0.19666283905583745,
+  "val/loss_key": 0.04223325690190582,
+  "val/loss_point_role": 0.005440456306409909,
+  "val/loss_model_point": 0.030754710138521112,
+  "val/loss_window_norm": 0.012126494532596347,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 5/20: 100%|█████████████████████| 535/535 [00:35<00:00, 14.98it/s, loss=0.324]
+{
+  "epoch": 5,
+  "train/loss": 0.32445935621707866,
+  "train/loss_action": 0.2102139423914927,
+  "train/loss_key": 0.047113710465648766,
+  "train/loss_point_role": 0.01475354823656772,
+  "train/loss_model_point": 0.03499831797961318,
+  "train/loss_window_norm": 0.01737983683792117,
+  "val/loss": 0.2875875610270346,
+  "val/loss_action": 0.20611442046438952,
+  "val/loss_key": 0.03422374879337182,
+  "val/loss_point_role": 0.0019757096525215615,
+  "val/loss_model_point": 0.0334485380064881,
+  "val/loss_window_norm": 0.01182514433138046,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 6/20: 100%|█████████████████████| 535/535 [00:34<00:00, 15.57it/s, loss=0.293]
+{
+  "epoch": 6,
+  "train/loss": 0.29335383452462443,
+  "train/loss_action": 0.2037820281158169,
+  "train/loss_key": 0.02557414106233138,
+  "train/loss_point_role": 0.013918629917205928,
+  "train/loss_model_point": 0.03416001608280893,
+  "train/loss_window_norm": 0.01591901883143647,
+  "val/loss": 0.24100269201349514,
+  "val/loss_action": 0.1837833935936916,
+  "val/loss_key": 0.011063623818790157,
+  "val/loss_point_role": 0.002386670652116444,
+  "val/loss_model_point": 0.03243550997894548,
+  "val/loss_window_norm": 0.011333494815407387,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 7/20: 100%|█████████████████████| 535/535 [00:34<00:00, 15.38it/s, loss=0.268]
+{
+  "epoch": 7,
+  "train/loss": 0.2680967565888888,
+  "train/loss_action": 0.19854360555009956,
+  "train/loss_key": 0.009496661395415587,
+  "train/loss_point_role": 0.012377120268245901,
+  "train/loss_model_point": 0.03262410037552987,
+  "train/loss_window_norm": 0.01505526953981139,
+  "val/loss": 0.21702359139329774,
+  "val/loss_action": 0.1576020195941913,
+  "val/loss_key": 0.0065120257917029535,
+  "val/loss_point_role": 0.010593642317813802,
+  "val/loss_model_point": 0.02979828991121381,
+  "val/loss_window_norm": 0.012517615962762829,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 8/20: 100%|█████████████████████| 535/535 [00:34<00:00, 15.62it/s, loss=0.269]
+{
+  "epoch": 8,
+  "train/loss": 0.2686862478772019,
+  "train/loss_action": 0.19662196542381394,
+  "train/loss_key": 0.005857358124557382,
+  "train/loss_point_role": 0.020027239601823534,
+  "train/loss_model_point": 0.03210286703722681,
+  "train/loss_window_norm": 0.014076817304676624,
+  "val/loss": 0.22833040594234766,
+  "val/loss_action": 0.1760665587428627,
+  "val/loss_key": 0.0037754777220225604,
+  "val/loss_point_role": 0.0006410730254451632,
+  "val/loss_model_point": 0.032103562288329744,
+  "val/loss_window_norm": 0.01574373452908505,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 9/20: 100%|█████████████████████| 535/535 [00:34<00:00, 15.40it/s, loss=0.251]
+{
+  "epoch": 9,
+  "train/loss": 0.2506100834587622,
+  "train/loss_action": 0.1874610207384507,
+  "train/loss_key": 0.004597652127884497,
+  "train/loss_point_role": 0.013127424821325541,
+  "train/loss_model_point": 0.03218267527450261,
+  "train/loss_window_norm": 0.013241309708065639,
+  "val/loss": 0.2121742657065418,
+  "val/loss_action": 0.16450020456812525,
+  "val/loss_key": 0.003282163056707198,
+  "val/loss_point_role": 0.0009389898856583295,
+  "val/loss_model_point": 0.03274151391072318,
+  "val/loss_window_norm": 0.01071139505559889,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 10/20: 100%|████████████████████| 535/535 [00:35<00:00, 14.94it/s, loss=0.243]
+{
+  "epoch": 10,
+  "train/loss": 0.24283360202866203,
+  "train/loss_action": 0.18519477557541264,
+  "train/loss_key": 0.0030338786498525167,
+  "train/loss_point_role": 0.011229479039738095,
+  "train/loss_model_point": 0.030325109600827495,
+  "train/loss_window_norm": 0.013050357959434163,
+  "val/loss": 0.19186816497165907,
+  "val/loss_action": 0.1478536121495826,
+  "val/loss_key": 0.0028553915339900207,
+  "val/loss_point_role": 0.0010630113619886643,
+  "val/loss_model_point": 0.027876901949742638,
+  "val/loss_window_norm": 0.012219249756745862,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 11/20: 100%|████████████████████| 535/535 [00:35<00:00, 14.98it/s, loss=0.239]
+{
+  "epoch": 11,
+  "train/loss": 0.23866620404487315,
+  "train/loss_action": 0.1824128388887988,
+  "train/loss_key": 0.002847243013219106,
+  "train/loss_point_role": 0.01140601591960072,
+  "train/loss_model_point": 0.029862213090278537,
+  "train/loss_window_norm": 0.012137891898936116,
+  "val/loss": 0.19590366702400486,
+  "val/loss_action": 0.1534867984948557,
+  "val/loss_key": 0.0018596980452786466,
+  "val/loss_point_role": 0.0005214404847191362,
+  "val/loss_model_point": 0.02871360500666795,
+  "val/loss_window_norm": 0.011322125080388356,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 12/20: 100%|████████████████████| 535/535 [00:33<00:00, 15.74it/s, loss=0.237]
+{
+  "epoch": 12,
+  "train/loss": 0.23667577249505228,
+  "train/loss_action": 0.18062830456041243,
+  "train/loss_key": 0.0021840500975256034,
+  "train/loss_point_role": 0.012990710898559042,
+  "train/loss_model_point": 0.02866965874049041,
+  "train/loss_window_norm": 0.01220304781029011,
+  "val/loss": 0.20390330457014233,
+  "val/loss_action": 0.16468698464344642,
+  "val/loss_key": 0.0015857366027034108,
+  "val/loss_point_role": 0.00035177656629573593,
+  "val/loss_model_point": 0.0264690092084467,
+  "val/loss_window_norm": 0.010809795430230624,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 13/20: 100%|████████████████████| 535/535 [00:34<00:00, 15.43it/s, loss=0.239]
+{
+  "epoch": 13,
+  "train/loss": 0.2390389536726244,
+  "train/loss_action": 0.18294261829125227,
+  "train/loss_key": 0.001983582531917358,
+  "train/loss_point_role": 0.013089227379980858,
+  "train/loss_model_point": 0.028746166722039165,
+  "train/loss_window_norm": 0.01227735941259637,
+  "val/loss": 0.1859329394055297,
+  "val/loss_action": 0.14966936565723318,
+  "val/loss_key": 0.0010856919373812464,
+  "val/loss_point_role": 0.00041231438424169906,
+  "val/loss_model_point": 0.024886510856713808,
+  "val/loss_window_norm": 0.009879058358219868,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 14/20: 100%|████████████████████| 535/535 [00:34<00:00, 15.63it/s, loss=0.237]
+{
+  "epoch": 14,
+  "train/loss": 0.23665976337304792,
+  "train/loss_action": 0.18487013873086913,
+  "train/loss_key": 0.0015245340120588397,
+  "train/loss_point_role": 0.010016556831666627,
+  "train/loss_model_point": 0.029080951951667076,
+  "train/loss_window_norm": 0.01116758222613778,
+  "val/loss": 0.19117233592691044,
+  "val/loss_action": 0.1499849932619172,
+  "val/loss_key": 0.0013153387814994896,
+  "val/loss_point_role": 0.0005030970411446996,
+  "val/loss_model_point": 0.02837679551002827,
+  "val/loss_window_norm": 0.010992108800461687,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 15/20: 100%|█████████████████████| 535/535 [00:34<00:00, 15.61it/s, loss=0.23]
+{
+  "epoch": 15,
+  "train/loss": 0.23040560305963456,
+  "train/loss_action": 0.1790301997556332,
+  "train/loss_key": 0.001334083566613192,
+  "train/loss_point_role": 0.010032556808105228,
+  "train/loss_model_point": 0.028058248759927025,
+  "train/loss_window_norm": 0.01195051513274617,
+  "val/loss": 0.19077370342061029,
+  "val/loss_action": 0.15183915641785894,
+  "val/loss_key": 0.0010608771389736488,
+  "val/loss_point_role": 0.0005113711936794822,
+  "val/loss_model_point": 0.0248848871717639,
+  "val/loss_window_norm": 0.01247741147324258,
+  "val/action_acc": 0.950354609929078
+}
+epoch 16/20: 100%|████████████████████| 535/535 [00:53<00:00, 10.08it/s, loss=0.225]
+{
+  "epoch": 16,
+  "train/loss": 0.2253116684519476,
+  "train/loss_action": 0.17584272015233193,
+  "train/loss_key": 0.0011477468874907541,
+  "train/loss_point_role": 0.010696565842058808,
+  "train/loss_model_point": 0.02633333859927162,
+  "train/loss_window_norm": 0.011291297124936052,
+  "val/loss": 0.1878563062005498,
+  "val/loss_action": 0.15107464035013404,
+  "val/loss_key": 0.0007814819685220155,
+  "val/loss_point_role": 0.0002452316340226234,
+  "val/loss_model_point": 0.026910023294811975,
+  "val/loss_window_norm": 0.008844928751973739,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 17/20: 100%|████████████████████| 535/535 [00:35<00:00, 15.07it/s, loss=0.227]
+{
+  "epoch": 17,
+  "train/loss": 0.2271665892747282,
+  "train/loss_action": 0.17936177281667176,
+  "train/loss_key": 0.0009288304082769171,
+  "train/loss_point_role": 0.010899441597828269,
+  "train/loss_model_point": 0.025483757997643117,
+  "train/loss_window_norm": 0.0104927851997166,
+  "val/loss": 0.16840630917017121,
+  "val/loss_action": 0.1347727091427724,
+  "val/loss_key": 0.0007160706177241572,
+  "val/loss_point_role": 0.00035716995403453573,
+  "val/loss_model_point": 0.023866621249005304,
+  "val/loss_window_norm": 0.00869373975176957,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 18/20: 100%|████████████████████| 535/535 [00:34<00:00, 15.39it/s, loss=0.221]
+{
+  "epoch": 18,
+  "train/loss": 0.22069896814914933,
+  "train/loss_action": 0.17620577806610324,
+  "train/loss_key": 0.0009852879703021692,
+  "train/loss_point_role": 0.010283254189164643,
+  "train/loss_model_point": 0.023498846999153604,
+  "train/loss_window_norm": 0.009725798874402914,
+  "val/loss": 0.16689060579895193,
+  "val/loss_action": 0.13349696243867762,
+  "val/loss_key": 0.0005831260297269337,
+  "val/loss_point_role": 0.0001583542357527499,
+  "val/loss_model_point": 0.02198191752644084,
+  "val/loss_window_norm": 0.010670245506599256,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 19/20: 100%|████████████████████| 535/535 [00:34<00:00, 15.50it/s, loss=0.217]
+{
+  "epoch": 19,
+  "train/loss": 0.21667443646482168,
+  "train/loss_action": 0.17378557708927278,
+  "train/loss_key": 0.0008509054008217533,
+  "train/loss_point_role": 0.00974725474415187,
+  "train/loss_model_point": 0.022646593300920885,
+  "train/loss_window_norm": 0.009644106261344015,
+  "val/loss": 0.18598394646770552,
+  "val/loss_action": 0.15082776455257646,
+  "val/loss_key": 0.0007183833698823262,
+  "val/loss_point_role": 0.00030643150367200663,
+  "val/loss_model_point": 0.023594861817116855,
+  "val/loss_window_norm": 0.0105365085335455,
+  "val/action_acc": 0.9539007092198581
+}
+epoch 20/20: 100%|████████████████████| 535/535 [00:34<00:00, 15.53it/s, loss=0.215]
+{
+  "epoch": 20,
+  "train/loss": 0.2153770556680374,
+  "train/loss_action": 0.17326466349415642,
+  "train/loss_key": 0.0007867291039671871,
+  "train/loss_point_role": 0.012292495547527389,
+  "train/loss_model_point": 0.02041567299789747,
+  "train/loss_window_norm": 0.008617493889315845,
+  "val/loss": 0.17989943777232748,
+  "val/loss_action": 0.151231492026614,
+  "val/loss_key": 0.000371606145045781,
+  "val/loss_point_role": 0.00020363615303657824,
+  "val/loss_model_point": 0.019298002209699322,
+  "val/loss_window_norm": 0.008794701489758618,
+  "val/action_acc": 0.9539007092198581
+}

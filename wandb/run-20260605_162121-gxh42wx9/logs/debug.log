@@ -1,0 +1,24 @@
+2026-06-05 16:21:21,056 INFO    MainThread:36620 [wandb_setup.py:_flush():81] Current SDK version is 0.27.0
+2026-06-05 16:21:21,056 INFO    MainThread:36620 [wandb_setup.py:_flush():81] Configure stats pid to 36620
+2026-06-05 16:21:21,056 INFO    MainThread:36620 [wandb_setup.py:_flush():81] Loading settings from environment variables
+2026-06-05 16:21:21,056 INFO    MainThread:36620 [wandb_init.py:setup_run_log_directory():723] Logging user logs to W:\master thesis\VideoCAD-Luyi\wandb\run-20260605_162121-gxh42wx9\logs\debug.log
+2026-06-05 16:21:21,057 INFO    MainThread:36620 [wandb_init.py:setup_run_log_directory():724] Logging internal logs to W:\master thesis\VideoCAD-Luyi\wandb\run-20260605_162121-gxh42wx9\logs\debug-internal.log
+2026-06-05 16:21:21,058 INFO    MainThread:36620 [wandb_init.py:init():851] calling init triggers
+2026-06-05 16:21:21,058 INFO    MainThread:36620 [wandb_init.py:init():856] wandb.init called with sweep_config: {}
+config: {'dataset_path': 'processed_data', 'batch_size': 4, 'lr': 0.001, 'override_lr': 0.001, 'num_workers': 0, 'save_frequency': 20, 'checkpoint_dir': 'outputs/checkpoints', 'val_frequency': 5, 'compile': False, 'enable_random': True, 'sequential': False, 'seq_val_frequency': 1100, 'epochs': 100, 'enable_parallel': False, 'early_stopping_enabled': True, 'early_stopping_patience': 20, 'early_stopping_min_delta': 0.0, 'early_stopping_metric': 'loss', 'early_stopping_mode': 'min', 'use_mse': True, 'rank': 0, 'world_size': 1, 'gpu_ids': [0], 'persistent_workers': False, 'use_wandb': True, 'wandb_project': 'primitive-action-training', 'wandb_entity': None, 'wandb_run_name': 'overfit_stepidx_cap384_lossweighted', 'experiment_name': 'default_params_2026_06_05_16_21_20', 'lr_scheduler': 'cosine', 'min_lr': 1e-06, 'log_frequency': 10, '_wandb': {}}
+2026-06-05 16:21:21,058 INFO    MainThread:36620 [wandb_init.py:init():899] starting backend
+2026-06-05 16:21:23,396 INFO    MainThread:36620 [wandb_init.py:init():914] sending inform_init request
+2026-06-05 16:21:23,718 INFO    MainThread:36620 [wandb_init.py:init():919] backend started and connected
+2026-06-05 16:21:23,719 INFO    MainThread:36620 [wandb_init.py:init():989] updated telemetry
+2026-06-05 16:21:23,762 INFO    MainThread:36620 [wandb_init.py:init():1012] communicating run to backend with 90.0 second timeout
+2026-06-05 16:21:24,064 INFO    MainThread:36620 [wandb_init.py:init():1057] starting run threads in backend
+2026-06-05 16:21:24,208 INFO    MainThread:36620 [wandb_run.py:_console_start():2509] atexit reg
+2026-06-05 16:21:24,208 INFO    MainThread:36620 [wandb_run.py:_redirect():2359] redirect: wrap_raw
+2026-06-05 16:21:24,208 INFO    MainThread:36620 [wandb_run.py:_redirect():2428] Wrapping output streams.
+2026-06-05 16:21:24,208 INFO    MainThread:36620 [wandb_run.py:_redirect():2451] Redirects installed.
+2026-06-05 16:21:24,212 INFO    MainThread:36620 [wandb_init.py:init():1095] run started, returning control to user process
+2026-06-05 16:33:54,626 INFO    MainThread:36620 [wandb_run.py:_finish():2271] finishing run luyi-wang-technical-university-of-munich/primitive-action-training/gxh42wx9
+2026-06-05 16:33:54,627 INFO    MainThread:36620 [wandb_run.py:_atexit_cleanup():2476] got exitcode: 0
+2026-06-05 16:33:54,627 INFO    MainThread:36620 [wandb_run.py:_restore():2458] restore
+2026-06-05 16:33:54,627 INFO    MainThread:36620 [wandb_run.py:_restore():2464] restore done
+2026-06-05 16:33:56,136 INFO    MainThread:36620 [wandb_run.py:_footer_sync_info():3877] logging synced files

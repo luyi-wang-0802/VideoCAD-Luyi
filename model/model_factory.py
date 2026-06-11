@@ -1,37 +1,101 @@
+from __future__ import annotations
+
+import json
+from enum import Enum
+from pathlib import Path
+from typing import Any
 
 import torch
+
 from model.autoregressive_transformer import AutoRegressiveTransformer
-from enum import Enum
+from model.primitive_action_policy import PrimitiveActionPolicyConfig, PrimitiveActionPolicyModel
+
+
 class ModelType(Enum):
     MULTI_CLASSES = "multi_classes"
+    ONLINE_GUI_POLICY = "online_gui_policy"
+    PRIMITIVE_ACTION_POLICY = "primitive_action_policy"
+
+
+def _load_vocab_counts(model_config: dict[str, Any]) -> dict[str, int]:
+    vocab_path = model_config.get("action_vocab_path")
+    if not vocab_path:
+        dataset_path = model_config.get("dataset_path") or model_config.get("dataset_dir") or "processed_data"
+        vocab_path = Path(dataset_path) / "action_vocab.json"
+    vocab_path = Path(vocab_path)
+    if not vocab_path.exists():
+        return {}
+
+    vocab = json.loads(vocab_path.read_text(encoding="utf-8-sig"))
+    action_type_to_id = vocab.get("action_type_to_id", {})
+    high_level_to_id = vocab.get("high_level_to_id", {})
+    gui_action_to_id = vocab.get("gui_action_to_id", {})
+    key_to_id = vocab.get("key_to_id", {})
+    coordinate_frame_to_id = vocab.get("coordinate_frame_to_id", {})
+    target_entity_to_id = vocab.get("target_entity_to_id", {})
+    point_role_to_id = vocab.get("point_role_to_id", {})
+    return {
+        "num_action_types": max(action_type_to_id.values(), default=0) + 1,
+        "num_high_level_actions": max(high_level_to_id.values(), default=0) + 1,
+        "num_gui_actions": max(gui_action_to_id.values(), default=0) + 1,
+        "num_keys": len(key_to_id),
+        "num_coordinate_frames": max(coordinate_frame_to_id.values(), default=0) + 1,
+        "num_target_entities": max(target_entity_to_id.values(), default=0) + 1,
+        "num_point_roles": max(point_role_to_id.values(), default=0) + 1,
+    }
+
+
+def _strip_wrappers(state_dict: dict[str, torch.Tensor]) -> dict[str, torch.Tensor]:
+    new_state_dict = {}
+    for key, value in state_dict.items():
+        if key.startswith("module._orig_mod."):
+            new_state_dict[key.replace("module._orig_mod.", "")] = value
+        elif key.startswith("module."):
+            new_state_dict[key.replace("module.", "")] = value
+        else:
+            new_state_dict[key] = value
+    return new_state_dict
+
 
 class ModelFactory:
+    def load_model(self, model_name: str, model_path: str | Path, device: str | torch.device):
+        ckpt = torch.load(model_path, map_location=device)
+        state_dict = ckpt["model_state_dict"] if "model_state_dict" in ckpt else ckpt
+        model, model_type = self.create_model(model_name, ckpt.get("model_config", {}), device)
+        model.load_state_dict(_strip_wrappers(state_dict), strict=False)
+        return model, model_type
 
-    def load_model(self, model_name, model_path, device):
-        ckpt = torch.load(model_path)
-        state_dict = ckpt["model_state_dict"]
-        return AutoRegressiveTransformer.load_state_dict(state_dict).to(device), ModelType.MULTI_CLASSES
-
-    def create_model(self, 
-                    model_name, 
-                    model_config, 
-                    device,
-                    state_dict=None):
-
-        model_type = None
-        model = AutoRegressiveTransformer(**model_config).to(device)
-        model_type = ModelType.MULTI_CLASSES
+    def create_model(
+        self,
+        model_name: str,
+        model_config: dict[str, Any],
+        device: str | torch.device,
+        state_dict: dict[str, torch.Tensor] | None = None,
+    ):
+        if model_name == "primitive_action_policy":
+            config_kwargs = dict(model_config)
+            config_kwargs.update({k: v for k, v in _load_vocab_counts(model_config).items() if v})
+            allowed_keys = set(PrimitiveActionPolicyConfig.__dataclass_fields__.keys())
+            config = PrimitiveActionPolicyConfig(**{k: v for k, v in config_kwargs.items() if k in allowed_keys})
+            model = PrimitiveActionPolicyModel(config).to(device)
+            model_type = ModelType.PRIMITIVE_ACTION_POLICY
+        elif model_name == "online_gui_policy":
+            try:
+                from low_level_gui_imitation.model import OnlineGuiPolicyConfig, OnlineGuiPolicyModel
+            except ImportError as exc:
+                raise ImportError(
+                    "online_gui_policy requires low_level_gui_imitation, which is not available in this repo. "
+                    "Use model_name='primitive_action_policy' for the current processed_data format."
+                ) from exc
+            allowed_keys = set(OnlineGuiPolicyConfig.__dataclass_fields__.keys())
+            config_kwargs = {key: value for key, value in model_config.items() if key in allowed_keys}
+            model = OnlineGuiPolicyModel(OnlineGuiPolicyConfig(**config_kwargs)).to(device)
+            model_type = ModelType.ONLINE_GUI_POLICY
+        else:
+            model = AutoRegressiveTransformer(**model_config).to(device)
+            model_type = ModelType.MULTI_CLASSES
 
         if state_dict:
             print("Loading state dict")
-            new_state_dict = {}
-            for k, v in state_dict.items():
-                if k.startswith("module._orig_mod."):
-                    new_state_dict[k.replace("module._orig_mod.", "")] = v
-                elif k.startswith("module."):
-                    new_state_dict[k.replace("module.", "")] = v
-                else:
-                    new_state_dict[k] = v
-            model.load_state_dict(new_state_dict, strict=False)
+            model.load_state_dict(_strip_wrappers(state_dict), strict=False)
         return model, model_type
-

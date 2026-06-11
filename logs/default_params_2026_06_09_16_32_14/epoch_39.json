@@ -1,0 +1,23 @@
+{
+    "loss": 509.2732203602791,
+    "loss_action_type": 76.36349049584533,
+    "loss_high_level": 1051.0386810302734,
+    "loss_gui_action": 1002.1294164657593,
+    "loss_coordinate_frame": 523.2520976066589,
+    "loss_xy": 0.0,
+    "loss_key": 0.0,
+    "loss_repeat": 0.0,
+    "loss_interval": 0.0,
+    "loss_param_bins": 280.18275143764913,
+    "loss_target_entity": 0.0,
+    "loss_point_role": 0.0,
+    "action_type_correct": 278,
+    "high_level_correct": 16,
+    "gui_action_correct": 18,
+    "coordinate_frame_correct": 67,
+    "target_entity_correct": 1,
+    "point_role_correct": 87,
+    "param_bin_correct": 302,
+    "param_bin_count": 480,
+    "count": 298
+}

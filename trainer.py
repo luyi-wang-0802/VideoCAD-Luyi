@@ -19,6 +19,14 @@ import torch.profiler # Import the profiler
 
 TOLERANCE = 3
 
+
+def flatten_metrics(metrics, prefix):
+    return {
+        f"{prefix}/{key}": value
+        for key, value in metrics.items()
+        if isinstance(value, (int, float))
+    }
+
 def get_current_datetime(formatted=True):
     now = datetime.datetime.now()
     if formatted:
@@ -153,30 +161,59 @@ class CheckpointHandler:
         self.experiment_name = experiment_name
         self.rank = rank
         self.is_master = rank == 0
-        self.checkpoint_dir = f'{dir_name}/{self.experiment_name}'
+        self.checkpoint_dir = os.path.join(dir_name, self.experiment_name)
         if self.is_master:
             os.makedirs(self.checkpoint_dir, exist_ok=True)
 
-    def build_checkpoint(self, epoch, loss, model, optimizer):
+    def build_checkpoint(self, epoch, loss, model, optimizer, scheduler=None, training_config=None):
         checkpoint = {
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'loss': loss,
         }
+        if scheduler is not None:
+            checkpoint['scheduler_state_dict'] = scheduler.state_dict()
+        if training_config is not None:
+            checkpoint['training_config'] = dict(training_config)
         return checkpoint
 
-    def save_checkpoint(self, epoch, loss, model, optimizer, is_best=False):
+    def _save_atomic(self, checkpoint, filename):
+        os.makedirs(self.checkpoint_dir, exist_ok=True)
+        final_path = os.path.join(self.checkpoint_dir, filename)
+        tmp_path = f"{final_path}.{os.getpid()}.tmp"
+        torch.save(checkpoint, tmp_path)
+
+        last_error = None
+        for _ in range(5):
+            try:
+                os.replace(tmp_path, final_path)
+                return final_path
+            except PermissionError as exc:
+                last_error = exc
+                time.sleep(0.25)
+
+        if os.path.exists(tmp_path):
+            try:
+                os.remove(tmp_path)
+            except OSError:
+                pass
+        if last_error is not None:
+            print(
+                f"Warning: skipped {final_path} update because Windows denied file replacement: {last_error}. "
+                "The previous checkpoint file is still intact."
+            )
+        return None
+
+    def save_checkpoint(self, epoch, loss, model, optimizer, scheduler=None, training_config=None, kind="last"):
         if not self.is_master:
             return
-        checkpoint = self.build_checkpoint(epoch, loss, model, optimizer)
-        if is_best:
-            torch.save(checkpoint, f'{self.checkpoint_dir}/best_model.pt')
-            print(f"Saved best model checkpoint for epoch {epoch+1}")
-        else:
-            torch.save(checkpoint, f'{self.checkpoint_dir}/epoch_{epoch+1}.pt')
-
-        print(f"Saved model checkpoint for epoch {epoch+1}")
+        checkpoint = self.build_checkpoint(epoch, loss, model, optimizer, scheduler, training_config)
+        if kind not in {"best", "last"}:
+            raise ValueError(f"Unsupported checkpoint kind: {kind}")
+        path = self._save_atomic(checkpoint, f"{kind}.pt")
+        if path is not None:
+            print(f"Saved {kind} checkpoint for epoch {epoch+1}: {path}")
         return checkpoint
 
 
@@ -225,6 +262,19 @@ class BaseTrainer:
         self.metrics_handler = MetricsHandler(self.experiment_name, self.rank)
         self.checkpoint_handler = CheckpointHandler(
             self.experiment_name, self.rank, training_config.get('checkpoint_dir', "checkpoints"))
+        self.wandb_run = None
+        if self.is_master and training_config.get('use_wandb', False):
+            try:
+                import wandb
+
+                self.wandb_run = wandb.init(
+                    project=training_config.get('wandb_project', 'videocad-primitive-action'),
+                    entity=training_config.get('wandb_entity'),
+                    name=training_config.get('wandb_run_name') or self.experiment_name,
+                    config=training_config,
+                )
+            except ImportError:
+                self.log("wandb is not installed; continuing without wandb logging.")
 
         self.train_loader = train_packet["loader"]
         self.val_loader = val_packet["loader"]
@@ -251,6 +301,7 @@ class BaseTrainer:
             self.optimizer = torch.optim.Adam(param_groups)
         else:
             self.optimizer = torch.optim.Adam(self.model.parameters(), lr=lr)
+        self.scheduler = self._build_lr_scheduler()
         
         self.use_mse = training_config.get('use_mse', False)
 
@@ -262,6 +313,16 @@ class BaseTrainer:
             [0, 0, 0, 0, 0, 1],  # Command 3
             [0, 0, 0, 0, 0, 0]   # Command 4
         ]).float().to(device)
+
+    def log_wandb(self, metrics, step=None):
+        if self.wandb_run is None:
+            return
+        self.wandb_run.log(metrics, step=step)
+
+    def finish_wandb(self):
+        if self.wandb_run is not None:
+            self.wandb_run.finish()
+            self.wandb_run = None
 
     def apply_action_mask(self, cmd_pred, param_pred):
         """
@@ -282,10 +343,61 @@ class BaseTrainer:
         )
         return masked_params
 
-    def save_checkpoint(self, epoch, loss, is_best=False):
+    def save_checkpoint(self, epoch, loss, kind="last"):
         ckpt = self.checkpoint_handler.save_checkpoint(
-            epoch, loss, self.model, self.optimizer, is_best)
+            epoch,
+            loss,
+            self.model,
+            self.optimizer,
+            scheduler=self.scheduler,
+            training_config=self.training_config,
+            kind=kind,
+        )
         return ckpt
+
+    def _build_lr_scheduler(self):
+        if self.training_config.get('disable_lr_scheduler', False):
+            return None
+
+        scheduler_type = self.training_config.get('lr_scheduler', None)
+        if scheduler_type is None:
+            return None
+
+        scheduler_type = str(scheduler_type).lower()
+        min_lr = self.training_config.get('min_lr', 1e-6)
+        if scheduler_type == 'cosine':
+            return torch.optim.lr_scheduler.CosineAnnealingLR(
+                self.optimizer,
+                T_max=max(int(self.training_config.get('epochs', 1)), 1),
+                eta_min=min_lr,
+            )
+        if scheduler_type == 'step':
+            return torch.optim.lr_scheduler.StepLR(
+                self.optimizer,
+                step_size=max(int(self.training_config.get('lr_step_size', 20)), 1),
+                gamma=float(self.training_config.get('lr_gamma', 0.5)),
+            )
+        if scheduler_type == 'plateau':
+            return torch.optim.lr_scheduler.ReduceLROnPlateau(
+                self.optimizer,
+                mode=self.training_config.get('early_stopping_mode', 'min'),
+                factor=float(self.training_config.get('lr_gamma', 0.5)),
+                patience=max(int(self.training_config.get('lr_patience', 5)), 1),
+                min_lr=min_lr,
+            )
+        raise ValueError(f"Unsupported lr_scheduler: {scheduler_type}")
+
+    def _step_lr_scheduler(self, avg_loss, val_metrics):
+        if self.scheduler is None:
+            return
+        if isinstance(self.scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
+            metric = self._get_current_metric(avg_loss, val_metrics or {})
+            self.scheduler.step(metric)
+        else:
+            self.scheduler.step()
+
+    def get_current_lr(self):
+        return self.optimizer.param_groups[0]['lr']
         
 
     def prepare_batch(self, batch):
@@ -344,19 +456,22 @@ class BaseTrainer:
         best_model_state = None
         patience_counter = 0
         start_time = time.time()
-        for epoch in tqdm(range(epochs)):
+        for epoch in range(epochs):
+            self.log(f"Epoch [{epoch + 1}/{epochs}] started")
             if self.train_sampler:
                 self.train_sampler.set_epoch(epoch)
             # Training phase
             avg_loss, metrics = self._train_epoch(epoch, noise)
             self.log_epoch_metrics(epoch, epochs, avg_loss, metrics)
-            
-            # Save checkpoint
-            if (epoch + 1) % self.training_config['save_frequency'] == 0:
-                self.save_checkpoint(epoch, avg_loss)
+            epoch_metrics = self._epoch_wandb_metrics(epoch, avg_loss, metrics)
+            if epoch_metrics:
+                self.log_wandb(epoch_metrics, step=(epoch + 1) * len(self.train_loader))
+            self.save_checkpoint(epoch, avg_loss, kind="last")
             
             # Validation phase
             val_metrics = self._run_validation(epoch)
+            if val_metrics:
+                self.log_wandb(flatten_metrics(val_metrics, "val"), step=(epoch + 1) * len(self.train_loader))
             if dist.is_initialized():
                 dist.barrier()   # all ranks wait until validation is done everywhere
             
@@ -364,6 +479,7 @@ class BaseTrainer:
             best_metric_value, patience_counter, best_model_state, should_stop = \
                 self._handle_early_stopping(epoch, avg_loss, val_metrics, 
                                          best_metric_value, patience_counter, best_model_state)
+            self._step_lr_scheduler(avg_loss, val_metrics)
             
             if should_stop:
                 self.log(f"Early stopping triggered after {epoch+1} epochs")
@@ -380,6 +496,9 @@ class BaseTrainer:
             self.log(f"Loaded best model from epoch {best_model_state['epoch']}")
         
         return self.model
+
+    def _epoch_wandb_metrics(self, epoch, avg_loss, metrics):
+        return {"train/epoch": epoch + 1, "train/loss_epoch": avg_loss, "train/lr": self.get_current_lr()}
 
     def _train_epoch(self, epoch, noise=False):
         """Train for one epoch."""
@@ -439,7 +558,7 @@ class BaseTrainer:
             prof.__enter__()
 
         # Training loop
-        for batch_idx, batch in tqdm(enumerate(self.train_loader), disable=not self.is_master):
+        for batch_idx, batch in enumerate(self.train_loader):
             # Data loading timing
             time_data = time.time() - batch_timer
             data_time.update(time_data)
@@ -454,7 +573,8 @@ class BaseTrainer:
             # Loss timing and logging
             time_loss = time.time() - batch_timer 
             loss_time.update(time_loss)
-            if (batch_idx + 1) % 2 == 0:
+            log_frequency = int(self.training_config.get('log_frequency', 10))
+            if log_frequency > 0 and ((batch_idx + 1) % log_frequency == 0 or (batch_idx + 1) == len(self.train_loader)):
                 self._log_batch_metrics(epoch, batch_idx, loss.item(), metrics, data_time, loss_time)
             
             batch_timer = time.time()
@@ -518,11 +638,17 @@ class BaseTrainer:
 
     def _log_batch_metrics(self, epoch, batch_idx, loss, metrics, data_time, loss_time):
         """Log metrics for a batch."""
-        self.log_metrics(epoch, self.training_config['epochs'], batch_idx, 
-                        len(self.train_loader), loss, metrics=metrics)
+        self.log_metrics(
+            epoch,
+            self.training_config['epochs'],
+            batch_idx,
+            len(self.train_loader),
+            loss,
+            metrics=metrics,
+            data_time=data_time.avg,
+            loss_time=loss_time.avg,
+        )
         self.save_metrics(metrics, ext=f"epoch_{epoch+1}")
-        self.log(f"Average loss time: {loss_time.avg:.4f} seconds")
-        self.log(f"Average load time: {data_time.avg:.4f} seconds")
 
     def _run_validation(self, epoch):
         """Run validation and handle early stopping."""
@@ -551,7 +677,7 @@ class BaseTrainer:
             self.log(f"Validation {self.early_stopping_metric} improved from {best_metric_value:.4f} to {current_metric:.4f}")
             best_metric_value = current_metric
             patience_counter = 0
-            best_model_state = self.save_checkpoint(epoch, avg_loss, is_best=True)
+            best_model_state = self.save_checkpoint(epoch, avg_loss, kind="best")
             self.log(f"Saved best model checkpoint at epoch {epoch+1}")
         else:
             patience_counter += 1
@@ -1379,8 +1505,265 @@ class MultiClassesTrainer(BaseTrainer):
             print(f"Command {i}: {metrics[f'cmd_accuracy_{i}']:.2f}%")
 
 
+def move_to_device(value, device):
+    if torch.is_tensor(value):
+        return value.to(device)
+    if isinstance(value, dict):
+        return {key: move_to_device(item, device) for key, item in value.items()}
+    if isinstance(value, list):
+        return [move_to_device(item, device) for item in value]
+    return value
+
+
+class PrimitiveActionTrainer(BaseTrainer):
+    def prepare_batch(self, batch):
+        return move_to_device(batch, self.device)
+
+    def init_metrics(self):
+        return {
+            "loss": 0.0,
+            "loss_action_type": 0.0,
+            "loss_high_level": 0.0,
+            "loss_gui_action": 0.0,
+            "loss_coordinate_frame": 0.0,
+            "loss_xy": 0.0,
+            "loss_key": 0.0,
+            "loss_repeat": 0.0,
+            "loss_interval": 0.0,
+            "loss_param_bins": 0.0,
+            "loss_x_bin": 0.0,
+            "loss_y_bin": 0.0,
+            "loss_key_bin": 0.0,
+            "loss_repeat_bin": 0.0,
+            "loss_interval_bin": 0.0,
+            "loss_target_entity": 0.0,
+            "loss_point_role": 0.0,
+            "action_type_correct": 0,
+            "high_level_correct": 0,
+            "gui_action_correct": 0,
+            "coordinate_frame_correct": 0,
+            "target_entity_correct": 0,
+            "point_role_correct": 0,
+            "param_bin_correct": 0,
+            "param_bin_count": 0,
+            "x_bin_correct": 0,
+            "x_bin_count": 0,
+            "x_bin_tol_correct": 0,
+            "y_bin_correct": 0,
+            "y_bin_count": 0,
+            "y_bin_tol_correct": 0,
+            "key_bin_correct": 0,
+            "key_bin_count": 0,
+            "repeat_bin_correct": 0,
+            "repeat_bin_count": 0,
+            "interval_bin_correct": 0,
+            "interval_bin_count": 0,
+            "xy_abs_error": 0.0,
+            "xy_count": 0,
+            "key_correct": 0,
+            "key_count": 0,
+            "repeat_correct": 0,
+            "repeat_count": 0,
+            "count": 0,
+        }
+
+    def update_metrics(self, metrics, batch_metrics):
+        count = int(batch_metrics.get("count", 1))
+        metrics["count"] += count
+        for key, value in batch_metrics.items():
+            if key == "count":
+                continue
+            if key.startswith("loss"):
+                metrics[key] += float(value) * count
+            elif isinstance(value, float):
+                metrics[key] += float(value)
+            else:
+                metrics[key] += int(value)
+
+    def _average_metrics(self, metrics):
+        count = max(int(metrics.get("count", 0)), 1)
+        averaged = dict(metrics)
+        for key in list(averaged.keys()):
+            if key.startswith("loss"):
+                averaged[key] = averaged[key] / count
+        averaged["action_type_acc"] = metrics["action_type_correct"] / count
+        averaged["high_level_acc"] = metrics["high_level_correct"] / count
+        averaged["gui_action_acc"] = metrics["gui_action_correct"] / count
+        averaged["coordinate_frame_acc"] = metrics["coordinate_frame_correct"] / count
+        averaged["target_entity_acc"] = metrics.get("target_entity_correct", 0) / count
+        averaged["point_role_acc"] = metrics.get("point_role_correct", 0) / count
+        param_count = max(int(metrics.get("param_bin_count", 0)), 1)
+        averaged["param_bin_acc"] = metrics.get("param_bin_correct", 0) / param_count
+        for name in ["x_bin", "y_bin", "key_bin", "repeat_bin", "interval_bin"]:
+            metric_count = max(int(metrics.get(f"{name}_count", 0)), 1)
+            averaged[f"{name}_acc"] = metrics.get(f"{name}_correct", 0) / metric_count
+        averaged["x_bin_tol_acc"] = metrics.get("x_bin_tol_correct", 0) / max(int(metrics.get("x_bin_count", 0)), 1)
+        averaged["y_bin_tol_acc"] = metrics.get("y_bin_tol_correct", 0) / max(int(metrics.get("y_bin_count", 0)), 1)
+        averaged["xy_mae"] = metrics.get("xy_abs_error", 0.0) / max(int(metrics.get("xy_count", 0)), 1)
+        averaged["key_acc"] = metrics.get("key_correct", 0) / max(int(metrics.get("key_count", 0)), 1)
+        averaged["repeat_acc"] = metrics.get("repeat_correct", 0) / max(int(metrics.get("repeat_count", 0)), 1)
+        return averaged
+
+    def _batch_metrics(self, outputs, target, loss_dict):
+        action_pred = outputs["action_type_logits"].argmax(dim=-1)
+        high_pred = outputs["high_level_logits"].argmax(dim=-1)
+        gui_pred = outputs["gui_action_logits"].argmax(dim=-1)
+        frame_pred = outputs["coordinate_frame_logits"].argmax(dim=-1)
+        entity_pred = outputs["target_entity_logits"].argmax(dim=-1)
+        role_pred = outputs["point_role_logits"].argmax(dim=-1)
+        is_move = target["is_move"].bool()
+        is_key_action = target["is_key_action"].bool()
+        xy_error = (
+            (outputs["xy"][is_move] - target["xy"][is_move]).abs().sum().item()
+            if is_move.any()
+            else 0.0
+        )
+        key_target = target["key_id"].long()
+        valid_key = is_key_action & (key_target >= 0)
+        key_pred = outputs["key_logits"].argmax(dim=-1)
+        repeat_target = target["key_repeat_count"].long()
+        valid_repeat = is_key_action & (repeat_target >= 0)
+        repeat_pred = outputs["repeat_logits"].argmax(dim=-1)
+        metric_values = {
+            "xy_abs_error": xy_error,
+            "xy_count": int(is_move.sum().item()) * 2,
+            "key_correct": ((key_pred == key_target) & valid_key).sum().item(),
+            "key_count": valid_key.sum().item(),
+            "repeat_correct": ((repeat_pred == repeat_target) & valid_repeat).sum().item(),
+            "repeat_count": valid_repeat.sum().item(),
+        }
+        if getattr(self.model.config, "use_binned_primitive_params", False):
+            param_pred = outputs["param_bin_logits"].argmax(dim=-1)
+            param_target = target["primitive_param_bins"]
+            param_mask = param_target != -1
+            metric_values.update(
+                {
+                    "param_bin_correct": ((param_pred == param_target) & param_mask).sum().item(),
+                    "param_bin_count": param_mask.sum().item(),
+                }
+            )
+            for index, name in enumerate(["x_bin", "y_bin", "key_bin", "repeat_bin", "interval_bin"]):
+                mask = param_mask[:, index]
+                metric_values[f"{name}_correct"] = ((param_pred[:, index] == param_target[:, index]) & mask).sum().item()
+                metric_values[f"{name}_count"] = mask.sum().item()
+            xy_tolerance = int(getattr(self.model.config, "xy_bin_tolerance", 5))
+            metric_values["x_bin_tol_correct"] = (
+                ((param_pred[:, 0] - param_target[:, 0]).abs() <= xy_tolerance) & param_mask[:, 0]
+            ).sum().item()
+            metric_values["y_bin_tol_correct"] = (
+                ((param_pred[:, 1] - param_target[:, 1]).abs() <= xy_tolerance) & param_mask[:, 1]
+            ).sum().item()
+        return {
+            **{key: value.detach().item() for key, value in loss_dict.items() if key.startswith("loss")},
+            "action_type_correct": (action_pred == target["action_type_id"]).sum().item(),
+            "high_level_correct": (high_pred == target["high_level_id"]).sum().item(),
+            "gui_action_correct": (gui_pred == target["gui_action_id"]).sum().item(),
+            "coordinate_frame_correct": (frame_pred == target["coordinate_frame_id"]).sum().item(),
+            "target_entity_correct": (entity_pred == target["target_entity_id"]).sum().item(),
+            "point_role_correct": (role_pred == target["point_role_id"]).sum().item(),
+            **metric_values,
+            "count": target["action_type_id"].shape[0],
+        }
+
+    def _process_batch(self, batch, noise=False):
+        del noise
+        self.optimizer.zero_grad()
+        batch_dict = self.prepare_batch(batch)
+        outputs = self.model(batch_dict)
+        loss_dict = self.model.compute_loss(batch_dict, outputs)
+        loss = loss_dict["loss"]
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+        self.optimizer.step()
+        return loss, self._batch_metrics(outputs, batch_dict["target"], loss_dict)
+
+    @torch.no_grad()
+    def evaluate(self, model, mode="val", epoch=None, ablation=False):
+        del epoch, ablation
+        loader = self.val_loader if mode.startswith("val") else self.test_loader
+        model.eval()
+        metrics = self.init_metrics()
+        total_loss = 0.0
+        for batch in loader:
+            batch_dict = self.prepare_batch(batch)
+            outputs = model(batch_dict)
+            loss_dict = model.compute_loss(batch_dict, outputs)
+            total_loss += loss_dict["loss"].item()
+            self.update_metrics(metrics, self._batch_metrics(outputs, batch_dict["target"], loss_dict))
+        avg = self._average_metrics(metrics)
+        avg["loss"] = total_loss / max(len(loader), 1)
+        model.train()
+        return avg
+
+    def save_metrics(self, metrics, ext=""):
+        if "count" in metrics:
+            metrics = self._average_metrics(metrics)
+        self.metrics_handler.save_metrics(metrics, ext)
+
+    def log_metrics(self, epoch, epochs, batch_idx, loader_len, loss, **kwargs):
+        metrics = self._average_metrics(kwargs.get("metrics", {}))
+        step = epoch * loader_len + batch_idx + 1
+        self.log_wandb(
+            {
+                **flatten_metrics(metrics, "train_batch"),
+                "train_batch/loss_current": loss,
+                "train_batch/lr": self.get_current_lr(),
+                "train_batch/epoch": epoch + 1,
+            },
+            step=step,
+        )
+        self.log(
+            f"epoch {epoch + 1:03d}/{epochs} "
+            f"batch {batch_idx + 1:03d}/{loader_len} "
+            f"loss {loss:.4f} "
+            f"act {metrics.get('action_type_acc', 0):.3f} "
+            f"high {metrics.get('high_level_acc', 0):.3f} "
+            f"gui {metrics.get('gui_action_acc', 0):.3f} "
+            f"xy_mae {metrics.get('xy_mae', 0):.5f} "
+            f"key {metrics.get('key_acc', 0):.3f} "
+            f"repeat {metrics.get('repeat_acc', 0):.3f} "
+            f"load {kwargs.get('data_time', 0):.3f}s "
+            f"step {kwargs.get('loss_time', 0):.3f}s"
+        )
+
+    def print_metrics(self, metrics, mode=""):
+        self.log(
+            f"{mode}: loss={metrics.get('loss', 0):.4f}, "
+            f"action_type_acc={metrics.get('action_type_acc', 0):.3f}, "
+            f"high_level_acc={metrics.get('high_level_acc', 0):.3f}, "
+            f"gui_action_acc={metrics.get('gui_action_acc', 0):.3f}, "
+            f"xy_mae={metrics.get('xy_mae', 0):.5f}, "
+            f"key_acc={metrics.get('key_acc', 0):.3f}, "
+            f"repeat_acc={metrics.get('repeat_acc', 0):.3f}"
+        )
+
+    def _epoch_wandb_metrics(self, epoch, avg_loss, metrics):
+        averaged = self._average_metrics(metrics)
+        return {
+            **flatten_metrics(averaged, "train"),
+            "train/loss_epoch": avg_loss,
+            "train/lr": self.get_current_lr(),
+            "train/epoch": epoch + 1,
+        }
+
+    def log_epoch_metrics(self, epoch, epochs, avg_loss, metrics):
+        averaged = self._average_metrics(metrics)
+        self.log(
+            f"epoch {epoch + 1:03d}/{epochs} done "
+            f"loss {avg_loss:.4f} "
+            f"act {averaged.get('action_type_acc', 0):.3f} "
+            f"high {averaged.get('high_level_acc', 0):.3f} "
+            f"gui {averaged.get('gui_action_acc', 0):.3f} "
+            f"xy_mae {averaged.get('xy_mae', 0):.5f} "
+            f"key {averaged.get('key_acc', 0):.3f} "
+            f"repeat {averaged.get('repeat_acc', 0):.3f} "
+            f"lr {self.get_current_lr():.6g}"
+        )
+
 
 # Factory function to create the appropriate trainer
 def create_trainer(train_loader, val_loader, test_loader, model, training_config, device, model_type: ModelType, rank=0):
+    if model_type == ModelType.PRIMITIVE_ACTION_POLICY:
+        return PrimitiveActionTrainer(train_loader, val_loader, test_loader, model, training_config, device, rank)
     return MultiClassesTrainer(train_loader, val_loader, test_loader, model, training_config, device, rank)
     

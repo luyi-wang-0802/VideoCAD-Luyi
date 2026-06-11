@@ -1,0 +1,38 @@
+[
+  {
+    "sample_id": "plan_001",
+    "split": "train",
+    "path": "processed_data/samples/plan_001.json",
+    "trajectory_path": "processed_data/trajectories/plan_001_training_steps.jsonl",
+    "tensor_path": "processed_data/tensors/plan_001.npz",
+    "runtime_plan_path": "processed_data/runtime_plans/plan_001_runtime_plan.json",
+    "resplan_json_path": "raw_data/resplan_to_JSON/resplan_to_JSON_001.json",
+    "supervision_sources": {
+      "high_level_sequence_path": "raw_data/bim_sequence/resplan_to_JSON_001_bim_sequence/high_level_sequence.json",
+      "gui_action_sequence_path": "raw_data/bim_sequence/resplan_to_JSON_001_bim_sequence/gui_action_sequence.json",
+      "primitive_plan_path": "raw_data/bim_sequence/resplan_to_JSON_001_bim_sequence/primitive_plan.json"
+    },
+    "num_raw_steps": 192,
+    "num_training_steps": 161,
+    "missing_observation_screenshots": 0,
+    "missing_action_after_screenshots": 75
+  },
+  {
+    "sample_id": "plan_019",
+    "split": "train",
+    "path": "processed_data/samples/plan_019.json",
+    "trajectory_path": "processed_data/trajectories/plan_019_training_steps.jsonl",
+    "tensor_path": "processed_data/tensors/plan_019.npz",
+    "runtime_plan_path": "processed_data/runtime_plans/plan_019_runtime_plan.json",
+    "resplan_json_path": "raw_data/resplan_to_JSON/resplan_to_JSON_019.json",
+    "supervision_sources": {
+      "high_level_sequence_path": "raw_data/bim_sequence/resplan_to_JSON_019_bim_sequence/high_level_sequence.json",
+      "gui_action_sequence_path": "raw_data/bim_sequence/resplan_to_JSON_019_bim_sequence/gui_action_sequence.json",
+      "primitive_plan_path": "raw_data/bim_sequence/resplan_to_JSON_019_bim_sequence/primitive_plan.json"
+    },
+    "num_raw_steps": 162,
+    "num_training_steps": 137,
+    "missing_observation_screenshots": 0,
+    "missing_action_after_screenshots": 63
+  }
+]

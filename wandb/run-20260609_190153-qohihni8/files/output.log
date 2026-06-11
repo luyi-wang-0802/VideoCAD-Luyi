@@ -1,0 +1,1512 @@
+[34m[1mwandb[0m: Detected [huggingface_hub.inference] in use.
+[34m[1mwandb[0m: Use W&B Weave for improved LLM call tracing. Install Weave with `pip install weave` then add `import weave` to the top of your script.
+[34m[1mwandb[0m: For more information, check out the docs at: https://weave-docs.wandb.ai
+Epoch [1/200] started
+epoch 001/200 batch 010/75 loss 34.1027 act 0.225 xy_mae 5.24766 key 0.357 repeat 0.429 load 0.050s step 0.065s
+epoch 001/200 batch 020/75 loss 2.9865 act 0.275 xy_mae 2.58786 key 0.478 repeat 0.478 load 0.050s step 0.047s
+epoch 001/200 batch 030/75 loss 10.4022 act 0.283 xy_mae 2.01214 key 0.528 repeat 0.528 load 0.050s step 0.041s
+epoch 001/200 batch 040/75 loss 5.5911 act 0.312 xy_mae 1.59562 key 0.596 repeat 0.511 load 0.049s step 0.039s
+epoch 001/200 batch 050/75 loss 7.6587 act 0.365 xy_mae 1.28011 key 0.630 repeat 0.556 load 0.049s step 0.037s
+epoch 001/200 batch 060/75 loss 16.6422 act 0.329 xy_mae 1.13018 key 0.656 repeat 0.590 load 0.049s step 0.036s
+epoch 001/200 batch 070/75 loss 12.8604 act 0.346 xy_mae 1.00430 key 0.690 repeat 0.620 load 0.049s step 0.036s
+epoch 001/200 batch 075/75 loss 4.6771 act 0.336 xy_mae 0.96214 key 0.703 repeat 0.635 load 0.048s step 0.036s
+epoch 001/200 done loss 13.7144 act 0.336 xy_mae 0.96214 key 0.703 repeat 0.635 lr 0.002
+Saved last checkpoint for epoch 1: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from inf to 13.7144
+Saved best checkpoint for epoch 1: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 1
+Epoch 1 took 6.64 seconds
+Epoch [2/200] started
+epoch 002/200 batch 010/75 loss 11.3209 act 0.550 xy_mae 0.33035 key 0.400 repeat 0.600 load 0.052s step 0.032s
+epoch 002/200 batch 020/75 loss 3.1230 act 0.438 xy_mae 0.35408 key 0.615 repeat 0.615 load 0.051s step 0.034s
+epoch 002/200 batch 030/75 loss 4.4373 act 0.483 xy_mae 0.40385 key 0.778 repeat 0.741 load 0.052s step 0.035s
+epoch 002/200 batch 040/75 loss 6.0091 act 0.475 xy_mae 0.37918 key 0.784 repeat 0.757 load 0.052s step 0.035s
+epoch 002/200 batch 050/75 loss 3.8943 act 0.445 xy_mae 0.37447 key 0.783 repeat 0.739 load 0.052s step 0.036s
+epoch 002/200 batch 060/75 loss 4.8619 act 0.438 xy_mae 0.37127 key 0.782 repeat 0.655 load 0.052s step 0.036s
+epoch 002/200 batch 070/75 loss 15.4856 act 0.407 xy_mae 0.37576 key 0.765 repeat 0.676 load 0.051s step 0.036s
+epoch 002/200 batch 075/75 loss 10.1833 act 0.389 xy_mae 0.37482 key 0.757 repeat 0.676 load 0.051s step 0.036s
+epoch 002/200 done loss 7.3305 act 0.389 xy_mae 0.37482 key 0.757 repeat 0.676 lr 0.00199988
+Saved last checkpoint for epoch 2: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 13.7144 to 7.3305
+Saved best checkpoint for epoch 2: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 2
+Epoch 2 took 6.90 seconds
+Epoch [3/200] started
+epoch 003/200 batch 010/75 loss 7.5511 act 0.400 xy_mae 0.74911 key 0.700 repeat 0.700 load 0.047s step 0.041s
+epoch 003/200 batch 020/75 loss 4.3934 act 0.362 xy_mae 0.61409 key 0.789 repeat 0.632 load 0.049s step 0.039s
+epoch 003/200 batch 030/75 loss 4.7135 act 0.392 xy_mae 0.48688 key 0.767 repeat 0.667 load 0.049s step 0.037s
+epoch 003/200 batch 040/75 loss 13.0615 act 0.388 xy_mae 0.46853 key 0.789 repeat 0.684 load 0.048s step 0.037s
+epoch 003/200 batch 050/75 loss 2.8948 act 0.425 xy_mae 0.43301 key 0.795 repeat 0.705 load 0.048s step 0.037s
+epoch 003/200 batch 060/75 loss 5.3354 act 0.396 xy_mae 0.42871 key 0.759 repeat 0.690 load 0.048s step 0.036s
+epoch 003/200 batch 070/75 loss 9.3913 act 0.382 xy_mae 0.41309 key 0.743 repeat 0.671 load 0.048s step 0.036s
+epoch 003/200 batch 075/75 loss 4.9536 act 0.386 xy_mae 0.40198 key 0.757 repeat 0.689 load 0.048s step 0.036s
+epoch 003/200 done loss 7.0385 act 0.386 xy_mae 0.40198 key 0.757 repeat 0.689 lr 0.00199951
+Saved last checkpoint for epoch 3: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 7.3305 to 7.0385
+Saved best checkpoint for epoch 3: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 3
+Epoch 3 took 6.58 seconds
+Epoch [4/200] started
+epoch 004/200 batch 010/75 loss 7.2204 act 0.175 xy_mae 0.41849 key 0.615 repeat 0.615 load 0.050s step 0.033s
+epoch 004/200 batch 020/75 loss 5.0770 act 0.200 xy_mae 0.38563 key 0.714 repeat 0.667 load 0.049s step 0.034s
+epoch 004/200 batch 030/75 loss 4.5490 act 0.292 xy_mae 0.37518 key 0.742 repeat 0.742 load 0.048s step 0.034s
+epoch 004/200 batch 040/75 loss 5.2785 act 0.344 xy_mae 0.38224 key 0.721 repeat 0.721 load 0.048s step 0.034s
+epoch 004/200 batch 050/75 loss 5.5722 act 0.370 xy_mae 0.37670 key 0.708 repeat 0.708 load 0.048s step 0.034s
+epoch 004/200 batch 060/75 loss 4.7474 act 0.412 xy_mae 0.35093 key 0.754 repeat 0.770 load 0.048s step 0.033s
+epoch 004/200 batch 070/75 loss 2.3985 act 0.436 xy_mae 0.33909 key 0.767 repeat 0.767 load 0.048s step 0.033s
+epoch 004/200 batch 075/75 loss 1.6706 act 0.450 xy_mae 0.33291 key 0.757 repeat 0.757 load 0.047s step 0.033s
+epoch 004/200 done loss 5.8901 act 0.450 xy_mae 0.33291 key 0.757 repeat 0.757 lr 0.00199889
+Saved last checkpoint for epoch 4: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 7.0385 to 5.8901
+Saved best checkpoint for epoch 4: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 4
+Epoch 4 took 6.36 seconds
+Epoch [5/200] started
+epoch 005/200 batch 010/75 loss 12.4903 act 0.700 xy_mae 0.25278 key 0.778 repeat 0.889 load 0.047s step 0.034s
+epoch 005/200 batch 020/75 loss 3.6787 act 0.650 xy_mae 0.25644 key 0.750 repeat 0.812 load 0.046s step 0.035s
+epoch 005/200 batch 030/75 loss 3.4412 act 0.650 xy_mae 0.26179 key 0.792 repeat 0.875 load 0.047s step 0.035s
+epoch 005/200 batch 040/75 loss 4.1753 act 0.581 xy_mae 0.27714 key 0.812 repeat 0.906 load 0.048s step 0.034s
+epoch 005/200 batch 050/75 loss 6.8002 act 0.550 xy_mae 0.27856 key 0.816 repeat 0.878 load 0.048s step 0.033s
+epoch 005/200 batch 060/75 loss 5.7817 act 0.512 xy_mae 0.28385 key 0.817 repeat 0.883 load 0.048s step 0.033s
+epoch 005/200 batch 070/75 loss 3.7425 act 0.507 xy_mae 0.28517 key 0.806 repeat 0.851 load 0.048s step 0.032s
+epoch 005/200 batch 075/75 loss 1.4028 act 0.507 xy_mae 0.28229 key 0.757 repeat 0.838 load 0.048s step 0.032s
+epoch 005/200 done loss 5.5604 act 0.507 xy_mae 0.28229 key 0.757 repeat 0.838 lr 0.00199803
+Saved last checkpoint for epoch 5: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=5.0344, action_type_acc=0.591, xy_mae=0.26162, key_acc=0.797, repeat_acc=0.892
+Validation loss improved from 5.8901 to 5.5604
+Saved best checkpoint for epoch 5: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 5
+Epoch 5 took 11.30 seconds
+Epoch [6/200] started
+epoch 006/200 batch 010/75 loss 10.4395 act 0.450 xy_mae 0.24958 key 0.857 repeat 0.929 load 0.050s step 0.076s
+epoch 006/200 batch 020/75 loss 2.2059 act 0.525 xy_mae 0.25479 key 0.885 repeat 0.923 load 0.051s step 0.051s
+epoch 006/200 batch 030/75 loss 3.0178 act 0.517 xy_mae 0.26180 key 0.811 repeat 0.838 load 0.050s step 0.043s
+epoch 006/200 batch 040/75 loss 3.9127 act 0.550 xy_mae 0.27393 key 0.804 repeat 0.824 load 0.049s step 0.039s
+epoch 006/200 batch 050/75 loss 8.7645 act 0.570 xy_mae 0.26385 key 0.770 repeat 0.820 load 0.049s step 0.037s
+epoch 006/200 batch 060/75 loss 3.7506 act 0.575 xy_mae 0.27072 key 0.765 repeat 0.838 load 0.049s step 0.036s
+epoch 006/200 batch 070/75 loss 1.8012 act 0.607 xy_mae 0.27270 key 0.781 repeat 0.836 load 0.048s step 0.035s
+epoch 006/200 batch 075/75 loss 6.7713 act 0.614 xy_mae 0.27536 key 0.784 repeat 0.838 load 0.048s step 0.034s
+epoch 006/200 done loss 4.3564 act 0.614 xy_mae 0.27536 key 0.784 repeat 0.838 lr 0.00199692
+Saved last checkpoint for epoch 6: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 5.5604 to 4.3564
+Saved best checkpoint for epoch 6: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 6
+Epoch 6 took 6.47 seconds
+Epoch [7/200] started
+epoch 007/200 batch 010/75 loss 3.5039 act 0.750 xy_mae 0.30160 key 0.875 repeat 0.875 load 0.048s step 0.034s
+epoch 007/200 batch 020/75 loss 9.9779 act 0.713 xy_mae 0.31353 key 0.737 repeat 0.895 load 0.048s step 0.032s
+epoch 007/200 batch 030/75 loss 6.6315 act 0.642 xy_mae 0.35632 key 0.633 repeat 0.933 load 0.048s step 0.032s
+epoch 007/200 batch 040/75 loss 0.3225 act 0.650 xy_mae 0.33284 key 0.690 repeat 0.952 load 0.047s step 0.033s
+epoch 007/200 batch 050/75 loss 0.0844 act 0.675 xy_mae 0.33626 key 0.712 repeat 0.942 load 0.048s step 0.033s
+epoch 007/200 batch 060/75 loss 0.8898 act 0.688 xy_mae 0.32321 key 0.746 repeat 0.949 load 0.048s step 0.033s
+epoch 007/200 batch 070/75 loss 1.5227 act 0.711 xy_mae 0.30896 key 0.765 repeat 0.926 load 0.048s step 0.033s
+epoch 007/200 batch 075/75 loss 11.0052 act 0.705 xy_mae 0.30684 key 0.757 repeat 0.932 load 0.047s step 0.033s
+epoch 007/200 done loss 4.2383 act 0.705 xy_mae 0.30684 key 0.757 repeat 0.932 lr 0.00199556
+Saved last checkpoint for epoch 7: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 4.3564 to 4.2383
+Saved best checkpoint for epoch 7: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 7
+Epoch 7 took 6.42 seconds
+Epoch [8/200] started
+epoch 008/200 batch 010/75 loss 6.8948 act 0.675 xy_mae 0.27009 key 0.615 repeat 0.769 load 0.048s step 0.034s
+epoch 008/200 batch 020/75 loss 8.1999 act 0.700 xy_mae 0.23305 key 0.714 repeat 0.810 load 0.048s step 0.035s
+epoch 008/200 batch 030/75 loss 0.2505 act 0.758 xy_mae 0.23913 key 0.731 repeat 0.808 load 0.049s step 0.034s
+epoch 008/200 batch 040/75 loss 1.1423 act 0.738 xy_mae 0.26246 key 0.757 repeat 0.838 load 0.049s step 0.035s
+epoch 008/200 batch 050/75 loss 2.2112 act 0.740 xy_mae 0.26682 key 0.739 repeat 0.870 load 0.049s step 0.035s
+epoch 008/200 batch 060/75 loss 3.6108 act 0.733 xy_mae 0.27785 key 0.759 repeat 0.845 load 0.048s step 0.035s
+epoch 008/200 batch 070/75 loss 3.7771 act 0.736 xy_mae 0.27670 key 0.761 repeat 0.859 load 0.048s step 0.035s
+epoch 008/200 batch 075/75 loss 0.8851 act 0.738 xy_mae 0.27459 key 0.757 repeat 0.851 load 0.048s step 0.035s
+epoch 008/200 done loss 3.6876 act 0.738 xy_mae 0.27459 key 0.757 repeat 0.851 lr 0.00199396
+Saved last checkpoint for epoch 8: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 4.2383 to 3.6876
+Saved best checkpoint for epoch 8: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 8
+Epoch 8 took 6.54 seconds
+Epoch [9/200] started
+epoch 009/200 batch 010/75 loss 5.7136 act 0.600 xy_mae 0.20110 key 0.625 repeat 1.000 load 0.047s step 0.035s
+epoch 009/200 batch 020/75 loss 1.5061 act 0.688 xy_mae 0.21938 key 0.688 repeat 1.000 load 0.048s step 0.035s
+epoch 009/200 batch 030/75 loss 0.9391 act 0.700 xy_mae 0.23346 key 0.692 repeat 0.962 load 0.048s step 0.035s
+epoch 009/200 batch 040/75 loss 2.5100 act 0.694 xy_mae 0.22555 key 0.676 repeat 0.941 load 0.047s step 0.036s
+epoch 009/200 batch 050/75 loss 4.6552 act 0.705 xy_mae 0.23060 key 0.721 repeat 0.884 load 0.048s step 0.036s
+epoch 009/200 batch 060/75 loss 1.2282 act 0.725 xy_mae 0.24371 key 0.776 repeat 0.914 load 0.047s step 0.036s
+epoch 009/200 batch 070/75 loss 0.3535 act 0.746 xy_mae 0.24390 key 0.776 repeat 0.925 load 0.047s step 0.035s
+epoch 009/200 batch 075/75 loss 3.2661 act 0.745 xy_mae 0.24621 key 0.784 repeat 0.919 load 0.047s step 0.035s
+epoch 009/200 done loss 3.1906 act 0.745 xy_mae 0.24621 key 0.784 repeat 0.919 lr 0.00199212
+Saved last checkpoint for epoch 9: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 3.6876 to 3.1906
+Saved best checkpoint for epoch 9: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 9
+Epoch 9 took 6.51 seconds
+Epoch [10/200] started
+epoch 010/200 batch 010/75 loss 3.7658 act 0.775 xy_mae 0.29403 key 0.706 repeat 0.882 load 0.046s step 0.037s
+epoch 010/200 batch 020/75 loss 3.1343 act 0.825 xy_mae 0.26267 key 0.760 repeat 0.880 load 0.047s step 0.036s
+epoch 010/200 batch 030/75 loss 1.9534 act 0.775 xy_mae 0.26319 key 0.677 repeat 0.903 load 0.047s step 0.037s
+epoch 010/200 batch 040/75 loss 1.2566 act 0.794 xy_mae 0.26332 key 0.684 repeat 0.895 load 0.047s step 0.037s
+epoch 010/200 batch 050/75 loss 2.6732 act 0.790 xy_mae 0.26720 key 0.723 repeat 0.894 load 0.047s step 0.037s
+epoch 010/200 batch 060/75 loss 7.7762 act 0.787 xy_mae 0.25357 key 0.732 repeat 0.875 load 0.047s step 0.037s
+epoch 010/200 batch 070/75 loss 2.0115 act 0.800 xy_mae 0.25187 key 0.754 repeat 0.892 load 0.047s step 0.036s
+epoch 010/200 batch 075/75 loss 8.8714 act 0.789 xy_mae 0.25160 key 0.770 repeat 0.892 load 0.047s step 0.036s
+epoch 010/200 done loss 2.7849 act 0.789 xy_mae 0.25160 key 0.770 repeat 0.892 lr 0.00199003
+Saved last checkpoint for epoch 10: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=4.3607, action_type_acc=0.779, xy_mae=0.41250, key_acc=0.811, repeat_acc=0.932
+Validation loss improved from 3.1906 to 2.7849
+Saved best checkpoint for epoch 10: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 10
+Epoch 10 took 11.58 seconds
+Epoch [11/200] started
+epoch 011/200 batch 010/75 loss 3.6944 act 0.800 xy_mae 0.32732 key 0.929 repeat 1.000 load 0.050s step 0.074s
+epoch 011/200 batch 020/75 loss 4.7579 act 0.775 xy_mae 0.30463 key 0.826 repeat 0.957 load 0.050s step 0.050s
+epoch 011/200 batch 030/75 loss 1.2462 act 0.775 xy_mae 0.30667 key 0.824 repeat 0.971 load 0.050s step 0.044s
+epoch 011/200 batch 040/75 loss 3.8081 act 0.775 xy_mae 0.29151 key 0.810 repeat 0.952 load 0.049s step 0.040s
+epoch 011/200 batch 050/75 loss 0.3226 act 0.780 xy_mae 0.28224 key 0.755 repeat 0.906 load 0.049s step 0.037s
+epoch 011/200 batch 060/75 loss 1.9724 act 0.787 xy_mae 0.27174 key 0.766 repeat 0.922 load 0.049s step 0.035s
+epoch 011/200 batch 070/75 loss 1.2955 act 0.793 xy_mae 0.26822 key 0.746 repeat 0.930 load 0.049s step 0.034s
+epoch 011/200 batch 075/75 loss 1.4690 act 0.792 xy_mae 0.26306 key 0.757 repeat 0.932 load 0.048s step 0.034s
+epoch 011/200 done loss 2.8530 act 0.792 xy_mae 0.26306 key 0.757 repeat 0.932 lr 0.00198769
+Saved last checkpoint for epoch 11: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 11 took 6.34 seconds
+Epoch [12/200] started
+epoch 012/200 batch 010/75 loss 1.2908 act 0.800 xy_mae 0.18001 key 0.857 repeat 0.857 load 0.049s step 0.030s
+epoch 012/200 batch 020/75 loss 0.7825 act 0.825 xy_mae 0.21220 key 0.833 repeat 0.944 load 0.048s step 0.031s
+epoch 012/200 batch 030/75 loss 4.7611 act 0.808 xy_mae 0.23937 key 0.885 repeat 0.962 load 0.048s step 0.031s
+epoch 012/200 batch 040/75 loss 1.0469 act 0.819 xy_mae 0.24101 key 0.829 repeat 0.927 load 0.048s step 0.031s
+epoch 012/200 batch 050/75 loss 3.7543 act 0.790 xy_mae 0.24603 key 0.783 repeat 0.891 load 0.048s step 0.031s
+epoch 012/200 batch 060/75 loss 5.1589 act 0.771 xy_mae 0.25436 key 0.750 repeat 0.857 load 0.048s step 0.031s
+epoch 012/200 batch 070/75 loss 1.4310 act 0.786 xy_mae 0.25427 key 0.761 repeat 0.887 load 0.048s step 0.031s
+epoch 012/200 batch 075/75 loss 0.5224 act 0.782 xy_mae 0.25137 key 0.770 repeat 0.892 load 0.048s step 0.031s
+epoch 012/200 done loss 3.0156 act 0.782 xy_mae 0.25137 key 0.770 repeat 0.892 lr 0.00198512
+Saved last checkpoint for epoch 12: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 12 took 6.10 seconds
+Epoch [13/200] started
+epoch 013/200 batch 010/75 loss 4.4559 act 0.800 xy_mae 0.19565 key 0.692 repeat 0.923 load 0.048s step 0.036s
+epoch 013/200 batch 020/75 loss 0.3805 act 0.838 xy_mae 0.18963 key 0.696 repeat 0.913 load 0.048s step 0.035s
+epoch 013/200 batch 030/75 loss 4.0994 act 0.842 xy_mae 0.21272 key 0.719 repeat 0.875 load 0.048s step 0.034s
+epoch 013/200 batch 040/75 loss 2.7095 act 0.819 xy_mae 0.21221 key 0.725 repeat 0.875 load 0.048s step 0.033s
+epoch 013/200 batch 050/75 loss 0.2517 act 0.825 xy_mae 0.20223 key 0.740 repeat 0.840 load 0.048s step 0.033s
+epoch 013/200 batch 060/75 loss 0.5351 act 0.829 xy_mae 0.19947 key 0.741 repeat 0.845 load 0.048s step 0.032s
+epoch 013/200 batch 070/75 loss 1.2127 act 0.825 xy_mae 0.20676 key 0.761 repeat 0.866 load 0.048s step 0.032s
+epoch 013/200 batch 075/75 loss 0.0105 act 0.832 xy_mae 0.20347 key 0.757 repeat 0.878 load 0.047s step 0.033s
+epoch 013/200 done loss 2.2466 act 0.832 xy_mae 0.20347 key 0.757 repeat 0.878 lr 0.0019823
+Saved last checkpoint for epoch 13: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 2.7849 to 2.2466
+Saved best checkpoint for epoch 13: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 13
+Epoch 13 took 6.32 seconds
+Epoch [14/200] started
+epoch 014/200 batch 010/75 loss 1.5285 act 0.925 xy_mae 0.28699 key 1.000 repeat 1.000 load 0.046s step 0.036s
+epoch 014/200 batch 020/75 loss 0.1568 act 0.875 xy_mae 0.26786 key 0.875 repeat 0.938 load 0.048s step 0.033s
+epoch 014/200 batch 030/75 loss 1.2297 act 0.867 xy_mae 0.23542 key 0.905 repeat 0.952 load 0.047s step 0.034s
+epoch 014/200 batch 040/75 loss 0.4091 act 0.863 xy_mae 0.22334 key 0.909 repeat 0.939 load 0.048s step 0.033s
+epoch 014/200 batch 050/75 loss 4.8045 act 0.865 xy_mae 0.22197 key 0.933 repeat 0.933 load 0.048s step 0.033s
+epoch 014/200 batch 060/75 loss 2.5499 act 0.846 xy_mae 0.21996 key 0.869 repeat 0.902 load 0.048s step 0.033s
+epoch 014/200 batch 070/75 loss 3.0952 act 0.836 xy_mae 0.21473 key 0.841 repeat 0.913 load 0.048s step 0.033s
+epoch 014/200 batch 075/75 loss 0.9313 act 0.832 xy_mae 0.21527 key 0.838 repeat 0.919 load 0.047s step 0.033s
+epoch 014/200 done loss 1.9370 act 0.832 xy_mae 0.21527 key 0.838 repeat 0.919 lr 0.00197923
+Saved last checkpoint for epoch 14: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 2.2466 to 1.9370
+Saved best checkpoint for epoch 14: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 14
+Epoch 14 took 6.30 seconds
+Epoch [15/200] started
+epoch 015/200 batch 010/75 loss 0.9620 act 0.925 xy_mae 0.20801 key 0.818 repeat 1.000 load 0.049s step 0.031s
+epoch 015/200 batch 020/75 loss 0.1825 act 0.925 xy_mae 0.22325 key 0.800 repeat 1.000 load 0.050s step 0.031s
+epoch 015/200 batch 030/75 loss 0.1353 act 0.933 xy_mae 0.21238 key 0.844 repeat 1.000 load 0.049s step 0.031s
+epoch 015/200 batch 040/75 loss 3.5802 act 0.906 xy_mae 0.19900 key 0.762 repeat 0.929 load 0.049s step 0.031s
+epoch 015/200 batch 050/75 loss 4.2872 act 0.905 xy_mae 0.19674 key 0.808 repeat 0.942 load 0.049s step 0.031s
+epoch 015/200 batch 060/75 loss 0.2078 act 0.883 xy_mae 0.19771 key 0.814 repeat 0.932 load 0.049s step 0.031s
+epoch 015/200 batch 070/75 loss 0.3543 act 0.875 xy_mae 0.19354 key 0.814 repeat 0.943 load 0.049s step 0.031s
+epoch 015/200 batch 075/75 loss 0.3520 act 0.872 xy_mae 0.19227 key 0.811 repeat 0.932 load 0.048s step 0.031s
+epoch 015/200 done loss 1.7909 act 0.872 xy_mae 0.19227 key 0.811 repeat 0.932 lr 0.00197593
+Saved last checkpoint for epoch 15: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=1.3317, action_type_acc=0.889, xy_mae=0.18536, key_acc=0.824, repeat_acc=0.986
+Validation loss improved from 1.9370 to 1.7909
+Saved best checkpoint for epoch 15: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 15
+Epoch 15 took 11.29 seconds
+Epoch [16/200] started
+epoch 016/200 batch 010/75 loss 1.5094 act 0.875 xy_mae 0.19129 key 0.714 repeat 1.000 load 0.048s step 0.071s
+epoch 016/200 batch 020/75 loss 0.7864 act 0.925 xy_mae 0.19582 key 0.688 repeat 1.000 load 0.049s step 0.049s
+epoch 016/200 batch 030/75 loss 5.1916 act 0.908 xy_mae 0.19731 key 0.769 repeat 1.000 load 0.048s step 0.042s
+epoch 016/200 batch 040/75 loss 0.8831 act 0.881 xy_mae 0.20589 key 0.811 repeat 0.973 load 0.048s step 0.039s
+epoch 016/200 batch 050/75 loss 0.8592 act 0.875 xy_mae 0.20855 key 0.816 repeat 0.939 load 0.048s step 0.038s
+epoch 016/200 batch 060/75 loss 0.3336 act 0.871 xy_mae 0.20666 key 0.845 repeat 0.948 load 0.048s step 0.037s
+epoch 016/200 batch 070/75 loss 0.4556 act 0.875 xy_mae 0.20924 key 0.851 repeat 0.955 load 0.047s step 0.037s
+epoch 016/200 batch 075/75 loss 2.5688 act 0.866 xy_mae 0.20615 key 0.851 repeat 0.946 load 0.047s step 0.036s
+epoch 016/200 done loss 1.6417 act 0.866 xy_mae 0.20615 key 0.851 repeat 0.946 lr 0.00197238
+Saved last checkpoint for epoch 16: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 1.7909 to 1.6417
+Saved best checkpoint for epoch 16: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 16
+Epoch 16 took 6.60 seconds
+Epoch [17/200] started
+epoch 017/200 batch 010/75 loss 0.3066 act 0.925 xy_mae 0.19276 key 0.900 repeat 0.900 load 0.048s step 0.034s
+epoch 017/200 batch 020/75 loss 1.8155 act 0.887 xy_mae 0.18385 key 0.955 repeat 0.955 load 0.047s step 0.034s
+epoch 017/200 batch 030/75 loss 0.7612 act 0.883 xy_mae 0.20301 key 0.909 repeat 0.970 load 0.047s step 0.034s
+epoch 017/200 batch 040/75 loss 0.2201 act 0.881 xy_mae 0.20181 key 0.907 repeat 0.977 load 0.048s step 0.033s
+epoch 017/200 batch 050/75 loss 0.8509 act 0.885 xy_mae 0.20901 key 0.922 repeat 0.980 load 0.048s step 0.034s
+epoch 017/200 batch 060/75 loss 1.5243 act 0.883 xy_mae 0.21706 key 0.902 repeat 0.951 load 0.048s step 0.034s
+epoch 017/200 batch 070/75 loss 1.5960 act 0.889 xy_mae 0.22242 key 0.914 repeat 0.957 load 0.048s step 0.034s
+epoch 017/200 batch 075/75 loss 0.2719 act 0.886 xy_mae 0.22449 key 0.905 repeat 0.946 load 0.047s step 0.034s
+epoch 017/200 done loss 1.4144 act 0.886 xy_mae 0.22449 key 0.905 repeat 0.946 lr 0.0019686
+Saved last checkpoint for epoch 17: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 1.6417 to 1.4144
+Saved best checkpoint for epoch 17: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 17
+Epoch 17 took 6.54 seconds
+Epoch [18/200] started
+epoch 018/200 batch 010/75 loss 0.2880 act 0.825 xy_mae 0.16943 key 0.917 repeat 0.917 load 0.047s step 0.035s
+epoch 018/200 batch 020/75 loss 3.0127 act 0.838 xy_mae 0.19295 key 0.957 repeat 0.913 load 0.047s step 0.035s
+epoch 018/200 batch 030/75 loss 0.0001 act 0.883 xy_mae 0.20129 key 0.966 repeat 0.931 load 0.048s step 0.033s
+epoch 018/200 batch 040/75 loss 6.0343 act 0.869 xy_mae 0.20082 key 0.900 repeat 0.900 load 0.048s step 0.033s
+epoch 018/200 batch 050/75 loss 0.7560 act 0.875 xy_mae 0.19651 key 0.865 repeat 0.904 load 0.048s step 0.034s
+epoch 018/200 batch 060/75 loss 0.5118 act 0.879 xy_mae 0.19498 key 0.869 repeat 0.918 load 0.048s step 0.034s
+epoch 018/200 batch 070/75 loss 0.8315 act 0.879 xy_mae 0.20341 key 0.870 repeat 0.928 load 0.048s step 0.034s
+epoch 018/200 batch 075/75 loss 1.4009 act 0.879 xy_mae 0.20496 key 0.878 repeat 0.932 load 0.047s step 0.034s
+epoch 018/200 done loss 1.7584 act 0.879 xy_mae 0.20496 key 0.878 repeat 0.932 lr 0.00196458
+Saved last checkpoint for epoch 18: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 18 took 6.27 seconds
+Epoch [19/200] started
+epoch 019/200 batch 010/75 loss 1.6473 act 0.900 xy_mae 0.22595 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 019/200 batch 020/75 loss 0.0843 act 0.912 xy_mae 0.22553 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 019/200 batch 030/75 loss 0.2797 act 0.908 xy_mae 0.20812 key 0.957 repeat 1.000 load 0.049s step 0.033s
+epoch 019/200 batch 040/75 loss 5.8134 act 0.906 xy_mae 0.21283 key 0.912 repeat 1.000 load 0.049s step 0.033s
+epoch 019/200 batch 050/75 loss 0.6321 act 0.915 xy_mae 0.22115 key 0.864 repeat 0.977 load 0.048s step 0.033s
+epoch 019/200 batch 060/75 loss 0.9470 act 0.912 xy_mae 0.21709 key 0.828 repeat 0.983 load 0.048s step 0.033s
+epoch 019/200 batch 070/75 loss 0.6609 act 0.907 xy_mae 0.21526 key 0.826 repeat 0.957 load 0.048s step 0.033s
+epoch 019/200 batch 075/75 loss 0.0411 act 0.903 xy_mae 0.21404 key 0.838 repeat 0.959 load 0.048s step 0.033s
+epoch 019/200 done loss 1.6583 act 0.903 xy_mae 0.21404 key 0.838 repeat 0.959 lr 0.00196031
+Saved last checkpoint for epoch 19: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 19 took 6.25 seconds
+Epoch [20/200] started
+epoch 020/200 batch 010/75 loss 0.2983 act 0.850 xy_mae 0.27894 key 0.778 repeat 0.889 load 0.047s step 0.035s
+epoch 020/200 batch 020/75 loss 3.0962 act 0.863 xy_mae 0.25941 key 0.840 repeat 0.960 load 0.047s step 0.035s
+epoch 020/200 batch 030/75 loss 0.5013 act 0.892 xy_mae 0.24680 key 0.857 repeat 0.971 load 0.047s step 0.034s
+epoch 020/200 batch 040/75 loss 1.7400 act 0.887 xy_mae 0.23640 key 0.870 repeat 0.978 load 0.047s step 0.033s
+epoch 020/200 batch 050/75 loss 0.3700 act 0.900 xy_mae 0.21972 key 0.887 repeat 0.981 load 0.047s step 0.033s
+epoch 020/200 batch 060/75 loss 1.0474 act 0.896 xy_mae 0.21627 key 0.903 repeat 0.952 load 0.048s step 0.033s
+epoch 020/200 batch 070/75 loss 1.9440 act 0.893 xy_mae 0.21108 key 0.914 repeat 0.957 load 0.048s step 0.033s
+epoch 020/200 batch 075/75 loss 0.2369 act 0.893 xy_mae 0.20999 key 0.905 repeat 0.959 load 0.047s step 0.033s
+epoch 020/200 done loss 1.2234 act 0.893 xy_mae 0.20999 key 0.905 repeat 0.959 lr 0.00195582
+Saved last checkpoint for epoch 20: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.9319, action_type_acc=0.946, xy_mae=0.23237, key_acc=0.973, repeat_acc=0.946
+Validation loss improved from 1.4144 to 1.2234
+Saved best checkpoint for epoch 20: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 20
+Epoch 20 took 11.20 seconds
+Epoch [21/200] started
+epoch 021/200 batch 010/75 loss 0.4782 act 0.950 xy_mae 0.29234 key 1.000 repeat 0.889 load 0.046s step 0.050s
+epoch 021/200 batch 020/75 loss 0.0003 act 0.950 xy_mae 0.25871 key 1.000 repeat 0.947 load 0.047s step 0.037s
+epoch 021/200 batch 030/75 loss 0.6607 act 0.925 xy_mae 0.22756 key 0.967 repeat 0.900 load 0.049s step 0.033s
+epoch 021/200 batch 040/75 loss 0.1886 act 0.931 xy_mae 0.21679 key 0.947 repeat 0.895 load 0.048s step 0.032s
+epoch 021/200 batch 050/75 loss 1.1791 act 0.930 xy_mae 0.22221 key 0.941 repeat 0.882 load 0.048s step 0.030s
+epoch 021/200 batch 060/75 loss 2.1735 act 0.921 xy_mae 0.21991 key 0.917 repeat 0.900 load 0.048s step 0.029s
+epoch 021/200 batch 070/75 loss 0.4090 act 0.918 xy_mae 0.21519 key 0.914 repeat 0.871 load 0.048s step 0.029s
+epoch 021/200 batch 075/75 loss 0.0266 act 0.923 xy_mae 0.21284 key 0.905 repeat 0.865 load 0.048s step 0.028s
+epoch 021/200 done loss 1.3994 act 0.923 xy_mae 0.21284 key 0.905 repeat 0.865 lr 0.00195108
+Saved last checkpoint for epoch 21: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 21 took 5.89 seconds
+Epoch [22/200] started
+epoch 022/200 batch 010/75 loss 2.9442 act 0.900 xy_mae 0.21127 key 0.909 repeat 0.909 load 0.048s step 0.028s
+epoch 022/200 batch 020/75 loss 0.1594 act 0.938 xy_mae 0.20295 key 0.957 repeat 0.957 load 0.048s step 0.028s
+epoch 022/200 batch 030/75 loss 0.5252 act 0.925 xy_mae 0.19377 key 0.938 repeat 0.969 load 0.048s step 0.028s
+epoch 022/200 batch 040/75 loss 0.4836 act 0.919 xy_mae 0.18230 key 0.949 repeat 0.974 load 0.048s step 0.028s
+epoch 022/200 batch 050/75 loss 1.1527 act 0.925 xy_mae 0.18133 key 0.957 repeat 0.978 load 0.048s step 0.029s
+epoch 022/200 batch 060/75 loss 5.0635 act 0.925 xy_mae 0.18832 key 0.968 repeat 0.984 load 0.048s step 0.030s
+epoch 022/200 batch 070/75 loss 3.9084 act 0.925 xy_mae 0.18849 key 0.943 repeat 0.971 load 0.048s step 0.030s
+epoch 022/200 batch 075/75 loss 0.7314 act 0.926 xy_mae 0.19066 key 0.932 repeat 0.973 load 0.048s step 0.030s
+epoch 022/200 done loss 1.3094 act 0.926 xy_mae 0.19066 key 0.932 repeat 0.973 lr 0.00194611
+Saved last checkpoint for epoch 22: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 22 took 6.02 seconds
+Epoch [23/200] started
+epoch 023/200 batch 010/75 loss 0.8900 act 0.900 xy_mae 0.27726 key 1.000 repeat 1.000 load 0.047s step 0.031s
+epoch 023/200 batch 020/75 loss 1.7796 act 0.887 xy_mae 0.24893 key 0.944 repeat 0.833 load 0.048s step 0.031s
+epoch 023/200 batch 030/75 loss 0.5259 act 0.892 xy_mae 0.24390 key 0.926 repeat 0.889 load 0.048s step 0.031s
+epoch 023/200 batch 040/75 loss 0.4300 act 0.906 xy_mae 0.23086 key 0.947 repeat 0.895 load 0.048s step 0.031s
+epoch 023/200 batch 050/75 loss 1.3704 act 0.900 xy_mae 0.21830 key 0.960 repeat 0.920 load 0.048s step 0.032s
+epoch 023/200 batch 060/75 loss 5.2502 act 0.904 xy_mae 0.20175 key 0.932 repeat 0.915 load 0.048s step 0.031s
+epoch 023/200 batch 070/75 loss 7.1709 act 0.893 xy_mae 0.19878 key 0.930 repeat 0.930 load 0.048s step 0.031s
+epoch 023/200 batch 075/75 loss 4.9216 act 0.889 xy_mae 0.20018 key 0.932 repeat 0.932 load 0.048s step 0.031s
+epoch 023/200 done loss 1.6441 act 0.889 xy_mae 0.20018 key 0.932 repeat 0.932 lr 0.00194091
+Saved last checkpoint for epoch 23: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 23 took 6.09 seconds
+Epoch [24/200] started
+epoch 024/200 batch 010/75 loss 0.6848 act 0.875 xy_mae 0.16817 key 0.889 repeat 1.000 load 0.048s step 0.032s
+epoch 024/200 batch 020/75 loss 0.4098 act 0.925 xy_mae 0.15817 key 0.944 repeat 1.000 load 0.048s step 0.032s
+epoch 024/200 batch 030/75 loss 3.0631 act 0.933 xy_mae 0.16766 key 0.957 repeat 1.000 load 0.048s step 0.032s
+epoch 024/200 batch 040/75 loss 1.3975 act 0.919 xy_mae 0.17271 key 0.971 repeat 1.000 load 0.048s step 0.033s
+epoch 024/200 batch 050/75 loss 0.0001 act 0.915 xy_mae 0.17263 key 0.938 repeat 1.000 load 0.048s step 0.033s
+epoch 024/200 batch 060/75 loss 3.7288 act 0.867 xy_mae 0.18277 key 0.906 repeat 0.906 load 0.048s step 0.032s
+epoch 024/200 batch 070/75 loss 0.7543 act 0.850 xy_mae 0.18329 key 0.859 repeat 0.873 load 0.048s step 0.032s
+epoch 024/200 batch 075/75 loss 2.5644 act 0.849 xy_mae 0.18436 key 0.865 repeat 0.878 load 0.047s step 0.032s
+epoch 024/200 done loss 2.1990 act 0.849 xy_mae 0.18436 key 0.865 repeat 0.878 lr 0.00193548
+Saved last checkpoint for epoch 24: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 24 took 6.12 seconds
+Epoch [25/200] started
+epoch 025/200 batch 010/75 loss 0.7948 act 0.825 xy_mae 0.14938 key 0.786 repeat 0.929 load 0.048s step 0.034s
+epoch 025/200 batch 020/75 loss 5.9856 act 0.838 xy_mae 0.17081 key 0.840 repeat 0.960 load 0.047s step 0.034s
+epoch 025/200 batch 030/75 loss 5.3779 act 0.825 xy_mae 0.19012 key 0.853 repeat 0.971 load 0.047s step 0.033s
+epoch 025/200 batch 040/75 loss 8.0911 act 0.794 xy_mae 0.18207 key 0.837 repeat 0.977 load 0.047s step 0.033s
+epoch 025/200 batch 050/75 loss 6.1774 act 0.810 xy_mae 0.18277 key 0.824 repeat 0.961 load 0.047s step 0.032s
+epoch 025/200 batch 060/75 loss 7.7964 act 0.800 xy_mae 0.17976 key 0.833 repeat 0.950 load 0.048s step 0.032s
+epoch 025/200 batch 070/75 loss 1.2041 act 0.796 xy_mae 0.17519 key 0.859 repeat 0.944 load 0.048s step 0.032s
+epoch 025/200 batch 075/75 loss 0.1411 act 0.799 xy_mae 0.17416 key 0.865 repeat 0.946 load 0.047s step 0.032s
+epoch 025/200 done loss 2.4545 act 0.799 xy_mae 0.17416 key 0.865 repeat 0.946 lr 0.00192981
+Saved last checkpoint for epoch 25: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=1.5959, action_type_acc=0.862, xy_mae=0.14076, key_acc=0.892, repeat_acc=0.973
+Validation loss did not improve. Patience: 5/20
+Epoch 25 took 10.96 seconds
+Epoch [26/200] started
+epoch 026/200 batch 010/75 loss 4.3902 act 0.825 xy_mae 0.14587 key 1.000 repeat 1.000 load 0.048s step 0.058s
+epoch 026/200 batch 020/75 loss 1.5464 act 0.838 xy_mae 0.16061 key 0.920 repeat 1.000 load 0.048s step 0.041s
+epoch 026/200 batch 030/75 loss 1.7686 act 0.825 xy_mae 0.18268 key 0.882 repeat 1.000 load 0.048s step 0.036s
+epoch 026/200 batch 040/75 loss 4.0262 act 0.831 xy_mae 0.18420 key 0.878 repeat 1.000 load 0.048s step 0.033s
+epoch 026/200 batch 050/75 loss 0.6777 act 0.850 xy_mae 0.16931 key 0.889 repeat 1.000 load 0.048s step 0.032s
+epoch 026/200 batch 060/75 loss 0.1253 act 0.858 xy_mae 0.16662 key 0.919 repeat 1.000 load 0.048s step 0.031s
+epoch 026/200 batch 070/75 loss 2.5089 act 0.839 xy_mae 0.17666 key 0.913 repeat 0.971 load 0.049s step 0.030s
+epoch 026/200 batch 075/75 loss 0.7508 act 0.842 xy_mae 0.17689 key 0.905 repeat 0.973 load 0.049s step 0.029s
+epoch 026/200 done loss 1.9421 act 0.842 xy_mae 0.17689 key 0.905 repeat 0.973 lr 0.00192392
+Saved last checkpoint for epoch 26: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 6/20
+Epoch 26 took 6.03 seconds
+Epoch [27/200] started
+epoch 027/200 batch 010/75 loss 1.9785 act 0.775 xy_mae 0.15010 key 0.833 repeat 0.917 load 0.049s step 0.030s
+epoch 027/200 batch 020/75 loss 0.1608 act 0.838 xy_mae 0.13700 key 0.889 repeat 0.889 load 0.048s step 0.031s
+epoch 027/200 batch 030/75 loss 0.1453 act 0.850 xy_mae 0.15287 key 0.917 repeat 0.917 load 0.048s step 0.031s
+epoch 027/200 batch 040/75 loss 1.2656 act 0.856 xy_mae 0.15822 key 0.941 repeat 0.941 load 0.047s step 0.032s
+epoch 027/200 batch 050/75 loss 0.0594 act 0.855 xy_mae 0.15791 key 0.952 repeat 0.952 load 0.047s step 0.031s
+epoch 027/200 batch 060/75 loss 6.3631 act 0.846 xy_mae 0.15541 key 0.962 repeat 0.962 load 0.047s step 0.031s
+epoch 027/200 batch 070/75 loss 2.1512 act 0.836 xy_mae 0.15361 key 0.955 repeat 0.940 load 0.048s step 0.031s
+epoch 027/200 batch 075/75 loss 1.5960 act 0.839 xy_mae 0.15650 key 0.959 repeat 0.946 load 0.047s step 0.031s
+epoch 027/200 done loss 1.5784 act 0.839 xy_mae 0.15650 key 0.959 repeat 0.946 lr 0.0019178
+Saved last checkpoint for epoch 27: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 7/20
+Epoch 27 took 6.09 seconds
+Epoch [28/200] started
+epoch 028/200 batch 010/75 loss 0.0045 act 0.800 xy_mae 0.20581 key 0.909 repeat 1.000 load 0.049s step 0.034s
+epoch 028/200 batch 020/75 loss 1.4010 act 0.850 xy_mae 0.16950 key 0.950 repeat 1.000 load 0.049s step 0.033s
+epoch 028/200 batch 030/75 loss 5.3141 act 0.850 xy_mae 0.14445 key 0.967 repeat 0.967 load 0.048s step 0.033s
+epoch 028/200 batch 040/75 loss 9.7584 act 0.831 xy_mae 0.14823 key 0.947 repeat 0.974 load 0.048s step 0.032s
+epoch 028/200 batch 050/75 loss 0.1549 act 0.840 xy_mae 0.14295 key 0.938 repeat 0.958 load 0.048s step 0.032s
+epoch 028/200 batch 060/75 loss 3.0067 act 0.850 xy_mae 0.14446 key 0.949 repeat 0.966 load 0.048s step 0.033s
+epoch 028/200 batch 070/75 loss 0.4428 act 0.846 xy_mae 0.14663 key 0.958 repeat 0.972 load 0.048s step 0.032s
+epoch 028/200 batch 075/75 loss 1.2380 act 0.849 xy_mae 0.14554 key 0.959 repeat 0.973 load 0.048s step 0.032s
+epoch 028/200 done loss 1.6385 act 0.849 xy_mae 0.14554 key 0.959 repeat 0.973 lr 0.00191145
+Saved last checkpoint for epoch 28: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 8/20
+Epoch 28 took 6.22 seconds
+Epoch [29/200] started
+epoch 029/200 batch 010/75 loss 0.7410 act 0.975 xy_mae 0.14702 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 029/200 batch 020/75 loss 0.2066 act 0.875 xy_mae 0.14460 key 0.941 repeat 1.000 load 0.049s step 0.031s
+epoch 029/200 batch 030/75 loss 0.4008 act 0.858 xy_mae 0.18049 key 0.966 repeat 1.000 load 0.049s step 0.031s
+epoch 029/200 batch 040/75 loss 3.4334 act 0.863 xy_mae 0.18054 key 0.944 repeat 1.000 load 0.049s step 0.030s
+epoch 029/200 batch 050/75 loss 0.6618 act 0.835 xy_mae 0.17730 key 0.956 repeat 0.956 load 0.049s step 0.030s
+epoch 029/200 batch 060/75 loss 0.7459 act 0.812 xy_mae 0.17532 key 0.963 repeat 0.963 load 0.049s step 0.030s
+epoch 029/200 batch 070/75 loss 3.1327 act 0.807 xy_mae 0.17211 key 0.913 repeat 0.913 load 0.049s step 0.030s
+epoch 029/200 batch 075/75 loss 0.1015 act 0.805 xy_mae 0.16725 key 0.905 repeat 0.919 load 0.048s step 0.031s
+epoch 029/200 done loss 2.1058 act 0.805 xy_mae 0.16725 key 0.905 repeat 0.919 lr 0.00190487
+Saved last checkpoint for epoch 29: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 9/20
+Epoch 29 took 6.09 seconds
+Epoch [30/200] started
+epoch 030/200 batch 010/75 loss 7.9670 act 0.750 xy_mae 0.13523 key 0.875 repeat 1.000 load 0.047s step 0.033s
+epoch 030/200 batch 020/75 loss 0.1825 act 0.787 xy_mae 0.14960 key 0.929 repeat 1.000 load 0.047s step 0.032s
+epoch 030/200 batch 030/75 loss 1.2541 act 0.800 xy_mae 0.15808 key 0.889 repeat 1.000 load 0.047s step 0.032s
+epoch 030/200 batch 040/75 loss 0.1570 act 0.812 xy_mae 0.16203 key 0.903 repeat 0.968 load 0.047s step 0.032s
+epoch 030/200 batch 050/75 loss 3.2376 act 0.815 xy_mae 0.15948 key 0.940 repeat 0.980 load 0.048s step 0.032s
+epoch 030/200 batch 060/75 loss 1.5710 act 0.821 xy_mae 0.15878 key 0.933 repeat 0.983 load 0.048s step 0.032s
+epoch 030/200 batch 070/75 loss 1.5296 act 0.821 xy_mae 0.16539 key 0.944 repeat 0.986 load 0.048s step 0.032s
+epoch 030/200 batch 075/75 loss 3.3170 act 0.819 xy_mae 0.16841 key 0.946 repeat 0.986 load 0.047s step 0.032s
+epoch 030/200 done loss 1.5073 act 0.819 xy_mae 0.16841 key 0.946 repeat 0.986 lr 0.00189808
+Saved last checkpoint for epoch 30: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=1.2375, action_type_acc=0.879, xy_mae=0.19976, key_acc=0.973, repeat_acc=0.986
+Validation loss did not improve. Patience: 10/20
+Epoch 30 took 10.95 seconds
+Epoch [31/200] started
+epoch 031/200 batch 010/75 loss 1.6798 act 0.850 xy_mae 0.17236 key 1.000 repeat 1.000 load 0.047s step 0.065s
+epoch 031/200 batch 020/75 loss 0.5200 act 0.887 xy_mae 0.16034 key 1.000 repeat 1.000 load 0.048s step 0.045s
+epoch 031/200 batch 030/75 loss 0.0790 act 0.875 xy_mae 0.14396 key 0.971 repeat 1.000 load 0.047s step 0.039s
+epoch 031/200 batch 040/75 loss 0.2938 act 0.875 xy_mae 0.13657 key 0.958 repeat 0.979 load 0.048s step 0.035s
+epoch 031/200 batch 050/75 loss 0.2020 act 0.890 xy_mae 0.14308 key 0.965 repeat 0.982 load 0.048s step 0.034s
+epoch 031/200 batch 060/75 loss 1.3884 act 0.896 xy_mae 0.15087 key 0.970 repeat 0.985 load 0.048s step 0.033s
+epoch 031/200 batch 070/75 loss 0.8167 act 0.904 xy_mae 0.15404 key 0.958 repeat 0.986 load 0.048s step 0.032s
+epoch 031/200 batch 075/75 loss 3.4211 act 0.893 xy_mae 0.15652 key 0.959 repeat 0.986 load 0.048s step 0.032s
+epoch 031/200 done loss 1.0324 act 0.893 xy_mae 0.15652 key 0.959 repeat 0.986 lr 0.00189106
+Saved last checkpoint for epoch 31: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 1.2234 to 1.0324
+Saved best checkpoint for epoch 31: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 31
+Epoch 31 took 6.27 seconds
+Epoch [32/200] started
+epoch 032/200 batch 010/75 loss 0.3402 act 0.875 xy_mae 0.16323 key 0.900 repeat 1.000 load 0.049s step 0.030s
+epoch 032/200 batch 020/75 loss 0.1517 act 0.887 xy_mae 0.16166 key 0.952 repeat 0.952 load 0.049s step 0.030s
+epoch 032/200 batch 030/75 loss 0.8118 act 0.900 xy_mae 0.15006 key 0.971 repeat 0.941 load 0.049s step 0.030s
+epoch 032/200 batch 040/75 loss 0.4846 act 0.869 xy_mae 0.14772 key 0.976 repeat 0.952 load 0.049s step 0.030s
+epoch 032/200 batch 050/75 loss 0.0885 act 0.885 xy_mae 0.15394 key 0.981 repeat 0.962 load 0.049s step 0.031s
+epoch 032/200 batch 060/75 loss 0.2536 act 0.879 xy_mae 0.14902 key 0.968 repeat 0.952 load 0.049s step 0.032s
+epoch 032/200 batch 070/75 loss 0.8050 act 0.893 xy_mae 0.15464 key 0.972 repeat 0.958 load 0.049s step 0.032s
+epoch 032/200 batch 075/75 loss 0.0858 act 0.896 xy_mae 0.15310 key 0.973 repeat 0.959 load 0.048s step 0.033s
+epoch 032/200 done loss 1.1242 act 0.896 xy_mae 0.15310 key 0.973 repeat 0.959 lr 0.00188382
+Saved last checkpoint for epoch 32: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 32 took 6.25 seconds
+Epoch [33/200] started
+epoch 033/200 batch 010/75 loss 0.5399 act 1.000 xy_mae 0.19616 key 1.000 repeat 1.000 load 0.050s step 0.034s
+epoch 033/200 batch 020/75 loss 2.9154 act 0.925 xy_mae 0.17781 key 1.000 repeat 1.000 load 0.049s step 0.035s
+epoch 033/200 batch 030/75 loss 0.1041 act 0.925 xy_mae 0.16591 key 1.000 repeat 1.000 load 0.049s step 0.036s
+epoch 033/200 batch 040/75 loss 1.7584 act 0.919 xy_mae 0.16400 key 1.000 repeat 1.000 load 0.049s step 0.036s
+epoch 033/200 batch 050/75 loss 0.9526 act 0.915 xy_mae 0.16101 key 1.000 repeat 1.000 load 0.049s step 0.036s
+epoch 033/200 batch 060/75 loss 1.9030 act 0.908 xy_mae 0.16218 key 1.000 repeat 1.000 load 0.049s step 0.036s
+epoch 033/200 batch 070/75 loss 0.3755 act 0.911 xy_mae 0.16429 key 1.000 repeat 1.000 load 0.049s step 0.036s
+epoch 033/200 batch 075/75 loss 0.5937 act 0.913 xy_mae 0.16960 key 0.986 repeat 0.986 load 0.048s step 0.036s
+epoch 033/200 done loss 0.9884 act 0.913 xy_mae 0.16960 key 0.986 repeat 0.986 lr 0.00187637
+Saved last checkpoint for epoch 33: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 1.0324 to 0.9884
+Saved best checkpoint for epoch 33: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 33
+Epoch 33 took 6.64 seconds
+Epoch [34/200] started
+epoch 034/200 batch 010/75 loss 2.7712 act 0.875 xy_mae 0.13515 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 034/200 batch 020/75 loss 0.3991 act 0.875 xy_mae 0.12983 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 034/200 batch 030/75 loss 4.1305 act 0.875 xy_mae 0.12863 key 1.000 repeat 1.000 load 0.048s step 0.036s
+epoch 034/200 batch 040/75 loss 2.8906 act 0.875 xy_mae 0.12874 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 034/200 batch 050/75 loss 2.4817 act 0.875 xy_mae 0.14605 key 0.962 repeat 0.981 load 0.048s step 0.035s
+epoch 034/200 batch 060/75 loss 0.3275 act 0.887 xy_mae 0.14822 key 0.967 repeat 0.983 load 0.048s step 0.035s
+epoch 034/200 batch 070/75 loss 3.1638 act 0.875 xy_mae 0.14958 key 0.959 repeat 0.986 load 0.048s step 0.035s
+epoch 034/200 batch 075/75 loss 0.1395 act 0.872 xy_mae 0.14694 key 0.959 repeat 0.986 load 0.048s step 0.035s
+epoch 034/200 done loss 1.2793 act 0.872 xy_mae 0.14694 key 0.959 repeat 0.986 lr 0.0018687
+Saved last checkpoint for epoch 34: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 34 took 6.40 seconds
+Epoch [35/200] started
+epoch 035/200 batch 010/75 loss 0.5505 act 0.900 xy_mae 0.15564 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 035/200 batch 020/75 loss 0.4530 act 0.925 xy_mae 0.15572 key 0.938 repeat 0.938 load 0.048s step 0.035s
+epoch 035/200 batch 030/75 loss 0.2973 act 0.917 xy_mae 0.15352 key 0.913 repeat 0.913 load 0.048s step 0.034s
+epoch 035/200 batch 040/75 loss 1.2558 act 0.912 xy_mae 0.14805 key 0.935 repeat 0.935 load 0.048s step 0.035s
+epoch 035/200 batch 050/75 loss 0.4062 act 0.910 xy_mae 0.14880 key 0.958 repeat 0.958 load 0.048s step 0.035s
+epoch 035/200 batch 060/75 loss 1.0127 act 0.896 xy_mae 0.15028 key 0.964 repeat 0.946 load 0.048s step 0.035s
+epoch 035/200 batch 070/75 loss 0.4056 act 0.886 xy_mae 0.15137 key 0.970 repeat 0.955 load 0.048s step 0.035s
+epoch 035/200 batch 075/75 loss 0.0150 act 0.886 xy_mae 0.15299 key 0.973 repeat 0.959 load 0.048s step 0.035s
+epoch 035/200 done loss 1.2959 act 0.886 xy_mae 0.15299 key 0.973 repeat 0.959 lr 0.00186081
+Saved last checkpoint for epoch 35: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=1.1514, action_type_acc=0.886, xy_mae=0.12387, key_acc=0.973, repeat_acc=0.986
+Validation loss did not improve. Patience: 2/20
+Epoch 35 took 11.44 seconds
+Epoch [36/200] started
+epoch 036/200 batch 010/75 loss 1.6502 act 0.800 xy_mae 0.13122 key 0.889 repeat 0.889 load 0.054s step 0.060s
+epoch 036/200 batch 020/75 loss 0.4522 act 0.863 xy_mae 0.13086 key 0.933 repeat 0.933 load 0.054s step 0.043s
+epoch 036/200 batch 030/75 loss 0.1255 act 0.883 xy_mae 0.12683 key 0.960 repeat 0.960 load 0.053s step 0.039s
+epoch 036/200 batch 040/75 loss 0.4561 act 0.887 xy_mae 0.13583 key 0.971 repeat 0.971 load 0.053s step 0.036s
+epoch 036/200 batch 050/75 loss 0.1584 act 0.895 xy_mae 0.12509 key 0.979 repeat 0.979 load 0.052s step 0.035s
+epoch 036/200 batch 060/75 loss 0.9510 act 0.896 xy_mae 0.12553 key 0.983 repeat 0.983 load 0.052s step 0.035s
+epoch 036/200 batch 070/75 loss 0.1460 act 0.882 xy_mae 0.12665 key 0.986 repeat 0.986 load 0.052s step 0.034s
+epoch 036/200 batch 075/75 loss 0.2736 act 0.883 xy_mae 0.12556 key 0.986 repeat 0.986 load 0.051s step 0.034s
+epoch 036/200 done loss 1.1836 act 0.883 xy_mae 0.12556 key 0.986 repeat 0.986 lr 0.00185271
+Saved last checkpoint for epoch 36: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 36 took 6.54 seconds
+Epoch [37/200] started
+epoch 037/200 batch 010/75 loss 0.7726 act 0.950 xy_mae 0.13911 key 1.000 repeat 1.000 load 0.046s step 0.035s
+epoch 037/200 batch 020/75 loss 0.4490 act 0.912 xy_mae 0.15082 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 037/200 batch 030/75 loss 0.1411 act 0.933 xy_mae 0.14566 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 037/200 batch 040/75 loss 0.2249 act 0.931 xy_mae 0.14301 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 037/200 batch 050/75 loss 0.5654 act 0.920 xy_mae 0.14760 key 0.977 repeat 0.977 load 0.048s step 0.035s
+epoch 037/200 batch 060/75 loss 0.6086 act 0.925 xy_mae 0.14155 key 0.981 repeat 0.981 load 0.048s step 0.034s
+epoch 037/200 batch 070/75 loss 0.0233 act 0.921 xy_mae 0.14249 key 0.986 repeat 0.986 load 0.048s step 0.034s
+epoch 037/200 batch 075/75 loss 0.0383 act 0.923 xy_mae 0.14092 key 0.986 repeat 0.986 load 0.047s step 0.034s
+epoch 037/200 done loss 0.8002 act 0.923 xy_mae 0.14092 key 0.986 repeat 0.986 lr 0.00184441
+Saved last checkpoint for epoch 37: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.9884 to 0.8002
+Saved best checkpoint for epoch 37: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 37
+Epoch 37 took 6.43 seconds
+Epoch [38/200] started
+epoch 038/200 batch 010/75 loss 0.2678 act 0.975 xy_mae 0.13008 key 1.000 repeat 1.000 load 0.046s step 0.036s
+epoch 038/200 batch 020/75 loss 0.2185 act 0.963 xy_mae 0.13324 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 038/200 batch 030/75 loss 1.1405 act 0.942 xy_mae 0.13084 key 0.970 repeat 0.970 load 0.048s step 0.034s
+epoch 038/200 batch 040/75 loss 0.2237 act 0.950 xy_mae 0.14321 key 0.977 repeat 0.977 load 0.048s step 0.034s
+epoch 038/200 batch 050/75 loss 0.1735 act 0.950 xy_mae 0.14505 key 0.982 repeat 0.982 load 0.048s step 0.034s
+epoch 038/200 batch 060/75 loss 0.0027 act 0.942 xy_mae 0.14732 key 0.968 repeat 0.968 load 0.048s step 0.034s
+epoch 038/200 batch 070/75 loss 0.3902 act 0.943 xy_mae 0.14908 key 0.959 repeat 0.973 load 0.048s step 0.034s
+epoch 038/200 batch 075/75 loss 0.1787 act 0.946 xy_mae 0.14938 key 0.959 repeat 0.973 load 0.047s step 0.034s
+epoch 038/200 done loss 0.7146 act 0.946 xy_mae 0.14938 key 0.959 repeat 0.973 lr 0.00183589
+Saved last checkpoint for epoch 38: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.8002 to 0.7146
+Saved best checkpoint for epoch 38: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 38
+Epoch 38 took 6.42 seconds
+Epoch [39/200] started
+epoch 039/200 batch 010/75 loss 0.1676 act 0.950 xy_mae 0.17742 key 1.000 repeat 1.000 load 0.050s step 0.031s
+epoch 039/200 batch 020/75 loss 0.1009 act 0.975 xy_mae 0.15757 key 1.000 repeat 1.000 load 0.049s step 0.031s
+epoch 039/200 batch 030/75 loss 0.9721 act 0.967 xy_mae 0.15544 key 1.000 repeat 0.971 load 0.049s step 0.031s
+epoch 039/200 batch 040/75 loss 0.1040 act 0.963 xy_mae 0.15728 key 0.957 repeat 0.957 load 0.048s step 0.031s
+epoch 039/200 batch 050/75 loss 0.7011 act 0.960 xy_mae 0.16175 key 0.962 repeat 0.962 load 0.048s step 0.031s
+epoch 039/200 batch 060/75 loss 0.2049 act 0.950 xy_mae 0.15902 key 0.966 repeat 0.966 load 0.048s step 0.031s
+epoch 039/200 batch 070/75 loss 1.0085 act 0.946 xy_mae 0.15168 key 0.971 repeat 0.971 load 0.048s step 0.031s
+epoch 039/200 batch 075/75 loss 0.0176 act 0.946 xy_mae 0.15057 key 0.973 repeat 0.973 load 0.048s step 0.032s
+epoch 039/200 done loss 0.6591 act 0.946 xy_mae 0.15057 key 0.973 repeat 0.973 lr 0.00182717
+Saved last checkpoint for epoch 39: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.7146 to 0.6591
+Saved best checkpoint for epoch 39: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 39
+Epoch 39 took 6.29 seconds
+Epoch [40/200] started
+epoch 040/200 batch 010/75 loss 0.1420 act 0.975 xy_mae 0.13331 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 040/200 batch 020/75 loss 0.4175 act 0.988 xy_mae 0.15072 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 040/200 batch 030/75 loss 0.3560 act 0.983 xy_mae 0.16830 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 040/200 batch 040/75 loss 1.5325 act 0.963 xy_mae 0.17338 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 040/200 batch 050/75 loss 0.2495 act 0.970 xy_mae 0.17321 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 040/200 batch 060/75 loss 0.1417 act 0.967 xy_mae 0.17195 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 040/200 batch 070/75 loss 0.1918 act 0.971 xy_mae 0.16884 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 040/200 batch 075/75 loss 5.1956 act 0.970 xy_mae 0.16704 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 040/200 done loss 0.5425 act 0.970 xy_mae 0.16704 key 1.000 repeat 1.000 lr 0.00181824
+Saved last checkpoint for epoch 40: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.6100, action_type_acc=0.970, xy_mae=0.11710, key_acc=0.932, repeat_acc=1.000
+Validation loss improved from 0.6591 to 0.5425
+Saved best checkpoint for epoch 40: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 40
+Epoch 40 took 11.37 seconds
+Epoch [41/200] started
+epoch 041/200 batch 010/75 loss 0.6842 act 0.950 xy_mae 0.13233 key 1.000 repeat 1.000 load 0.047s step 0.076s
+epoch 041/200 batch 020/75 loss 0.4679 act 0.963 xy_mae 0.13483 key 0.938 repeat 1.000 load 0.050s step 0.051s
+epoch 041/200 batch 030/75 loss 0.6610 act 0.942 xy_mae 0.14521 key 0.968 repeat 1.000 load 0.049s step 0.045s
+epoch 041/200 batch 040/75 loss 1.5806 act 0.950 xy_mae 0.16076 key 0.974 repeat 1.000 load 0.048s step 0.043s
+epoch 041/200 batch 050/75 loss 0.1695 act 0.945 xy_mae 0.15498 key 0.978 repeat 0.978 load 0.048s step 0.041s
+epoch 041/200 batch 060/75 loss 0.0248 act 0.954 xy_mae 0.14983 key 0.981 repeat 0.981 load 0.048s step 0.039s
+epoch 041/200 batch 070/75 loss 0.2486 act 0.961 xy_mae 0.15059 key 0.985 repeat 0.956 load 0.049s step 0.038s
+epoch 041/200 batch 075/75 loss 0.6993 act 0.963 xy_mae 0.14974 key 0.986 repeat 0.946 load 0.048s step 0.038s
+epoch 041/200 done loss 0.5311 act 0.963 xy_mae 0.14974 key 0.986 repeat 0.946 lr 0.00180911
+Saved last checkpoint for epoch 41: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.5425 to 0.5311
+Saved best checkpoint for epoch 41: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 41
+Epoch 41 took 6.78 seconds
+Epoch [42/200] started
+epoch 042/200 batch 010/75 loss 0.1224 act 0.975 xy_mae 0.15595 key 0.929 repeat 1.000 load 0.048s step 0.034s
+epoch 042/200 batch 020/75 loss 0.0279 act 0.925 xy_mae 0.15706 key 0.958 repeat 1.000 load 0.050s step 0.033s
+epoch 042/200 batch 030/75 loss 0.3538 act 0.950 xy_mae 0.15605 key 0.971 repeat 1.000 load 0.050s step 0.033s
+epoch 042/200 batch 040/75 loss 0.0747 act 0.956 xy_mae 0.15348 key 0.977 repeat 1.000 load 0.050s step 0.033s
+epoch 042/200 batch 050/75 loss 0.1250 act 0.950 xy_mae 0.15479 key 0.982 repeat 1.000 load 0.050s step 0.033s
+epoch 042/200 batch 060/75 loss 1.5475 act 0.929 xy_mae 0.15311 key 0.969 repeat 0.984 load 0.049s step 0.034s
+epoch 042/200 batch 070/75 loss 2.0052 act 0.921 xy_mae 0.15219 key 0.971 repeat 0.985 load 0.049s step 0.034s
+epoch 042/200 batch 075/75 loss 0.1004 act 0.919 xy_mae 0.15083 key 0.973 repeat 0.986 load 0.049s step 0.034s
+epoch 042/200 done loss 1.2027 act 0.919 xy_mae 0.15083 key 0.973 repeat 0.986 lr 0.00179978
+Saved last checkpoint for epoch 42: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 42 took 6.41 seconds
+Epoch [43/200] started
+epoch 043/200 batch 010/75 loss 0.8451 act 0.900 xy_mae 0.14341 key 0.875 repeat 1.000 load 0.045s step 0.038s
+epoch 043/200 batch 020/75 loss 1.6271 act 0.912 xy_mae 0.14105 key 0.955 repeat 1.000 load 0.046s step 0.038s
+epoch 043/200 batch 030/75 loss 1.2444 act 0.892 xy_mae 0.12897 key 0.935 repeat 1.000 load 0.047s step 0.036s
+epoch 043/200 batch 040/75 loss 0.4043 act 0.887 xy_mae 0.13299 key 0.929 repeat 0.976 load 0.047s step 0.037s
+epoch 043/200 batch 050/75 loss 0.6947 act 0.895 xy_mae 0.13726 key 0.939 repeat 0.980 load 0.047s step 0.036s
+epoch 043/200 batch 060/75 loss 0.3691 act 0.896 xy_mae 0.13689 key 0.930 repeat 0.965 load 0.047s step 0.036s
+epoch 043/200 batch 070/75 loss 0.6471 act 0.904 xy_mae 0.14090 key 0.930 repeat 0.958 load 0.047s step 0.036s
+epoch 043/200 batch 075/75 loss 0.5247 act 0.903 xy_mae 0.14048 key 0.932 repeat 0.946 load 0.046s step 0.036s
+epoch 043/200 done loss 1.2163 act 0.903 xy_mae 0.14048 key 0.932 repeat 0.946 lr 0.00179026
+Saved last checkpoint for epoch 43: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 43 took 6.39 seconds
+Epoch [44/200] started
+epoch 044/200 batch 010/75 loss 0.7178 act 0.950 xy_mae 0.11524 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 044/200 batch 020/75 loss 0.4906 act 0.938 xy_mae 0.11965 key 1.000 repeat 1.000 load 0.046s step 0.036s
+epoch 044/200 batch 030/75 loss 2.0384 act 0.917 xy_mae 0.13584 key 0.929 repeat 0.964 load 0.047s step 0.034s
+epoch 044/200 batch 040/75 loss 4.2203 act 0.900 xy_mae 0.12729 key 0.921 repeat 0.974 load 0.047s step 0.035s
+epoch 044/200 batch 050/75 loss 2.6259 act 0.885 xy_mae 0.12634 key 0.891 repeat 0.978 load 0.048s step 0.035s
+epoch 044/200 batch 060/75 loss 0.1070 act 0.896 xy_mae 0.12529 key 0.909 repeat 0.982 load 0.048s step 0.035s
+epoch 044/200 batch 070/75 loss 0.1533 act 0.886 xy_mae 0.12224 key 0.899 repeat 0.971 load 0.047s step 0.035s
+epoch 044/200 batch 075/75 loss 0.6014 act 0.886 xy_mae 0.12482 key 0.905 repeat 0.973 load 0.047s step 0.035s
+epoch 044/200 done loss 1.2868 act 0.886 xy_mae 0.12482 key 0.905 repeat 0.973 lr 0.00178054
+Saved last checkpoint for epoch 44: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 44 took 6.31 seconds
+Epoch [45/200] started
+epoch 045/200 batch 010/75 loss 0.0193 act 0.975 xy_mae 0.13328 key 0.900 repeat 0.800 load 0.047s step 0.032s
+epoch 045/200 batch 020/75 loss 1.4999 act 0.950 xy_mae 0.13202 key 0.944 repeat 0.889 load 0.047s step 0.033s
+epoch 045/200 batch 030/75 loss 3.7793 act 0.908 xy_mae 0.13122 key 0.935 repeat 0.935 load 0.047s step 0.033s
+epoch 045/200 batch 040/75 loss 0.5113 act 0.912 xy_mae 0.13533 key 0.949 repeat 0.949 load 0.047s step 0.032s
+epoch 045/200 batch 050/75 loss 0.9005 act 0.915 xy_mae 0.14198 key 0.962 repeat 0.962 load 0.047s step 0.032s
+epoch 045/200 batch 060/75 loss 0.1437 act 0.917 xy_mae 0.14595 key 0.966 repeat 0.966 load 0.047s step 0.032s
+epoch 045/200 batch 070/75 loss 0.0071 act 0.918 xy_mae 0.14651 key 0.971 repeat 0.971 load 0.047s step 0.032s
+epoch 045/200 batch 075/75 loss 1.0531 act 0.919 xy_mae 0.14848 key 0.959 repeat 0.959 load 0.047s step 0.032s
+epoch 045/200 done loss 1.0936 act 0.919 xy_mae 0.14848 key 0.959 repeat 0.959 lr 0.00177063
+Saved last checkpoint for epoch 45: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.5093, action_type_acc=0.956, xy_mae=0.12910, key_acc=0.959, repeat_acc=0.959
+Validation loss did not improve. Patience: 4/20
+Epoch 45 took 10.95 seconds
+Epoch [46/200] started
+epoch 046/200 batch 010/75 loss 1.0655 act 0.950 xy_mae 0.10145 key 1.000 repeat 1.000 load 0.047s step 0.078s
+epoch 046/200 batch 020/75 loss 0.3457 act 0.975 xy_mae 0.12569 key 1.000 repeat 1.000 load 0.048s step 0.051s
+epoch 046/200 batch 030/75 loss 3.9012 act 0.967 xy_mae 0.12924 key 0.933 repeat 0.967 load 0.049s step 0.043s
+epoch 046/200 batch 040/75 loss 0.9439 act 0.956 xy_mae 0.12794 key 0.956 repeat 0.978 load 0.049s step 0.038s
+epoch 046/200 batch 050/75 loss 0.0640 act 0.955 xy_mae 0.12798 key 0.966 repeat 0.983 load 0.048s step 0.036s
+epoch 046/200 batch 060/75 loss 0.1465 act 0.946 xy_mae 0.12927 key 0.969 repeat 0.984 load 0.048s step 0.034s
+epoch 046/200 batch 070/75 loss 0.0457 act 0.946 xy_mae 0.13028 key 0.973 repeat 0.986 load 0.048s step 0.033s
+epoch 046/200 batch 075/75 loss 1.1312 act 0.946 xy_mae 0.13058 key 0.973 repeat 0.986 load 0.047s step 0.033s
+epoch 046/200 done loss 0.5698 act 0.946 xy_mae 0.13058 key 0.973 repeat 0.986 lr 0.00176053
+Saved last checkpoint for epoch 46: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 5/20
+Epoch 46 took 6.22 seconds
+Epoch [47/200] started
+epoch 047/200 batch 010/75 loss 1.3642 act 0.925 xy_mae 0.14445 key 1.000 repeat 1.000 load 0.049s step 0.028s
+epoch 047/200 batch 020/75 loss 0.1429 act 0.912 xy_mae 0.13760 key 0.857 repeat 0.952 load 0.049s step 0.029s
+epoch 047/200 batch 030/75 loss 1.6130 act 0.908 xy_mae 0.13754 key 0.871 repeat 0.968 load 0.048s step 0.029s
+epoch 047/200 batch 040/75 loss 3.7365 act 0.912 xy_mae 0.14111 key 0.902 repeat 0.976 load 0.048s step 0.030s
+epoch 047/200 batch 050/75 loss 0.3533 act 0.930 xy_mae 0.13660 key 0.925 repeat 0.981 load 0.048s step 0.030s
+epoch 047/200 batch 060/75 loss 0.1573 act 0.938 xy_mae 0.13552 key 0.933 repeat 0.983 load 0.049s step 0.030s
+epoch 047/200 batch 070/75 loss 0.0365 act 0.946 xy_mae 0.13413 key 0.942 repeat 0.986 load 0.048s step 0.031s
+epoch 047/200 batch 075/75 loss 6.3702 act 0.940 xy_mae 0.13621 key 0.946 repeat 0.986 load 0.048s step 0.031s
+epoch 047/200 done loss 0.8297 act 0.940 xy_mae 0.13621 key 0.946 repeat 0.986 lr 0.00175024
+Saved last checkpoint for epoch 47: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 6/20
+Epoch 47 took 6.07 seconds
+Epoch [48/200] started
+epoch 048/200 batch 010/75 loss 0.3791 act 0.975 xy_mae 0.17770 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 048/200 batch 020/75 loss 0.1011 act 0.950 xy_mae 0.15502 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 048/200 batch 030/75 loss 0.1523 act 0.958 xy_mae 0.15529 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 048/200 batch 040/75 loss 0.0393 act 0.969 xy_mae 0.14871 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 048/200 batch 050/75 loss 0.3495 act 0.970 xy_mae 0.14923 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 048/200 batch 060/75 loss 0.0770 act 0.967 xy_mae 0.14718 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 048/200 batch 070/75 loss 1.0979 act 0.957 xy_mae 0.14172 key 0.986 repeat 0.986 load 0.048s step 0.031s
+epoch 048/200 batch 075/75 loss 0.2833 act 0.956 xy_mae 0.14145 key 0.986 repeat 0.986 load 0.048s step 0.031s
+epoch 048/200 done loss 0.6241 act 0.956 xy_mae 0.14145 key 0.986 repeat 0.986 lr 0.00173976
+Saved last checkpoint for epoch 48: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 7/20
+Epoch 48 took 6.10 seconds
+Epoch [49/200] started
+epoch 049/200 batch 010/75 loss 0.3925 act 0.950 xy_mae 0.11099 key 0.833 repeat 0.917 load 0.047s step 0.034s
+epoch 049/200 batch 020/75 loss 0.0717 act 0.938 xy_mae 0.11430 key 0.905 repeat 0.952 load 0.047s step 0.035s
+epoch 049/200 batch 030/75 loss 0.0548 act 0.950 xy_mae 0.12534 key 0.929 repeat 0.964 load 0.047s step 0.035s
+epoch 049/200 batch 040/75 loss 0.0005 act 0.963 xy_mae 0.12975 key 0.944 repeat 0.972 load 0.047s step 0.034s
+epoch 049/200 batch 050/75 loss 0.2914 act 0.960 xy_mae 0.13426 key 0.938 repeat 0.979 load 0.047s step 0.034s
+epoch 049/200 batch 060/75 loss 1.6516 act 0.958 xy_mae 0.13385 key 0.945 repeat 0.945 load 0.047s step 0.034s
+epoch 049/200 batch 070/75 loss 0.8623 act 0.954 xy_mae 0.13573 key 0.941 repeat 0.926 load 0.047s step 0.035s
+epoch 049/200 batch 075/75 loss 0.1206 act 0.956 xy_mae 0.13761 key 0.946 repeat 0.932 load 0.047s step 0.034s
+epoch 049/200 done loss 0.8965 act 0.956 xy_mae 0.13761 key 0.946 repeat 0.932 lr 0.0017291
+Saved last checkpoint for epoch 49: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 8/20
+Epoch 49 took 6.29 seconds
+Epoch [50/200] started
+epoch 050/200 batch 010/75 loss 0.0990 act 0.850 xy_mae 0.16333 key 0.917 repeat 1.000 load 0.047s step 0.032s
+epoch 050/200 batch 020/75 loss 0.1713 act 0.900 xy_mae 0.14970 key 0.952 repeat 1.000 load 0.048s step 0.032s
+epoch 050/200 batch 030/75 loss 0.0292 act 0.933 xy_mae 0.13368 key 0.970 repeat 1.000 load 0.048s step 0.032s
+epoch 050/200 batch 040/75 loss 0.0060 act 0.944 xy_mae 0.13469 key 0.977 repeat 1.000 load 0.048s step 0.033s
+epoch 050/200 batch 050/75 loss 0.2697 act 0.950 xy_mae 0.13530 key 0.964 repeat 0.982 load 0.047s step 0.033s
+epoch 050/200 batch 060/75 loss 0.2674 act 0.954 xy_mae 0.13540 key 0.952 repeat 0.984 load 0.048s step 0.033s
+epoch 050/200 batch 070/75 loss 0.0086 act 0.961 xy_mae 0.13638 key 0.943 repeat 0.986 load 0.048s step 0.033s
+epoch 050/200 batch 075/75 loss 0.1785 act 0.956 xy_mae 0.13742 key 0.946 repeat 0.986 load 0.047s step 0.033s
+epoch 050/200 done loss 0.5621 act 0.956 xy_mae 0.13742 key 0.946 repeat 0.986 lr 0.00171827
+Saved last checkpoint for epoch 50: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.5317, action_type_acc=0.970, xy_mae=0.12216, key_acc=0.986, repeat_acc=0.986
+Validation loss did not improve. Patience: 9/20
+Epoch 50 took 11.14 seconds
+Epoch [51/200] started
+epoch 051/200 batch 010/75 loss 2.9317 act 0.900 xy_mae 0.11072 key 0.909 repeat 0.909 load 0.048s step 0.081s
+epoch 051/200 batch 020/75 loss 0.2910 act 0.950 xy_mae 0.11185 key 0.950 repeat 0.950 load 0.049s step 0.052s
+epoch 051/200 batch 030/75 loss 1.0369 act 0.925 xy_mae 0.11689 key 0.939 repeat 0.939 load 0.049s step 0.044s
+epoch 051/200 batch 040/75 loss 0.0325 act 0.938 xy_mae 0.11799 key 0.929 repeat 0.952 load 0.049s step 0.040s
+epoch 051/200 batch 050/75 loss 0.0693 act 0.935 xy_mae 0.12698 key 0.940 repeat 0.960 load 0.049s step 0.037s
+epoch 051/200 batch 060/75 loss 1.7260 act 0.946 xy_mae 0.13032 key 0.932 repeat 0.966 load 0.048s step 0.035s
+epoch 051/200 batch 070/75 loss 0.1017 act 0.946 xy_mae 0.13049 key 0.944 repeat 0.972 load 0.048s step 0.035s
+epoch 051/200 batch 075/75 loss 0.0000 act 0.950 xy_mae 0.12915 key 0.946 repeat 0.973 load 0.048s step 0.034s
+epoch 051/200 done loss 0.5858 act 0.950 xy_mae 0.12915 key 0.946 repeat 0.973 lr 0.00170725
+Saved last checkpoint for epoch 51: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 10/20
+Epoch 51 took 6.35 seconds
+Epoch [52/200] started
+epoch 052/200 batch 010/75 loss 0.0159 act 1.000 xy_mae 0.17150 key 1.000 repeat 1.000 load 0.049s step 0.029s
+epoch 052/200 batch 020/75 loss 0.0986 act 1.000 xy_mae 0.15894 key 0.947 repeat 0.947 load 0.049s step 0.030s
+epoch 052/200 batch 030/75 loss 0.0827 act 1.000 xy_mae 0.15110 key 0.966 repeat 0.966 load 0.049s step 0.031s
+epoch 052/200 batch 040/75 loss 0.2160 act 0.988 xy_mae 0.14479 key 0.974 repeat 0.974 load 0.049s step 0.031s
+epoch 052/200 batch 050/75 loss 0.0779 act 0.985 xy_mae 0.14130 key 0.963 repeat 0.981 load 0.049s step 0.032s
+epoch 052/200 batch 060/75 loss 4.3718 act 0.971 xy_mae 0.14743 key 0.968 repeat 0.984 load 0.049s step 0.032s
+epoch 052/200 batch 070/75 loss 0.0073 act 0.964 xy_mae 0.14641 key 0.956 repeat 0.985 load 0.049s step 0.032s
+epoch 052/200 batch 075/75 loss 0.0000 act 0.963 xy_mae 0.14506 key 0.946 repeat 0.973 load 0.048s step 0.032s
+epoch 052/200 done loss 0.6605 act 0.963 xy_mae 0.14506 key 0.946 repeat 0.973 lr 0.00169606
+Saved last checkpoint for epoch 52: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 11/20
+Epoch 52 took 6.20 seconds
+Epoch [53/200] started
+epoch 053/200 batch 010/75 loss 0.0739 act 1.000 xy_mae 0.13398 key 1.000 repeat 1.000 load 0.046s step 0.035s
+epoch 053/200 batch 020/75 loss 0.0641 act 0.975 xy_mae 0.12182 key 1.000 repeat 1.000 load 0.046s step 0.034s
+epoch 053/200 batch 030/75 loss 0.1781 act 0.967 xy_mae 0.12173 key 1.000 repeat 1.000 load 0.046s step 0.034s
+epoch 053/200 batch 040/75 loss 0.2255 act 0.969 xy_mae 0.12863 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 053/200 batch 050/75 loss 0.3877 act 0.960 xy_mae 0.13024 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 053/200 batch 060/75 loss 0.2441 act 0.958 xy_mae 0.13345 key 0.982 repeat 1.000 load 0.047s step 0.032s
+epoch 053/200 batch 070/75 loss 0.1140 act 0.961 xy_mae 0.13976 key 0.986 repeat 1.000 load 0.047s step 0.032s
+epoch 053/200 batch 075/75 loss 0.6183 act 0.956 xy_mae 0.14197 key 0.986 repeat 1.000 load 0.047s step 0.032s
+epoch 053/200 done loss 0.4001 act 0.956 xy_mae 0.14197 key 0.986 repeat 1.000 lr 0.0016847
+Saved last checkpoint for epoch 53: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.5311 to 0.4001
+Saved best checkpoint for epoch 53: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 53
+Epoch 53 took 6.23 seconds
+Epoch [54/200] started
+epoch 054/200 batch 010/75 loss 0.1871 act 0.950 xy_mae 0.11459 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 054/200 batch 020/75 loss 0.2077 act 0.963 xy_mae 0.12544 key 1.000 repeat 1.000 load 0.049s step 0.031s
+epoch 054/200 batch 030/75 loss 0.6111 act 0.975 xy_mae 0.12179 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 054/200 batch 040/75 loss 0.0836 act 0.975 xy_mae 0.12404 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 054/200 batch 050/75 loss 0.1623 act 0.970 xy_mae 0.12718 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 054/200 batch 060/75 loss 5.1529 act 0.971 xy_mae 0.12903 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 054/200 batch 070/75 loss 0.0618 act 0.975 xy_mae 0.12375 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 054/200 batch 075/75 loss 0.0001 act 0.977 xy_mae 0.12509 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 054/200 done loss 0.3593 act 0.977 xy_mae 0.12509 key 1.000 repeat 1.000 lr 0.00167318
+Saved last checkpoint for epoch 54: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.4001 to 0.3593
+Saved best checkpoint for epoch 54: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 54
+Epoch 54 took 6.23 seconds
+Epoch [55/200] started
+epoch 055/200 batch 010/75 loss 0.7287 act 1.000 xy_mae 0.12801 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 055/200 batch 020/75 loss 0.1145 act 1.000 xy_mae 0.13069 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 055/200 batch 030/75 loss 0.4890 act 1.000 xy_mae 0.15569 key 0.971 repeat 0.971 load 0.048s step 0.031s
+epoch 055/200 batch 040/75 loss 0.3175 act 0.994 xy_mae 0.14847 key 0.977 repeat 0.977 load 0.049s step 0.031s
+epoch 055/200 batch 050/75 loss 0.1479 act 0.995 xy_mae 0.14472 key 0.981 repeat 0.981 load 0.048s step 0.031s
+epoch 055/200 batch 060/75 loss 0.0696 act 0.992 xy_mae 0.14430 key 0.967 repeat 0.984 load 0.048s step 0.032s
+epoch 055/200 batch 070/75 loss 0.0856 act 0.993 xy_mae 0.13999 key 0.972 repeat 0.986 load 0.048s step 0.032s
+epoch 055/200 batch 075/75 loss 1.1833 act 0.993 xy_mae 0.13902 key 0.973 repeat 0.986 load 0.048s step 0.032s
+epoch 055/200 done loss 0.4026 act 0.993 xy_mae 0.13902 key 0.973 repeat 0.986 lr 0.00166148
+Saved last checkpoint for epoch 55: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.2691, action_type_acc=0.987, xy_mae=0.10377, key_acc=1.000, repeat_acc=1.000
+Validation loss did not improve. Patience: 1/20
+Epoch 55 took 10.97 seconds
+Epoch [56/200] started
+epoch 056/200 batch 010/75 loss 0.1803 act 1.000 xy_mae 0.12566 key 1.000 repeat 1.000 load 0.049s step 0.075s
+epoch 056/200 batch 020/75 loss 0.0717 act 0.975 xy_mae 0.11421 key 1.000 repeat 0.941 load 0.049s step 0.049s
+epoch 056/200 batch 030/75 loss 0.0417 act 0.983 xy_mae 0.11294 key 1.000 repeat 0.962 load 0.050s step 0.041s
+epoch 056/200 batch 040/75 loss 0.2771 act 0.981 xy_mae 0.11365 key 1.000 repeat 0.972 load 0.049s step 0.037s
+epoch 056/200 batch 050/75 loss 0.2544 act 0.980 xy_mae 0.12123 key 1.000 repeat 0.979 load 0.049s step 0.035s
+epoch 056/200 batch 060/75 loss 0.1037 act 0.983 xy_mae 0.12312 key 1.000 repeat 0.982 load 0.049s step 0.033s
+epoch 056/200 batch 070/75 loss 0.7744 act 0.979 xy_mae 0.12513 key 1.000 repeat 0.985 load 0.048s step 0.032s
+epoch 056/200 batch 075/75 loss 0.0073 act 0.980 xy_mae 0.12317 key 1.000 repeat 0.986 load 0.048s step 0.032s
+epoch 056/200 done loss 0.2474 act 0.980 xy_mae 0.12317 key 1.000 repeat 0.986 lr 0.00164962
+Saved last checkpoint for epoch 56: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.3593 to 0.2474
+Saved best checkpoint for epoch 56: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 56
+Epoch 56 took 6.32 seconds
+Epoch [57/200] started
+epoch 057/200 batch 010/75 loss 0.0771 act 1.000 xy_mae 0.17795 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 057/200 batch 020/75 loss 0.2237 act 0.975 xy_mae 0.15673 key 1.000 repeat 1.000 load 0.047s step 0.031s
+epoch 057/200 batch 030/75 loss 0.0519 act 0.983 xy_mae 0.15491 key 1.000 repeat 1.000 load 0.047s step 0.031s
+epoch 057/200 batch 040/75 loss 0.2110 act 0.981 xy_mae 0.15189 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 057/200 batch 050/75 loss 0.2511 act 0.985 xy_mae 0.15000 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 057/200 batch 060/75 loss 0.1703 act 0.988 xy_mae 0.14662 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 057/200 batch 070/75 loss 0.1343 act 0.982 xy_mae 0.14482 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 057/200 batch 075/75 loss 0.9142 act 0.980 xy_mae 0.14639 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 057/200 done loss 0.3267 act 0.980 xy_mae 0.14639 key 1.000 repeat 1.000 lr 0.00163761
+Saved last checkpoint for epoch 57: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 57 took 6.02 seconds
+Epoch [58/200] started
+epoch 058/200 batch 010/75 loss 0.0000 act 1.000 xy_mae 0.17706 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 058/200 batch 020/75 loss 0.3172 act 1.000 xy_mae 0.20564 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 058/200 batch 030/75 loss 0.4315 act 0.983 xy_mae 0.16814 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 058/200 batch 040/75 loss 0.2306 act 0.969 xy_mae 0.16481 key 1.000 repeat 0.952 load 0.048s step 0.032s
+epoch 058/200 batch 050/75 loss 0.0049 act 0.960 xy_mae 0.16658 key 1.000 repeat 0.963 load 0.049s step 0.031s
+epoch 058/200 batch 060/75 loss 0.0753 act 0.967 xy_mae 0.16524 key 1.000 repeat 0.968 load 0.049s step 0.031s
+epoch 058/200 batch 070/75 loss 0.0319 act 0.961 xy_mae 0.16120 key 1.000 repeat 0.971 load 0.049s step 0.031s
+epoch 058/200 batch 075/75 loss 0.0526 act 0.963 xy_mae 0.15928 key 1.000 repeat 0.973 load 0.048s step 0.031s
+epoch 058/200 done loss 0.5420 act 0.963 xy_mae 0.15928 key 1.000 repeat 0.973 lr 0.00162543
+Saved last checkpoint for epoch 58: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 58 took 6.13 seconds
+Epoch [59/200] started
+epoch 059/200 batch 010/75 loss 0.2258 act 1.000 xy_mae 0.09925 key 0.875 repeat 1.000 load 0.050s step 0.031s
+epoch 059/200 batch 020/75 loss 0.3148 act 0.988 xy_mae 0.10781 key 0.950 repeat 1.000 load 0.048s step 0.032s
+epoch 059/200 batch 030/75 loss 0.9623 act 0.975 xy_mae 0.11432 key 0.968 repeat 1.000 load 0.048s step 0.031s
+epoch 059/200 batch 040/75 loss 0.2394 act 0.981 xy_mae 0.11917 key 0.975 repeat 1.000 load 0.049s step 0.030s
+epoch 059/200 batch 050/75 loss 0.0000 act 0.980 xy_mae 0.12408 key 0.962 repeat 1.000 load 0.049s step 0.031s
+epoch 059/200 batch 060/75 loss 0.3729 act 0.983 xy_mae 0.12864 key 0.967 repeat 1.000 load 0.048s step 0.031s
+epoch 059/200 batch 070/75 loss 0.0997 act 0.971 xy_mae 0.13886 key 0.942 repeat 1.000 load 0.048s step 0.032s
+epoch 059/200 batch 075/75 loss 0.0001 act 0.973 xy_mae 0.14010 key 0.946 repeat 1.000 load 0.048s step 0.032s
+epoch 059/200 done loss 0.4725 act 0.973 xy_mae 0.14010 key 0.946 repeat 1.000 lr 0.0016131
+Saved last checkpoint for epoch 59: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 59 took 6.10 seconds
+Epoch [60/200] started
+epoch 060/200 batch 010/75 loss 1.3061 act 0.950 xy_mae 0.15397 key 0.875 repeat 0.875 load 0.048s step 0.031s
+epoch 060/200 batch 020/75 loss 0.0327 act 0.950 xy_mae 0.14183 key 0.900 repeat 0.950 load 0.048s step 0.032s
+epoch 060/200 batch 030/75 loss 0.0621 act 0.950 xy_mae 0.12914 key 0.923 repeat 0.962 load 0.048s step 0.031s
+epoch 060/200 batch 040/75 loss 0.6650 act 0.963 xy_mae 0.13325 key 0.944 repeat 0.944 load 0.048s step 0.031s
+epoch 060/200 batch 050/75 loss 0.1990 act 0.965 xy_mae 0.12999 key 0.958 repeat 0.958 load 0.048s step 0.031s
+epoch 060/200 batch 060/75 loss 0.0892 act 0.950 xy_mae 0.12960 key 0.965 repeat 0.965 load 0.048s step 0.031s
+epoch 060/200 batch 070/75 loss 0.2791 act 0.921 xy_mae 0.12931 key 0.971 repeat 0.957 load 0.048s step 0.031s
+epoch 060/200 batch 075/75 loss 0.5128 act 0.926 xy_mae 0.12736 key 0.973 repeat 0.959 load 0.048s step 0.031s
+epoch 060/200 done loss 1.1276 act 0.926 xy_mae 0.12736 key 0.973 repeat 0.959 lr 0.00160062
+Saved last checkpoint for epoch 60: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=2.3331, action_type_acc=0.839, xy_mae=0.12784, key_acc=0.973, repeat_acc=1.000
+Validation loss did not improve. Patience: 4/20
+Epoch 60 took 11.05 seconds
+Epoch [61/200] started
+epoch 061/200 batch 010/75 loss 0.0488 act 0.850 xy_mae 0.13644 key 0.929 repeat 1.000 load 0.046s step 0.075s
+epoch 061/200 batch 020/75 loss 0.1901 act 0.838 xy_mae 0.12052 key 0.957 repeat 1.000 load 0.048s step 0.050s
+epoch 061/200 batch 030/75 loss 0.2235 act 0.858 xy_mae 0.13233 key 0.935 repeat 0.968 load 0.048s step 0.041s
+epoch 061/200 batch 040/75 loss 1.4245 act 0.850 xy_mae 0.12880 key 0.956 repeat 0.978 load 0.048s step 0.037s
+epoch 061/200 batch 050/75 loss 0.5143 act 0.850 xy_mae 0.13770 key 0.959 repeat 0.980 load 0.048s step 0.035s
+epoch 061/200 batch 060/75 loss 0.1912 act 0.871 xy_mae 0.13846 key 0.965 repeat 0.982 load 0.048s step 0.034s
+epoch 061/200 batch 070/75 loss 2.8434 act 0.882 xy_mae 0.14017 key 0.957 repeat 0.986 load 0.048s step 0.033s
+epoch 061/200 batch 075/75 loss 0.0321 act 0.886 xy_mae 0.13592 key 0.959 repeat 0.986 load 0.048s step 0.033s
+epoch 061/200 done loss 1.5494 act 0.886 xy_mae 0.13592 key 0.959 repeat 0.986 lr 0.00158799
+Saved last checkpoint for epoch 61: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 5/20
+Epoch 61 took 6.22 seconds
+Epoch [62/200] started
+epoch 062/200 batch 010/75 loss 0.0550 act 0.900 xy_mae 0.11987 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 062/200 batch 020/75 loss 0.1074 act 0.925 xy_mae 0.11949 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 062/200 batch 030/75 loss 0.0870 act 0.933 xy_mae 0.11206 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 062/200 batch 040/75 loss 5.1867 act 0.938 xy_mae 0.12202 key 0.972 repeat 1.000 load 0.047s step 0.032s
+epoch 062/200 batch 050/75 loss 0.0345 act 0.915 xy_mae 0.12451 key 0.942 repeat 0.981 load 0.048s step 0.032s
+epoch 062/200 batch 060/75 loss 0.1622 act 0.912 xy_mae 0.12571 key 0.949 repeat 0.966 load 0.048s step 0.032s
+epoch 062/200 batch 070/75 loss 0.2345 act 0.918 xy_mae 0.12385 key 0.942 repeat 0.971 load 0.048s step 0.031s
+epoch 062/200 batch 075/75 loss 0.0001 act 0.923 xy_mae 0.12533 key 0.932 repeat 0.973 load 0.047s step 0.031s
+epoch 062/200 done loss 1.0470 act 0.923 xy_mae 0.12533 key 0.932 repeat 0.973 lr 0.00157522
+Saved last checkpoint for epoch 62: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 6/20
+Epoch 62 took 6.08 seconds
+Epoch [63/200] started
+epoch 063/200 batch 010/75 loss 0.0870 act 0.950 xy_mae 0.13776 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 063/200 batch 020/75 loss 0.1450 act 0.950 xy_mae 0.11695 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 063/200 batch 030/75 loss 0.3395 act 0.958 xy_mae 0.12235 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 063/200 batch 040/75 loss 0.1858 act 0.956 xy_mae 0.12064 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 063/200 batch 050/75 loss 0.2849 act 0.950 xy_mae 0.12740 key 0.981 repeat 1.000 load 0.048s step 0.033s
+epoch 063/200 batch 060/75 loss 0.0623 act 0.954 xy_mae 0.12695 key 0.984 repeat 1.000 load 0.048s step 0.032s
+epoch 063/200 batch 070/75 loss 0.0337 act 0.954 xy_mae 0.12512 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 063/200 batch 075/75 loss 1.9789 act 0.953 xy_mae 0.12661 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 063/200 done loss 0.5325 act 0.953 xy_mae 0.12661 key 0.986 repeat 1.000 lr 0.0015623
+Saved last checkpoint for epoch 63: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 7/20
+Epoch 63 took 6.15 seconds
+Epoch [64/200] started
+epoch 064/200 batch 010/75 loss 0.0000 act 1.000 xy_mae 0.12788 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 064/200 batch 020/75 loss 1.4036 act 0.963 xy_mae 0.11778 key 1.000 repeat 1.000 load 0.049s step 0.033s
+epoch 064/200 batch 030/75 loss 0.0877 act 0.967 xy_mae 0.11432 key 1.000 repeat 1.000 load 0.049s step 0.033s
+epoch 064/200 batch 040/75 loss 0.2849 act 0.969 xy_mae 0.11439 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 064/200 batch 050/75 loss 0.1917 act 0.960 xy_mae 0.11574 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 064/200 batch 060/75 loss 0.0817 act 0.967 xy_mae 0.11862 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 064/200 batch 070/75 loss 0.6178 act 0.957 xy_mae 0.12143 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 064/200 batch 075/75 loss 0.0192 act 0.960 xy_mae 0.12031 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 064/200 done loss 0.3822 act 0.960 xy_mae 0.12031 key 0.986 repeat 1.000 lr 0.00154925
+Saved last checkpoint for epoch 64: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 8/20
+Epoch 64 took 6.16 seconds
+Epoch [65/200] started
+epoch 065/200 batch 010/75 loss 0.1045 act 0.975 xy_mae 0.11947 key 1.000 repeat 1.000 load 0.049s step 0.034s
+epoch 065/200 batch 020/75 loss 0.0107 act 0.963 xy_mae 0.13236 key 1.000 repeat 1.000 load 0.049s step 0.033s
+epoch 065/200 batch 030/75 loss 0.0769 act 0.975 xy_mae 0.13291 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 065/200 batch 040/75 loss 0.0180 act 0.975 xy_mae 0.13556 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 065/200 batch 050/75 loss 0.0767 act 0.970 xy_mae 0.13460 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 065/200 batch 060/75 loss 0.3135 act 0.975 xy_mae 0.13150 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 065/200 batch 070/75 loss 0.0407 act 0.979 xy_mae 0.12319 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 065/200 batch 075/75 loss 0.0049 act 0.977 xy_mae 0.12383 key 1.000 repeat 1.000 load 0.049s step 0.031s
+epoch 065/200 done loss 0.3601 act 0.977 xy_mae 0.12383 key 1.000 repeat 1.000 lr 0.00153606
+Saved last checkpoint for epoch 65: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.3251, action_type_acc=0.977, xy_mae=0.12341, key_acc=1.000, repeat_acc=1.000
+Validation loss did not improve. Patience: 9/20
+Epoch 65 took 11.14 seconds
+Epoch [66/200] started
+epoch 066/200 batch 010/75 loss 0.3621 act 1.000 xy_mae 0.13914 key 1.000 repeat 1.000 load 0.049s step 0.081s
+epoch 066/200 batch 020/75 loss 0.0753 act 0.988 xy_mae 0.12326 key 1.000 repeat 1.000 load 0.048s step 0.055s
+epoch 066/200 batch 030/75 loss 0.1615 act 0.992 xy_mae 0.13135 key 1.000 repeat 1.000 load 0.048s step 0.047s
+epoch 066/200 batch 040/75 loss 0.2640 act 0.994 xy_mae 0.13542 key 1.000 repeat 1.000 load 0.048s step 0.044s
+epoch 066/200 batch 050/75 loss 0.0849 act 0.995 xy_mae 0.13410 key 1.000 repeat 1.000 load 0.048s step 0.042s
+epoch 066/200 batch 060/75 loss 0.1525 act 0.996 xy_mae 0.14483 key 1.000 repeat 1.000 load 0.048s step 0.040s
+epoch 066/200 batch 070/75 loss 0.1037 act 0.993 xy_mae 0.13946 key 1.000 repeat 1.000 load 0.048s step 0.040s
+epoch 066/200 batch 075/75 loss 2.4112 act 0.990 xy_mae 0.13901 key 1.000 repeat 1.000 load 0.047s step 0.039s
+epoch 066/200 done loss 0.2713 act 0.990 xy_mae 0.13901 key 1.000 repeat 1.000 lr 0.00152274
+Saved last checkpoint for epoch 66: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 10/20
+Epoch 66 took 6.68 seconds
+Epoch [67/200] started
+epoch 067/200 batch 010/75 loss 0.1761 act 1.000 xy_mae 0.10684 key 1.000 repeat 1.000 load 0.049s step 0.034s
+epoch 067/200 batch 020/75 loss 0.1502 act 1.000 xy_mae 0.10648 key 1.000 repeat 1.000 load 0.049s step 0.034s
+epoch 067/200 batch 030/75 loss 0.0667 act 0.992 xy_mae 0.11521 key 0.963 repeat 1.000 load 0.049s step 0.034s
+epoch 067/200 batch 040/75 loss 0.5582 act 0.988 xy_mae 0.12524 key 0.971 repeat 1.000 load 0.049s step 0.034s
+epoch 067/200 batch 050/75 loss 0.1627 act 0.990 xy_mae 0.13169 key 0.959 repeat 1.000 load 0.048s step 0.034s
+epoch 067/200 batch 060/75 loss 0.2650 act 0.988 xy_mae 0.13105 key 0.964 repeat 1.000 load 0.048s step 0.034s
+epoch 067/200 batch 070/75 loss 0.0401 act 0.986 xy_mae 0.12631 key 0.971 repeat 1.000 load 0.048s step 0.034s
+epoch 067/200 batch 075/75 loss 0.0000 act 0.987 xy_mae 0.12641 key 0.973 repeat 1.000 load 0.048s step 0.035s
+epoch 067/200 done loss 0.2762 act 0.987 xy_mae 0.12641 key 0.973 repeat 1.000 lr 0.00150929
+Saved last checkpoint for epoch 67: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 11/20
+Epoch 67 took 6.40 seconds
+Epoch [68/200] started
+epoch 068/200 batch 010/75 loss 0.1859 act 0.950 xy_mae 0.14942 key 1.000 repeat 1.000 load 0.047s step 0.039s
+epoch 068/200 batch 020/75 loss 0.1259 act 0.950 xy_mae 0.14176 key 1.000 repeat 1.000 load 0.047s step 0.038s
+epoch 068/200 batch 030/75 loss 1.0914 act 0.958 xy_mae 0.13637 key 1.000 repeat 1.000 load 0.047s step 0.037s
+epoch 068/200 batch 040/75 loss 0.7237 act 0.963 xy_mae 0.13019 key 1.000 repeat 0.973 load 0.048s step 0.037s
+epoch 068/200 batch 050/75 loss 0.8036 act 0.965 xy_mae 0.13511 key 1.000 repeat 0.979 load 0.048s step 0.036s
+epoch 068/200 batch 060/75 loss 0.0488 act 0.958 xy_mae 0.13637 key 1.000 repeat 0.983 load 0.048s step 0.036s
+epoch 068/200 batch 070/75 loss 2.7131 act 0.954 xy_mae 0.13797 key 1.000 repeat 0.986 load 0.048s step 0.036s
+epoch 068/200 batch 075/75 loss 0.0733 act 0.953 xy_mae 0.13936 key 1.000 repeat 0.986 load 0.047s step 0.036s
+epoch 068/200 done loss 0.6353 act 0.953 xy_mae 0.13936 key 1.000 repeat 0.986 lr 0.00149571
+Saved last checkpoint for epoch 68: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 12/20
+Epoch 68 took 6.46 seconds
+Epoch [69/200] started
+epoch 069/200 batch 010/75 loss 0.1907 act 0.975 xy_mae 0.09981 key 1.000 repeat 0.900 load 0.048s step 0.036s
+epoch 069/200 batch 020/75 loss 2.7918 act 0.938 xy_mae 0.11599 key 1.000 repeat 0.952 load 0.049s step 0.037s
+epoch 069/200 batch 030/75 loss 0.0555 act 0.958 xy_mae 0.12025 key 1.000 repeat 0.926 load 0.049s step 0.036s
+epoch 069/200 batch 040/75 loss 0.0763 act 0.969 xy_mae 0.11981 key 1.000 repeat 0.949 load 0.049s step 0.036s
+epoch 069/200 batch 050/75 loss 0.6390 act 0.970 xy_mae 0.12143 key 1.000 repeat 0.957 load 0.049s step 0.036s
+epoch 069/200 batch 060/75 loss 0.2372 act 0.971 xy_mae 0.11771 key 1.000 repeat 0.965 load 0.049s step 0.036s
+epoch 069/200 batch 070/75 loss 0.0564 act 0.971 xy_mae 0.11921 key 1.000 repeat 0.971 load 0.049s step 0.036s
+epoch 069/200 batch 075/75 loss 0.1150 act 0.970 xy_mae 0.12034 key 0.986 repeat 0.973 load 0.049s step 0.035s
+epoch 069/200 done loss 0.4905 act 0.970 xy_mae 0.12034 key 0.986 repeat 0.973 lr 0.00148201
+Saved last checkpoint for epoch 69: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 13/20
+Epoch 69 took 6.49 seconds
+Epoch [70/200] started
+epoch 070/200 batch 010/75 loss 0.0450 act 1.000 xy_mae 0.10711 key 1.000 repeat 1.000 load 0.049s step 0.029s
+epoch 070/200 batch 020/75 loss 0.0820 act 1.000 xy_mae 0.11195 key 1.000 repeat 1.000 load 0.049s step 0.031s
+epoch 070/200 batch 030/75 loss 0.0169 act 0.992 xy_mae 0.10353 key 1.000 repeat 1.000 load 0.049s step 0.030s
+epoch 070/200 batch 040/75 loss 0.0037 act 0.988 xy_mae 0.10654 key 1.000 repeat 1.000 load 0.049s step 0.030s
+epoch 070/200 batch 050/75 loss 0.2521 act 0.980 xy_mae 0.11610 key 0.981 repeat 1.000 load 0.049s step 0.031s
+epoch 070/200 batch 060/75 loss 0.0747 act 0.975 xy_mae 0.11496 key 0.969 repeat 1.000 load 0.049s step 0.031s
+epoch 070/200 batch 070/75 loss 0.5054 act 0.971 xy_mae 0.11988 key 0.958 repeat 1.000 load 0.048s step 0.032s
+epoch 070/200 batch 075/75 loss 0.1312 act 0.973 xy_mae 0.12261 key 0.959 repeat 1.000 load 0.048s step 0.032s
+epoch 070/200 done loss 0.5933 act 0.973 xy_mae 0.12261 key 0.959 repeat 1.000 lr 0.0014682
+Saved last checkpoint for epoch 70: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.5045, action_type_acc=0.970, xy_mae=0.10404, key_acc=0.986, repeat_acc=1.000
+Validation loss did not improve. Patience: 14/20
+Epoch 70 took 11.07 seconds
+Epoch [71/200] started
+epoch 071/200 batch 010/75 loss 0.3629 act 0.975 xy_mae 0.10661 key 1.000 repeat 1.000 load 0.047s step 0.074s
+epoch 071/200 batch 020/75 loss 0.0416 act 0.963 xy_mae 0.10945 key 0.950 repeat 1.000 load 0.048s step 0.052s
+epoch 071/200 batch 030/75 loss 0.0367 act 0.967 xy_mae 0.11586 key 0.964 repeat 1.000 load 0.048s step 0.043s
+epoch 071/200 batch 040/75 loss 0.0511 act 0.956 xy_mae 0.11250 key 0.971 repeat 0.971 load 0.048s step 0.039s
+epoch 071/200 batch 050/75 loss 0.1510 act 0.965 xy_mae 0.11226 key 0.978 repeat 0.978 load 0.048s step 0.037s
+epoch 071/200 batch 060/75 loss 0.2734 act 0.967 xy_mae 0.11984 key 0.983 repeat 0.983 load 0.048s step 0.035s
+epoch 071/200 batch 070/75 loss 0.2890 act 0.961 xy_mae 0.12254 key 0.942 repeat 0.986 load 0.048s step 0.034s
+epoch 071/200 batch 075/75 loss 0.2444 act 0.963 xy_mae 0.12099 key 0.946 repeat 0.986 load 0.048s step 0.034s
+epoch 071/200 done loss 0.6214 act 0.963 xy_mae 0.12099 key 0.946 repeat 0.986 lr 0.00145426
+Saved last checkpoint for epoch 71: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 15/20
+Epoch 71 took 6.31 seconds
+Epoch [72/200] started
+epoch 072/200 batch 010/75 loss 0.0923 act 0.950 xy_mae 0.11963 key 0.917 repeat 1.000 load 0.047s step 0.033s
+epoch 072/200 batch 020/75 loss 0.2524 act 0.950 xy_mae 0.12156 key 0.957 repeat 1.000 load 0.048s step 0.032s
+epoch 072/200 batch 030/75 loss 0.0889 act 0.950 xy_mae 0.11771 key 0.972 repeat 1.000 load 0.048s step 0.033s
+epoch 072/200 batch 040/75 loss 0.3401 act 0.944 xy_mae 0.12041 key 0.956 repeat 1.000 load 0.048s step 0.033s
+epoch 072/200 batch 050/75 loss 0.0147 act 0.950 xy_mae 0.12296 key 0.963 repeat 1.000 load 0.049s step 0.032s
+epoch 072/200 batch 060/75 loss 0.0791 act 0.958 xy_mae 0.11701 key 0.967 repeat 1.000 load 0.049s step 0.032s
+epoch 072/200 batch 070/75 loss 0.0934 act 0.957 xy_mae 0.11859 key 0.957 repeat 0.986 load 0.049s step 0.032s
+epoch 072/200 batch 075/75 loss 0.0671 act 0.956 xy_mae 0.12198 key 0.959 repeat 0.986 load 0.049s step 0.032s
+epoch 072/200 done loss 0.6017 act 0.956 xy_mae 0.12198 key 0.959 repeat 0.986 lr 0.00144022
+Saved last checkpoint for epoch 72: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 16/20
+Epoch 72 took 6.25 seconds
+Epoch [73/200] started
+epoch 073/200 batch 010/75 loss 4.1456 act 0.950 xy_mae 0.11359 key 0.909 repeat 1.000 load 0.048s step 0.031s
+epoch 073/200 batch 020/75 loss 0.2199 act 0.950 xy_mae 0.11534 key 0.957 repeat 1.000 load 0.048s step 0.031s
+epoch 073/200 batch 030/75 loss 0.1251 act 0.958 xy_mae 0.11940 key 0.972 repeat 1.000 load 0.049s step 0.032s
+epoch 073/200 batch 040/75 loss 0.3974 act 0.950 xy_mae 0.13173 key 0.978 repeat 1.000 load 0.049s step 0.032s
+epoch 073/200 batch 050/75 loss 4.9924 act 0.955 xy_mae 0.13708 key 0.942 repeat 0.981 load 0.050s step 0.032s
+epoch 073/200 batch 060/75 loss 0.2445 act 0.954 xy_mae 0.13746 key 0.917 repeat 0.967 load 0.049s step 0.032s
+epoch 073/200 batch 070/75 loss 0.4559 act 0.954 xy_mae 0.13663 key 0.914 repeat 0.971 load 0.049s step 0.032s
+epoch 073/200 batch 075/75 loss 0.0480 act 0.956 xy_mae 0.13627 key 0.919 repeat 0.973 load 0.049s step 0.032s
+epoch 073/200 done loss 0.8673 act 0.956 xy_mae 0.13627 key 0.919 repeat 0.973 lr 0.00142607
+Saved last checkpoint for epoch 73: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 17/20
+Epoch 73 took 6.26 seconds
+Epoch [74/200] started
+epoch 074/200 batch 010/75 loss 1.8180 act 0.975 xy_mae 0.16663 key 0.750 repeat 0.875 load 0.049s step 0.033s
+epoch 074/200 batch 020/75 loss 0.0860 act 0.975 xy_mae 0.15544 key 0.889 repeat 0.944 load 0.048s step 0.035s
+epoch 074/200 batch 030/75 loss 0.0761 act 0.967 xy_mae 0.13692 key 0.929 repeat 0.964 load 0.048s step 0.034s
+epoch 074/200 batch 040/75 loss 0.0354 act 0.975 xy_mae 0.12877 key 0.927 repeat 0.976 load 0.048s step 0.034s
+epoch 074/200 batch 050/75 loss 0.8273 act 0.975 xy_mae 0.12277 key 0.942 repeat 0.981 load 0.048s step 0.034s
+epoch 074/200 batch 060/75 loss 0.1574 act 0.975 xy_mae 0.12320 key 0.937 repeat 0.984 load 0.049s step 0.034s
+epoch 074/200 batch 070/75 loss 0.0406 act 0.979 xy_mae 0.12001 key 0.931 repeat 0.972 load 0.049s step 0.034s
+epoch 074/200 batch 075/75 loss 0.0757 act 0.977 xy_mae 0.11982 key 0.932 repeat 0.973 load 0.048s step 0.034s
+epoch 074/200 done loss 0.5758 act 0.977 xy_mae 0.11982 key 0.932 repeat 0.973 lr 0.00141181
+Saved last checkpoint for epoch 74: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 18/20
+Epoch 74 took 6.37 seconds
+Epoch [75/200] started
+epoch 075/200 batch 010/75 loss 0.4792 act 1.000 xy_mae 0.10989 key 1.000 repeat 1.000 load 0.047s step 0.036s
+epoch 075/200 batch 020/75 loss 0.1196 act 1.000 xy_mae 0.10303 key 0.938 repeat 1.000 load 0.047s step 0.036s
+epoch 075/200 batch 030/75 loss 0.0102 act 1.000 xy_mae 0.10014 key 0.931 repeat 1.000 load 0.047s step 0.036s
+epoch 075/200 batch 040/75 loss 0.0585 act 0.994 xy_mae 0.10718 key 0.951 repeat 1.000 load 0.048s step 0.036s
+epoch 075/200 batch 050/75 loss 0.1351 act 0.990 xy_mae 0.11887 key 0.960 repeat 1.000 load 0.048s step 0.035s
+epoch 075/200 batch 060/75 loss 0.0077 act 0.988 xy_mae 0.11971 key 0.966 repeat 1.000 load 0.048s step 0.035s
+epoch 075/200 batch 070/75 loss 0.0083 act 0.986 xy_mae 0.11938 key 0.956 repeat 1.000 load 0.048s step 0.035s
+epoch 075/200 batch 075/75 loss 0.0327 act 0.987 xy_mae 0.11848 key 0.959 repeat 1.000 load 0.047s step 0.035s
+epoch 075/200 done loss 0.2576 act 0.987 xy_mae 0.11848 key 0.959 repeat 1.000 lr 0.00139745
+Saved last checkpoint for epoch 75: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.2896, action_type_acc=0.987, xy_mae=0.13093, key_acc=0.946, repeat_acc=0.973
+Validation loss did not improve. Patience: 19/20
+Epoch 75 took 11.37 seconds
+Epoch [76/200] started
+epoch 076/200 batch 010/75 loss 0.0824 act 0.950 xy_mae 0.12044 key 0.909 repeat 1.000 load 0.050s step 0.058s
+epoch 076/200 batch 020/75 loss 0.0784 act 0.975 xy_mae 0.11104 key 0.941 repeat 1.000 load 0.050s step 0.042s
+epoch 076/200 batch 030/75 loss 0.0217 act 0.983 xy_mae 0.11170 key 0.931 repeat 0.966 load 0.049s step 0.038s
+epoch 076/200 batch 040/75 loss 0.0226 act 0.988 xy_mae 0.10624 key 0.943 repeat 0.971 load 0.049s step 0.037s
+epoch 076/200 batch 050/75 loss 0.1227 act 0.985 xy_mae 0.11056 key 0.956 repeat 0.978 load 0.048s step 0.036s
+epoch 076/200 batch 060/75 loss 0.0671 act 0.988 xy_mae 0.11550 key 0.964 repeat 0.982 load 0.048s step 0.036s
+epoch 076/200 batch 070/75 loss 0.0566 act 0.989 xy_mae 0.11261 key 0.971 repeat 0.971 load 0.048s step 0.036s
+epoch 076/200 batch 075/75 loss 0.2650 act 0.990 xy_mae 0.11543 key 0.973 repeat 0.973 load 0.048s step 0.036s
+epoch 076/200 done loss 0.2364 act 0.990 xy_mae 0.11543 key 0.973 repeat 0.973 lr 0.00138299
+Saved last checkpoint for epoch 76: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.2474 to 0.2364
+Saved best checkpoint for epoch 76: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 76
+Epoch 76 took 6.59 seconds
+Epoch [77/200] started
+epoch 077/200 batch 010/75 loss 0.1904 act 0.975 xy_mae 0.14006 key 1.000 repeat 1.000 load 0.049s step 0.034s
+epoch 077/200 batch 020/75 loss 0.0181 act 0.988 xy_mae 0.15946 key 0.947 repeat 1.000 load 0.048s step 0.036s
+epoch 077/200 batch 030/75 loss 0.0448 act 0.983 xy_mae 0.14932 key 0.966 repeat 1.000 load 0.048s step 0.036s
+epoch 077/200 batch 040/75 loss 4.4733 act 0.981 xy_mae 0.14695 key 0.976 repeat 1.000 load 0.048s step 0.036s
+epoch 077/200 batch 050/75 loss 0.0902 act 0.980 xy_mae 0.13444 key 0.980 repeat 1.000 load 0.048s step 0.036s
+epoch 077/200 batch 060/75 loss 0.0119 act 0.983 xy_mae 0.12965 key 0.983 repeat 1.000 load 0.048s step 0.036s
+epoch 077/200 batch 070/75 loss 0.0057 act 0.982 xy_mae 0.12638 key 0.986 repeat 1.000 load 0.048s step 0.035s
+epoch 077/200 batch 075/75 loss 0.0645 act 0.983 xy_mae 0.12540 key 0.986 repeat 1.000 load 0.048s step 0.035s
+epoch 077/200 done loss 0.2957 act 0.983 xy_mae 0.12540 key 0.986 repeat 1.000 lr 0.00136844
+Saved last checkpoint for epoch 77: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 77 took 6.40 seconds
+Epoch [78/200] started
+epoch 078/200 batch 010/75 loss 0.0265 act 1.000 xy_mae 0.12514 key 1.000 repeat 1.000 load 0.049s step 0.033s
+epoch 078/200 batch 020/75 loss 0.0333 act 1.000 xy_mae 0.12187 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 078/200 batch 030/75 loss 0.0684 act 0.992 xy_mae 0.11431 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 078/200 batch 040/75 loss 0.0878 act 0.988 xy_mae 0.11325 key 1.000 repeat 1.000 load 0.047s step 0.034s
+epoch 078/200 batch 050/75 loss 0.0760 act 0.980 xy_mae 0.11529 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 078/200 batch 060/75 loss 0.1174 act 0.983 xy_mae 0.11775 key 0.983 repeat 1.000 load 0.048s step 0.033s
+epoch 078/200 batch 070/75 loss 0.7490 act 0.982 xy_mae 0.11918 key 0.986 repeat 1.000 load 0.048s step 0.033s
+epoch 078/200 batch 075/75 loss 0.0131 act 0.983 xy_mae 0.11686 key 0.986 repeat 1.000 load 0.047s step 0.033s
+epoch 078/200 done loss 0.2778 act 0.983 xy_mae 0.11686 key 0.986 repeat 1.000 lr 0.0013538
+Saved last checkpoint for epoch 78: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 78 took 6.20 seconds
+Epoch [79/200] started
+epoch 079/200 batch 010/75 loss 0.0989 act 1.000 xy_mae 0.11853 key 1.000 repeat 1.000 load 0.046s step 0.033s
+epoch 079/200 batch 020/75 loss 0.0539 act 1.000 xy_mae 0.11849 key 0.944 repeat 1.000 load 0.048s step 0.031s
+epoch 079/200 batch 030/75 loss 0.0242 act 1.000 xy_mae 0.12003 key 0.960 repeat 1.000 load 0.049s step 0.030s
+epoch 079/200 batch 040/75 loss 0.3703 act 1.000 xy_mae 0.12233 key 0.949 repeat 1.000 load 0.049s step 0.031s
+epoch 079/200 batch 050/75 loss 0.5819 act 0.990 xy_mae 0.11700 key 0.960 repeat 1.000 load 0.048s step 0.031s
+epoch 079/200 batch 060/75 loss 0.0986 act 0.992 xy_mae 0.11691 key 0.966 repeat 1.000 load 0.048s step 0.031s
+epoch 079/200 batch 070/75 loss 0.0117 act 0.993 xy_mae 0.11933 key 0.971 repeat 1.000 load 0.048s step 0.031s
+epoch 079/200 batch 075/75 loss 0.0612 act 0.993 xy_mae 0.11903 key 0.973 repeat 1.000 load 0.048s step 0.031s
+epoch 079/200 done loss 0.1961 act 0.993 xy_mae 0.11903 key 0.973 repeat 1.000 lr 0.00133907
+Saved last checkpoint for epoch 79: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.2364 to 0.1961
+Saved best checkpoint for epoch 79: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 79
+Epoch 79 took 6.26 seconds
+Epoch [80/200] started
+epoch 080/200 batch 010/75 loss 0.0150 act 1.000 xy_mae 0.09398 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 080/200 batch 020/75 loss 0.0404 act 1.000 xy_mae 0.10499 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 080/200 batch 030/75 loss 0.0539 act 1.000 xy_mae 0.10248 key 0.968 repeat 1.000 load 0.048s step 0.034s
+epoch 080/200 batch 040/75 loss 0.1382 act 1.000 xy_mae 0.10056 key 0.975 repeat 1.000 load 0.048s step 0.033s
+epoch 080/200 batch 050/75 loss 0.1494 act 1.000 xy_mae 0.10916 key 0.962 repeat 1.000 load 0.048s step 0.033s
+epoch 080/200 batch 060/75 loss 0.0262 act 0.996 xy_mae 0.10950 key 0.968 repeat 1.000 load 0.048s step 0.033s
+epoch 080/200 batch 070/75 loss 0.0269 act 0.996 xy_mae 0.11848 key 0.971 repeat 1.000 load 0.048s step 0.033s
+epoch 080/200 batch 075/75 loss 0.0000 act 0.997 xy_mae 0.11990 key 0.973 repeat 1.000 load 0.048s step 0.033s
+epoch 080/200 done loss 0.1777 act 0.997 xy_mae 0.11990 key 0.973 repeat 1.000 lr 0.00132426
+Saved last checkpoint for epoch 80: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.3388, action_type_acc=0.987, xy_mae=0.15712, key_acc=1.000, repeat_acc=1.000
+Validation loss improved from 0.1961 to 0.1777
+Saved best checkpoint for epoch 80: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 80
+Epoch 80 took 11.26 seconds
+Epoch [81/200] started
+epoch 081/200 batch 010/75 loss 0.1019 act 1.000 xy_mae 0.15429 key 1.000 repeat 1.000 load 0.046s step 0.050s
+epoch 081/200 batch 020/75 loss 0.1855 act 0.988 xy_mae 0.16674 key 0.955 repeat 1.000 load 0.047s step 0.038s
+epoch 081/200 batch 030/75 loss 0.2325 act 0.992 xy_mae 0.14987 key 0.969 repeat 1.000 load 0.048s step 0.033s
+epoch 081/200 batch 040/75 loss 0.0004 act 0.994 xy_mae 0.13982 key 0.976 repeat 1.000 load 0.048s step 0.031s
+epoch 081/200 batch 050/75 loss 0.1097 act 0.995 xy_mae 0.13883 key 0.963 repeat 1.000 load 0.048s step 0.030s
+epoch 081/200 batch 060/75 loss 0.4966 act 0.996 xy_mae 0.13662 key 0.968 repeat 1.000 load 0.048s step 0.030s
+epoch 081/200 batch 070/75 loss 0.0775 act 0.996 xy_mae 0.13460 key 0.971 repeat 1.000 load 0.048s step 0.029s
+epoch 081/200 batch 075/75 loss 0.1335 act 0.993 xy_mae 0.13288 key 0.973 repeat 1.000 load 0.048s step 0.029s
+epoch 081/200 done loss 0.2266 act 0.993 xy_mae 0.13288 key 0.973 repeat 1.000 lr 0.00130936
+Saved last checkpoint for epoch 81: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 1/20
+Epoch 81 took 5.89 seconds
+Epoch [82/200] started
+epoch 082/200 batch 010/75 loss 0.3663 act 1.000 xy_mae 0.13541 key 1.000 repeat 1.000 load 0.049s step 0.029s
+epoch 082/200 batch 020/75 loss 0.0219 act 1.000 xy_mae 0.13466 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 082/200 batch 030/75 loss 0.3163 act 1.000 xy_mae 0.12629 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 082/200 batch 040/75 loss 0.0008 act 0.988 xy_mae 0.14040 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 082/200 batch 050/75 loss 0.1821 act 0.980 xy_mae 0.13153 key 0.980 repeat 0.980 load 0.048s step 0.032s
+epoch 082/200 batch 060/75 loss 0.8154 act 0.979 xy_mae 0.13056 key 0.982 repeat 0.982 load 0.048s step 0.033s
+epoch 082/200 batch 070/75 loss 0.0002 act 0.982 xy_mae 0.13112 key 0.971 repeat 0.986 load 0.048s step 0.033s
+epoch 082/200 batch 075/75 loss 0.0330 act 0.983 xy_mae 0.13402 key 0.973 repeat 0.986 load 0.048s step 0.033s
+epoch 082/200 done loss 0.4294 act 0.983 xy_mae 0.13402 key 0.973 repeat 0.986 lr 0.00129439
+Saved last checkpoint for epoch 82: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 82 took 6.22 seconds
+Epoch [83/200] started
+epoch 083/200 batch 010/75 loss 10.5934 act 0.975 xy_mae 0.10274 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 083/200 batch 020/75 loss 0.1479 act 0.988 xy_mae 0.11944 key 0.947 repeat 1.000 load 0.049s step 0.033s
+epoch 083/200 batch 030/75 loss 0.0546 act 0.975 xy_mae 0.11767 key 0.960 repeat 1.000 load 0.048s step 0.034s
+epoch 083/200 batch 040/75 loss 0.2861 act 0.981 xy_mae 0.11427 key 0.971 repeat 1.000 load 0.048s step 0.034s
+epoch 083/200 batch 050/75 loss 0.0922 act 0.970 xy_mae 0.11676 key 0.959 repeat 1.000 load 0.048s step 0.034s
+epoch 083/200 batch 060/75 loss 0.0317 act 0.971 xy_mae 0.12100 key 0.947 repeat 1.000 load 0.048s step 0.034s
+epoch 083/200 batch 070/75 loss 2.3198 act 0.975 xy_mae 0.12245 key 0.928 repeat 1.000 load 0.048s step 0.034s
+epoch 083/200 batch 075/75 loss 0.1493 act 0.977 xy_mae 0.12142 key 0.932 repeat 1.000 load 0.048s step 0.034s
+epoch 083/200 done loss 0.5653 act 0.977 xy_mae 0.12142 key 0.932 repeat 1.000 lr 0.00127935
+Saved last checkpoint for epoch 83: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 83 took 6.29 seconds
+Epoch [84/200] started
+epoch 084/200 batch 010/75 loss 0.0339 act 1.000 xy_mae 0.07133 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 084/200 batch 020/75 loss 0.0867 act 1.000 xy_mae 0.08248 key 0.955 repeat 1.000 load 0.048s step 0.033s
+epoch 084/200 batch 030/75 loss 0.0491 act 1.000 xy_mae 0.09729 key 0.971 repeat 1.000 load 0.048s step 0.033s
+epoch 084/200 batch 040/75 loss 0.0124 act 1.000 xy_mae 0.10106 key 0.976 repeat 1.000 load 0.048s step 0.033s
+epoch 084/200 batch 050/75 loss 0.0776 act 1.000 xy_mae 0.10892 key 0.960 repeat 1.000 load 0.048s step 0.033s
+epoch 084/200 batch 060/75 loss 0.1828 act 0.996 xy_mae 0.11033 key 0.967 repeat 1.000 load 0.048s step 0.033s
+epoch 084/200 batch 070/75 loss 0.1288 act 0.996 xy_mae 0.11084 key 0.972 repeat 1.000 load 0.048s step 0.033s
+epoch 084/200 batch 075/75 loss 0.2598 act 0.997 xy_mae 0.11258 key 0.973 repeat 1.000 load 0.047s step 0.033s
+epoch 084/200 done loss 0.1820 act 0.997 xy_mae 0.11258 key 0.973 repeat 1.000 lr 0.00126424
+Saved last checkpoint for epoch 84: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 84 took 6.23 seconds
+Epoch [85/200] started
+epoch 085/200 batch 010/75 loss 0.0776 act 1.000 xy_mae 0.09276 key 1.000 repeat 1.000 load 0.051s step 0.033s
+epoch 085/200 batch 020/75 loss 0.0075 act 1.000 xy_mae 0.09989 key 1.000 repeat 1.000 load 0.049s step 0.034s
+epoch 085/200 batch 030/75 loss 0.0872 act 0.992 xy_mae 0.10361 key 1.000 repeat 1.000 load 0.049s step 0.033s
+epoch 085/200 batch 040/75 loss 0.0419 act 0.994 xy_mae 0.10880 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 085/200 batch 050/75 loss 0.0745 act 0.995 xy_mae 0.11049 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 085/200 batch 060/75 loss 0.0000 act 0.996 xy_mae 0.11120 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 085/200 batch 070/75 loss 0.0241 act 0.996 xy_mae 0.10910 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 085/200 batch 075/75 loss 0.3086 act 0.997 xy_mae 0.11565 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 085/200 done loss 0.1322 act 0.997 xy_mae 0.11565 key 1.000 repeat 1.000 lr 0.00124907
+Saved last checkpoint for epoch 85: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.1838, action_type_acc=0.997, xy_mae=0.14746, key_acc=1.000, repeat_acc=1.000
+Validation loss improved from 0.1777 to 0.1322
+Saved best checkpoint for epoch 85: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 85
+Epoch 85 took 11.42 seconds
+Epoch [86/200] started
+epoch 086/200 batch 010/75 loss 0.1281 act 1.000 xy_mae 0.12230 key 1.000 repeat 1.000 load 0.049s step 0.067s
+epoch 086/200 batch 020/75 loss 0.0766 act 0.988 xy_mae 0.11692 key 1.000 repeat 1.000 load 0.048s step 0.045s
+epoch 086/200 batch 030/75 loss 0.0425 act 0.992 xy_mae 0.11275 key 1.000 repeat 1.000 load 0.048s step 0.039s
+epoch 086/200 batch 040/75 loss 0.0720 act 0.994 xy_mae 0.11303 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 086/200 batch 050/75 loss 0.1321 act 0.995 xy_mae 0.11074 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 086/200 batch 060/75 loss 0.0713 act 0.996 xy_mae 0.10862 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 086/200 batch 070/75 loss 0.1037 act 0.996 xy_mae 0.10728 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 086/200 batch 075/75 loss 0.0000 act 0.997 xy_mae 0.10780 key 1.000 repeat 1.000 load 0.047s step 0.031s
+epoch 086/200 done loss 0.1220 act 0.997 xy_mae 0.10780 key 1.000 repeat 1.000 lr 0.00123383
+Saved last checkpoint for epoch 86: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.1322 to 0.1220
+Saved best checkpoint for epoch 86: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 86
+Epoch 86 took 6.20 seconds
+Epoch [87/200] started
+epoch 087/200 batch 010/75 loss 0.1297 act 1.000 xy_mae 0.12284 key 1.000 repeat 1.000 load 0.047s step 0.029s
+epoch 087/200 batch 020/75 loss 0.0293 act 1.000 xy_mae 0.11613 key 1.000 repeat 1.000 load 0.048s step 0.029s
+epoch 087/200 batch 030/75 loss 0.0149 act 1.000 xy_mae 0.10400 key 1.000 repeat 1.000 load 0.048s step 0.029s
+epoch 087/200 batch 040/75 loss 0.1062 act 1.000 xy_mae 0.10557 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 087/200 batch 050/75 loss 0.2901 act 1.000 xy_mae 0.10584 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 087/200 batch 060/75 loss 0.1350 act 1.000 xy_mae 0.10301 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 087/200 batch 070/75 loss 0.1333 act 1.000 xy_mae 0.10234 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 087/200 batch 075/75 loss 0.1769 act 1.000 xy_mae 0.10339 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 087/200 done loss 0.0943 act 1.000 xy_mae 0.10339 key 1.000 repeat 1.000 lr 0.00121853
+Saved last checkpoint for epoch 87: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.1220 to 0.0943
+Saved best checkpoint for epoch 87: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 87
+Epoch 87 took 6.19 seconds
+Epoch [88/200] started
+epoch 088/200 batch 010/75 loss 0.4376 act 1.000 xy_mae 0.11604 key 1.000 repeat 1.000 load 0.050s step 0.030s
+epoch 088/200 batch 020/75 loss 0.0271 act 1.000 xy_mae 0.10795 key 1.000 repeat 1.000 load 0.049s step 0.031s
+epoch 088/200 batch 030/75 loss 0.1726 act 1.000 xy_mae 0.10695 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 088/200 batch 040/75 loss 0.0798 act 1.000 xy_mae 0.10849 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 088/200 batch 050/75 loss 0.0067 act 1.000 xy_mae 0.10525 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 088/200 batch 060/75 loss 0.0213 act 1.000 xy_mae 0.10508 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 088/200 batch 070/75 loss 0.0000 act 1.000 xy_mae 0.10815 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 088/200 batch 075/75 loss 0.1481 act 1.000 xy_mae 0.10653 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 088/200 done loss 0.0924 act 1.000 xy_mae 0.10653 key 1.000 repeat 1.000 lr 0.00120319
+Saved last checkpoint for epoch 88: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.0943 to 0.0924
+Saved best checkpoint for epoch 88: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 88
+Epoch 88 took 6.26 seconds
+Epoch [89/200] started
+epoch 089/200 batch 010/75 loss 0.0000 act 1.000 xy_mae 0.10198 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 089/200 batch 020/75 loss 0.0733 act 1.000 xy_mae 0.09860 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 089/200 batch 030/75 loss 0.1324 act 1.000 xy_mae 0.10129 key 1.000 repeat 1.000 load 0.047s step 0.031s
+epoch 089/200 batch 040/75 loss 0.0219 act 1.000 xy_mae 0.09925 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 089/200 batch 050/75 loss 0.0952 act 1.000 xy_mae 0.09913 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 089/200 batch 060/75 loss 0.0643 act 1.000 xy_mae 0.09770 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 089/200 batch 070/75 loss 0.1052 act 1.000 xy_mae 0.10062 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 089/200 batch 075/75 loss 0.1268 act 1.000 xy_mae 0.10114 key 1.000 repeat 1.000 load 0.047s step 0.031s
+epoch 089/200 done loss 0.0858 act 1.000 xy_mae 0.10114 key 1.000 repeat 1.000 lr 0.00118779
+Saved last checkpoint for epoch 89: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss improved from 0.0924 to 0.0858
+Saved best checkpoint for epoch 89: checkpoints\default_params_2026_06_09_19_01_52\best.pt
+Saved best model checkpoint at epoch 89
+Epoch 89 took 6.24 seconds
+Epoch [90/200] started
+epoch 090/200 batch 010/75 loss 0.0387 act 1.000 xy_mae 0.09010 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 090/200 batch 020/75 loss 0.0243 act 1.000 xy_mae 0.09437 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 090/200 batch 030/75 loss 0.1189 act 1.000 xy_mae 0.09574 key 1.000 repeat 1.000 load 0.047s step 0.032s
+epoch 090/200 batch 040/75 loss 0.0006 act 1.000 xy_mae 0.11065 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 090/200 batch 050/75 loss 0.1815 act 1.000 xy_mae 0.11697 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 090/200 batch 060/75 loss 0.0470 act 1.000 xy_mae 0.11497 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 090/200 batch 070/75 loss 0.0858 act 0.996 xy_mae 0.11027 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 090/200 batch 075/75 loss 0.0000 act 0.997 xy_mae 0.11073 key 1.000 repeat 1.000 load 0.048s step 0.031s
+epoch 090/200 done loss 0.0996 act 0.997 xy_mae 0.11073 key 1.000 repeat 1.000 lr 0.00117234
+Saved last checkpoint for epoch 90: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.1773, action_type_acc=0.993, xy_mae=0.10950, key_acc=1.000, repeat_acc=0.986
+Validation loss did not improve. Patience: 1/20
+Epoch 90 took 10.96 seconds
+Epoch [91/200] started
+epoch 091/200 batch 010/75 loss 0.0439 act 1.000 xy_mae 0.10751 key 1.000 repeat 1.000 load 0.049s step 0.070s
+epoch 091/200 batch 020/75 loss 0.0502 act 1.000 xy_mae 0.10304 key 1.000 repeat 1.000 load 0.050s step 0.046s
+epoch 091/200 batch 030/75 loss 0.0682 act 1.000 xy_mae 0.10194 key 1.000 repeat 1.000 load 0.050s step 0.040s
+epoch 091/200 batch 040/75 loss 0.3668 act 1.000 xy_mae 0.10532 key 1.000 repeat 1.000 load 0.049s step 0.036s
+epoch 091/200 batch 050/75 loss 0.1432 act 1.000 xy_mae 0.10397 key 1.000 repeat 1.000 load 0.049s step 0.034s
+epoch 091/200 batch 060/75 loss 0.1007 act 0.996 xy_mae 0.10047 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 091/200 batch 070/75 loss 0.3663 act 0.996 xy_mae 0.10277 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 091/200 batch 075/75 loss 0.1128 act 0.997 xy_mae 0.10311 key 1.000 repeat 0.986 load 0.048s step 0.031s
+epoch 091/200 done loss 0.1447 act 0.997 xy_mae 0.10311 key 1.000 repeat 0.986 lr 0.00115686
+Saved last checkpoint for epoch 91: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 2/20
+Epoch 91 took 6.16 seconds
+Epoch [92/200] started
+epoch 092/200 batch 010/75 loss 0.0957 act 1.000 xy_mae 0.09885 key 1.000 repeat 1.000 load 0.049s step 0.028s
+epoch 092/200 batch 020/75 loss 0.3069 act 1.000 xy_mae 0.10227 key 1.000 repeat 1.000 load 0.048s step 0.028s
+epoch 092/200 batch 030/75 loss 0.0216 act 1.000 xy_mae 0.09825 key 1.000 repeat 1.000 load 0.048s step 0.029s
+epoch 092/200 batch 040/75 loss 0.1825 act 1.000 xy_mae 0.09494 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 092/200 batch 050/75 loss 0.0377 act 1.000 xy_mae 0.09662 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 092/200 batch 060/75 loss 0.0750 act 1.000 xy_mae 0.09826 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 092/200 batch 070/75 loss 0.0887 act 0.996 xy_mae 0.09876 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 092/200 batch 075/75 loss 0.0693 act 0.997 xy_mae 0.09673 key 0.986 repeat 1.000 load 0.048s step 0.030s
+epoch 092/200 done loss 0.1663 act 0.997 xy_mae 0.09673 key 0.986 repeat 1.000 lr 0.00114133
+Saved last checkpoint for epoch 92: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 3/20
+Epoch 92 took 6.02 seconds
+Epoch [93/200] started
+epoch 093/200 batch 010/75 loss 0.2058 act 0.975 xy_mae 0.09049 key 1.000 repeat 1.000 load 0.046s step 0.035s
+epoch 093/200 batch 020/75 loss 4.7356 act 0.975 xy_mae 0.09725 key 1.000 repeat 1.000 load 0.047s step 0.035s
+epoch 093/200 batch 030/75 loss 0.1084 act 0.983 xy_mae 0.10142 key 1.000 repeat 1.000 load 0.047s step 0.034s
+epoch 093/200 batch 040/75 loss 0.0704 act 0.988 xy_mae 0.10348 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 093/200 batch 050/75 loss 0.0000 act 0.990 xy_mae 0.10216 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 093/200 batch 060/75 loss 0.0041 act 0.988 xy_mae 0.10327 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 093/200 batch 070/75 loss 0.1207 act 0.989 xy_mae 0.10523 key 1.000 repeat 1.000 load 0.048s step 0.033s
+epoch 093/200 batch 075/75 loss 0.2168 act 0.987 xy_mae 0.10883 key 1.000 repeat 1.000 load 0.047s step 0.033s
+epoch 093/200 done loss 0.2083 act 0.987 xy_mae 0.10883 key 1.000 repeat 1.000 lr 0.00112577
+Saved last checkpoint for epoch 93: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 4/20
+Epoch 93 took 6.17 seconds
+Epoch [94/200] started
+epoch 094/200 batch 010/75 loss 0.0258 act 0.975 xy_mae 0.11953 key 1.000 repeat 1.000 load 0.046s step 0.033s
+epoch 094/200 batch 020/75 loss 0.0002 act 0.988 xy_mae 0.11747 key 1.000 repeat 1.000 load 0.047s step 0.031s
+epoch 094/200 batch 030/75 loss 0.0708 act 0.983 xy_mae 0.11115 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 094/200 batch 040/75 loss 1.4167 act 0.981 xy_mae 0.11115 key 0.977 repeat 1.000 load 0.048s step 0.030s
+epoch 094/200 batch 050/75 loss 0.2141 act 0.985 xy_mae 0.11510 key 0.981 repeat 0.981 load 0.047s step 0.031s
+epoch 094/200 batch 060/75 loss 0.1178 act 0.988 xy_mae 0.11515 key 0.983 repeat 0.983 load 0.047s step 0.032s
+epoch 094/200 batch 070/75 loss 0.0225 act 0.986 xy_mae 0.11492 key 0.985 repeat 0.985 load 0.048s step 0.031s
+epoch 094/200 batch 075/75 loss 0.1974 act 0.987 xy_mae 0.11492 key 0.986 repeat 0.986 load 0.047s step 0.031s
+epoch 094/200 done loss 0.2303 act 0.987 xy_mae 0.11492 key 0.986 repeat 0.986 lr 0.00111018
+Saved last checkpoint for epoch 94: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 5/20
+Epoch 94 took 6.08 seconds
+Epoch [95/200] started
+epoch 095/200 batch 010/75 loss 0.1819 act 0.975 xy_mae 0.11278 key 1.000 repeat 0.909 load 0.048s step 0.031s
+epoch 095/200 batch 020/75 loss 0.3856 act 0.988 xy_mae 0.09976 key 0.952 repeat 0.952 load 0.048s step 0.031s
+epoch 095/200 batch 030/75 loss 0.2322 act 0.983 xy_mae 0.10271 key 0.969 repeat 0.969 load 0.048s step 0.031s
+epoch 095/200 batch 040/75 loss 0.0648 act 0.981 xy_mae 0.10137 key 0.977 repeat 0.977 load 0.048s step 0.030s
+epoch 095/200 batch 050/75 loss 0.0207 act 0.985 xy_mae 0.10045 key 0.962 repeat 0.962 load 0.048s step 0.031s
+epoch 095/200 batch 060/75 loss 2.5362 act 0.983 xy_mae 0.10980 key 0.968 repeat 0.968 load 0.048s step 0.031s
+epoch 095/200 batch 070/75 loss 0.0095 act 0.979 xy_mae 0.10670 key 0.972 repeat 0.972 load 0.048s step 0.031s
+epoch 095/200 batch 075/75 loss 0.1072 act 0.980 xy_mae 0.10852 key 0.973 repeat 0.973 load 0.048s step 0.031s
+epoch 095/200 done loss 0.3031 act 0.980 xy_mae 0.10852 key 0.973 repeat 0.973 lr 0.00109456
+Saved last checkpoint for epoch 95: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.1404, action_type_acc=0.987, xy_mae=0.08570, key_acc=0.986, repeat_acc=1.000
+Validation loss did not improve. Patience: 6/20
+Epoch 95 took 10.96 seconds
+Epoch [96/200] started
+epoch 096/200 batch 010/75 loss 0.0143 act 0.975 xy_mae 0.11722 key 0.923 repeat 1.000 load 0.048s step 0.071s
+epoch 096/200 batch 020/75 loss 0.1381 act 0.988 xy_mae 0.10939 key 0.957 repeat 1.000 load 0.049s step 0.048s
+epoch 096/200 batch 030/75 loss 1.2752 act 0.983 xy_mae 0.10097 key 0.969 repeat 1.000 load 0.049s step 0.041s
+epoch 096/200 batch 040/75 loss 0.3114 act 0.988 xy_mae 0.10252 key 0.979 repeat 1.000 load 0.048s step 0.037s
+epoch 096/200 batch 050/75 loss 0.1065 act 0.990 xy_mae 0.10526 key 0.982 repeat 1.000 load 0.048s step 0.035s
+epoch 096/200 batch 060/75 loss 0.0857 act 0.988 xy_mae 0.10563 key 0.985 repeat 1.000 load 0.048s step 0.033s
+epoch 096/200 batch 070/75 loss 0.0000 act 0.986 xy_mae 0.10195 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 096/200 batch 075/75 loss 0.0598 act 0.987 xy_mae 0.10213 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 096/200 done loss 0.1634 act 0.987 xy_mae 0.10213 key 0.986 repeat 1.000 lr 0.00107892
+Saved last checkpoint for epoch 96: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 7/20
+Epoch 96 took 6.18 seconds
+Epoch [97/200] started
+epoch 097/200 batch 010/75 loss 0.0504 act 1.000 xy_mae 0.09137 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 097/200 batch 020/75 loss 0.1729 act 0.988 xy_mae 0.11120 key 0.944 repeat 1.000 load 0.048s step 0.030s
+epoch 097/200 batch 030/75 loss 0.0182 act 0.992 xy_mae 0.10474 key 0.967 repeat 1.000 load 0.047s step 0.031s
+epoch 097/200 batch 040/75 loss 0.0000 act 0.994 xy_mae 0.10215 key 0.951 repeat 1.000 load 0.048s step 0.031s
+epoch 097/200 batch 050/75 loss 0.0316 act 0.995 xy_mae 0.10508 key 0.958 repeat 1.000 load 0.048s step 0.031s
+epoch 097/200 batch 060/75 loss 0.1422 act 0.996 xy_mae 0.10517 key 0.967 repeat 1.000 load 0.047s step 0.032s
+epoch 097/200 batch 070/75 loss 0.1616 act 0.993 xy_mae 0.10558 key 0.972 repeat 1.000 load 0.047s step 0.032s
+epoch 097/200 batch 075/75 loss 0.1937 act 0.993 xy_mae 0.10567 key 0.973 repeat 1.000 load 0.047s step 0.032s
+epoch 097/200 done loss 0.1917 act 0.993 xy_mae 0.10567 key 0.973 repeat 1.000 lr 0.00106326
+Saved last checkpoint for epoch 97: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 8/20
+Epoch 97 took 6.08 seconds
+Epoch [98/200] started
+epoch 098/200 batch 010/75 loss 0.0794 act 1.000 xy_mae 0.10680 key 1.000 repeat 1.000 load 0.047s step 0.034s
+epoch 098/200 batch 020/75 loss 0.0965 act 1.000 xy_mae 0.10613 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 098/200 batch 030/75 loss 0.1548 act 1.000 xy_mae 0.10272 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 098/200 batch 040/75 loss 0.1115 act 1.000 xy_mae 0.09749 key 0.977 repeat 1.000 load 0.049s step 0.032s
+epoch 098/200 batch 050/75 loss 0.0260 act 0.990 xy_mae 0.09952 key 0.982 repeat 1.000 load 0.049s step 0.032s
+epoch 098/200 batch 060/75 loss 0.4255 act 0.992 xy_mae 0.10373 key 0.984 repeat 1.000 load 0.048s step 0.032s
+epoch 098/200 batch 070/75 loss 0.0396 act 0.989 xy_mae 0.10752 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 098/200 batch 075/75 loss 0.0000 act 0.987 xy_mae 0.10767 key 0.986 repeat 1.000 load 0.048s step 0.032s
+epoch 098/200 done loss 0.1863 act 0.987 xy_mae 0.10767 key 0.986 repeat 1.000 lr 0.00104758
+Saved last checkpoint for epoch 98: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 9/20
+Epoch 98 took 6.18 seconds
+Epoch [99/200] started
+epoch 099/200 batch 010/75 loss 0.0561 act 1.000 xy_mae 0.09570 key 1.000 repeat 1.000 load 0.049s step 0.035s
+epoch 099/200 batch 020/75 loss 0.0482 act 1.000 xy_mae 0.09109 key 0.952 repeat 1.000 load 0.048s step 0.036s
+epoch 099/200 batch 030/75 loss 0.1667 act 1.000 xy_mae 0.09918 key 0.968 repeat 1.000 load 0.049s step 0.035s
+epoch 099/200 batch 040/75 loss 0.0403 act 1.000 xy_mae 0.09503 key 0.976 repeat 1.000 load 0.048s step 0.035s
+epoch 099/200 batch 050/75 loss 0.0241 act 1.000 xy_mae 0.08990 key 0.979 repeat 1.000 load 0.048s step 0.035s
+epoch 099/200 batch 060/75 loss 0.0536 act 1.000 xy_mae 0.09216 key 0.982 repeat 1.000 load 0.048s step 0.035s
+epoch 099/200 batch 070/75 loss 0.0000 act 0.996 xy_mae 0.09539 key 0.986 repeat 1.000 load 0.048s step 0.035s
+epoch 099/200 batch 075/75 loss 0.0738 act 0.997 xy_mae 0.09441 key 0.986 repeat 1.000 load 0.048s step 0.035s
+epoch 099/200 done loss 0.2040 act 0.997 xy_mae 0.09441 key 0.986 repeat 1.000 lr 0.0010319
+Saved last checkpoint for epoch 99: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 10/20
+Epoch 99 took 6.39 seconds
+Epoch [100/200] started
+epoch 100/200 batch 010/75 loss 0.0371 act 1.000 xy_mae 0.07891 key 1.000 repeat 1.000 load 0.048s step 0.037s
+epoch 100/200 batch 020/75 loss 0.0833 act 1.000 xy_mae 0.08447 key 1.000 repeat 1.000 load 0.048s step 0.036s
+epoch 100/200 batch 030/75 loss 0.0293 act 0.992 xy_mae 0.09296 key 1.000 repeat 1.000 load 0.048s step 0.036s
+epoch 100/200 batch 040/75 loss 0.0701 act 0.994 xy_mae 0.10180 key 1.000 repeat 1.000 load 0.048s step 0.036s
+epoch 100/200 batch 050/75 loss 0.0101 act 0.990 xy_mae 0.10071 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 100/200 batch 060/75 loss 0.0231 act 0.992 xy_mae 0.09846 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 100/200 batch 070/75 loss 0.0398 act 0.989 xy_mae 0.10073 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 100/200 batch 075/75 loss 0.0016 act 0.990 xy_mae 0.09997 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 100/200 done loss 0.1583 act 0.990 xy_mae 0.09997 key 1.000 repeat 1.000 lr 0.0010162
+Saved last checkpoint for epoch 100: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.2311, action_type_acc=0.980, xy_mae=0.09650, key_acc=1.000, repeat_acc=1.000
+Validation loss did not improve. Patience: 11/20
+Epoch 100 took 11.42 seconds
+Epoch [101/200] started
+epoch 101/200 batch 010/75 loss 0.0133 act 0.975 xy_mae 0.07478 key 1.000 repeat 1.000 load 0.046s step 0.083s
+epoch 101/200 batch 020/75 loss 0.2078 act 0.988 xy_mae 0.08422 key 1.000 repeat 1.000 load 0.049s step 0.053s
+epoch 101/200 batch 030/75 loss 0.0760 act 0.992 xy_mae 0.08336 key 1.000 repeat 1.000 load 0.049s step 0.045s
+epoch 101/200 batch 040/75 loss 0.2339 act 0.988 xy_mae 0.09415 key 1.000 repeat 1.000 load 0.049s step 0.041s
+epoch 101/200 batch 050/75 loss 0.1075 act 0.985 xy_mae 0.09732 key 0.979 repeat 1.000 load 0.049s step 0.039s
+epoch 101/200 batch 060/75 loss 0.0851 act 0.988 xy_mae 0.09874 key 0.983 repeat 1.000 load 0.049s step 0.038s
+epoch 101/200 batch 070/75 loss 0.0773 act 0.986 xy_mae 0.09677 key 0.986 repeat 1.000 load 0.048s step 0.038s
+epoch 101/200 batch 075/75 loss 0.0575 act 0.987 xy_mae 0.09636 key 0.986 repeat 1.000 load 0.048s step 0.037s
+epoch 101/200 done loss 0.1542 act 0.987 xy_mae 0.09636 key 0.986 repeat 1.000 lr 0.0010005
+Saved last checkpoint for epoch 101: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 12/20
+Epoch 101 took 6.62 seconds
+Epoch [102/200] started
+epoch 102/200 batch 010/75 loss 0.0813 act 1.000 xy_mae 0.08525 key 1.000 repeat 1.000 load 0.048s step 0.036s
+epoch 102/200 batch 020/75 loss 0.0932 act 1.000 xy_mae 0.09156 key 1.000 repeat 1.000 load 0.049s step 0.035s
+epoch 102/200 batch 030/75 loss 0.0273 act 0.992 xy_mae 0.09517 key 1.000 repeat 1.000 load 0.048s step 0.036s
+epoch 102/200 batch 040/75 loss 0.1042 act 0.994 xy_mae 0.09963 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 102/200 batch 050/75 loss 0.1228 act 0.995 xy_mae 0.09773 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 102/200 batch 060/75 loss 0.0620 act 0.996 xy_mae 0.09438 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 102/200 batch 070/75 loss 0.0905 act 0.996 xy_mae 0.09824 key 1.000 repeat 1.000 load 0.048s step 0.035s
+epoch 102/200 batch 075/75 loss 0.1777 act 0.997 xy_mae 0.09847 key 1.000 repeat 1.000 load 0.048s step 0.034s
+epoch 102/200 done loss 0.1293 act 0.997 xy_mae 0.09847 key 1.000 repeat 1.000 lr 0.000984801
+Saved last checkpoint for epoch 102: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 13/20
+Epoch 102 took 6.36 seconds
+Epoch [103/200] started
+epoch 103/200 batch 010/75 loss 0.0014 act 0.975 xy_mae 0.07372 key 1.000 repeat 1.000 load 0.051s step 0.029s
+epoch 103/200 batch 020/75 loss 0.0544 act 0.988 xy_mae 0.08633 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 103/200 batch 030/75 loss 0.0684 act 0.992 xy_mae 0.08893 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 103/200 batch 040/75 loss 0.1344 act 0.994 xy_mae 0.09616 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 103/200 batch 050/75 loss 0.1928 act 0.995 xy_mae 0.09615 key 1.000 repeat 1.000 load 0.049s step 0.033s
+epoch 103/200 batch 060/75 loss 0.0383 act 0.988 xy_mae 0.09550 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 103/200 batch 070/75 loss 2.0085 act 0.986 xy_mae 0.09228 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 103/200 batch 075/75 loss 0.0274 act 0.987 xy_mae 0.09281 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 103/200 done loss 0.1831 act 0.987 xy_mae 0.09281 key 1.000 repeat 1.000 lr 0.000969105
+Saved last checkpoint for epoch 103: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 14/20
+Epoch 103 took 6.23 seconds
+Epoch [104/200] started
+epoch 104/200 batch 010/75 loss 0.0481 act 0.975 xy_mae 0.09549 key 1.000 repeat 1.000 load 0.048s step 0.030s
+epoch 104/200 batch 020/75 loss 0.1998 act 0.988 xy_mae 0.09728 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 104/200 batch 030/75 loss 0.0501 act 0.983 xy_mae 0.09273 key 1.000 repeat 1.000 load 0.049s step 0.031s
+epoch 104/200 batch 040/75 loss 0.2401 act 0.981 xy_mae 0.08683 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 104/200 batch 050/75 loss 0.1667 act 0.985 xy_mae 0.08960 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 104/200 batch 060/75 loss 0.0176 act 0.988 xy_mae 0.08623 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 104/200 batch 070/75 loss 0.0976 act 0.986 xy_mae 0.08953 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 104/200 batch 075/75 loss 0.0323 act 0.987 xy_mae 0.09035 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 104/200 done loss 0.1163 act 0.987 xy_mae 0.09035 key 1.000 repeat 1.000 lr 0.000953417
+Saved last checkpoint for epoch 104: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 15/20
+Epoch 104 took 6.16 seconds
+Epoch [105/200] started
+epoch 105/200 batch 010/75 loss 0.3736 act 0.975 xy_mae 0.11023 key 1.000 repeat 1.000 load 0.050s step 0.032s
+epoch 105/200 batch 020/75 loss 0.0924 act 0.988 xy_mae 0.10293 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 105/200 batch 030/75 loss 0.0012 act 0.992 xy_mae 0.10016 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 105/200 batch 040/75 loss 0.0036 act 0.994 xy_mae 0.09603 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 105/200 batch 050/75 loss 0.0098 act 0.990 xy_mae 0.08994 key 1.000 repeat 1.000 load 0.049s step 0.032s
+epoch 105/200 batch 060/75 loss 0.0836 act 0.992 xy_mae 0.08890 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 105/200 batch 070/75 loss 0.0416 act 0.993 xy_mae 0.08915 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 105/200 batch 075/75 loss 0.0676 act 0.993 xy_mae 0.09030 key 1.000 repeat 1.000 load 0.048s step 0.032s
+epoch 105/200 done loss 0.1111 act 0.993 xy_mae 0.09030 key 1.000 repeat 1.000 lr 0.000937741
+Saved last checkpoint for epoch 105: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation: loss=0.0735, action_type_acc=1.000, xy_mae=0.08267, key_acc=1.000, repeat_acc=1.000
+Validation loss did not improve. Patience: 16/20
+Epoch 105 took 11.28 seconds
+Epoch [106/200] started
+epoch 106/200 batch 010/75 loss 0.0659 act 1.000 xy_mae 0.11395 key 1.000 repeat 1.000 load 0.049s step 0.072s
+epoch 106/200 batch 020/75 loss 0.4406 act 1.000 xy_mae 0.11698 key 1.000 repeat 1.000 load 0.051s step 0.049s
+epoch 106/200 batch 030/75 loss 0.0319 act 1.000 xy_mae 0.10562 key 1.000 repeat 1.000 load 0.052s step 0.041s
+epoch 106/200 batch 040/75 loss 0.0384 act 0.994 xy_mae 0.09739 key 1.000 repeat 1.000 load 0.051s step 0.037s
+epoch 106/200 batch 050/75 loss 0.1972 act 0.995 xy_mae 0.09245 key 1.000 repeat 1.000 load 0.051s step 0.035s
+epoch 106/200 batch 060/75 loss 0.0649 act 0.996 xy_mae 0.09143 key 1.000 repeat 1.000 load 0.051s step 0.034s
+epoch 106/200 batch 070/75 loss 0.0830 act 0.996 xy_mae 0.09203 key 1.000 repeat 1.000 load 0.051s step 0.033s
+epoch 106/200 batch 075/75 loss 0.0212 act 0.997 xy_mae 0.09174 key 1.000 repeat 1.000 load 0.051s step 0.033s
+epoch 106/200 done loss 0.1020 act 0.997 xy_mae 0.09174 key 1.000 repeat 1.000 lr 0.00092208
+Saved last checkpoint for epoch 106: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 17/20
+Epoch 106 took 6.43 seconds
+Epoch [107/200] started
+epoch 107/200 batch 010/75 loss 0.1151 act 1.000 xy_mae 0.07774 key 1.000 repeat 0.857 load 0.048s step 0.033s
+epoch 107/200 batch 020/75 loss 0.0762 act 1.000 xy_mae 0.06948 key 1.000 repeat 0.938 load 0.048s step 0.033s
+epoch 107/200 batch 030/75 loss 0.1417 act 1.000 xy_mae 0.06986 key 1.000 repeat 0.964 load 0.048s step 0.033s
+epoch 107/200 batch 040/75 loss 0.1047 act 1.000 xy_mae 0.07845 key 1.000 repeat 0.974 load 0.049s step 0.033s
+epoch 107/200 batch 050/75 loss 2.0812 act 0.985 xy_mae 0.07705 key 1.000 repeat 0.957 load 0.050s step 0.033s
+epoch 107/200 batch 060/75 loss 0.2421 act 0.983 xy_mae 0.08276 key 1.000 repeat 0.964 load 0.050s step 0.033s
+epoch 107/200 batch 070/75 loss 0.0222 act 0.986 xy_mae 0.08628 key 1.000 repeat 0.970 load 0.050s step 0.032s
+epoch 107/200 batch 075/75 loss 0.0000 act 0.987 xy_mae 0.08519 key 1.000 repeat 0.973 load 0.049s step 0.032s
+epoch 107/200 done loss 0.1687 act 0.987 xy_mae 0.08519 key 1.000 repeat 0.973 lr 0.000906439
+Saved last checkpoint for epoch 107: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 18/20
+Epoch 107 took 6.31 seconds
+Epoch [108/200] started
+epoch 108/200 batch 010/75 loss 0.0780 act 1.000 xy_mae 0.09736 key 1.000 repeat 1.000 load 0.053s step 0.028s
+epoch 108/200 batch 020/75 loss 0.2502 act 1.000 xy_mae 0.10389 key 1.000 repeat 1.000 load 0.052s step 0.028s
+epoch 108/200 batch 030/75 loss 0.1274 act 1.000 xy_mae 0.09574 key 1.000 repeat 1.000 load 0.051s step 0.029s
+epoch 108/200 batch 040/75 loss 0.0301 act 1.000 xy_mae 0.09671 key 1.000 repeat 1.000 load 0.051s step 0.029s
+epoch 108/200 batch 050/75 loss 0.0871 act 1.000 xy_mae 0.09276 key 0.979 repeat 1.000 load 0.051s step 0.029s
+epoch 108/200 batch 060/75 loss 0.0443 act 0.996 xy_mae 0.09053 key 0.983 repeat 1.000 load 0.051s step 0.029s
+epoch 108/200 batch 070/75 loss 0.2329 act 0.996 xy_mae 0.09032 key 0.985 repeat 1.000 load 0.050s step 0.030s
+epoch 108/200 batch 075/75 loss 0.0891 act 0.997 xy_mae 0.09098 key 0.986 repeat 1.000 load 0.050s step 0.030s
+epoch 108/200 done loss 0.1244 act 0.997 xy_mae 0.09098 key 0.986 repeat 1.000 lr 0.000890821
+Saved last checkpoint for epoch 108: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 19/20
+Epoch 108 took 6.21 seconds
+Epoch [109/200] started
+epoch 109/200 batch 010/75 loss 0.0107 act 1.000 xy_mae 0.08261 key 1.000 repeat 1.000 load 0.051s step 0.031s
+epoch 109/200 batch 020/75 loss 0.0053 act 1.000 xy_mae 0.08512 key 1.000 repeat 1.000 load 0.052s step 0.031s
+epoch 109/200 batch 030/75 loss 0.0532 act 1.000 xy_mae 0.08715 key 1.000 repeat 1.000 load 0.053s step 0.031s
+epoch 109/200 batch 040/75 loss 0.0557 act 1.000 xy_mae 0.08617 key 1.000 repeat 1.000 load 0.054s step 0.031s
+epoch 109/200 batch 050/75 loss 0.0189 act 1.000 xy_mae 0.08606 key 1.000 repeat 1.000 load 0.055s step 0.032s
+epoch 109/200 batch 060/75 loss 0.1520 act 1.000 xy_mae 0.09119 key 1.000 repeat 1.000 load 0.055s step 0.032s
+epoch 109/200 batch 070/75 loss 0.0450 act 1.000 xy_mae 0.09479 key 1.000 repeat 1.000 load 0.056s step 0.033s
+epoch 109/200 batch 075/75 loss 0.2522 act 1.000 xy_mae 0.09413 key 1.000 repeat 1.000 load 0.056s step 0.033s
+epoch 109/200 done loss 0.0958 act 1.000 xy_mae 0.09413 key 1.000 repeat 1.000 lr 0.000875229
+Saved last checkpoint for epoch 109: checkpoints\default_params_2026_06_09_19_01_52\last.pt
+Validation loss did not improve. Patience: 20/20
+Early stopping triggered after 109 epochs
+Loaded best model from epoch 89
+Test Results:
+{'loss': 0.10416528675627584, 'loss_action_type': 0.0008351690554773452, 'loss_high_level': 0.0, 'loss_gui_action': 0.0, 'loss_coordinate_frame': 0.0, 'loss_xy': 0.006568424177087293, 'loss_key': 0.03661432941047693, 'loss_repeat': 1.7642117168824273e-05, 'loss_interval': 0.0, 'loss_param_bins': 0.0, 'loss_x_bin': 0.0, 'loss_y_bin': 0.0, 'loss_key_bin': 0.0, 'loss_repeat_bin': 0.0, 'loss_interval_bin': 0.0, 'loss_target_entity': 0.0, 'loss_point_role': 0.0, 'action_type_correct': 298, 'high_level_correct': 63, 'gui_action_correct': 1, 'coordinate_frame_correct': 15, 'target_entity_correct': 43, 'point_role_correct': 41, 'param_bin_correct': 0, 'param_bin_count': 0, 'x_bin_correct': 0, 'x_bin_count': 0, 'x_bin_tol_correct': 0, 'y_bin_correct': 0, 'y_bin_count': 0, 'y_bin_tol_correct': 0, 'key_bin_correct': 0, 'key_bin_count': 0, 'repeat_bin_correct': 0, 'repeat_bin_count': 0, 'interval_bin_correct': 0, 'interval_bin_count': 0, 'xy_abs_error': 24.962149314582348, 'xy_count': 276, 'key_correct': 73, 'key_count': 74, 'repeat_correct': 74, 'repeat_count': 74, 'count': 298, 'action_type_acc': 1.0, 'high_level_acc': 0.21140939597315436, 'gui_action_acc': 0.003355704697986577, 'coordinate_frame_acc': 0.050335570469798654, 'target_entity_acc': 0.14429530201342283, 'point_role_acc': 0.13758389261744966, 'param_bin_acc': 0.0, 'x_bin_acc': 0.0, 'y_bin_acc': 0.0, 'key_bin_acc': 0.0, 'repeat_bin_acc': 0.0, 'interval_bin_acc': 0.0, 'x_bin_tol_acc': 0.0, 'y_bin_tol_acc': 0.0, 'xy_mae': 0.09044256998037083, 'key_acc': 0.9864864864864865, 'repeat_acc': 1.0}

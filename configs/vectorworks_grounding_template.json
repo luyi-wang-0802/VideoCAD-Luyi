@@ -1,0 +1,56 @@
+{
+  "description": "Vectorworks screen/canvas calibration used by the model policy executor. Adjust these values on the target machine before live rollout.",
+  "active_window": {
+    "title_contains": "Vectorworks",
+    "rect": {
+      "left": 0,
+      "top": 0,
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "canvas": {
+    "rect": {
+      "left": 23,
+      "top": 180,
+      "width": 1897,
+      "height": 810
+    },
+    "coordinate_mapping": {
+      "method": "centered_canvas_range_uniform",
+      "model_center_screen": {
+        "x": 966,
+        "y": 581
+      },
+      "edge_margin_px": 40,
+      "scale_multiplier": 1.16,
+      "canvas_corners": {
+        "top_left": {
+          "x": 23,
+          "y": 180
+        },
+        "bottom_left": {
+          "x": 23,
+          "y": 990
+        },
+        "top_right": {
+          "x": 1920,
+          "y": 180
+        },
+        "bottom_right": {
+          "x": 1920,
+          "y": 985
+        }
+      }
+    },
+    "model_range_mm": {
+      "x_min": -0.5,
+      "x_max": 0.5,
+      "y_min": -0.5,
+      "y_max": 0.5
+    }
+  },
+  "timing": {
+    "pause_after_action_s": 0.15
+  }
+}
