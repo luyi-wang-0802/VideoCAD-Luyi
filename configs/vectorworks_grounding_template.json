@@ -1,5 +1,86 @@
 {
-  "description": "Vectorworks screen/canvas calibration used by the model policy executor. Adjust these values on the target machine before live rollout.",
+  "description": "Fill this file after opening Vectorworks. Coordinates are screen pixels.",
+  "tool_shortcuts": {
+    "Wall Tool": [
+      "9"
+    ],
+    "Slab Tool": [
+      "s"
+    ],
+    "Window Tool": [
+      "shift",
+      "d"
+    ],
+    "Door Tool": [
+      "alt",
+      "shift",
+      "d"
+    ],
+    "Roof Tool": [
+      "ctrl",
+      "alt",
+      "1"
+    ],
+    "3D View": [
+      "shift",
+      "c"
+    ],
+    "Select All": [
+      "ctrl",
+      "a"
+    ],
+    "Zoom Out View": [
+      "ctrl",
+      "2"
+    ],
+    "Selection Tool": [
+      "x"
+    ]
+  },
+  "roof_create": {
+    "selection_drag_start": [
+      360,
+      290
+    ],
+    "selection_drag_end": [
+      1390,
+      956
+    ],
+    "selection_drag_move_duration_ms": 120,
+    "selection_drag_duration_ms": 700,
+    "pause_after_activate_tool_ms": 300
+  },
+  "view_check": {
+    "drag_up_right": {
+      "dx": 300,
+      "dy": -180,
+      "duration_ms": 500,
+      "button": "left"
+    }
+  },
+  "opening_insert": {
+    "double_click_interval_s": 0.3,
+    "move_duration_ms": 25,
+    "pause_before_click_ms": 0
+  },
+  "slab_create": {
+    "move_duration_ms": 35
+  },
+  "file_create": {
+    "pause_after_new_file_ms": 0,
+    "middle_drag_start": [
+      1510,
+      660
+    ],
+    "middle_drag_end": [
+      500,
+      600
+    ],
+    "middle_drag_move_duration_ms": 60,
+    "middle_drag_duration_ms": 400,
+    "middle_drag_repeat": 1,
+    "pause_after_zoom_out_ms": 1000
+  },
   "active_window": {
     "title_contains": "Vectorworks",
     "rect": {
@@ -9,38 +90,70 @@
       "height": 1080
     }
   },
+  "targets": {
+    "canvas_point:model_origin": {
+      "x": 885,
+      "y": 630
+    }
+  },
+  "geometry_input": {
+    "wall_mode": "screen_start_end",
+    "wall_move_duration_ms": 35,
+    "use_shift_orthogonal_constraint": false,
+    "reset_shift_ime_before_shift_hotkey": true,
+    "short_exterior_wall_chain_threshold": 0.05,
+    "length_input_scale": 10000,
+    "length_unit": "mm",
+    "numeric_decimals": 3,
+    "description": "Wall drawing mode. screen_start_end uses explicit start/end canvas clicks for low-level mouse trajectory collection. start_point_plus_length_angle is an experimental Data Bar mode."
+  },
   "canvas": {
+    "description": "Visible Vectorworks drawing canvas area in screen pixels, excluding side panels/title bars. Calibrate this from the ruler/canvas region.",
     "rect": {
-      "left": 23,
-      "top": 180,
-      "width": 1897,
-      "height": 810
+      "left": 250,
+      "top": 270,
+      "width": 1270,
+      "height": 720
     },
     "coordinate_mapping": {
       "method": "centered_canvas_range_uniform",
+      "description": "Map normalized model coordinates to the calibrated canvas with one uniform pixel scale for x and y. This preserves plan aspect ratio while keeping the model centered away from Vectorworks auto-pan/auto-expand edges.",
       "model_center_screen": {
-        "x": 966,
-        "y": 581
+        "x": 885,
+        "y": 630
       },
       "edge_margin_px": 40,
-      "scale_multiplier": 1.16,
+      "scale_multiplier": 2.0,
+      "model_output_range": {
+        "description": "Primitive policy MOVE_TO outputs were trained in this effective normalized model range. The executor applies scale_multiplier=2.0 to map +/-0.25 to the calibrated canvas safe bounds.",
+        "x_min": -0.25,
+        "x_max": 0.25,
+        "y_min": -0.25,
+        "y_max": 0.25
+      },
+      "auto_compress_primitive_model_points": true,
+      "safe_region_note": "Uniform-scale mapping keeps the model centered. scale_multiplier can be increased after zooming Vectorworks out, as long as all mapped points stay comfortably inside the canvas.",
       "canvas_corners": {
         "top_left": {
-          "x": 23,
-          "y": 180
+          "x": 250,
+          "y": 270
         },
         "bottom_left": {
-          "x": 23,
+          "x": 250,
           "y": 990
         },
         "top_right": {
-          "x": 1920,
-          "y": 180
+          "x": 1520,
+          "y": 270
         },
         "bottom_right": {
-          "x": 1920,
-          "y": 985
+          "x": 1520,
+          "y": 990
         }
+      },
+      "formula": {
+        "x_screen": "center_x + model_x * pixels_per_unit",
+        "y_screen": "center_y - model_y * pixels_per_unit"
       }
     },
     "model_range_mm": {
@@ -48,9 +161,26 @@
       "x_max": 0.5,
       "y_min": -0.5,
       "y_max": 0.5
+    },
+    "mapping": {
+      "x_screen": "center_x + model_x * pixels_per_unit",
+      "y_screen": "center_y - model_y * pixels_per_unit"
+    },
+    "coordinate_readout": {
+      "description": "Optional bottom status-bar coordinate display area for OCR verification of the current cursor model X/Y.",
+      "enabled": false,
+      "rect": {
+        "left": 1500,
+        "top": 990,
+        "width": 400,
+        "height": 40
+      },
+      "expected_text_pattern": "X: <number>    Y: <number>",
+      "usage": "Set enabled=true only after calibrating this rect around the Vectorworks bottom-right X/Y readout."
     }
   },
   "timing": {
-    "pause_after_action_s": 0.15
+    "pause_after_action_s": 0.05,
+    "screenshot_after_each_primitive": true
   }
 }
