@@ -7,13 +7,10 @@ from typing import Any
 
 import torch
 
-from model.autoregressive_transformer import AutoRegressiveTransformer
 from model.primitive_action_policy import PrimitiveActionPolicyConfig, PrimitiveActionPolicyModel
 
 
 class ModelType(Enum):
-    MULTI_CLASSES = "multi_classes"
-    ONLINE_GUI_POLICY = "online_gui_policy"
     PRIMITIVE_ACTION_POLICY = "primitive_action_policy"
 
 
@@ -79,21 +76,11 @@ class ModelFactory:
             config = PrimitiveActionPolicyConfig(**{k: v for k, v in config_kwargs.items() if k in allowed_keys})
             model = PrimitiveActionPolicyModel(config).to(device)
             model_type = ModelType.PRIMITIVE_ACTION_POLICY
-        elif model_name == "online_gui_policy":
-            try:
-                from low_level_gui_imitation.model import OnlineGuiPolicyConfig, OnlineGuiPolicyModel
-            except ImportError as exc:
-                raise ImportError(
-                    "online_gui_policy requires low_level_gui_imitation, which is not available in this repo. "
-                    "Use model_name='primitive_action_policy' for the current processed_data format."
-                ) from exc
-            allowed_keys = set(OnlineGuiPolicyConfig.__dataclass_fields__.keys())
-            config_kwargs = {key: value for key, value in model_config.items() if key in allowed_keys}
-            model = OnlineGuiPolicyModel(OnlineGuiPolicyConfig(**config_kwargs)).to(device)
-            model_type = ModelType.ONLINE_GUI_POLICY
         else:
-            model = AutoRegressiveTransformer(**model_config).to(device)
-            model_type = ModelType.MULTI_CLASSES
+            raise ValueError(
+                f"Unsupported model_name={model_name!r}. "
+                "This project currently keeps only model_name='primitive_action_policy'."
+            )
 
         if state_dict:
             print("Loading state dict")

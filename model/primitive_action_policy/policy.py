@@ -2,101 +2,33 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Any
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-
-@dataclass
-class PrimitiveActionPolicyConfig:
-    hidden_size: int = 256
-    image_channels: int = 1
-    history_length: int = 32
-    num_transformer_layers: int = 4
-    num_attention_heads: int = 4
-    dim_feedforward: int = 512
-    dropout: float = 0.1
-    num_action_types: int = 6
-    num_high_level_actions: int = 8
-    num_gui_actions: int = 16
-    num_keys: int = 16
-    num_coordinate_frames: int = 4
-    num_target_entities: int = 1
-    num_point_roles: int = 1
-    max_step_index: int = 512
-    max_repeat_count: int = 8
-    wall_feature_dim: int = 5
-    insertion_feature_dim: int = 5
-    primitive_action_dim: int = 6
-    primitive_param_dim: int = 5
-    num_param_bins: int = 1000
-    key_bin_size: int = 50
-    repeat_bin_size: int = 100
-    model_coord_min: float = -0.5
-    model_coord_max: float = 0.5
-    use_binned_primitive_params: bool = False
-    soft_xy_bin_loss: bool = True
-    xy_bin_tolerance: int = 5
-    xy_bin_soft_sigma: float = 2.0
-    ignore_interval_bin_loss: bool = True
-    ignore_interval_loss: bool = True
-    default_key_interval_ms: float = 100.0
-    xy_smooth_l1_beta: float = 0.02
-    loss_param_bins_weight: float = 1.0
-    loss_action_type_weight: float = 1.0
-    loss_high_level_weight: float = 1.0
-    loss_gui_action_weight: float = 1.0
-    loss_xy_weight: float = 50.0
-    loss_key_weight: float = 1.0
-    loss_repeat_weight: float = 0.5
-    loss_interval_weight: float = 0.0
-
-
-def masked_mean(values: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
-    if values.shape[1] == 0:
-        return torch.zeros(values.shape[0], values.shape[-1], device=values.device, dtype=values.dtype)
-    mask_f = mask.to(values.dtype).unsqueeze(-1)
-    denom = mask_f.sum(dim=1).clamp_min(1.0)
-    return (values * mask_f).sum(dim=1) / denom
+from model.primitive_action_policy.config import PrimitiveActionPolicyConfig
+from model.primitive_action_policy.layers import make_image_encoder, masked_mean
 
 
 class PrimitiveActionPolicyModel(nn.Module):
-    """Predict the next primitive action from plan, screenshot, and action history.
-
-    The model consumes one training step at a time:
-
-    - current screenshot observation
-    - global ResPlan tensors
-    - fixed-length action history
-
-    Auxiliary heads are kept for compatibility/debugging, but the current training
-    objective is action type plus the binned primitive-action parameters.
-    """
+    """Predict the next primitive action from plan, screenshot, floorplan, and action history."""
 
     def __init__(self, config: PrimitiveActionPolicyConfig) -> None:
         super().__init__()
         self.config = config
         h = config.hidden_size
 
-        self.image_encoder = nn.Sequential(
-            nn.Conv2d(config.image_channels, 32, kernel_size=7, stride=2, padding=3),
-            nn.GroupNorm(8, 32),
-            nn.GELU(),
-            nn.MaxPool2d(kernel_size=3, stride=2, padding=1),
-            nn.Conv2d(32, 64, kernel_size=3, stride=2, padding=1),
-            nn.GroupNorm(8, 64),
-            nn.GELU(),
-            nn.Conv2d(64, 128, kernel_size=3, stride=2, padding=1),
-            nn.GroupNorm(8, 128),
-            nn.GELU(),
-            nn.AdaptiveAvgPool2d((1, 1)),
-            nn.Flatten(),
-            nn.Linear(128, h),
-            nn.LayerNorm(h),
+        self.image_encoder = make_image_encoder(config.image_channels, h)
+        self.global_floorplan_encoder = make_image_encoder(config.image_channels, h)
+        self.floorplan_cross_attention = nn.MultiheadAttention(
+            embed_dim=h,
+            num_heads=config.num_attention_heads,
+            dropout=config.dropout,
+            batch_first=True,
         )
+        self.floorplan_cross_norm = nn.LayerNorm(h)
 
         self.wall_encoder = nn.Sequential(
             nn.Linear(config.wall_feature_dim, h),
@@ -258,6 +190,21 @@ class PrimitiveActionPolicyModel(nn.Module):
         )
         hidden = self.transformer(tokens, src_key_padding_mask=key_padding_mask)
         query_hidden = self.final_norm(hidden[:, -1])
+        global_floorplan = batch.get("global_floorplan")
+        if global_floorplan is not None:
+            floorplan_embedding = self.global_floorplan_encoder(global_floorplan)
+            floorplan_available = batch.get("global_floorplan_available")
+            if floorplan_available is None:
+                floorplan_available = torch.ones((batch_size,), dtype=torch.bool, device=floorplan_embedding.device)
+            floorplan_available_f = floorplan_available.to(floorplan_embedding.dtype).view(batch_size, 1)
+            floorplan_embedding = floorplan_embedding * floorplan_available_f
+            floorplan_context, _ = self.floorplan_cross_attention(
+                query=query_hidden.unsqueeze(1),
+                key=floorplan_embedding.unsqueeze(1),
+                value=floorplan_embedding.unsqueeze(1),
+                need_weights=False,
+            )
+            query_hidden = self.floorplan_cross_norm(query_hidden + floorplan_context.squeeze(1) * floorplan_available_f)
 
         return {
             "action_type_logits": self.action_type_head(query_hidden),
@@ -373,7 +320,6 @@ class PrimitiveActionPolicyModel(nn.Module):
 
         is_move = target["is_move"].bool()
         is_key_action = target["is_key_action"].bool()
-
         losses["loss_xy"] = (
             F.smooth_l1_loss(outputs["xy"][is_move], target["xy"][is_move], beta=cfg.xy_smooth_l1_beta)
             if is_move.any()
@@ -407,7 +353,7 @@ class PrimitiveActionPolicyModel(nn.Module):
                 else zero
             )
 
-        total = (
+        losses["loss"] = (
             cfg.loss_action_type_weight * losses["loss_action_type"]
             + cfg.loss_high_level_weight * losses["loss_high_level"]
             + cfg.loss_gui_action_weight * losses["loss_gui_action"]
@@ -416,7 +362,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             + cfg.loss_repeat_weight * losses["loss_repeat"]
             + cfg.loss_interval_weight * losses["loss_interval"]
         )
-        losses["loss"] = total
         return losses
 
     @torch.no_grad()
@@ -445,14 +390,7 @@ class PrimitiveActionPolicyModel(nn.Module):
             else:
                 key_interval = outputs["key_interval"] * 1000.0
         primitive_action = torch.stack(
-            [
-                action_type_id.float(),
-                x,
-                y,
-                key_id.float(),
-                repeat_count.float(),
-                key_interval,
-            ],
+            [action_type_id.float(), x, y, key_id.float(), repeat_count.float(), key_interval],
             dim=-1,
         )
         non_move = action_type_id != 1

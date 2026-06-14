@@ -38,9 +38,12 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+from PIL import Image, ImageOps
 
 
 MISSING = -1
+DEFAULT_KEY_INTERVAL_MS = 100.0
+DEFAULT_PROCESSED_IMAGE_SIZE = (384, 216)
 
 ACTION_TYPE_TO_ID = {
     "MOVE_TO": 1,
@@ -64,6 +67,12 @@ DEFAULT_DOOR_EDGE_OFFSET_SOURCE_UNITS = 1.0
 
 def read_json(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+def read_optional_json(path: Path | None, default: Any) -> Any:
+    if path is None or not path.exists():
+        return default
+    return read_json(path)
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -93,7 +102,25 @@ def write_jsonl(path: Path, records: list[dict[str, Any]]) -> None:
 
 
 def relpath(path: Path, repo_root: Path) -> str:
-    return path.resolve().relative_to(repo_root).as_posix()
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(repo_root).as_posix()
+    except ValueError:
+        return resolved.as_posix()
+
+
+def relpath_if_exists(path: Path | None, repo_root: Path) -> str | None:
+    if path is None or not path.exists():
+        return None
+    return relpath(path, repo_root)
+
+
+def sequence_root(raw_data_dir: Path) -> Path:
+    for name in ("bim_sequences", "bim_sequence"):
+        candidate = raw_data_dir / name
+        if candidate.exists():
+            return candidate
+    return raw_data_dir / "bim_sequences"
 
 
 def stable_mapping(names: list[str], include_none: bool = True) -> dict[str, int]:
@@ -109,10 +136,27 @@ def plan_suffix_from_run_dir(run_dir: Path) -> str:
     return run_dir.name.removeprefix("plan_")
 
 
+def source_suffix_candidates(run_suffix: str) -> list[str]:
+    candidates = [run_suffix]
+    stripped = run_suffix.lstrip("0")
+    if stripped:
+        candidates.append(stripped.zfill(3))
+        candidates.append(stripped)
+    seen = set()
+    return [candidate for candidate in candidates if not (candidate in seen or seen.add(candidate))]
+
+
+def first_existing_path(candidates: list[Path]) -> Path:
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return candidates[0]
+
+
 def discover_runs(raw_data_dir: Path) -> list[dict[str, Path | str]]:
     trajectory_root = raw_data_dir / "trajectory_data"
     resplan_root = raw_data_dir / "resplan_to_JSON"
-    sequence_root = raw_data_dir / "bim_sequence"
+    sequence_root_dir = sequence_root(raw_data_dir)
     run_dirs = sorted(
         path
         for path in trajectory_root.glob("plan_*")
@@ -121,8 +165,11 @@ def discover_runs(raw_data_dir: Path) -> list[dict[str, Path | str]]:
     runs = []
     for run_dir in run_dirs:
         suffix = plan_suffix_from_run_dir(run_dir)
-        resplan_path = resplan_root / f"resplan_to_JSON_{suffix}.json"
-        sequence_dir = sequence_root / f"resplan_to_JSON_{suffix}_bim_sequence"
+        suffixes = source_suffix_candidates(suffix)
+        resplan_path = first_existing_path([resplan_root / f"resplan_to_JSON_{item}.json" for item in suffixes])
+        sequence_dir = first_existing_path(
+            [sequence_root_dir / f"resplan_to_JSON_{item}_bim_sequence" for item in suffixes]
+        )
         paths = {
             "run_id": run_dir.name,
             "suffix": suffix,
@@ -136,7 +183,16 @@ def discover_runs(raw_data_dir: Path) -> list[dict[str, Path | str]]:
             "gui_action_sequence_path": sequence_dir / "gui_action_sequence.json",
             "primitive_plan_path": sequence_dir / "primitive_plan.json",
         }
-        missing = [str(path) for key, path in paths.items() if key not in {"run_id", "suffix"} and not Path(path).exists()]
+        optional = {
+            "run_id",
+            "suffix",
+            "primitive_actions_path",
+            "sequence_dir",
+            "high_level_sequence_path",
+            "gui_action_sequence_path",
+            "primitive_plan_path",
+        }
+        missing = [str(path) for key, path in paths.items() if key not in optional and not Path(path).exists()]
         if missing:
             raise FileNotFoundError(f"Missing files for {run_dir.name}: {missing}")
         runs.append(paths)
@@ -157,6 +213,14 @@ def key_name(action: dict[str, Any]) -> str | None:
 
 def collect_key_names(actions: list[dict[str, Any]]) -> list[str]:
     return [name for action in actions if (name := key_name(action))]
+
+
+def high_level_name(action: dict[str, Any]) -> str:
+    return action.get("parent_high_level_type") or action.get("high_level_action_type") or "<none>"
+
+
+def gui_action_name(action: dict[str, Any]) -> str:
+    return action.get("parent_gui_action") or action.get("gui_action_type") or "<none>"
 
 
 def get_xy_and_frame(action: dict[str, Any]) -> tuple[float, float, str]:
@@ -217,16 +281,16 @@ def condense_key_repeats(actions: list[dict[str, Any]]) -> list[dict[str, Any]]:
                 if prev_time is not None and next_time is not None:
                     intervals.append(max(0.0, float(next_time) - float(prev_time)) * 1000.0)
             current["key_repeat_count"] = len(group)
-            current["key_interval"] = round(sum(intervals) / len(intervals), 3) if intervals else MISSING
+            current["key_interval"] = round(sum(intervals) / len(intervals), 3) if intervals else DEFAULT_KEY_INTERVAL_MS
             current["condensed_primitive_ids"] = [item.get("primitive_id") for item in group]
             current["timestamp_utc_after"] = group[-1].get("timestamp_utc_after")
             current["timestamp_utc"] = group[-1].get("timestamp_utc")
             current["time_s_after"] = group[-1].get("time_s_after")
             current["time_s"] = group[-1].get("time_s")
-            current["screenshot_path"] = group[-1].get("screenshot_path") or current.get("screenshot_path")
+            current["screenshot_path"] = group[0].get("screenshot_path") or current.get("screenshot_path")
         else:
             current["key_repeat_count"] = 1 if current.get("type") in {"PRESS_KEY", "HOTKEY"} else MISSING
-            current["key_interval"] = MISSING
+            current["key_interval"] = DEFAULT_KEY_INTERVAL_MS if current.get("type") in {"PRESS_KEY", "HOTKEY"} else MISSING
 
         condensed.append(current)
         index = next_index
@@ -252,6 +316,80 @@ def resolve_screenshot_path(path_value: str | None, run_dir: Path, repo_root: Pa
     return path_value.replace("\\", "/")
 
 
+def resolve_global_floorplan_path(run: dict[str, Path | str], repo_root: Path) -> str | None:
+    run_dir = Path(run["trajectory_dir"])
+    run_summary_path = Path(run["run_summary_path"])
+    path_value = None
+    if run_summary_path.exists():
+        summary = read_json(run_summary_path)
+        capture = summary.get("global_floorplan_capture") or {}
+        path_value = capture.get("screenshot_path")
+
+    metadata_path = run_dir / "global_floorplan" / "metadata.json"
+    if path_value is None and metadata_path.exists():
+        metadata = read_json(metadata_path)
+        path_value = metadata.get("screenshot_path")
+
+    candidates: list[Path] = []
+    if path_value:
+        raw_path = Path(path_value)
+        if raw_path.is_absolute():
+            candidates.append(raw_path)
+        else:
+            candidates.extend(
+                [
+                    repo_root / raw_path,
+                    run_dir.parent / raw_path,
+                    run_dir / raw_path.name,
+                    run_dir / "global_floorplan" / raw_path.name,
+                ]
+            )
+    candidates.append(run_dir / "global_floorplan" / "floorplan_before_roof.png")
+
+    for candidate in candidates:
+        if candidate.exists():
+            return relpath(candidate, repo_root)
+    return path_value.replace("\\", "/") if path_value else None
+
+
+def resize_image_to_training_size(source: Path, target: Path, image_size: tuple[int, int]) -> None:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    image = Image.open(source).convert("L")
+    resized = ImageOps.contain(image, image_size, Image.Resampling.BILINEAR)
+    canvas = Image.new("L", image_size, color=0)
+    offset = ((image_size[0] - resized.width) // 2, (image_size[1] - resized.height) // 2)
+    canvas.paste(resized, offset)
+    canvas.save(target)
+
+
+def materialize_training_image(
+    path_value: str | None,
+    output_dir: Path,
+    repo_root: Path,
+    run_id: str,
+    image_group: str,
+    image_size: tuple[int, int],
+    cache: dict[str, str | None],
+) -> str | None:
+    if not path_value:
+        return None
+    if path_value in cache:
+        return cache[path_value]
+
+    source = Path(path_value)
+    if not source.is_absolute():
+        source = repo_root / source
+    if not source.exists():
+        cache[path_value] = None
+        return None
+
+    target = output_dir / "images" / run_id / image_group / source.name
+    resize_image_to_training_size(source, target, image_size)
+    resized_path = relpath(target, repo_root)
+    cache[path_value] = resized_path
+    return resized_path
+
+
 def encode_primitive_action(action: dict[str, Any], key_to_id: dict[str, int]) -> tuple[list[float], str]:
     action_type = action.get("type")
     action_type_id = ACTION_TYPE_TO_ID.get(str(action_type), 0)
@@ -264,6 +402,11 @@ def encode_primitive_action(action: dict[str, Any], key_to_id: dict[str, int]) -
     key_id = key_to_id.get(key, MISSING) if key else MISSING
     repeat_count = action.get("key_repeat_count", MISSING)
     key_interval = action.get("key_interval", MISSING)
+    if action_type in {"PRESS_KEY", "HOTKEY"}:
+        if repeat_count in {None, MISSING}:
+            repeat_count = 1
+        if key_interval in {None, MISSING}:
+            key_interval = DEFAULT_KEY_INTERVAL_MS
     return (
         [
             float(action_type_id),
@@ -540,8 +683,8 @@ def build_vocab(
     for run in runs:
         all_actions.extend(condense_key_repeats(read_jsonl(Path(run["imitation_path"]))))
 
-    high_levels = [action.get("parent_high_level_type") or "<none>" for action in all_actions]
-    gui_actions = [action.get("parent_gui_action") or "<none>" for action in all_actions]
+    high_levels = [high_level_name(action) for action in all_actions]
+    gui_actions = [gui_action_name(action) for action in all_actions]
     keys = collect_key_names(all_actions)
     target_entities = [action_target_entity(action) for action in all_actions]
     point_roles = [action_point_role(action) for action in all_actions]
@@ -583,15 +726,27 @@ def transform_run(
     target_entity_to_id: dict[str, int],
     point_role_to_id: dict[str, int],
     split: str,
+    image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
 ) -> dict[str, Any]:
     run_id = str(run["run_id"])
     run_dir = Path(run["trajectory_dir"])
     raw_actions = read_jsonl(Path(run["imitation_path"]))
     actions = condense_key_repeats(raw_actions)
     resplan = read_json(Path(run["resplan_path"]))
-    high_sequence = read_json(Path(run["high_level_sequence_path"]))
-    gui_sequence = read_json(Path(run["gui_action_sequence_path"]))
-    primitive_plan = read_json(Path(run["primitive_plan_path"]))
+    high_sequence = read_optional_json(Path(run["high_level_sequence_path"]), {"sequence": []})
+    gui_sequence = read_optional_json(Path(run["gui_action_sequence_path"]), {"sequence": []})
+    primitive_plan = read_optional_json(Path(run["primitive_plan_path"]), {})
+    image_cache: dict[str, str | None] = {}
+    global_floorplan_raw_path = resolve_global_floorplan_path(run, repo_root)
+    global_floorplan_path = materialize_training_image(
+        global_floorplan_raw_path,
+        output_dir=output_dir,
+        repo_root=repo_root,
+        run_id=run_id,
+        image_group="global_floorplan",
+        image_size=image_size,
+        cache=image_cache,
+    )
 
     steps = []
     trajectory_rows = []
@@ -602,13 +757,11 @@ def transform_run(
     target_entity_ids = []
     point_role_ids = []
     flat_actions = []
-    last_screenshot_path = None
-
     for step_index, action in enumerate(actions):
-        high_level_name = action.get("parent_high_level_type") or "<none>"
-        gui_action_name = action.get("parent_gui_action") or "<none>"
-        high_level_id = high_level_to_id.get(high_level_name, 0)
-        gui_action_id = gui_action_to_id.get(gui_action_name, 0)
+        high_name = high_level_name(action)
+        gui_name = gui_action_name(action)
+        high_level_id = high_level_to_id.get(high_name, 0)
+        gui_action_id = gui_action_to_id.get(gui_name, 0)
         primitive_action, coordinate_frame = encode_primitive_action(action, key_to_id)
         coordinate_frame_id = COORDINATE_FRAME_TO_ID[coordinate_frame]
         target_entity = action_target_entity(action)
@@ -616,8 +769,17 @@ def transform_run(
         target_entity_id = target_entity_to_id.get(target_entity, 0)
         point_role_id = point_role_to_id.get(point_role, 0)
         flat_action = [float(high_level_id), float(gui_action_id), *primitive_action]
-        action_screenshot_path = resolve_screenshot_path(action.get("screenshot_path"), run_dir, repo_root)
-        observation_screenshot_path = last_screenshot_path or action_screenshot_path
+        raw_action_screenshot_path = resolve_screenshot_path(action.get("screenshot_path"), run_dir, repo_root)
+        action_screenshot_path = materialize_training_image(
+            raw_action_screenshot_path,
+            output_dir=output_dir,
+            repo_root=repo_root,
+            run_id=run_id,
+            image_group="screenshots",
+            image_size=image_size,
+            cache=image_cache,
+        )
+        observation_screenshot_path = action_screenshot_path
 
         primitive_actions.append(primitive_action)
         high_level_ids.append(high_level_id)
@@ -634,13 +796,14 @@ def transform_run(
             "condensed_primitive_ids": action.get("condensed_primitive_ids"),
             "model_input": {
                 "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
+                "global_floorplan_path": global_floorplan_path,
                 "observation_screenshot_path": observation_screenshot_path,
                 "history_policy": "use previous steps in this sample only; do not include future sequence labels",
             },
             "supervision_target": {
-                "high_level_action": high_level_name,
+                "high_level_action": high_name,
                 "high_level_id": high_level_id,
-                "gui_action": gui_action_name,
+                "gui_action": gui_name,
                 "gui_action_id": gui_action_id,
                 "coordinate_frame": coordinate_frame,
                 "coordinate_frame_id": coordinate_frame_id,
@@ -664,6 +827,7 @@ def transform_run(
                 "window_point": action.get("resolved_window_point")
                 or (action.get("coordinates", {}).get("window") if action.get("coordinates") else None),
                 "window_point_norm": action.get("resolved_window_point_norm"),
+                "raw_action_screenshot_path": raw_action_screenshot_path,
                 "action_screenshot_path": action_screenshot_path,
                 "time_s_before": action.get("time_s_before"),
                 "time_s_after": action.get("time_s_after"),
@@ -682,15 +846,12 @@ def transform_run(
             }
         )
 
-        if action_screenshot_path:
-            last_screenshot_path = action_screenshot_path
-
     teacher_forcing = {
         "mode": "autoregressive_next_step",
-        "global_input": "model_input.resplan_json_path or encoded_resplan",
+        "global_input": "model_input.resplan_json_path or encoded_resplan + global_floorplan_path",
         "per_step_input": "observation_screenshot_path + previous primitive/high/gui history",
         "target": "supervision_target at the current step",
-        "no_leakage_rule": "Do not feed full high_level_sequence/gui_action_sequence/primitive_plan as model input.",
+        "no_leakage_rule": "Do not feed future trajectory rows or optional sequence/provenance files as model input.",
     }
     sample = {
         "sample_id": run_id,
@@ -711,14 +872,17 @@ def transform_run(
         },
         "model_inputs": {
             "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
+            "global_floorplan_path": global_floorplan_path,
+            "global_floorplan_raw_path": global_floorplan_raw_path,
+            "processed_image_size": list(image_size),
             "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan),
         },
         "supervision_sources": {
-            "high_level_sequence_path": relpath(Path(run["high_level_sequence_path"]), repo_root),
-            "gui_action_sequence_path": relpath(Path(run["gui_action_sequence_path"]), repo_root),
-            "primitive_plan_path": relpath(Path(run["primitive_plan_path"]), repo_root),
+            "high_level_sequence_path": relpath_if_exists(Path(run["high_level_sequence_path"]), repo_root),
+            "gui_action_sequence_path": relpath_if_exists(Path(run["gui_action_sequence_path"]), repo_root),
+            "primitive_plan_path": relpath_if_exists(Path(run["primitive_plan_path"]), repo_root),
             "imitation_trajectory_path": relpath(Path(run["imitation_path"]), repo_root),
-            "note": "These sequence files provide labels/provenance only. They are not inference-time model inputs.",
+            "note": "Trajectory rows provide training labels. Sequence files are optional provenance only and are not inference-time model inputs.",
         },
         "sequence_stats": sequence_stats(high_sequence, gui_sequence, primitive_plan),
         "teacher_forcing": teacher_forcing,
@@ -745,6 +909,9 @@ def transform_run(
         {
             "sample_id": run_id,
             "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
+            "global_floorplan_path": global_floorplan_path,
+            "global_floorplan_raw_path": global_floorplan_raw_path,
+            "processed_image_size": list(image_size),
             "encoded_resplan": sample["model_inputs"]["encoded_resplan"],
             "execution_coordinate_policy": sample["model_inputs"]["encoded_resplan"]["execution_coordinate_policy"],
             "entity_points": sample["model_inputs"]["encoded_resplan"]["entity_points"],
@@ -766,7 +933,8 @@ def transform_run(
     observation_missing = sum(
         1 for row in trajectory_rows if not row["model_input"].get("observation_screenshot_path")
     )
-    action_after_missing = sum(
+    global_floorplan_missing = 0 if global_floorplan_path else 1
+    action_screenshot_missing = sum(
         1 for row in trajectory_rows if not row["debug_provenance"].get("action_screenshot_path")
     )
     return {
@@ -777,19 +945,30 @@ def transform_run(
         "tensor_path": relpath(tensor_path, repo_root),
         "runtime_plan_path": relpath(runtime_plan_path, repo_root),
         "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
+        "global_floorplan_path": global_floorplan_path,
+        "global_floorplan_raw_path": global_floorplan_raw_path,
+        "processed_image_size": list(image_size),
         "supervision_sources": {
-            "high_level_sequence_path": relpath(Path(run["high_level_sequence_path"]), repo_root),
-            "gui_action_sequence_path": relpath(Path(run["gui_action_sequence_path"]), repo_root),
-            "primitive_plan_path": relpath(Path(run["primitive_plan_path"]), repo_root),
+            "high_level_sequence_path": relpath_if_exists(Path(run["high_level_sequence_path"]), repo_root),
+            "gui_action_sequence_path": relpath_if_exists(Path(run["gui_action_sequence_path"]), repo_root),
+            "primitive_plan_path": relpath_if_exists(Path(run["primitive_plan_path"]), repo_root),
         },
         "num_raw_steps": len(raw_actions),
         "num_training_steps": len(actions),
         "missing_observation_screenshots": observation_missing,
-        "missing_action_after_screenshots": action_after_missing,
+        "missing_global_floorplan": global_floorplan_missing,
+        "missing_action_screenshots": action_screenshot_missing,
+        "missing_action_after_screenshots": action_screenshot_missing,
     }
 
 
-def transform_dataset(raw_data_dir: Path, output_dir: Path, repo_root: Path, overwrite: bool = False) -> None:
+def transform_dataset(
+    raw_data_dir: Path,
+    output_dir: Path,
+    repo_root: Path,
+    overwrite: bool = False,
+    image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
+) -> None:
     runs = discover_runs(raw_data_dir)
     if output_dir.exists() and overwrite:
         shutil.rmtree(output_dir)
@@ -812,6 +991,7 @@ def transform_dataset(raw_data_dir: Path, output_dir: Path, repo_root: Path, ove
                 target_entity_to_id=target_entity_to_id,
                 point_role_to_id=point_role_to_id,
                 split=split,
+                image_size=image_size,
             )
         )
 
@@ -823,8 +1003,15 @@ def transform_dataset(raw_data_dir: Path, output_dir: Path, repo_root: Path, ove
         "num_training_steps": sum(item["num_training_steps"] for item in index),
         "primitive_action_dim": 6,
         "flat_action_dim": 8,
+        "processed_image_size": list(image_size),
+        "missing_global_floorplans": sum(item["missing_global_floorplan"] for item in index),
         "training_contract": {
-            "inference_inputs": ["resplan_json", "current_screenshot", "historical_actions"],
+            "inference_inputs": [
+                "resplan_json_or_encoded_sequence_entities",
+                "global_floorplan_image",
+                "current_screenshot",
+                "historical_actions",
+            ],
             "training_targets": [
                 "next_high_level_id",
                 "next_gui_action_id",
@@ -860,6 +1047,8 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--raw-data-dir", type=Path, default=Path("raw_data"))
     parser.add_argument("--output-dir", type=Path, default=Path("processed_data"))
+    parser.add_argument("--image-width", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[0])
+    parser.add_argument("--image-height", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[1])
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -872,6 +1061,7 @@ def main() -> None:
         output_dir=(repo_root / args.output_dir).resolve(),
         repo_root=repo_root,
         overwrite=args.overwrite,
+        image_size=(args.image_width, args.image_height),
     )
 
 

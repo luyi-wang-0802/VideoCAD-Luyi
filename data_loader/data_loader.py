@@ -12,6 +12,7 @@ from torch.utils.data import DataLoader, Dataset
 from data_loader.image_loader import ScreenshotImageLoader
 
 
+DEFAULT_IMAGE_SIZE = (384, 216)
 LOCATION_TO_ID = {"exterior": 0, "interior": 1, "unknown": 2}
 OPENING_TO_ID = {"door": 0, "window": 1, "front_door": 2, "unknown": 3}
 PRIMITIVE_ACTION_DIM = 6
@@ -115,7 +116,7 @@ class PrimitiveActionDataset(Dataset):
         dataset_dir: str | Path = "processed_data",
         split: str | None = None,
         repo_root: str | Path = ".",
-        image_size: tuple[int, int] = (224, 224),
+        image_size: tuple[int, int] = DEFAULT_IMAGE_SIZE,
         history_length: int = 32,
         load_images: bool = True,
         normalize_images: bool = True,
@@ -151,15 +152,18 @@ class PrimitiveActionDataset(Dataset):
             sample_path = resolve_path(entry["path"], self.repo_root)
             sample = read_json(sample_path)
             self.samples[sample["sample_id"]] = sample
+            global_floorplan_path = sample.get("model_inputs", {}).get("global_floorplan_path")
             plan_tensors = self._encode_plan(sample["model_inputs"]["encoded_resplan"])
             encoded_steps = [self._encode_step(step) for step in sample["steps"]]
             for step_index, step in enumerate(sample["steps"]):
+                step_global_floorplan_path = step.get("model_input", {}).get("global_floorplan_path")
                 self.steps.append(
                     {
                         "sample_id": sample["sample_id"],
                         "split": sample.get("split"),
                         "sample_path": str(sample_path),
                         "step": step,
+                        "global_floorplan_path": step_global_floorplan_path or global_floorplan_path,
                         "target": encoded_steps[step_index],
                         "history": self._build_history(encoded_steps, step_index),
                         "plan": plan_tensors,
@@ -267,12 +271,15 @@ class PrimitiveActionDataset(Dataset):
         step = item["step"]
         screenshot_path = step["model_input"].get("observation_screenshot_path")
         observation, observation_available = self.image_loader.load(screenshot_path)
+        global_floorplan, global_floorplan_available = self.image_loader.load(item.get("global_floorplan_path"))
         result: dict[str, Any] = {
             "sample_id": item["sample_id"],
             "split": item["split"],
             "step_index": torch.tensor(int(step["step_index"]), dtype=torch.long),
             "observation": observation,
             "observation_available": torch.tensor(observation_available, dtype=torch.bool),
+            "global_floorplan": global_floorplan,
+            "global_floorplan_available": torch.tensor(global_floorplan_available, dtype=torch.bool),
             "plan": item["plan"],
             "history": item["history"],
             "target": item["target"],
@@ -284,6 +291,7 @@ class PrimitiveActionDataset(Dataset):
         if self.include_raw:
             result["raw_step"] = step
             result["sample_path"] = item["sample_path"]
+            result["global_floorplan_path"] = item.get("global_floorplan_path")
         return result
 
     def __len__(self) -> int:
@@ -293,8 +301,9 @@ class PrimitiveActionDataset(Dataset):
     def _pad_tensor_list(values: list[torch.Tensor]) -> tuple[torch.Tensor, torch.Tensor]:
         max_len = max((value.shape[0] for value in values), default=0)
         feature_dim = values[0].shape[1] if values else 0
-        padded = torch.zeros((len(values), max_len, feature_dim), dtype=values[0].dtype)
-        mask = torch.zeros((len(values), max_len), dtype=torch.bool)
+        device = values[0].device if values else torch.device("cpu")
+        padded = torch.zeros((len(values), max_len, feature_dim), dtype=values[0].dtype, device=device)
+        mask = torch.zeros((len(values), max_len), dtype=torch.bool, device=device)
         for index, value in enumerate(values):
             length = value.shape[0]
             if length:
@@ -314,6 +323,8 @@ class PrimitiveActionDataset(Dataset):
             "step_index": torch.stack([item["step_index"] for item in batch]),
             "observation": torch.stack([item["observation"] for item in batch]),
             "observation_available": torch.stack([item["observation_available"] for item in batch]),
+            "global_floorplan": torch.stack([item["global_floorplan"] for item in batch]),
+            "global_floorplan_available": torch.stack([item["global_floorplan_available"] for item in batch]),
             "plan": {
                 "walls": walls,
                 "wall_mask": wall_mask,
@@ -329,6 +340,7 @@ class PrimitiveActionDataset(Dataset):
         if "raw_step" in batch[0]:
             result["raw_step"] = [item["raw_step"] for item in batch]
             result["sample_path"] = [item["sample_path"] for item in batch]
+            result["global_floorplan_path"] = [item["global_floorplan_path"] for item in batch]
         return result
 
 

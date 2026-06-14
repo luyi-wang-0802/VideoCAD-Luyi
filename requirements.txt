@@ -14,3 +14,4 @@ pytest
 jupyter
 ipython
 lmdb
+wandb

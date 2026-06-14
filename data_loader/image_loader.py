@@ -15,7 +15,7 @@ class ScreenshotImageLoader:
     def __init__(
         self,
         repo_root: str | Path = ".",
-        image_size: tuple[int, int] = (224, 224),
+        image_size: tuple[int, int] = (384, 216),
         load_images: bool = True,
         normalize: bool = True,
         channels: int = 1,

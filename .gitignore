@@ -1,0 +1,33 @@
+# Training outputs and logs
+outputs/
+logs/
+checkpoints/
+wandb/
+
+# Local/generated datasets
+raw_data/
+processed_data/
+
+# Python cache and test cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+
+# Local cache directories
+.cache/
+cache/
+*.cache
+
+# Jupyter/IPython
+.ipynb_checkpoints/
+
+# Environment and editor-local files
+.env
+.env.*
+.venv/
+venv/
+.vscode/

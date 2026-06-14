@@ -180,10 +180,9 @@ Or customize the training parameters:
 
 ```bash
 python main.py \
-  --dataset_path data/data_resized \
-  --config_path data/data_resized/dataset_split.json \
-  --model_config model_configs/transformer_experiments.json \
-  --model_name cad_past_10_actions_and_states_timestep_embedding \
+  --dataset_path processed_data \
+  --model_config model_configs/primitive_action_policy.json \
+  --model_name primitive_action_policy \
   --checkpoint_dir checkpoints \
   --epochs 1000 \
   --batch_size 2 \
@@ -196,7 +195,7 @@ Test a trained model checkpoint:
 
 ```bash
 python test.py \
-  --checkpoint_folder cad_past_10_actions_and_states_timestep_embedding_2025_10_19_18_55_03 \
+  --checkpoint_folder primitive_action_policy_run \
   --output_root_dir test_results
 ```
 
@@ -206,8 +205,9 @@ Or specify a custom checkpoint path:
 python test.py \
   --checkpoint_folder my_experiment \
   --checkpoint_path checkpoints/my_experiment/best_model.pt \
-  --dataset_path data/data_resized \
-  --config_path data/data_resized/dataset_split.json \
+  --dataset_path processed_data \
+  --model_config model_configs/primitive_action_policy.json \
+  --model_name primitive_action_policy \
   --output_root_dir evaluation_results
 ```
 

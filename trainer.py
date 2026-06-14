@@ -92,9 +92,11 @@ class AverageMeter(object):
     
 
 class MetricsHandler:
-    def __init__(self, experiment_name, rank=0):
+    def __init__(self, experiment_name, rank=0, log_dir="logs"):
         self.metrics = {}
         self.experiment_name = experiment_name
+        self.log_dir = log_dir
+        self.experiment_dir = os.path.join(self.log_dir, self.experiment_name)
         self.rank = rank
         self.is_master = rank == 0
         self.create_log_file()
@@ -138,20 +140,16 @@ class MetricsHandler:
     def create_log_file(self):
         if not self.is_master:
             return
-        path_name = f"logs/{self.experiment_name}"
-        if not os.path.exists(path_name):
-            os.makedirs(path_name, exist_ok=True)
+        os.makedirs(self.experiment_dir, exist_ok=True)
 
     def save_metrics(self, metrics, ext=""):
         if not self.is_master:
             return
         if ext:
-            save_path = f'logs/{self.experiment_name}/{ext}.json'
+            save_path = os.path.join(self.experiment_dir, f"{ext}.json")
         else:
-            save_path = f'logs/{self.experiment_name}/{get_current_datetime()}.json'
-        tmp = f"logs/{self.experiment_name}"
-        if not os.path.exists(tmp):
-            os.makedirs(tmp, exist_ok=True)
+            save_path = os.path.join(self.experiment_dir, f"{get_current_datetime()}.json")
+        os.makedirs(self.experiment_dir, exist_ok=True)
         with open(save_path, 'w') as f:
             json.dump(metrics, f, indent=4)
 
@@ -259,19 +257,27 @@ class BaseTrainer:
         else:
             self.experiment_name = training_config.get('experiment_name')
         
-        self.metrics_handler = MetricsHandler(self.experiment_name, self.rank)
+        self.metrics_handler = MetricsHandler(
+            self.experiment_name,
+            self.rank,
+            training_config.get('log_dir', "logs"),
+        )
         self.checkpoint_handler = CheckpointHandler(
             self.experiment_name, self.rank, training_config.get('checkpoint_dir', "checkpoints"))
         self.wandb_run = None
         if self.is_master and training_config.get('use_wandb', False):
             try:
                 import wandb
+                wandb_dir = training_config.get('wandb_dir')
+                if wandb_dir:
+                    os.makedirs(wandb_dir, exist_ok=True)
 
                 self.wandb_run = wandb.init(
                     project=training_config.get('wandb_project', 'videocad-primitive-action'),
                     entity=training_config.get('wandb_entity'),
                     name=training_config.get('wandb_run_name') or self.experiment_name,
                     config=training_config,
+                    dir=wandb_dir,
                 )
             except ImportError:
                 self.log("wandb is not installed; continuing without wandb logging.")
@@ -519,7 +525,11 @@ class BaseTrainer:
         # Setup profiler if enabled
         prof = None
         if enable_profiling:
-            profile_log_dir_base = f'./logs/{self.experiment_name}/profile_traces'
+            profile_log_dir_base = os.path.join(
+                self.training_config.get('log_dir', "logs"),
+                self.experiment_name,
+                "profile_traces",
+            )
             profile_log_dir_rank = f'{profile_log_dir_base}/epoch{epoch}/rank{self.rank}'
 
             # Master rank creates the base directory

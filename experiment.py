@@ -11,6 +11,33 @@ import torch
 def get_curr_time():
     return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
 
+
+def resolve_config_entry(experiment_params, config_name=""):
+    if not config_name:
+        if "default_params" in experiment_params:
+            return "default_params", experiment_params["default_params"]
+        first_key = next(iter(experiment_params))
+        return first_key, experiment_params[first_key]
+    if config_name in experiment_params:
+        return config_name, experiment_params[config_name]
+    for key, params in experiment_params.items():
+        if isinstance(params, dict) and params.get("model_name") == config_name:
+            return key, params
+    if "default_params" in experiment_params:
+        return "default_params", experiment_params["default_params"]
+    raise KeyError(
+        f"Config {config_name!r} was not found. Available configs: {list(experiment_params.keys())}"
+    )
+
+
+def apply_command_line_training_overrides(training_config):
+    overrides = training_config.get("command_line_overrides", {})
+    for key, value in overrides.items():
+        if value is not None:
+            training_config[key] = value
+    return training_config
+
+
 class Experiment:
 
     def __init__(self, 
@@ -82,13 +109,16 @@ class Experiment:
         if "train_config" in experiment_params:
             for k, v in experiment_params["train_config"].items():
                 training_config[k] = v
+        apply_command_line_training_overrides(training_config)
         if training_config.get("override_lr") is not None:
             training_config["lr"] = training_config["override_lr"]
 
-        if not os.path.exists(f"logs/{experiment_name}") and self.rank == 0:
-            os.makedirs(f"logs/{experiment_name}")
-            save_json(experiment_params, f"logs/{experiment_name}/params.json")
-            save_json(training_config, f"logs/{experiment_name}/training_config.json")
+        log_dir = training_config.get("log_dir", "logs")
+        experiment_log_dir = os.path.join(log_dir, experiment_name)
+        if self.rank == 0:
+            os.makedirs(experiment_log_dir, exist_ok=True)
+            save_json(experiment_params, os.path.join(experiment_log_dir, "params.json"))
+            save_json(training_config, os.path.join(experiment_log_dir, "training_config.json"))
         
         model, model_type = self.load_model_and_training_type(experiment_params)
         if training_config.get("compile", True):
@@ -125,13 +155,13 @@ class Experiment:
         if self.rank == 0:
             print("Test Results:")
             print(results)
-            save_json(results, f"logs/{experiment_name}/results.json")
+            save_json(results, os.path.join(experiment_log_dir, "results.json"))
             if training_config.get("sequential", False):
                 print("Evaluating Sequential Model")
                 seq_results = trainer.sequential_evaluate(model)
                 print("Sequential Test Results:")
                 print(seq_results)
-                save_json(seq_results, f"logs/{experiment_name}/seq_results.json")
+                save_json(seq_results, os.path.join(experiment_log_dir, "seq_results.json"))
         trainer.finish_wandb()
 
 
@@ -162,7 +192,9 @@ class Experiment:
         else:
             experiment_params = config_path
         if config_name:
-            self.run_experiment_with_params(experiment_params[config_name], config_name)
+            resolved_name, params = resolve_config_entry(experiment_params, config_name)
+            run_name = config_name if config_name == params.get("model_name") else resolved_name
+            self.run_experiment_with_params(params, run_name)
             return
         for k, v in experiment_params.items():
             self.run_experiment_with_params(v, k)

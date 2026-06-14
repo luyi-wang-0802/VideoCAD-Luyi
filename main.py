@@ -9,10 +9,11 @@ warnings.filterwarnings("ignore", message="'has_cuda' is deprecated")
 
 import argparse
 from data_loader.data_loader import create_dataloader, create_dataset_from_config
+from data_loader.device_cached_loader import DeviceCachedDataLoader
 from model.model_factory import ModelFactory, ModelType
 from trainer import create_trainer
 import torch
-from experiment import Experiment
+from experiment import Experiment, resolve_config_entry
 import utils
 from torchvision import transforms
 import torch.distributed as dist
@@ -50,6 +51,22 @@ def cleanup():
     dist.destroy_process_group()
 
 
+def output_subdir(output_dir, path):
+    if os.path.isabs(path):
+        return path
+    return os.path.join(output_dir, path)
+
+
+def cache_packet_on_device(packet, device, split_name):
+    print(f"Caching {split_name} batches on {device}...")
+    cached_loader = DeviceCachedDataLoader.from_loader(
+        packet["loader"],
+        device=device,
+    )
+    print(f"Cached {len(cached_loader)} {split_name} batches on {device}")
+    return {"loader": cached_loader, "sampler": None}
+
+
 def main(rank=None, world_size=None, gpu_ids=None, args=None): 
     if args is None: # hack to allow for multi gpu training
         raise ValueError("args must be provided")
@@ -80,11 +97,23 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         torch.multiprocessing.set_start_method('spawn')
 
     model_params = utils.load_json(args.model_config)
-    model_params["use_gencad_augmentation"] = args.enable_random
-    num_views = model_params[args.model_name].get("num_views", 0)
+    config_name, selected_model_params = resolve_config_entry(model_params, args.model_name)
+    selected_model_params["use_gencad_augmentation"] = args.enable_random
+    selected_model_params["dataset_path"] = args.dataset_path
+    model_params[config_name] = selected_model_params
+    num_views = selected_model_params.get("num_views", 0)
     assert num_views == len(args.view_ids) or num_views == 0
     if num_views == 0:
         args.view_ids = []
+    output_dir = args.output_dir
+    log_dir = output_subdir(output_dir, "logs")
+    checkpoint_dir = output_subdir(output_dir, args.checkpoint_dir)
+    wandb_dir = output_subdir(output_dir, "wandb")
+    if rank in {None, 0}:
+        os.makedirs(output_dir, exist_ok=True)
+        os.makedirs(log_dir, exist_ok=True)
+        os.makedirs(checkpoint_dir, exist_ok=True)
+        os.makedirs(wandb_dir, exist_ok=True)
 
     training_config = {
         'dataset_path': args.dataset_path,
@@ -93,10 +122,13 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'override_lr': args.lr,
         'num_workers': args.num_workers,
         'save_frequency': 20,
-        'checkpoint_dir': args.checkpoint_dir,
+        'output_dir': output_dir,
+        'log_dir': log_dir,
+        'checkpoint_dir': checkpoint_dir,
+        'wandb_dir': wandb_dir,
         'val_frequency': 4,
         'compile': args.compile, #VPT cannot be compiled
-        'enable_random': model_params.get("enable_random", True),
+        'enable_random': selected_model_params.get("enable_random", True),
         'sequential': False,
         'seq_val_frequency': 1100,
         'epochs': args.epochs,
@@ -115,6 +147,14 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'wandb_project': args.wandb_project,
         'wandb_entity': args.wandb_entity,
         'wandb_run_name': args.wandb_run_name,
+        'command_line_overrides': {
+            'early_stopping_enabled': args.early_stopping_enabled,
+            'early_stopping_patience': args.early_stopping_patience,
+            'early_stopping_min_delta': args.early_stopping_min_delta,
+            'early_stopping_metric': args.early_stopping_metric,
+            'early_stopping_mode': args.early_stopping_mode,
+            'val_frequency': args.val_frequency,
+        },
     }
 
     frame_transform = transforms.Compose([
@@ -143,6 +183,10 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         sequence_retriever=args.sequence_retriever,
         overfit=args.overfit_data,
     )
+    if args.cache_dataset_on_device:
+        train_packet = cache_packet_on_device(train_packet, device, "train")
+        val_packet = cache_packet_on_device(val_packet, device, "val")
+        test_packet = cache_packet_on_device(test_packet, device, "test")
     
     experiment = Experiment(
         train_packet=train_packet,
@@ -156,7 +200,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
 
     try:
         start_time = time.time()
-        experiment.run_experiment_with_config(args.model_config, args.model_name)
+        experiment.run_experiment_with_config(model_params, args.model_name)
         end_time = time.time()
         print(f"Total training time: {end_time - start_time:.2f} seconds")
     except KeyboardInterrupt:
@@ -185,19 +229,20 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--gpu_ids", type=str, default="0", help="Comma-separated list of GPU IDs to use (e.g., '0,1,2,3')")
-    parser.add_argument("--dataset_path", type=str, default="data/data_resized")
+    parser.add_argument("--dataset_path", type=str, default="processed_data")
     parser.add_argument("--compile", type=str2bool, default=False)
     parser.add_argument("--enable_random", type=str2bool, default=True)
     parser.add_argument("--image_dir", type=str, default="data/data_raw/images")
     parser.add_argument("--sequence_retriever", type=str, default="optimized")
-    parser.add_argument("--config_path", type=str, default="data/data_resized/dataset_split.json")
+    parser.add_argument("--config_path", type=str, default=None)
     parser.add_argument("--checkpoint_dir", type=str, default="checkpoints")
+    parser.add_argument("--output_dir", type=str, default="outputs")
     parser.add_argument("--multiview_dir", type=str, default="multi_view_images")
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--epochs", type=int, default=1000)
     parser.add_argument("--view_ids", type=list, default=["05", "09", "20"])
-    parser.add_argument("--model_config", type=str, default="model_configs/transformer_experiments.json")
-    parser.add_argument("--model_name", type=str, default="cad_past_10_actions_and_states_timestep_embedding")
+    parser.add_argument("--model_config", type=str, default="model_configs/primitive_action_policy.json")
+    parser.add_argument("--model_name", type=str, default="primitive_action_policy")
     parser.add_argument("--num_workers", type=int, default=2)
     parser.add_argument("--batch_size", type=int, default=2)
     parser.add_argument("--lr", type=float, default=None, help="Override the initial learning rate from model config.")
@@ -207,6 +252,13 @@ if __name__ == "__main__":
     parser.add_argument("--wandb_run_name", type=str, default=None)
     parser.add_argument("--enable_parallel", type=str2bool, default=True)
     parser.add_argument("--overfit_data", type=str2bool, default=False)
+    parser.add_argument("--cache_dataset_on_device", type=str2bool, default=False)
+    parser.add_argument("--early_stopping_enabled", type=str2bool, default=None)
+    parser.add_argument("--early_stopping_patience", type=int, default=None)
+    parser.add_argument("--early_stopping_min_delta", type=float, default=None)
+    parser.add_argument("--early_stopping_metric", type=str, default=None)
+    parser.add_argument("--early_stopping_mode", type=str, choices=["min", "max"], default=None)
+    parser.add_argument("--val_frequency", type=int, default=None)
     args = parser.parse_args()
 
 
