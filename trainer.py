@@ -476,8 +476,9 @@ class BaseTrainer:
             
             # Validation phase
             val_metrics = self._run_validation(epoch)
-            if val_metrics:
-                self.log_wandb(flatten_metrics(val_metrics, "val"), step=(epoch + 1) * len(self.train_loader))
+            val_wandb_metrics = self._validation_wandb_metrics(val_metrics)
+            if val_wandb_metrics:
+                self.log_wandb(val_wandb_metrics, step=(epoch + 1) * len(self.train_loader))
             if dist.is_initialized():
                 dist.barrier()   # all ranks wait until validation is done everywhere
             
@@ -505,6 +506,11 @@ class BaseTrainer:
 
     def _epoch_wandb_metrics(self, epoch, avg_loss, metrics):
         return {"train/epoch": epoch + 1, "train/loss_epoch": avg_loss, "train/lr": self.get_current_lr()}
+
+    def _validation_wandb_metrics(self, val_metrics):
+        if not val_metrics:
+            return {}
+        return flatten_metrics(val_metrics, "val")
 
     def _train_epoch(self, epoch, noise=False):
         """Train for one epoch."""
@@ -1526,6 +1532,29 @@ def move_to_device(value, device):
 
 
 class PrimitiveActionTrainer(BaseTrainer):
+    WANDB_METRIC_KEYS = (
+        "loss",
+        "loss_action_type",
+        "loss_high_level",
+        "loss_gui_action",
+        "loss_xy",
+        "loss_key",
+        "loss_repeat",
+        "action_type_acc",
+        "high_level_acc",
+        "gui_action_acc",
+        "xy_mae",
+        "key_acc",
+        "repeat_acc",
+    )
+
+    def _filtered_wandb_metrics(self, metrics, prefix):
+        return {
+            f"{prefix}/{key}": value
+            for key in self.WANDB_METRIC_KEYS
+            if isinstance((value := metrics.get(key)), (int, float))
+        }
+
     def prepare_batch(self, batch):
         return move_to_device(batch, self.device)
 
@@ -1715,7 +1744,7 @@ class PrimitiveActionTrainer(BaseTrainer):
         step = epoch * loader_len + batch_idx + 1
         self.log_wandb(
             {
-                **flatten_metrics(metrics, "train_batch"),
+                **self._filtered_wandb_metrics(metrics, "train_batch"),
                 "train_batch/loss_current": loss,
                 "train_batch/lr": self.get_current_lr(),
                 "train_batch/epoch": epoch + 1,
@@ -1750,11 +1779,16 @@ class PrimitiveActionTrainer(BaseTrainer):
     def _epoch_wandb_metrics(self, epoch, avg_loss, metrics):
         averaged = self._average_metrics(metrics)
         return {
-            **flatten_metrics(averaged, "train"),
+            **self._filtered_wandb_metrics(averaged, "train"),
             "train/loss_epoch": avg_loss,
             "train/lr": self.get_current_lr(),
             "train/epoch": epoch + 1,
         }
+
+    def _validation_wandb_metrics(self, val_metrics):
+        if not val_metrics:
+            return {}
+        return self._filtered_wandb_metrics(val_metrics, "val")
 
     def log_epoch_metrics(self, epoch, epochs, avg_loss, metrics):
         averaged = self._average_metrics(metrics)

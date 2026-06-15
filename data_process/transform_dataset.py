@@ -739,12 +739,53 @@ def sequence_stats(high_sequence: dict[str, Any], gui_sequence: dict[str, Any], 
 def split_for_index(index: int, total: int) -> str:
     if total <= 1:
         return "train"
-    ratio = index / total
-    if ratio < 0.8:
+    if total == 10:
+        # Keep whole trajectories intact while spreading plan complexity across splits.
+        # Each run contains slab/roof, but wall/window/door counts vary materially.
+        if index in {1, 8}:
+            return "val"
+        if index in {4, 9}:
+            return "test"
         return "train"
-    if ratio < 0.9:
+    ratio = index / total
+    if ratio < 0.7:
+        return "train"
+    if ratio < 0.85:
         return "val"
     return "test"
+
+
+def build_split_distribution(index: list[dict[str, Any]], repo_root: Path) -> dict[str, Any]:
+    distribution: dict[str, Any] = {}
+    for item in index:
+        split = item["split"]
+        split_record = distribution.setdefault(
+            split,
+            {
+                "num_runs": 0,
+                "num_training_steps": 0,
+                "samples": [],
+                "high_level_action": {},
+                "gui_action": {},
+                "action_type": {},
+            },
+        )
+        split_record["num_runs"] += 1
+        split_record["num_training_steps"] += int(item["num_training_steps"])
+        split_record["samples"].append(item["sample_id"])
+        sample = read_json(repo_root / item["path"])
+        for step in sample.get("steps", []):
+            target = step.get("supervision_target", {})
+            for key, value in [
+                ("high_level_action", target.get("high_level_action")),
+                ("gui_action", target.get("gui_action")),
+                ("action_type", target.get("primitive_action", [None])[0]),
+            ]:
+                if value is None:
+                    continue
+                value = str(value)
+                split_record[key][value] = split_record[key].get(value, 0) + 1
+    return distribution
 
 
 def action_target_entity(action: dict[str, Any]) -> str:
@@ -1094,8 +1135,10 @@ def transform_dataset(
         "num_runs": len(index),
         "num_raw_steps": sum(item["num_raw_steps"] for item in index),
         "num_training_steps": sum(item["num_training_steps"] for item in index),
+        "split_distribution": build_split_distribution(index, repo_root),
         "primitive_action_dim": 6,
         "flat_action_dim": 8,
+        "progress_feature_dim": len(PROGRESS_ENTITY_KEYS) * 3,
         "processed_image_size": list(image_size),
         "missing_global_floorplans": sum(item["missing_global_floorplan"] for item in index),
         "training_contract": {
