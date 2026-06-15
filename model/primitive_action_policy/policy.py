@@ -321,6 +321,24 @@ class PrimitiveActionPolicyModel(nn.Module):
             "loss_high_level": F.cross_entropy(outputs["high_level_logits"], target["high_level_id"].long()),
             "loss_gui_action": F.cross_entropy(outputs["gui_action_logits"], target["gui_action_id"].long()),
         }
+        valid_target_entity = target["has_target_entity"].bool()
+        losses["loss_target_entity"] = (
+            F.cross_entropy(
+                outputs["target_entity_logits"][valid_target_entity],
+                target["target_entity_id"][valid_target_entity].long(),
+            )
+            if valid_target_entity.any()
+            else zero
+        )
+        valid_point_role = target["has_point_role"].bool()
+        losses["loss_point_role"] = (
+            F.cross_entropy(
+                outputs["point_role_logits"][valid_point_role],
+                target["point_role_id"][valid_point_role].long(),
+            )
+            if valid_point_role.any()
+            else zero
+        )
         if cfg.use_binned_primitive_params:
             param_bins = target.get("primitive_param_bins")
             if param_bins is not None:
@@ -330,6 +348,8 @@ class PrimitiveActionPolicyModel(nn.Module):
                 + cfg.loss_high_level_weight * losses["loss_high_level"]
                 + cfg.loss_gui_action_weight * losses["loss_gui_action"]
                 + cfg.loss_param_bins_weight * losses.get("loss_param_bins", zero)
+                + cfg.loss_target_entity_weight * losses["loss_target_entity"]
+                + cfg.loss_point_role_weight * losses["loss_point_role"]
             )
             return losses
 
@@ -376,6 +396,8 @@ class PrimitiveActionPolicyModel(nn.Module):
             + cfg.loss_key_weight * losses["loss_key"]
             + cfg.loss_repeat_weight * losses["loss_repeat"]
             + cfg.loss_interval_weight * losses["loss_interval"]
+            + cfg.loss_target_entity_weight * losses["loss_target_entity"]
+            + cfg.loss_point_role_weight * losses["loss_point_role"]
         )
         return losses
 

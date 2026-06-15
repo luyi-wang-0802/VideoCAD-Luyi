@@ -79,6 +79,7 @@ COORDINATE_FRAME_TO_ID = {
 
 DEFAULT_WINDOW_EDGE_OFFSET_SOURCE_UNITS = 1.5
 DEFAULT_DOOR_EDGE_OFFSET_SOURCE_UNITS = 1.0
+DEFAULT_GROUNDING_CONFIG_PATH = Path("configs/vectorworks_grounding_template.json")
 
 
 def read_json(path: Path) -> Any:
@@ -436,15 +437,21 @@ def encode_primitive_action(action: dict[str, Any], key_to_id: dict[str, int]) -
     )
 
 
-def summarize_resplan_for_model(resplan: dict[str, Any], primitive_plan: dict[str, Any]) -> dict[str, Any]:
+def summarize_resplan_for_model(
+    resplan: dict[str, Any],
+    primitive_plan: dict[str, Any],
+    grounding_config: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     """Compact structured input features. The full JSON path is also kept."""
     coordinate_system = resplan.get("coordinate_system", {})
     walls = resplan.get("walls") or resplan.get("wall_segments") or resplan.get("wall_center_lines") or []
-    compression_scale = model_point_axis_compression_scale(primitive_plan)
+    compression = infer_model_point_axis_compression(resplan, primitive_plan, grounding_config)
+    compression_scale = compression["scale"]
     insertions = build_insertion_features(walls, coordinate_system, compression_scale)
     execution_walls = build_execution_wall_features(walls, coordinate_system, compression_scale)
-    execution_coordinate_policy = build_execution_coordinate_policy(coordinate_system, primitive_plan)
+    execution_coordinate_policy = build_execution_coordinate_policy(coordinate_system, compression)
     entity_points = build_entity_points(execution_walls, insertions, primitive_plan)
+    add_resplan_entity_points(entity_points, resplan, coordinate_system, compression_scale)
     rooms = resplan.get("rooms") or []
     return {
         "metadata": resplan.get("metadata", {}),
@@ -540,11 +547,90 @@ def apply_axis_compression(point: list[float], scale: list[float]) -> list[float
     return [round(float(point[0]) * float(scale[0]), 6), round(float(point[1]) * float(scale[1]), 6)]
 
 
+def model_axis_safe_limits(grounding_config: dict[str, Any] | None) -> tuple[float, float] | None:
+    if not grounding_config:
+        return None
+    canvas = grounding_config.get("canvas", {})
+    model_range = canvas.get("model_range_mm", {})
+    coordinate_mapping = canvas.get("coordinate_mapping", {})
+    if not bool(coordinate_mapping.get("auto_compress_primitive_model_points", True)):
+        return None
+    scale_multiplier = float(coordinate_mapping.get("scale_multiplier", 1.0) or 1.0)
+    if scale_multiplier <= 0:
+        return None
+    try:
+        x_limit = min(abs(float(model_range["x_min"])), abs(float(model_range["x_max"]))) / scale_multiplier
+        y_limit = min(abs(float(model_range["y_min"])), abs(float(model_range["y_max"]))) / scale_multiplier
+    except KeyError:
+        return None
+    if x_limit <= 0 or y_limit <= 0:
+        return None
+    return x_limit, y_limit
+
+
+def resplan_model_points_for_compression(resplan: dict[str, Any], coordinate_system: dict[str, Any]) -> list[list[float]]:
+    walls = resplan.get("walls") or resplan.get("wall_segments") or resplan.get("wall_center_lines") or []
+    points: list[list[float]] = []
+    for wall in walls if isinstance(walls, list) else []:
+        geometry = wall.get("geometry", {})
+        for key in ("start", "end"):
+            point = geometry.get(key)
+            if isinstance(point, list) and len(point) >= 2:
+                points.append(normalize_source_point_for_json(point, coordinate_system))
+        for opening in wall.get("openings", []) or []:
+            click_point = opening.get("insertion_point")
+            if click_point:
+                points.append(normalize_source_point_for_json(click_point, coordinate_system))
+    slab_point = resplan.get("slab_generate_point")
+    if isinstance(slab_point, list) and len(slab_point) >= 2:
+        points.append(normalize_source_point_for_json(slab_point, coordinate_system))
+    return points
+
+
+def infer_model_point_axis_compression(
+    resplan: dict[str, Any],
+    primitive_plan: dict[str, Any],
+    grounding_config: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    primitive_compression = primitive_plan.get("execution_policy", {}).get("model_point_axis_compression") or {}
+    primitive_scale = primitive_compression.get("scale")
+    if isinstance(primitive_scale, list) and len(primitive_scale) >= 2:
+        return {
+            "enabled": bool(primitive_compression.get("enabled", True)),
+            "scale": [float(primitive_scale[0]), float(primitive_scale[1])],
+            "source": "primitive_plan.execution_policy.model_point_axis_compression",
+            "raw": primitive_compression,
+        }
+
+    limits = model_axis_safe_limits(grounding_config)
+    if not limits:
+        return {"enabled": False, "scale": [1.0, 1.0], "source": "none", "raw": {}}
+    coordinate_system = resplan.get("coordinate_system", {})
+    points = resplan_model_points_for_compression(resplan, coordinate_system)
+    if not points:
+        return {"enabled": False, "scale": [1.0, 1.0], "source": "none", "raw": {}}
+
+    x_limit, y_limit = limits
+    max_abs_x = max(abs(float(point[0])) for point in points)
+    max_abs_y = max(abs(float(point[1])) for point in points)
+    scale_x = x_limit / max_abs_x if max_abs_x > x_limit else 1.0
+    scale_y = y_limit / max_abs_y if max_abs_y > y_limit else 1.0
+    compression = {
+        "enabled": scale_x < 0.999999 or scale_y < 0.999999,
+        "scale": [round(scale_x, 6), round(scale_y, 6)],
+        "source": "grounding_config.canvas.coordinate_mapping.auto_compress_primitive_model_points",
+        "raw": {
+            "safe_abs_limit": [round(x_limit, 6), round(y_limit, 6)],
+            "original_max_abs": [round(max_abs_x, 6), round(max_abs_y, 6)],
+        },
+    }
+    return compression
+
+
 def build_execution_coordinate_policy(
     coordinate_system: dict[str, Any],
-    primitive_plan: dict[str, Any],
+    compression: dict[str, Any],
 ) -> dict[str, Any]:
-    compression = primitive_plan.get("execution_policy", {}).get("model_point_axis_compression") or {}
     return {
         "coordinate_space": "centered_normalized_execution_model",
         "normalization": {
@@ -561,9 +647,9 @@ def build_execution_coordinate_policy(
         },
         "model_point_axis_compression": {
             "enabled": bool(compression.get("enabled", bool(compression))),
-            "scale": model_point_axis_compression_scale(primitive_plan),
-            "source": "primitive_plan.execution_policy.model_point_axis_compression",
-            "raw": compression,
+            "scale": compression.get("scale", [1.0, 1.0]),
+            "source": compression.get("source", "none"),
+            "raw": compression.get("raw", {}),
         },
     }
 
@@ -608,6 +694,20 @@ def build_entity_points(
             record = entity_points.setdefault(str(entity_id), {"entity_type": str(entity_id).split("_", 1)[0]})
             record[str(point_role)] = [round(float(model_point[0]), 6), round(float(model_point[1]), 6)]
     return entity_points
+
+
+def add_resplan_entity_points(
+    entity_points: dict[str, dict[str, Any]],
+    resplan: dict[str, Any],
+    coordinate_system: dict[str, Any],
+    compression_scale: list[float],
+) -> None:
+    slab_point = resplan.get("slab_generate_point")
+    if isinstance(slab_point, list) and len(slab_point) >= 2:
+        entity_points.setdefault("slab_0000", {"entity_type": "slab"})["slab_generate_point"] = apply_axis_compression(
+            normalize_source_point_for_json(slab_point, coordinate_system),
+            compression_scale,
+        )
 
 
 def build_execution_wall_features(
@@ -674,7 +774,7 @@ def build_insertion_features(
         wall_id = wall.get("wall_id")
         for opening in wall.get("openings", []) or []:
             centerline = opening.get("insertion_point")
-            click_point = offset_opening_click_point(opening, wall)
+            click_point = centerline
             if not centerline or not click_point:
                 continue
             insertions.append(
@@ -690,8 +790,7 @@ def build_insertion_features(
                         normalize_source_point_for_json(click_point, coordinate_system), compression_scale
                     ),
                     "click_point_rule": (
-                        "source insertion point + wall normal * edge offset "
-                        "(window=1.5 source units, door/front_door=1.0 source unit)"
+                        "source opening insertion point, matching rule-base primitive target_click_point_source"
                     ),
                 }
             )
@@ -848,6 +947,7 @@ def transform_run(
     point_role_to_id: dict[str, int],
     split: str,
     image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
+    grounding_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     run_id = str(run["run_id"])
     run_dir = Path(run["trajectory_dir"])
@@ -1004,7 +1104,7 @@ def transform_run(
             "global_floorplan_raw_path": global_floorplan_raw_path,
             "processed_image_size": list(image_size),
             "task_entity_counts": task_entity_counts,
-            "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan),
+            "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan, grounding_config),
         },
         "supervision_sources": {
             "high_level_sequence_path": relpath_if_exists(Path(run["high_level_sequence_path"]), repo_root),
@@ -1101,11 +1201,13 @@ def transform_dataset(
     repo_root: Path,
     overwrite: bool = False,
     image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
+    grounding_config_path: Path | None = DEFAULT_GROUNDING_CONFIG_PATH,
 ) -> None:
     runs = discover_runs(raw_data_dir)
     if output_dir.exists() and overwrite:
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    grounding_config = read_optional_json(repo_root / grounding_config_path, {}) if grounding_config_path else {}
 
     high_level_to_id, gui_action_to_id, key_to_id, target_entity_to_id, point_role_to_id, vocab = build_vocab(runs)
     write_json(output_dir / "action_vocab.json", vocab)
@@ -1125,6 +1227,7 @@ def transform_dataset(
                 point_role_to_id=point_role_to_id,
                 split=split,
                 image_size=image_size,
+                grounding_config=grounding_config,
             )
         )
 
@@ -1139,6 +1242,9 @@ def transform_dataset(
         "flat_action_dim": 8,
         "progress_feature_dim": len(PROGRESS_ENTITY_KEYS) * 3,
         "processed_image_size": list(image_size),
+        "grounding_config_path": relpath_if_exists(repo_root / grounding_config_path, repo_root)
+        if grounding_config_path
+        else None,
         "missing_global_floorplans": sum(item["missing_global_floorplan"] for item in index),
         "training_contract": {
             "inference_inputs": [
@@ -1184,6 +1290,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", type=Path, default=Path("processed_data"))
     parser.add_argument("--image-width", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[0])
     parser.add_argument("--image-height", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[1])
+    parser.add_argument("--grounding-config", type=Path, default=DEFAULT_GROUNDING_CONFIG_PATH)
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -1197,6 +1304,7 @@ def main() -> None:
         repo_root=repo_root,
         overwrite=args.overwrite,
         image_size=(args.image_width, args.image_height),
+        grounding_config_path=args.grounding_config,
     )
 
 

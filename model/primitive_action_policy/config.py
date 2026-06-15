@@ -49,3 +49,5 @@ class PrimitiveActionPolicyConfig:
     loss_key_weight: float = 1.0
     loss_repeat_weight: float = 0.5
     loss_interval_weight: float = 0.0
+    loss_target_entity_weight: float = 1.0
+    loss_point_role_weight: float = 1.0

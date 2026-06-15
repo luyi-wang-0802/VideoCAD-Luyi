@@ -34,6 +34,8 @@
     "loss_key_weight": 1.0,
     "loss_repeat_weight": 0.5,
     "loss_interval_weight": 0.0,
+    "loss_target_entity_weight": 1.0,
+    "loss_point_role_weight": 1.0,
     "train_config": {
       "lr": 0.0003,
       "lr_scheduler": "cosine",

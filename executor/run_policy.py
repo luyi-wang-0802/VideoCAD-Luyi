@@ -189,17 +189,32 @@ def infer_global_floorplan_path(
     return None
 
 
+def infer_runtime_plan_path(resplan_json_path: Path, dataset_dir: Path) -> Path | None:
+    run_id = infer_run_id_from_resplan_path(resplan_json_path)
+    if run_id is None:
+        return None
+    candidate = dataset_dir / "runtime_plans" / f"{run_id}_runtime_plan.json"
+    return candidate if candidate.exists() else None
+
+
 def runtime_sample_from_resplan(
     resplan_json_path: Path,
     runtime_plan_path: Path | None = None,
     dataset_dir: Path = Path("processed_data"),
     global_floorplan_path: Path | None = None,
+    grounding_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    if runtime_plan_path is None:
+        runtime_plan_path = infer_runtime_plan_path(resplan_json_path, dataset_dir)
     if runtime_plan_path is not None:
         runtime_plan = read_json(runtime_plan_path)
         encoded_resplan = runtime_plan.get("encoded_resplan")
         if not encoded_resplan:
             raise ValueError(f"{runtime_plan_path} does not contain encoded_resplan")
+        compression = encoded_resplan.get("execution_coordinate_policy", {}).get("model_point_axis_compression", {})
+        if grounding_config and not compression.get("enabled"):
+            resplan = read_json(resplan_json_path)
+            encoded_resplan = summarize_resplan_for_model(resplan, primitive_plan={}, grounding_config=grounding_config)
         return {
             "sample_id": runtime_plan.get("sample_id") or resplan_json_path.stem,
             "model_inputs": {
@@ -216,6 +231,7 @@ def runtime_sample_from_resplan(
         }
 
     resplan = read_json(resplan_json_path)
+    encoded_resplan = summarize_resplan_for_model(resplan, primitive_plan={}, grounding_config=grounding_config)
     return {
         "sample_id": resplan_json_path.stem,
         "model_inputs": {
@@ -226,8 +242,8 @@ def runtime_sample_from_resplan(
                 explicit_path=global_floorplan_path,
             ),
             "task_entity_counts": resplan.get("task_entity_counts")
-            or summarize_resplan_for_model(resplan, primitive_plan={}).get("task_entity_counts", {}),
-            "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan={}),
+            or encoded_resplan.get("task_entity_counts", {}),
+            "encoded_resplan": encoded_resplan,
         },
         "runtime_plan_path": None,
         "steps": [],
@@ -235,7 +251,6 @@ def runtime_sample_from_resplan(
 
 
 def snap_primitive_action_to_entity_role(sample: dict[str, Any], decoded_action: dict[str, Any]) -> dict[str, Any]:
-    raise RuntimeError("Entity-role snapping is disabled because target_entity/point_role are not trained targets.")
     primitive_action = list(decoded_action["primitive_action"])
     if int(round(float(primitive_action[0]))) != 1:
         return decoded_action
@@ -265,7 +280,7 @@ def snap_primitive_action_to_entity_role(sample: dict[str, Any], decoded_action:
         "enabled": True,
         "target_entity": entity_name,
         "point_role": point_role,
-        "source": "runtime_plan.entity_points",
+        "source": "encoded_resplan.entity_points",
     }
     return snapped
 
@@ -321,11 +336,15 @@ def decode_action(outputs: dict[str, torch.Tensor], model: torch.nn.Module, data
     gui_action_by_id = inverse_mapping(dataset.gui_action_to_id)
     key_by_id = inverse_mapping(dataset.key_to_id)
     frame_by_id = inverse_mapping(dataset.coordinate_frame_to_id)
+    target_entity_by_id = inverse_mapping(dataset.target_entity_to_id)
+    point_role_by_id = inverse_mapping(dataset.point_role_to_id)
 
     action_type_id = int(decoded["action_type_id"][0].item())
     high_level_id = int(decoded["high_level_id"][0].item())
     gui_action_id = int(decoded["gui_action_id"][0].item())
     frame_id = int(decoded["coordinate_frame_id"][0].item())
+    target_entity_id = int(decoded["target_entity_id"][0].item())
+    point_role_id = int(decoded["point_role_id"][0].item())
     key_id = int(round(primitive_action[3])) if primitive_action[3] >= 0 else -1
 
     primitive_action_type_id = int(round(float(primitive_action[0])))
@@ -338,6 +357,8 @@ def decode_action(outputs: dict[str, torch.Tensor], model: torch.nn.Module, data
         "high_level_action": high_level_by_id.get(high_level_id, "<unknown>"),
         "gui_action": gui_action_by_id.get(gui_action_id, "<unknown>"),
         "coordinate_frame": coordinate_frame,
+        "target_entity": target_entity_by_id.get(target_entity_id, "<unknown>"),
+        "point_role": point_role_by_id.get(point_role_id, "<unknown>"),
         "primitive_action": [round(float(value), 6) for value in primitive_action],
         "executor_action": primitive_action_to_executor_action(
             primitive_action,
@@ -348,6 +369,8 @@ def decode_action(outputs: dict[str, torch.Tensor], model: torch.nn.Module, data
             "high_level_id": high_level_id,
             "gui_action_id": gui_action_id,
             "coordinate_frame_id": frame_id,
+            "target_entity_id": target_entity_id,
+            "point_role_id": point_role_id,
             "key_id": key_id,
         },
     }
@@ -370,10 +393,10 @@ def encode_decoded_action(dataset: PrimitiveActionDataset, decoded_action: dict[
         "high_level_id": torch.tensor(int(raw["high_level_id"]), dtype=torch.long),
         "gui_action_id": torch.tensor(int(raw["gui_action_id"]), dtype=torch.long),
         "coordinate_frame_id": torch.tensor(int(raw["coordinate_frame_id"]), dtype=torch.long),
-        "target_entity_id": torch.tensor(0, dtype=torch.long),
-        "point_role_id": torch.tensor(0, dtype=torch.long),
-        "has_target_entity": torch.tensor(False, dtype=torch.bool),
-        "has_point_role": torch.tensor(False, dtype=torch.bool),
+        "target_entity_id": torch.tensor(int(raw.get("target_entity_id", 0)), dtype=torch.long),
+        "point_role_id": torch.tensor(int(raw.get("point_role_id", 0)), dtype=torch.long),
+        "has_target_entity": torch.tensor(int(raw.get("target_entity_id", 0)) > 0, dtype=torch.bool),
+        "has_point_role": torch.tensor(int(raw.get("point_role_id", 0)) > 0, dtype=torch.bool),
         "is_move": torch.tensor(action_type_id == 1, dtype=torch.bool),
         "is_key_action": torch.tensor(action_type_id in {3, 4}, dtype=torch.bool),
     }
@@ -385,6 +408,8 @@ def target_from_sample_step(step: dict[str, Any]) -> dict[str, Any]:
         "high_level_action": target["high_level_action"],
         "gui_action": target["gui_action"],
         "coordinate_frame": target["coordinate_frame"],
+        "target_entity": target.get("target_entity"),
+        "point_role": target.get("point_role"),
         "primitive_action": target["primitive_action"],
     }
 
@@ -447,6 +472,8 @@ def compact_event(
             "high_level_action": decoded_action.get("high_level_action"),
             "gui_action": decoded_action.get("gui_action"),
             "coordinate_frame": decoded_action.get("coordinate_frame"),
+            "target_entity": decoded_action.get("target_entity"),
+            "point_role": decoded_action.get("point_role"),
         },
         "screenshot_before": screenshot_before,
         "screenshot_after": screenshot_after,
@@ -485,7 +512,11 @@ def main() -> None:
     parser.add_argument("--teacher-force-history", action="store_true")
     parser.add_argument("--compare-sample", action="store_true")
     parser.add_argument("--live-primitive-actions", action="store_true")
-    parser.add_argument("--snap-entity-role", action="store_true", help=argparse.SUPPRESS)
+    parser.add_argument(
+        "--snap-entity-role",
+        action="store_true",
+        help="Snap MOVE_TO xy to predicted target_entity/point_role from encoded ResPlan entity_points.",
+    )
     parser.add_argument("--countdown", default=5, type=int)
     args = parser.parse_args()
 
@@ -498,6 +529,7 @@ def main() -> None:
         runtime_plan_path=args.runtime_plan,
         dataset_dir=args.dataset_dir,
         global_floorplan_path=args.global_floorplan,
+        grounding_config=read_json(args.calibration),
     )
     debug_sample = read_json(args.sample) if args.sample is not None else None
     dataset = PrimitiveActionDataset(
@@ -536,7 +568,7 @@ def main() -> None:
             outputs = model(batch)
         decoded_action = decode_action(outputs, model, dataset)
         if args.snap_entity_role:
-            raise RuntimeError("--snap-entity-role is disabled because target_entity/point_role are not trained targets.")
+            decoded_action = snap_primitive_action_to_entity_role(sample, decoded_action)
         event = execute_decoded_action(executor, decoded_action)
         event["screenshot_before"] = screenshot
         if args.compare_sample and step_index < len(sample_steps):
