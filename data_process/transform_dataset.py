@@ -740,12 +740,11 @@ def split_for_index(index: int, total: int) -> str:
     if total <= 1:
         return "train"
     if total == 10:
-        # Keep whole trajectories intact while spreading plan complexity across splits.
-        # Each run contains slab/roof, but wall/window/door counts vary materially.
+        # Keep whole trajectories intact. With only 10 plans, reserve validation
+        # trajectories for model selection and defer a held-out test split until
+        # the dataset is larger or the final model is frozen.
         if index in {1, 8}:
             return "val"
-        if index in {4, 9}:
-            return "test"
         return "train"
     ratio = index / total
     if ratio < 0.7:
