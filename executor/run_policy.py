@@ -112,7 +112,7 @@ def load_primitive_model(
     checkpoint = torch.load(checkpoint_path, map_location=device)
     state_dict = checkpoint["model_state_dict"] if "model_state_dict" in checkpoint else checkpoint
     model, _ = ModelFactory().create_model("primitive_action_policy", model_config, device)
-    model.load_state_dict(_strip_wrappers(state_dict), strict=True)
+    model.load_state_dict(_strip_wrappers(state_dict), strict=False)
     model.eval()
     return model
 
@@ -151,6 +151,9 @@ def make_batch(
             "wall_mask": torch.ones((1, plan["walls"].shape[0]), dtype=torch.bool),
             "insertions": plan["insertions"].unsqueeze(0),
             "insertion_mask": torch.ones((1, plan["insertions"].shape[0]), dtype=torch.bool),
+            "entities": plan["entities"].unsqueeze(0),
+            "entity_mask": torch.ones((1, plan["entities"].shape[0]), dtype=torch.bool),
+            "entity_vocab_ids": plan["entity_vocab_ids"].unsqueeze(0),
         },
         "history": {key: value.unsqueeze(0) for key, value in history.items()},
     }
@@ -555,48 +558,48 @@ def main() -> None:
     screenshot = args.initial_screenshot
     encoded_history: list[dict[str, torch.Tensor]] = []
     progress_state = initial_progress_state(sample)
-    events = []
-    sample_steps = debug_sample.get("steps", []) if debug_sample is not None else []
-    for step_index in range(args.max_steps):
-        if args.use_recorded_observations and step_index < len(sample_steps):
-            screenshot = sample_steps[step_index]["model_input"].get("observation_screenshot_path")
-        if screenshot is None and not args.dry_run:
-            screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
-
-        batch = make_batch(dataset, sample, screenshot, encoded_history, progress_state, image_loader, device, step_index)
-        with torch.no_grad():
-            outputs = model(batch)
-        decoded_action = decode_action(outputs, model, dataset)
-        if args.snap_entity_role:
-            decoded_action = snap_primitive_action_to_entity_role(sample, decoded_action)
-        event = execute_decoded_action(executor, decoded_action)
-        event["screenshot_before"] = screenshot
-        if args.compare_sample and step_index < len(sample_steps):
-            event["sample_comparison"] = compare_to_sample(decoded_action, sample_steps[step_index])
-
-        screenshot_after = executor.capture_screenshot(args.run_dir, step_index * 2 + 1)
-        event["screenshot_after"] = screenshot_after
-        compact = compact_event(event, step_index, decoded_action, screenshot, screenshot_after)
-        compact["task_progress"] = {
-            "entity_order": PROGRESS_ENTITY_KEYS,
-            "task_entity_counts": dict(progress_state["task_counts"]),
-            "done_entity_counts_before": dict(progress_state["done_counts"]),
-            "vector": progress_vector(progress_state["task_counts"], progress_state["done_counts"]),
-        }
-        events.append(compact)
-        print(json.dumps(compact, ensure_ascii=False, indent=2))
-
-        if args.teacher_force_history and step_index < len(sample_steps):
-            encoded_history.append(dataset._encode_step(sample_steps[step_index]))
-        else:
-            encoded_history.append(encode_decoded_action(dataset, decoded_action))
-        update_progress_state(progress_state, decoded_action)
-        screenshot = screenshot_after or screenshot
-
     log_path = args.run_dir / "policy_events.jsonl"
-    with log_path.open("w", encoding="utf-8") as handle:
-        for event in events:
-            handle.write(json.dumps(event, ensure_ascii=False) + "\n")
+    log_handle = log_path.open("w", encoding="utf-8")
+    sample_steps = debug_sample.get("steps", []) if debug_sample is not None else []
+    try:
+        for step_index in range(args.max_steps):
+            if args.use_recorded_observations and step_index < len(sample_steps):
+                screenshot = sample_steps[step_index]["model_input"].get("observation_screenshot_path")
+            if screenshot is None and not args.dry_run:
+                screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
+
+            batch = make_batch(dataset, sample, screenshot, encoded_history, progress_state, image_loader, device, step_index)
+            with torch.no_grad():
+                outputs = model(batch)
+            decoded_action = decode_action(outputs, model, dataset)
+            if args.snap_entity_role:
+                decoded_action = snap_primitive_action_to_entity_role(sample, decoded_action)
+            event = execute_decoded_action(executor, decoded_action)
+            event["screenshot_before"] = screenshot
+            if args.compare_sample and step_index < len(sample_steps):
+                event["sample_comparison"] = compare_to_sample(decoded_action, sample_steps[step_index])
+
+            screenshot_after = executor.capture_screenshot(args.run_dir, step_index * 2 + 1)
+            event["screenshot_after"] = screenshot_after
+            compact = compact_event(event, step_index, decoded_action, screenshot, screenshot_after)
+            compact["task_progress"] = {
+                "entity_order": PROGRESS_ENTITY_KEYS,
+                "task_entity_counts": dict(progress_state["task_counts"]),
+                "done_entity_counts_before": dict(progress_state["done_counts"]),
+                "vector": progress_vector(progress_state["task_counts"], progress_state["done_counts"]),
+            }
+            log_handle.write(json.dumps(compact, ensure_ascii=False) + "\n")
+            log_handle.flush()
+            print(json.dumps(compact, ensure_ascii=False, indent=2))
+
+            if args.teacher_force_history and step_index < len(sample_steps):
+                encoded_history.append(dataset._encode_step(sample_steps[step_index]))
+            else:
+                encoded_history.append(encode_decoded_action(dataset, decoded_action))
+            update_progress_state(progress_state, decoded_action)
+            screenshot = screenshot_after or screenshot
+    finally:
+        log_handle.close()
     print(f"Wrote {log_path}")
 
 

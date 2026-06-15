@@ -42,6 +42,13 @@ class PrimitiveActionPolicyModel(nn.Module):
             nn.Linear(h, h),
             nn.LayerNorm(h),
         )
+        self.entity_encoder = nn.Sequential(
+            nn.Linear(config.entity_feature_dim, h),
+            nn.GELU(),
+            nn.Linear(h, h),
+            nn.LayerNorm(h),
+        )
+        self.entity_score_norm = nn.LayerNorm(h)
         self.plan_projection = nn.Sequential(nn.Linear(h * 2, h), nn.GELU(), nn.LayerNorm(h))
         self.progress_encoder = nn.Sequential(
             nn.Linear(config.progress_feature_dim, h),
@@ -120,6 +127,25 @@ class PrimitiveActionPolicyModel(nn.Module):
         wall_context = masked_mean(wall_features, wall_mask)
         insertion_context = masked_mean(insertion_features, insertion_mask)
         return self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1))
+
+    def entity_target_logits(self, query_hidden: torch.Tensor, plan: dict[str, torch.Tensor]) -> torch.Tensor:
+        fallback_logits = self.target_entity_head(query_hidden)
+        entities = plan.get("entities")
+        entity_mask = plan.get("entity_mask")
+        entity_vocab_ids = plan.get("entity_vocab_ids")
+        if entities is None or entity_mask is None or entity_vocab_ids is None or entities.shape[1] == 0:
+            return fallback_logits
+
+        entity_features = self.entity_encoder(entities.float())
+        query = self.entity_score_norm(query_hidden).unsqueeze(1)
+        scores = (entity_features * query).sum(dim=-1) / (self.config.hidden_size ** 0.5)
+        scores = scores.masked_fill(~entity_mask.bool(), -1.0e4)
+
+        candidate_logits = torch.full_like(fallback_logits, -1.0e4)
+        safe_ids = entity_vocab_ids.long().clamp(min=0, max=self.config.num_target_entities - 1)
+        candidate_logits.scatter_reduce_(1, safe_ids, scores, reduce="amax", include_self=True)
+        candidate_logits[:, 0] = fallback_logits[:, 0]
+        return candidate_logits
 
     def encode_history(self, history: dict[str, torch.Tensor]) -> torch.Tensor:
         primitive = history["primitive_action"].float().clone()
@@ -226,7 +252,7 @@ class PrimitiveActionPolicyModel(nn.Module):
             "high_level_logits": self.high_level_head(query_hidden),
             "gui_action_logits": self.gui_action_head(query_hidden),
             "coordinate_frame_logits": self.coordinate_frame_head(query_hidden),
-            "target_entity_logits": self.target_entity_head(query_hidden),
+            "target_entity_logits": self.entity_target_logits(query_hidden, plan),
             "point_role_logits": self.point_role_head(query_hidden),
             "xy": self.xy_head(query_hidden),
             "key_logits": self.key_head(query_hidden),

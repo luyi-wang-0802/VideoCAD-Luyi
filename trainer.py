@@ -1593,12 +1593,6 @@ class PrimitiveActionTrainer(BaseTrainer):
             "loss_key": 0.0,
             "loss_repeat": 0.0,
             "loss_interval": 0.0,
-            "loss_param_bins": 0.0,
-            "loss_x_bin": 0.0,
-            "loss_y_bin": 0.0,
-            "loss_key_bin": 0.0,
-            "loss_repeat_bin": 0.0,
-            "loss_interval_bin": 0.0,
             "loss_target_entity": 0.0,
             "loss_point_role": 0.0,
             "action_type_correct": 0,
@@ -1606,21 +1600,9 @@ class PrimitiveActionTrainer(BaseTrainer):
             "gui_action_correct": 0,
             "coordinate_frame_correct": 0,
             "target_entity_correct": 0,
+            "target_entity_count": 0,
             "point_role_correct": 0,
-            "param_bin_correct": 0,
-            "param_bin_count": 0,
-            "x_bin_correct": 0,
-            "x_bin_count": 0,
-            "x_bin_tol_correct": 0,
-            "y_bin_correct": 0,
-            "y_bin_count": 0,
-            "y_bin_tol_correct": 0,
-            "key_bin_correct": 0,
-            "key_bin_count": 0,
-            "repeat_bin_correct": 0,
-            "repeat_bin_count": 0,
-            "interval_bin_correct": 0,
-            "interval_bin_count": 0,
+            "point_role_count": 0,
             "xy_abs_error": 0.0,
             "xy_count": 0,
             "key_correct": 0,
@@ -1653,15 +1635,12 @@ class PrimitiveActionTrainer(BaseTrainer):
         averaged["high_level_acc"] = metrics["high_level_correct"] / count
         averaged["gui_action_acc"] = metrics["gui_action_correct"] / count
         averaged["coordinate_frame_acc"] = metrics["coordinate_frame_correct"] / count
-        averaged["target_entity_acc"] = metrics.get("target_entity_correct", 0) / count
-        averaged["point_role_acc"] = metrics.get("point_role_correct", 0) / count
-        param_count = max(int(metrics.get("param_bin_count", 0)), 1)
-        averaged["param_bin_acc"] = metrics.get("param_bin_correct", 0) / param_count
-        for name in ["x_bin", "y_bin", "key_bin", "repeat_bin", "interval_bin"]:
-            metric_count = max(int(metrics.get(f"{name}_count", 0)), 1)
-            averaged[f"{name}_acc"] = metrics.get(f"{name}_correct", 0) / metric_count
-        averaged["x_bin_tol_acc"] = metrics.get("x_bin_tol_correct", 0) / max(int(metrics.get("x_bin_count", 0)), 1)
-        averaged["y_bin_tol_acc"] = metrics.get("y_bin_tol_correct", 0) / max(int(metrics.get("y_bin_count", 0)), 1)
+        averaged["target_entity_acc"] = metrics.get("target_entity_correct", 0) / max(
+            int(metrics.get("target_entity_count", 0)), 1
+        )
+        averaged["point_role_acc"] = metrics.get("point_role_correct", 0) / max(
+            int(metrics.get("point_role_count", 0)), 1
+        )
         averaged["xy_mae"] = metrics.get("xy_abs_error", 0.0) / max(int(metrics.get("xy_count", 0)), 1)
         averaged["key_acc"] = metrics.get("key_correct", 0) / max(int(metrics.get("key_count", 0)), 1)
         averaged["repeat_acc"] = metrics.get("repeat_correct", 0) / max(int(metrics.get("repeat_count", 0)), 1)
@@ -1676,6 +1655,8 @@ class PrimitiveActionTrainer(BaseTrainer):
         role_pred = outputs["point_role_logits"].argmax(dim=-1)
         is_move = target["is_move"].bool()
         is_key_action = target["is_key_action"].bool()
+        valid_target_entity = target["has_target_entity"].bool()
+        valid_point_role = target["has_point_role"].bool()
         xy_error = (
             (outputs["xy"][is_move] - target["xy"][is_move]).abs().sum().item()
             if is_move.any()
@@ -1695,35 +1676,32 @@ class PrimitiveActionTrainer(BaseTrainer):
             "repeat_correct": ((repeat_pred == repeat_target) & valid_repeat).sum().item(),
             "repeat_count": valid_repeat.sum().item(),
         }
-        if getattr(self.model.config, "use_binned_primitive_params", False):
-            param_pred = outputs["param_bin_logits"].argmax(dim=-1)
-            param_target = target["primitive_param_bins"]
-            param_mask = param_target != -1
-            metric_values.update(
-                {
-                    "param_bin_correct": ((param_pred == param_target) & param_mask).sum().item(),
-                    "param_bin_count": param_mask.sum().item(),
-                }
-            )
-            for index, name in enumerate(["x_bin", "y_bin", "key_bin", "repeat_bin", "interval_bin"]):
-                mask = param_mask[:, index]
-                metric_values[f"{name}_correct"] = ((param_pred[:, index] == param_target[:, index]) & mask).sum().item()
-                metric_values[f"{name}_count"] = mask.sum().item()
-            xy_tolerance = int(getattr(self.model.config, "xy_bin_tolerance", 5))
-            metric_values["x_bin_tol_correct"] = (
-                ((param_pred[:, 0] - param_target[:, 0]).abs() <= xy_tolerance) & param_mask[:, 0]
-            ).sum().item()
-            metric_values["y_bin_tol_correct"] = (
-                ((param_pred[:, 1] - param_target[:, 1]).abs() <= xy_tolerance) & param_mask[:, 1]
-            ).sum().item()
         return {
-            **{key: value.detach().item() for key, value in loss_dict.items() if key.startswith("loss")},
+            **{
+                key: value.detach().item()
+                for key, value in loss_dict.items()
+                if key
+                in {
+                    "loss",
+                    "loss_action_type",
+                    "loss_high_level",
+                    "loss_gui_action",
+                    "loss_xy",
+                    "loss_key",
+                    "loss_repeat",
+                    "loss_interval",
+                    "loss_target_entity",
+                    "loss_point_role",
+                }
+            },
             "action_type_correct": (action_pred == target["action_type_id"]).sum().item(),
             "high_level_correct": (high_pred == target["high_level_id"]).sum().item(),
             "gui_action_correct": (gui_pred == target["gui_action_id"]).sum().item(),
             "coordinate_frame_correct": (frame_pred == target["coordinate_frame_id"]).sum().item(),
-            "target_entity_correct": (entity_pred == target["target_entity_id"]).sum().item(),
-            "point_role_correct": (role_pred == target["point_role_id"]).sum().item(),
+            "target_entity_correct": ((entity_pred == target["target_entity_id"]) & valid_target_entity).sum().item(),
+            "target_entity_count": valid_target_entity.sum().item(),
+            "point_role_correct": ((role_pred == target["point_role_id"]) & valid_point_role).sum().item(),
+            "point_role_count": valid_point_role.sum().item(),
             **metric_values,
             "count": target["action_type_id"].shape[0],
         }

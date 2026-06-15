@@ -14,6 +14,7 @@
     "max_repeat_count": 8,
     "use_binned_primitive_params": false,
     "primitive_param_dim": 5,
+    "entity_feature_dim": 11,
     "num_param_bins": 1000,
     "key_bin_size": 50,
     "repeat_bin_size": 100,

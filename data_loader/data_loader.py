@@ -15,9 +15,19 @@ from data_loader.image_loader import ScreenshotImageLoader
 DEFAULT_IMAGE_SIZE = (384, 216)
 LOCATION_TO_ID = {"exterior": 0, "interior": 1, "unknown": 2}
 OPENING_TO_ID = {"door": 0, "window": 1, "front_door": 2, "unknown": 3}
+ENTITY_TYPE_TO_ID = {
+    "wall": 0,
+    "window": 1,
+    "door": 2,
+    "front_door": 3,
+    "slab": 4,
+    "roof": 5,
+    "unknown": 6,
+}
 PRIMITIVE_ACTION_DIM = 6
 PRIMITIVE_PARAM_DIM = 5
 PROGRESS_FEATURE_DIM = 18
+ENTITY_FEATURE_DIM = 11
 NUM_PARAM_BINS = 1000
 KEY_BIN = 50
 REPEAT_BIN = 100
@@ -203,10 +213,58 @@ class PrimitiveActionDataset(Dataset):
             opening_id = OPENING_TO_ID.get(opening_type, OPENING_TO_ID["unknown"])
             insertion_rows.append([center[0], center[1], click[0], click[1], float(opening_id)])
 
+        entity_rows = []
+        entity_vocab_ids = []
+        entity_points = encoded_resplan.get("entity_points", {})
+        for entity_name, record in entity_points.items():
+            if not isinstance(record, dict):
+                continue
+            entity_vocab_id = int(self.target_entity_to_id.get(str(entity_name), -1))
+            if entity_vocab_id < 0:
+                continue
+            entity_type = str(record.get("entity_type", "unknown")).lower()
+            type_id = ENTITY_TYPE_TO_ID.get(entity_type, ENTITY_TYPE_TO_ID["unknown"])
+            location_id = LOCATION_TO_ID["unknown"]
+            if entity_type == "wall":
+                for wall in encoded_resplan.get("execution_walls", []):
+                    if str(wall.get("wall_id")) == str(entity_name):
+                        location_id = LOCATION_TO_ID.get(wall.get("wall_location", "unknown"), LOCATION_TO_ID["unknown"])
+                        break
+            start = record.get("start_mm") or record.get("intersection_point") or record.get("slab_generate_point") or [0.0, 0.0]
+            end = record.get("end_mm") or record.get("intersection_point") or record.get("slab_generate_point") or start
+            center = [(float(start[0]) + float(end[0])) / 2.0, (float(start[1]) + float(end[1])) / 2.0]
+            has_start = float(isinstance(record.get("start_mm"), list))
+            has_end = float(isinstance(record.get("end_mm"), list))
+            has_intersection = float(isinstance(record.get("intersection_point"), list))
+            entity_rows.append(
+                [
+                    float(type_id) / max(len(ENTITY_TYPE_TO_ID) - 1, 1),
+                    float(location_id) / max(len(LOCATION_TO_ID) - 1, 1),
+                    float(start[0]),
+                    float(start[1]),
+                    float(end[0]),
+                    float(end[1]),
+                    float(center[0]),
+                    float(center[1]),
+                    has_start,
+                    has_end,
+                    has_intersection,
+                ]
+            )
+            entity_vocab_ids.append(entity_vocab_id)
+
         return {
             "walls": torch.tensor(wall_rows, dtype=torch.float32) if wall_rows else torch.zeros((0, 5)),
             "insertions": (
                 torch.tensor(insertion_rows, dtype=torch.float32) if insertion_rows else torch.zeros((0, 5))
+            ),
+            "entities": (
+                torch.tensor(entity_rows, dtype=torch.float32)
+                if entity_rows
+                else torch.zeros((0, ENTITY_FEATURE_DIM), dtype=torch.float32)
+            ),
+            "entity_vocab_ids": (
+                torch.tensor(entity_vocab_ids, dtype=torch.long) if entity_vocab_ids else torch.zeros((0,), dtype=torch.long)
             ),
         }
 
@@ -324,12 +382,26 @@ class PrimitiveActionDataset(Dataset):
                 mask[index, :length] = True
         return padded, mask
 
+    @staticmethod
+    def _pad_vector_list(values: list[torch.Tensor], pad_value: int = 0) -> tuple[torch.Tensor, torch.Tensor]:
+        max_len = max((value.shape[0] for value in values), default=0)
+        padded = torch.full((len(values), max_len), pad_value, dtype=values[0].dtype if values else torch.long)
+        mask = torch.zeros((len(values), max_len), dtype=torch.bool)
+        for index, value in enumerate(values):
+            length = value.shape[0]
+            if length:
+                padded[index, :length] = value
+                mask[index, :length] = True
+        return padded, mask
+
     @classmethod
     def collate_fn(cls, batch: list[dict[str, Any]]) -> dict[str, Any]:
         target_keys = batch[0]["target"].keys()
         history_keys = batch[0]["history"].keys()
         walls, wall_mask = cls._pad_tensor_list([item["plan"]["walls"] for item in batch])
         insertions, insertion_mask = cls._pad_tensor_list([item["plan"]["insertions"] for item in batch])
+        entities, entity_mask = cls._pad_tensor_list([item["plan"]["entities"] for item in batch])
+        entity_vocab_ids, entity_id_mask = cls._pad_vector_list([item["plan"]["entity_vocab_ids"] for item in batch])
         result: dict[str, Any] = {
             "sample_id": [item["sample_id"] for item in batch],
             "split": [item["split"] for item in batch],
@@ -343,6 +415,9 @@ class PrimitiveActionDataset(Dataset):
                 "wall_mask": wall_mask,
                 "insertions": insertions,
                 "insertion_mask": insertion_mask,
+                "entities": entities,
+                "entity_mask": entity_mask & entity_id_mask,
+                "entity_vocab_ids": entity_vocab_ids,
             },
             "progress": torch.stack([item["progress"] for item in batch]),
             "history": {key: torch.stack([item["history"][key] for item in batch]) for key in history_keys},
