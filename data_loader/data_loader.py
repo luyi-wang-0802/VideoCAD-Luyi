@@ -17,6 +17,7 @@ LOCATION_TO_ID = {"exterior": 0, "interior": 1, "unknown": 2}
 OPENING_TO_ID = {"door": 0, "window": 1, "front_door": 2, "unknown": 3}
 PRIMITIVE_ACTION_DIM = 6
 PRIMITIVE_PARAM_DIM = 5
+PROGRESS_FEATURE_DIM = 18
 NUM_PARAM_BINS = 1000
 KEY_BIN = 50
 REPEAT_BIN = 100
@@ -167,6 +168,7 @@ class PrimitiveActionDataset(Dataset):
                         "target": encoded_steps[step_index],
                         "history": self._build_history(encoded_steps, step_index),
                         "plan": plan_tensors,
+                        "progress": self._encode_progress(step),
                     }
                 )
 
@@ -207,6 +209,16 @@ class PrimitiveActionDataset(Dataset):
                 torch.tensor(insertion_rows, dtype=torch.float32) if insertion_rows else torch.zeros((0, 5))
             ),
         }
+
+    @staticmethod
+    def _encode_progress(step: dict[str, Any]) -> torch.Tensor:
+        progress = step.get("model_input", {}).get("task_progress", {})
+        vector = progress.get("vector") if isinstance(progress, dict) else None
+        if not isinstance(vector, list):
+            vector = [0.0] * PROGRESS_FEATURE_DIM
+        values = [float(value) for value in vector[:PROGRESS_FEATURE_DIM]]
+        values += [0.0] * (PROGRESS_FEATURE_DIM - len(values))
+        return torch.tensor(values, dtype=torch.float32)
 
     @staticmethod
     def _encode_step(step: dict[str, Any]) -> dict[str, torch.Tensor]:
@@ -281,6 +293,7 @@ class PrimitiveActionDataset(Dataset):
             "global_floorplan": global_floorplan,
             "global_floorplan_available": torch.tensor(global_floorplan_available, dtype=torch.bool),
             "plan": item["plan"],
+            "progress": item["progress"],
             "history": item["history"],
             "target": item["target"],
             # Compatibility aliases for existing code paths.
@@ -331,6 +344,7 @@ class PrimitiveActionDataset(Dataset):
                 "insertions": insertions,
                 "insertion_mask": insertion_mask,
             },
+            "progress": torch.stack([item["progress"] for item in batch]),
             "history": {key: torch.stack([item["history"][key] for item in batch]) for key in history_keys},
             "target": {key: torch.stack([item["target"][key] for item in batch]) for key in target_keys},
         }

@@ -43,6 +43,11 @@ class PrimitiveActionPolicyModel(nn.Module):
             nn.LayerNorm(h),
         )
         self.plan_projection = nn.Sequential(nn.Linear(h * 2, h), nn.GELU(), nn.LayerNorm(h))
+        self.progress_encoder = nn.Sequential(
+            nn.Linear(config.progress_feature_dim, h),
+            nn.GELU(),
+            nn.LayerNorm(h),
+        )
 
         self.action_type_embedding = nn.Embedding(config.num_action_types, h)
         self.high_level_embedding = nn.Embedding(config.num_high_level_actions, h)
@@ -60,9 +65,10 @@ class PrimitiveActionPolicyModel(nn.Module):
 
         self.plan_token = nn.Parameter(torch.zeros(1, 1, h))
         self.observation_token = nn.Parameter(torch.zeros(1, 1, h))
+        self.progress_token = nn.Parameter(torch.zeros(1, 1, h))
         self.step_token = nn.Parameter(torch.zeros(1, 1, h))
         self.query_token = nn.Parameter(torch.zeros(1, 1, h))
-        self.position_embedding = nn.Embedding(config.history_length + 4, h)
+        self.position_embedding = nn.Embedding(config.history_length + 5, h)
         self.step_index_embedding = nn.Embedding(config.max_step_index + 1, h)
 
         encoder_layer = nn.TransformerEncoderLayer(
@@ -157,6 +163,14 @@ class PrimitiveActionPolicyModel(nn.Module):
         batch_size = observation.shape[0]
         plan_embedding = self.encode_plan(plan) + self.plan_token.squeeze(1)
         observation_embedding = self.image_encoder(observation) + self.observation_token.squeeze(1)
+        progress = batch.get("progress")
+        if progress is None:
+            progress = torch.zeros(
+                (batch_size, self.config.progress_feature_dim),
+                dtype=observation.dtype,
+                device=observation.device,
+            )
+        progress_embedding = self.progress_encoder(progress.float()) + self.progress_token.squeeze(1)
         step_index = batch.get("step_index")
         if step_index is None:
             step_index = torch.zeros((batch_size,), dtype=torch.long, device=observation.device)
@@ -171,6 +185,7 @@ class PrimitiveActionPolicyModel(nn.Module):
             [
                 plan_embedding.unsqueeze(1),
                 observation_embedding.unsqueeze(1),
+                progress_embedding.unsqueeze(1),
                 step_embedding.unsqueeze(1),
                 history_embeddings,
                 query_embedding.unsqueeze(1),
@@ -182,7 +197,7 @@ class PrimitiveActionPolicyModel(nn.Module):
 
         key_padding_mask = torch.cat(
             [
-                torch.zeros((batch_size, 3), dtype=torch.bool, device=tokens.device),
+                torch.zeros((batch_size, 4), dtype=torch.bool, device=tokens.device),
                 ~history["mask"].to(torch.bool),
                 torch.zeros((batch_size, 1), dtype=torch.bool, device=tokens.device),
             ],

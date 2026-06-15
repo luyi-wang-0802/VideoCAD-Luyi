@@ -25,6 +25,7 @@ class PrimitiveActionPolicyConfig:
     max_repeat_count: int = 8
     wall_feature_dim: int = 5
     insertion_feature_dim: int = 5
+    progress_feature_dim: int = 18
     primitive_action_dim: int = 6
     primitive_param_dim: int = 5
     num_param_bins: int = 1000

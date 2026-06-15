@@ -44,6 +44,22 @@ from PIL import Image, ImageOps
 MISSING = -1
 DEFAULT_KEY_INTERVAL_MS = 100.0
 DEFAULT_PROCESSED_IMAGE_SIZE = (384, 216)
+PROGRESS_ENTITY_KEYS = [
+    "exterior_walls",
+    "interior_walls",
+    "windows",
+    "doors",
+    "slabs",
+    "roofs",
+]
+HIGH_LEVEL_TO_PROGRESS_KEY = {
+    "CREATE_EXTERIOR_WALL": "exterior_walls",
+    "CREATE_INTERIOR_WALL": "interior_walls",
+    "CREATE_WINDOW": "windows",
+    "CREATE_DOOR": "doors",
+    "CREATE_SLAB": "slabs",
+    "CREATE_ROOF": "roofs",
+}
 
 ACTION_TYPE_TO_ID = {
     "MOVE_TO": 1,
@@ -432,6 +448,7 @@ def summarize_resplan_for_model(resplan: dict[str, Any], primitive_plan: dict[st
     rooms = resplan.get("rooms") or []
     return {
         "metadata": resplan.get("metadata", {}),
+        "task_entity_counts": normalize_task_entity_counts(resplan),
         "coordinate_system": coordinate_system,
         "execution_coordinate_policy": execution_coordinate_policy,
         "counts": {
@@ -445,6 +462,70 @@ def summarize_resplan_for_model(resplan: dict[str, Any], primitive_plan: dict[st
         "insertions": insertions,
         "entity_points": entity_points,
     }
+
+
+def normalize_task_entity_counts(resplan: dict[str, Any]) -> dict[str, int]:
+    counts = resplan.get("task_entity_counts") or {}
+    walls = resplan.get("walls") or resplan.get("wall_segments") or resplan.get("wall_center_lines") or []
+    insertions = resplan.get("insertions") or resplan.get("openings") or []
+
+    result = {key: int(counts.get(key, 0) or 0) for key in PROGRESS_ENTITY_KEYS}
+    if not result["exterior_walls"] or not result["interior_walls"]:
+        for wall in walls if isinstance(walls, list) else []:
+            location = str(wall.get("physical", {}).get("wall_location", "unknown")).lower()
+            if location == "exterior":
+                result["exterior_walls"] += 1
+            elif location == "interior":
+                result["interior_walls"] += 1
+    if not result["windows"] or not result["doors"]:
+        for insertion in insertions if isinstance(insertions, list) else []:
+            opening_type = str(insertion.get("opening_type") or insertion.get("type") or "").lower()
+            if opening_type == "window":
+                result["windows"] += 1
+            elif opening_type in {"door", "front_door"}:
+                result["doors"] += 1
+    if "slabs" not in counts:
+        result["slabs"] = 1
+    if "roofs" not in counts:
+        result["roofs"] = 1
+    return result
+
+
+def progress_vector(task_counts: dict[str, int], done_counts: dict[str, int]) -> list[float]:
+    vector = []
+    for key in PROGRESS_ENTITY_KEYS:
+        total = max(int(task_counts.get(key, 0) or 0), 0)
+        done = max(int(done_counts.get(key, 0) or 0), 0)
+        done_clamped = min(done, total) if total else done
+        ratio = float(done_clamped) / float(total) if total else 1.0
+        vector.extend([float(total) / 100.0, float(done_clamped) / 100.0, ratio])
+    return vector
+
+
+def build_progress_by_step(actions: list[dict[str, Any]], task_counts: dict[str, int]) -> list[dict[str, Any]]:
+    entity_last_step: dict[tuple[str, str], int] = {}
+    for index, action in enumerate(actions):
+        progress_key = HIGH_LEVEL_TO_PROGRESS_KEY.get(high_level_name(action))
+        if not progress_key:
+            continue
+        entity = action.get("parent_entity") or f"{progress_key}:{action.get('parent_high_level_index', index)}"
+        entity_last_step[(progress_key, str(entity))] = index
+
+    progress_rows = []
+    for step_index in range(len(actions)):
+        done_counts = {key: 0 for key in PROGRESS_ENTITY_KEYS}
+        for (progress_key, _entity), last_step in entity_last_step.items():
+            if last_step < step_index:
+                done_counts[progress_key] += 1
+        progress_rows.append(
+            {
+                "entity_order": PROGRESS_ENTITY_KEYS,
+                "task_entity_counts": task_counts,
+                "done_entity_counts": done_counts,
+                "vector": progress_vector(task_counts, done_counts),
+            }
+        )
+    return progress_rows
 
 
 def model_point_axis_compression_scale(primitive_plan: dict[str, Any]) -> list[float]:
@@ -736,6 +817,8 @@ def transform_run(
     high_sequence = read_optional_json(Path(run["high_level_sequence_path"]), {"sequence": []})
     gui_sequence = read_optional_json(Path(run["gui_action_sequence_path"]), {"sequence": []})
     primitive_plan = read_optional_json(Path(run["primitive_plan_path"]), {})
+    task_entity_counts = normalize_task_entity_counts(resplan)
+    progress_by_step = build_progress_by_step(actions, task_entity_counts)
     image_cache: dict[str, str | None] = {}
     global_floorplan_raw_path = resolve_global_floorplan_path(run, repo_root)
     global_floorplan_path = materialize_training_image(
@@ -757,6 +840,7 @@ def transform_run(
     target_entity_ids = []
     point_role_ids = []
     flat_actions = []
+    progress_vectors = []
     for step_index, action in enumerate(actions):
         high_name = high_level_name(action)
         gui_name = gui_action_name(action)
@@ -769,6 +853,7 @@ def transform_run(
         target_entity_id = target_entity_to_id.get(target_entity, 0)
         point_role_id = point_role_to_id.get(point_role, 0)
         flat_action = [float(high_level_id), float(gui_action_id), *primitive_action]
+        task_progress = progress_by_step[step_index]
         raw_action_screenshot_path = resolve_screenshot_path(action.get("screenshot_path"), run_dir, repo_root)
         action_screenshot_path = materialize_training_image(
             raw_action_screenshot_path,
@@ -788,6 +873,7 @@ def transform_run(
         target_entity_ids.append(target_entity_id)
         point_role_ids.append(point_role_id)
         flat_actions.append(flat_action)
+        progress_vectors.append(task_progress["vector"])
 
         step = {
             "step_index": step_index,
@@ -798,6 +884,7 @@ def transform_run(
                 "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
                 "global_floorplan_path": global_floorplan_path,
                 "observation_screenshot_path": observation_screenshot_path,
+                "task_progress": task_progress,
                 "history_policy": "use previous steps in this sample only; do not include future sequence labels",
             },
             "supervision_target": {
@@ -813,6 +900,7 @@ def transform_run(
                 "point_role_id": point_role_id,
                 "primitive_action": primitive_action,
                 "flat_action": flat_action,
+                "progress_vector": task_progress["vector"],
             },
             "debug_provenance": {
                 "raw_action_type": action.get("type"),
@@ -875,6 +963,7 @@ def transform_run(
             "global_floorplan_path": global_floorplan_path,
             "global_floorplan_raw_path": global_floorplan_raw_path,
             "processed_image_size": list(image_size),
+            "task_entity_counts": task_entity_counts,
             "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan),
         },
         "supervision_sources": {
@@ -895,6 +984,7 @@ def transform_run(
             "target_entity_ids": target_entity_ids,
             "point_role_ids": point_role_ids,
             "flat_actions": flat_actions,
+            "progress": progress_vectors,
         },
     }
 
@@ -912,6 +1002,7 @@ def transform_run(
             "global_floorplan_path": global_floorplan_path,
             "global_floorplan_raw_path": global_floorplan_raw_path,
             "processed_image_size": list(image_size),
+            "task_entity_counts": task_entity_counts,
             "encoded_resplan": sample["model_inputs"]["encoded_resplan"],
             "execution_coordinate_policy": sample["model_inputs"]["encoded_resplan"]["execution_coordinate_policy"],
             "entity_points": sample["model_inputs"]["encoded_resplan"]["entity_points"],
@@ -928,6 +1019,7 @@ def transform_run(
         target_entity_ids=np.asarray(target_entity_ids, dtype=np.int64),
         point_role_ids=np.asarray(point_role_ids, dtype=np.int64),
         flat_actions=np.asarray(flat_actions, dtype=np.float32),
+        progress=np.asarray(progress_vectors, dtype=np.float32),
     )
 
     observation_missing = sum(
@@ -948,6 +1040,7 @@ def transform_run(
         "global_floorplan_path": global_floorplan_path,
         "global_floorplan_raw_path": global_floorplan_raw_path,
         "processed_image_size": list(image_size),
+        "task_entity_counts": task_entity_counts,
         "supervision_sources": {
             "high_level_sequence_path": relpath_if_exists(Path(run["high_level_sequence_path"]), repo_root),
             "gui_action_sequence_path": relpath_if_exists(Path(run["gui_action_sequence_path"]), repo_root),

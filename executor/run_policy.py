@@ -23,6 +23,24 @@ from executor.vectorworks_executor import VectorworksExecutor
 from model.model_factory import ModelFactory, _strip_wrappers
 
 
+PROGRESS_ENTITY_KEYS = [
+    "exterior_walls",
+    "interior_walls",
+    "windows",
+    "doors",
+    "slabs",
+    "roofs",
+]
+HIGH_LEVEL_TO_PROGRESS_KEY = {
+    "CREATE_EXTERIOR_WALL": "exterior_walls",
+    "CREATE_INTERIOR_WALL": "interior_walls",
+    "CREATE_WINDOW": "windows",
+    "CREATE_DOOR": "doors",
+    "CREATE_SLAB": "slabs",
+    "CREATE_ROOF": "roofs",
+}
+
+
 def move_to_device(value: Any, device: torch.device) -> Any:
     if torch.is_tensor(value):
         return value.to(device)
@@ -33,6 +51,50 @@ def move_to_device(value: Any, device: torch.device) -> Any:
 
 def inverse_mapping(mapping: dict[str, int]) -> dict[int, str]:
     return {int(value): key for key, value in mapping.items()}
+
+
+def progress_vector(task_counts: dict[str, int], done_counts: dict[str, int]) -> list[float]:
+    vector = []
+    for key in PROGRESS_ENTITY_KEYS:
+        total = max(int(task_counts.get(key, 0) or 0), 0)
+        done = max(int(done_counts.get(key, 0) or 0), 0)
+        done_clamped = min(done, total) if total else done
+        ratio = float(done_clamped) / float(total) if total else 1.0
+        vector.extend([float(total) / 100.0, float(done_clamped) / 100.0, ratio])
+    return vector
+
+
+def initial_progress_state(sample: dict[str, Any]) -> dict[str, dict[str, int]]:
+    counts = sample["model_inputs"].get("task_entity_counts") or {}
+    task_counts = {key: int(counts.get(key, 0) or 0) for key in PROGRESS_ENTITY_KEYS}
+    return {
+        "task_counts": task_counts,
+        "done_counts": {key: 0 for key in PROGRESS_ENTITY_KEYS},
+    }
+
+
+def should_count_completed_entity(decoded_action: dict[str, Any]) -> bool:
+    high_level = decoded_action.get("high_level_action")
+    action = decoded_action.get("executor_action", {})
+    action_type = action.get("action_type")
+    if high_level in {"CREATE_EXTERIOR_WALL", "CREATE_INTERIOR_WALL"}:
+        return action_type == "PRESS_KEY" and action.get("key") == "enter"
+    if high_level == "CREATE_SLAB":
+        return action_type == "CLICK"
+    if high_level in {"CREATE_WINDOW", "CREATE_DOOR"}:
+        return action_type == "DOUBLE_CLICK"
+    if high_level == "CREATE_ROOF":
+        return action_type == "PRESS_KEY" and action.get("key") == "enter"
+    return False
+
+
+def update_progress_state(progress_state: dict[str, dict[str, int]], decoded_action: dict[str, Any]) -> None:
+    progress_key = HIGH_LEVEL_TO_PROGRESS_KEY.get(decoded_action.get("high_level_action"))
+    if not progress_key or not should_count_completed_entity(decoded_action):
+        return
+    done_counts = progress_state["done_counts"]
+    task_counts = progress_state["task_counts"]
+    done_counts[progress_key] = min(done_counts.get(progress_key, 0) + 1, max(task_counts.get(progress_key, 0), 1))
 
 
 def load_primitive_model(
@@ -60,6 +122,7 @@ def make_batch(
     sample: dict[str, Any],
     screenshot_path: str | None,
     encoded_history: list[dict[str, torch.Tensor]],
+    progress_state: dict[str, dict[str, int]],
     image_loader: ScreenshotImageLoader,
     device: torch.device,
     step_index: int,
@@ -77,6 +140,10 @@ def make_batch(
         "observation_available": torch.tensor([available], dtype=torch.bool),
         "global_floorplan": global_floorplan.unsqueeze(0),
         "global_floorplan_available": torch.tensor([global_floorplan_available], dtype=torch.bool),
+        "progress": torch.tensor(
+            [progress_vector(progress_state["task_counts"], progress_state["done_counts"])],
+            dtype=torch.float32,
+        ),
         "observation_before": observation.unsqueeze(0),
         "observation_before_available": torch.tensor([available], dtype=torch.bool),
         "plan": {
@@ -94,7 +161,7 @@ def infer_run_id_from_resplan_path(resplan_json_path: Path) -> str | None:
     match = re.search(r"resplan_to_JSON_(\d+)", resplan_json_path.stem)
     if not match:
         return None
-    return f"plan_{int(match.group(1)):04d}"
+    return f"plan_{int(match.group(1)):03d}"
 
 
 def infer_global_floorplan_path(
@@ -108,10 +175,13 @@ def infer_global_floorplan_path(
     run_id = infer_run_id_from_resplan_path(resplan_json_path)
     if run_id is None:
         return None
+    legacy_run_id = f"plan_{int(run_id.removeprefix('plan_')):04d}"
 
     candidates = [
         dataset_dir / "images" / run_id / "global_floorplan" / "floorplan_before_roof.png",
+        dataset_dir / "images" / legacy_run_id / "global_floorplan" / "floorplan_before_roof.png",
         Path("raw_data") / "trajectory_data" / run_id / "global_floorplan" / "floorplan_before_roof.png",
+        Path("raw_data") / "trajectory_data" / legacy_run_id / "global_floorplan" / "floorplan_before_roof.png",
     ]
     for candidate in candidates:
         if candidate.exists():
@@ -137,6 +207,8 @@ def runtime_sample_from_resplan(
                 "global_floorplan_path": str(global_floorplan_path).replace("\\", "/")
                 if global_floorplan_path is not None
                 else runtime_plan.get("global_floorplan_path"),
+                "task_entity_counts": runtime_plan.get("task_entity_counts")
+                or (encoded_resplan.get("task_entity_counts") if isinstance(encoded_resplan, dict) else {}),
                 "encoded_resplan": encoded_resplan,
             },
             "runtime_plan_path": str(runtime_plan_path).replace("\\", "/"),
@@ -153,6 +225,8 @@ def runtime_sample_from_resplan(
                 dataset_dir=dataset_dir,
                 explicit_path=global_floorplan_path,
             ),
+            "task_entity_counts": resplan.get("task_entity_counts")
+            or summarize_resplan_for_model(resplan, primitive_plan={}).get("task_entity_counts", {}),
             "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan={}),
         },
         "runtime_plan_path": None,
@@ -448,6 +522,7 @@ def main() -> None:
 
     screenshot = args.initial_screenshot
     encoded_history: list[dict[str, torch.Tensor]] = []
+    progress_state = initial_progress_state(sample)
     events = []
     sample_steps = debug_sample.get("steps", []) if debug_sample is not None else []
     for step_index in range(args.max_steps):
@@ -456,7 +531,7 @@ def main() -> None:
         if screenshot is None and not args.dry_run:
             screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
 
-        batch = make_batch(dataset, sample, screenshot, encoded_history, image_loader, device, step_index)
+        batch = make_batch(dataset, sample, screenshot, encoded_history, progress_state, image_loader, device, step_index)
         with torch.no_grad():
             outputs = model(batch)
         decoded_action = decode_action(outputs, model, dataset)
@@ -470,6 +545,12 @@ def main() -> None:
         screenshot_after = executor.capture_screenshot(args.run_dir, step_index * 2 + 1)
         event["screenshot_after"] = screenshot_after
         compact = compact_event(event, step_index, decoded_action, screenshot, screenshot_after)
+        compact["task_progress"] = {
+            "entity_order": PROGRESS_ENTITY_KEYS,
+            "task_entity_counts": dict(progress_state["task_counts"]),
+            "done_entity_counts_before": dict(progress_state["done_counts"]),
+            "vector": progress_vector(progress_state["task_counts"], progress_state["done_counts"]),
+        }
         events.append(compact)
         print(json.dumps(compact, ensure_ascii=False, indent=2))
 
@@ -477,6 +558,7 @@ def main() -> None:
             encoded_history.append(dataset._encode_step(sample_steps[step_index]))
         else:
             encoded_history.append(encode_decoded_action(dataset, decoded_action))
+        update_progress_state(progress_state, decoded_action)
         screenshot = screenshot_after or screenshot
 
     log_path = args.run_dir / "policy_events.jsonl"
