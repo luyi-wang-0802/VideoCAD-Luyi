@@ -96,7 +96,17 @@ class MetricsHandler:
         self.metrics = {}
         self.experiment_name = experiment_name
         self.log_dir = log_dir
-        self.experiment_dir = os.path.join(self.log_dir, self.experiment_name)
+        norm_log_dir = os.path.normpath(self.log_dir)
+        if (
+            os.path.basename(norm_log_dir) == self.experiment_name
+            or (
+                os.path.basename(norm_log_dir) == "logs"
+                and os.path.basename(os.path.dirname(norm_log_dir)) == self.experiment_name
+            )
+        ):
+            self.experiment_dir = self.log_dir
+        else:
+            self.experiment_dir = os.path.join(self.log_dir, self.experiment_name)
         self.rank = rank
         self.is_master = rank == 0
         self.create_log_file()
@@ -159,7 +169,17 @@ class CheckpointHandler:
         self.experiment_name = experiment_name
         self.rank = rank
         self.is_master = rank == 0
-        self.checkpoint_dir = os.path.join(dir_name, self.experiment_name)
+        norm_dir_name = os.path.normpath(dir_name)
+        if (
+            os.path.basename(norm_dir_name) == self.experiment_name
+            or (
+                os.path.basename(norm_dir_name) == "checkpoints"
+                and os.path.basename(os.path.dirname(norm_dir_name)) == self.experiment_name
+            )
+        ):
+            self.checkpoint_dir = dir_name
+        else:
+            self.checkpoint_dir = os.path.join(dir_name, self.experiment_name)
         if self.is_master:
             os.makedirs(self.checkpoint_dir, exist_ok=True)
 

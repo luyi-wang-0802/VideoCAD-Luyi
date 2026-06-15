@@ -57,6 +57,10 @@ def output_subdir(output_dir, path):
     return os.path.join(output_dir, path)
 
 
+def args_to_dict(args):
+    return {key: value for key, value in vars(args).items()}
+
+
 def cache_packet_on_device(packet, device, split_name):
     print(f"Caching {split_name} batches on {device}...")
     cached_loader = DeviceCachedDataLoader.from_loader(
@@ -106,14 +110,10 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
     if num_views == 0:
         args.view_ids = []
     output_dir = args.output_dir
-    log_dir = output_subdir(output_dir, "logs")
-    checkpoint_dir = output_subdir(output_dir, args.checkpoint_dir)
-    wandb_dir = output_subdir(output_dir, "wandb")
+    training_runs_dir = output_subdir(output_dir, args.training_runs_dir)
     if rank in {None, 0}:
         os.makedirs(output_dir, exist_ok=True)
-        os.makedirs(log_dir, exist_ok=True)
-        os.makedirs(checkpoint_dir, exist_ok=True)
-        os.makedirs(wandb_dir, exist_ok=True)
+        os.makedirs(training_runs_dir, exist_ok=True)
 
     training_config = {
         'dataset_path': args.dataset_path,
@@ -123,9 +123,10 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'num_workers': args.num_workers,
         'save_frequency': 20,
         'output_dir': output_dir,
-        'log_dir': log_dir,
-        'checkpoint_dir': checkpoint_dir,
-        'wandb_dir': wandb_dir,
+        'training_runs_dir': training_runs_dir,
+        'model_config_path': args.model_config,
+        'dataset_summary_path': os.path.join(args.dataset_path, "summary.json"),
+        'command_args': args_to_dict(args),
         'val_frequency': 4,
         'compile': args.compile, #VPT cannot be compiled
         'enable_random': selected_model_params.get("enable_random", True),
@@ -235,8 +236,8 @@ if __name__ == "__main__":
     parser.add_argument("--image_dir", type=str, default="data/data_raw/images")
     parser.add_argument("--sequence_retriever", type=str, default="optimized")
     parser.add_argument("--config_path", type=str, default=None)
-    parser.add_argument("--checkpoint_dir", type=str, default="checkpoints")
     parser.add_argument("--output_dir", type=str, default="outputs")
+    parser.add_argument("--training_runs_dir", type=str, default="training_runs")
     parser.add_argument("--multiview_dir", type=str, default="multi_view_images")
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--epochs", type=int, default=1000)

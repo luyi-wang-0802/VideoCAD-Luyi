@@ -5,6 +5,7 @@ import itertools
 import datetime
 import json
 import os
+import shutil
 from utils import load_json, save_json
 import torch
 
@@ -106,6 +107,15 @@ class Experiment:
         
         training_config = self.training_config
         training_config["experiment_name"] = experiment_name
+        training_runs_dir = training_config.get(
+            "training_runs_dir",
+            os.path.join(training_config.get("output_dir", "outputs"), "training_runs"),
+        )
+        run_dir = training_config.get("run_dir") or os.path.join(training_runs_dir, experiment_name)
+        training_config["run_dir"] = run_dir
+        training_config["log_dir"] = os.path.join(run_dir, "logs")
+        training_config["checkpoint_dir"] = os.path.join(run_dir, "checkpoints")
+        training_config["wandb_dir"] = os.path.join(run_dir, "wandb")
         if "train_config" in experiment_params:
             for k, v in experiment_params["train_config"].items():
                 training_config[k] = v
@@ -113,12 +123,23 @@ class Experiment:
         if training_config.get("override_lr") is not None:
             training_config["lr"] = training_config["override_lr"]
 
-        log_dir = training_config.get("log_dir", "logs")
-        experiment_log_dir = os.path.join(log_dir, experiment_name)
+        experiment_log_dir = training_config["log_dir"]
+        config_snapshot_dir = os.path.join(run_dir, "configs")
         if self.rank == 0:
             os.makedirs(experiment_log_dir, exist_ok=True)
-            save_json(experiment_params, os.path.join(experiment_log_dir, "params.json"))
-            save_json(training_config, os.path.join(experiment_log_dir, "training_config.json"))
+            os.makedirs(training_config["checkpoint_dir"], exist_ok=True)
+            os.makedirs(config_snapshot_dir, exist_ok=True)
+            save_json(experiment_params, os.path.join(config_snapshot_dir, "model_params.json"))
+            save_json(training_config, os.path.join(config_snapshot_dir, "training_config.json"))
+            if training_config.get("command_args") is not None:
+                save_json(training_config["command_args"], os.path.join(config_snapshot_dir, "command_args.json"))
+            for source_key, target_name in [
+                ("model_config_path", "model_config_source.json"),
+                ("dataset_summary_path", "dataset_summary.json"),
+            ]:
+                source_path = training_config.get(source_key)
+                if source_path and os.path.exists(source_path):
+                    shutil.copyfile(source_path, os.path.join(config_snapshot_dir, target_name))
         
         model, model_type = self.load_model_and_training_type(experiment_params)
         if training_config.get("compile", True):
@@ -150,18 +171,19 @@ class Experiment:
                                 model_type=model_type,
                                 rank=self.rank)
         model = trainer.train(training_config["epochs"])
-        results = trainer.evaluate(model)
-        trainer.log_wandb({f"test/{key}": value for key, value in results.items() if isinstance(value, (int, float))})
+        final_eval_split = "test" if len(trainer.test_loader) > 0 else "val"
+        results = trainer.evaluate(model, mode=final_eval_split)
+        trainer.log_wandb({f"{final_eval_split}/{key}": value for key, value in results.items() if isinstance(value, (int, float))})
         if self.rank == 0:
-            print("Test Results:")
+            print(f"{final_eval_split.title()} Results:")
             print(results)
-            save_json(results, os.path.join(experiment_log_dir, "results.json"))
+            save_json(results, os.path.join(experiment_log_dir, f"{final_eval_split}_results.json"))
             if training_config.get("sequential", False):
                 print("Evaluating Sequential Model")
-                seq_results = trainer.sequential_evaluate(model)
-                print("Sequential Test Results:")
+                seq_results = trainer.sequential_evaluate(model, mode=f"{final_eval_split}_seq")
+                print(f"Sequential {final_eval_split.title()} Results:")
                 print(seq_results)
-                save_json(seq_results, os.path.join(experiment_log_dir, "seq_results.json"))
+                save_json(seq_results, os.path.join(experiment_log_dir, f"{final_eval_split}_seq_results.json"))
         trainer.finish_wandb()
 
 
