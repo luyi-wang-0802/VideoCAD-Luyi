@@ -6,7 +6,7 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from data_process.transform_dataset import condense_key_repeats, transform_run
+from data_process.transform_dataset import condense_key_repeats, target_split_counts, transform_run
 
 
 def write_json(path: Path, data: dict) -> None:
@@ -22,6 +22,10 @@ def write_jsonl(path: Path, rows: list[dict]) -> None:
 def write_image(path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     Image.new("RGB", (16, 9), color=(255, 255, 255)).save(path)
+
+
+def test_target_split_counts_use_7_2_1_ratio() -> None:
+    assert target_split_counts(301) == {"train": 211, "val": 60, "test": 30}
 
 
 def test_key_repeat_uses_first_pre_action_screenshot_and_default_interval() -> None:

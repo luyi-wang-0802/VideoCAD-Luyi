@@ -83,6 +83,61 @@ def test_primitive_policy_package_import_and_forward() -> None:
     assert torch.isfinite(losses["loss"])
 
 
+def test_primitive_policy_forward_without_global_floorplan() -> None:
+    model = PrimitiveActionPolicyModel(
+        PrimitiveActionPolicyConfig(
+            hidden_size=32,
+            num_transformer_layers=1,
+            num_attention_heads=4,
+            dim_feedforward=64,
+            history_length=2,
+            num_high_level_actions=3,
+            num_gui_actions=4,
+            num_keys=2,
+            num_target_entities=2,
+            num_point_roles=2,
+        )
+    )
+    batch = minimal_batch()
+    batch["global_floorplan"] = None
+    batch["global_floorplan_available"] = torch.tensor([False, False])
+
+    outputs = model(batch)
+    losses = model.compute_loss(batch, outputs)
+
+    assert outputs["action_type_logits"].shape == torch.Size([2, 6])
+    assert torch.isfinite(losses["loss"])
+
+
+def test_primitive_policy_entity_target_loss_backward() -> None:
+    model = PrimitiveActionPolicyModel(
+        PrimitiveActionPolicyConfig(
+            hidden_size=32,
+            num_transformer_layers=1,
+            num_attention_heads=4,
+            dim_feedforward=64,
+            history_length=2,
+            num_high_level_actions=3,
+            num_gui_actions=4,
+            num_keys=2,
+            num_target_entities=105,
+            num_point_roles=2,
+        )
+    )
+    batch = minimal_batch()
+    batch["plan"]["entities"] = torch.randn(2, 2, 11)
+    batch["plan"]["entity_mask"] = torch.tensor([[True, True], [True, False]])
+    batch["plan"]["entity_vocab_ids"] = torch.tensor([[1, 7], [2, 0]])
+    batch["target"]["target_entity_id"] = torch.tensor([7, 2])
+    batch["target"]["has_target_entity"] = torch.tensor([True, True])
+
+    outputs = model(batch)
+    losses = model.compute_loss(batch, outputs)
+    losses["loss"].backward()
+
+    assert torch.isfinite(losses["loss"])
+
+
 def test_model_factory_only_creates_current_primitive_policy() -> None:
     model, model_type = ModelFactory().create_model(
         "primitive_action_policy",

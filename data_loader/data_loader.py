@@ -124,29 +124,38 @@ class PrimitiveActionDataset(Dataset):
 
     def __init__(
         self,
-        dataset_dir: str | Path = "processed_data",
+        dataset_path: str | Path = "processed_data",
         split: str | None = None,
         repo_root: str | Path = ".",
         image_size: tuple[int, int] = DEFAULT_IMAGE_SIZE,
         history_length: int = 32,
         load_images: bool = True,
+        load_global_floorplan: bool = False,
         normalize_images: bool = True,
+        image_dtype: str | torch.dtype = torch.float32,
         include_raw: bool = False,
     ) -> None:
         self.repo_root = Path(repo_root).resolve()
-        self.dataset_dir = resolve_path(dataset_dir, self.repo_root)
+        self.dataset_path = resolve_path(dataset_path, self.repo_root)
         self.split = split
         self.history_length = history_length
         self.include_raw = include_raw
+        self.load_global_floorplan = load_global_floorplan
+        if isinstance(image_dtype, str):
+            dtype_map = {"float32": torch.float32, "float16": torch.float16}
+            if image_dtype not in dtype_map:
+                raise ValueError("image_dtype must be one of: float32, float16")
+            image_dtype = dtype_map[image_dtype]
         self.image_loader = ScreenshotImageLoader(
             repo_root=self.repo_root,
             image_size=image_size,
             load_images=load_images,
             normalize=normalize_images,
+            dtype=image_dtype,
         )
 
-        self.index = read_json(self.dataset_dir / "dataset_index.json")
-        self.vocab = read_json(self.dataset_dir / "action_vocab.json")
+        self.index = read_json(self.dataset_path / "dataset_index.json")
+        self.vocab = read_json(self.dataset_path / "action_vocab.json")
         self.action_type_to_id = self.vocab.get("action_type_to_id", {})
         self.high_level_to_id = self.vocab.get("high_level_to_id", {})
         self.gui_action_to_id = self.vocab.get("gui_action_to_id", {})
@@ -341,7 +350,10 @@ class PrimitiveActionDataset(Dataset):
         step = item["step"]
         screenshot_path = step["model_input"].get("observation_screenshot_path")
         observation, observation_available = self.image_loader.load(screenshot_path)
-        global_floorplan, global_floorplan_available = self.image_loader.load(item.get("global_floorplan_path"))
+        global_floorplan = None
+        global_floorplan_available = False
+        if self.load_global_floorplan:
+            global_floorplan, global_floorplan_available = self.image_loader.load(item.get("global_floorplan_path"))
         result: dict[str, Any] = {
             "sample_id": item["sample_id"],
             "split": item["split"],
@@ -354,10 +366,6 @@ class PrimitiveActionDataset(Dataset):
             "progress": item["progress"],
             "history": item["history"],
             "target": item["target"],
-            # Compatibility aliases for existing code paths.
-            "action": item["target"],
-            "observation_before": observation,
-            "observation_before_available": torch.tensor(observation_available, dtype=torch.bool),
         }
         if self.include_raw:
             result["raw_step"] = step
@@ -385,8 +393,14 @@ class PrimitiveActionDataset(Dataset):
     @staticmethod
     def _pad_vector_list(values: list[torch.Tensor], pad_value: int = 0) -> tuple[torch.Tensor, torch.Tensor]:
         max_len = max((value.shape[0] for value in values), default=0)
-        padded = torch.full((len(values), max_len), pad_value, dtype=values[0].dtype if values else torch.long)
-        mask = torch.zeros((len(values), max_len), dtype=torch.bool)
+        device = values[0].device if values else torch.device("cpu")
+        padded = torch.full(
+            (len(values), max_len),
+            pad_value,
+            dtype=values[0].dtype if values else torch.long,
+            device=device,
+        )
+        mask = torch.zeros((len(values), max_len), dtype=torch.bool, device=device)
         for index, value in enumerate(values):
             length = value.shape[0]
             if length:
@@ -408,7 +422,6 @@ class PrimitiveActionDataset(Dataset):
             "step_index": torch.stack([item["step_index"] for item in batch]),
             "observation": torch.stack([item["observation"] for item in batch]),
             "observation_available": torch.stack([item["observation_available"] for item in batch]),
-            "global_floorplan": torch.stack([item["global_floorplan"] for item in batch]),
             "global_floorplan_available": torch.stack([item["global_floorplan_available"] for item in batch]),
             "plan": {
                 "walls": walls,
@@ -423,29 +436,27 @@ class PrimitiveActionDataset(Dataset):
             "history": {key: torch.stack([item["history"][key] for item in batch]) for key in history_keys},
             "target": {key: torch.stack([item["target"][key] for item in batch]) for key in target_keys},
         }
-        result["action"] = result["target"]
-        result["observation_before"] = result["observation"]
-        result["observation_before_available"] = result["observation_available"]
         if "raw_step" in batch[0]:
             result["raw_step"] = [item["raw_step"] for item in batch]
             result["sample_path"] = [item["sample_path"] for item in batch]
             result["global_floorplan_path"] = [item["global_floorplan_path"] for item in batch]
+        global_floorplans = [item.get("global_floorplan") for item in batch]
+        if all(torch.is_tensor(item) for item in global_floorplans):
+            result["global_floorplan"] = torch.stack(global_floorplans)
+        else:
+            result["global_floorplan"] = None
         return result
 
 
-OnlineGuiPolicyDataset = PrimitiveActionDataset
-LowLevelGuiDataset = PrimitiveActionDataset
-
-
 def create_dataloader(
-    dataset_dir: str | Path = "processed_data",
+    dataset_path: str | Path = "processed_data",
     split: str | None = "train",
     batch_size: int = 8,
     shuffle: bool | None = None,
     num_workers: int = 0,
     **dataset_kwargs: Any,
 ) -> DataLoader:
-    dataset = PrimitiveActionDataset(dataset_dir=dataset_dir, split=split, **dataset_kwargs)
+    dataset = PrimitiveActionDataset(dataset_path=dataset_path, split=split, **dataset_kwargs)
     if shuffle is None:
         shuffle = split == "train"
     return DataLoader(
@@ -473,6 +484,8 @@ def create_dataset_from_config(
         "image_size",
         "history_length",
         "load_images",
+        "load_global_floorplan",
+        "image_dtype",
         "normalize_images",
         "include_raw",
     }
@@ -481,7 +494,7 @@ def create_dataset_from_config(
     for split in splits:
         effective_split = None if overfit else split
         loader = create_dataloader(
-            dataset_dir=dataset_path,
+            dataset_path=dataset_path,
             split=effective_split,
             batch_size=batch_size,
             num_workers=num_workers,

@@ -19,12 +19,14 @@ class ScreenshotImageLoader:
         load_images: bool = True,
         normalize: bool = True,
         channels: int = 1,
+        dtype: torch.dtype = torch.float32,
     ) -> None:
         self.repo_root = Path(repo_root).resolve()
         self.image_size = image_size
         self.load_images = load_images
         self.normalize = normalize
         self.channels = channels
+        self.dtype = dtype
         if channels not in {1, 3}:
             raise ValueError("channels must be 1 or 3")
 
@@ -38,7 +40,7 @@ class ScreenshotImageLoader:
 
     def empty(self) -> torch.Tensor:
         width, height = self.image_size
-        return torch.zeros((self.channels, height, width), dtype=torch.float32)
+        return torch.zeros((self.channels, height, width), dtype=self.dtype)
 
     def load(self, path: str | Path | None) -> tuple[torch.Tensor, bool]:
         if not self.load_images:
@@ -57,4 +59,5 @@ class ScreenshotImageLoader:
             tensor = torch.from_numpy(array).permute(2, 0, 1)
         if self.normalize:
             tensor = (tensor - 0.5) / 0.5
+        tensor = tensor.to(dtype=self.dtype)
         return tensor, True

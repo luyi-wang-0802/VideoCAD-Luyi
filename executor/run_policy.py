@@ -101,13 +101,13 @@ def load_primitive_model(
     checkpoint_path: Path,
     model_config_path: Path,
     model_name: str,
-    dataset_dir: Path,
+    dataset_path: Path,
     device: torch.device,
 ) -> torch.nn.Module:
     model_params = read_json(model_config_path)
     model_config = dict(model_params[model_name])
-    model_config["dataset_path"] = str(dataset_dir)
-    model_config.setdefault("action_vocab_path", str(dataset_dir / "action_vocab.json"))
+    model_config["dataset_path"] = str(dataset_path)
+    model_config.setdefault("action_vocab_path", str(dataset_path / "action_vocab.json"))
 
     checkpoint = torch.load(checkpoint_path, map_location=device)
     state_dict = checkpoint["model_state_dict"] if "model_state_dict" in checkpoint else checkpoint
@@ -144,8 +144,6 @@ def make_batch(
             [progress_vector(progress_state["task_counts"], progress_state["done_counts"])],
             dtype=torch.float32,
         ),
-        "observation_before": observation.unsqueeze(0),
-        "observation_before_available": torch.tensor([available], dtype=torch.bool),
         "plan": {
             "walls": plan["walls"].unsqueeze(0),
             "wall_mask": torch.ones((1, plan["walls"].shape[0]), dtype=torch.bool),
@@ -169,7 +167,7 @@ def infer_run_id_from_resplan_path(resplan_json_path: Path) -> str | None:
 
 def infer_global_floorplan_path(
     resplan_json_path: Path,
-    dataset_dir: Path,
+    dataset_path: Path,
     explicit_path: Path | None = None,
 ) -> str | None:
     if explicit_path is not None:
@@ -178,13 +176,10 @@ def infer_global_floorplan_path(
     run_id = infer_run_id_from_resplan_path(resplan_json_path)
     if run_id is None:
         return None
-    legacy_run_id = f"plan_{int(run_id.removeprefix('plan_')):04d}"
 
     candidates = [
-        dataset_dir / "images" / run_id / "global_floorplan" / "floorplan_before_roof.png",
-        dataset_dir / "images" / legacy_run_id / "global_floorplan" / "floorplan_before_roof.png",
+        dataset_path / "images" / run_id / "global_floorplan" / "floorplan_before_roof.png",
         Path("raw_data") / "trajectory_data" / run_id / "global_floorplan" / "floorplan_before_roof.png",
-        Path("raw_data") / "trajectory_data" / legacy_run_id / "global_floorplan" / "floorplan_before_roof.png",
     ]
     for candidate in candidates:
         if candidate.exists():
@@ -192,23 +187,23 @@ def infer_global_floorplan_path(
     return None
 
 
-def infer_runtime_plan_path(resplan_json_path: Path, dataset_dir: Path) -> Path | None:
+def infer_runtime_plan_path(resplan_json_path: Path, dataset_path: Path) -> Path | None:
     run_id = infer_run_id_from_resplan_path(resplan_json_path)
     if run_id is None:
         return None
-    candidate = dataset_dir / "runtime_plans" / f"{run_id}_runtime_plan.json"
+    candidate = dataset_path / "runtime_plans" / f"{run_id}_runtime_plan.json"
     return candidate if candidate.exists() else None
 
 
 def runtime_sample_from_resplan(
     resplan_json_path: Path,
     runtime_plan_path: Path | None = None,
-    dataset_dir: Path = Path("processed_data"),
+    dataset_path: Path = Path("processed_data"),
     global_floorplan_path: Path | None = None,
     grounding_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if runtime_plan_path is None:
-        runtime_plan_path = infer_runtime_plan_path(resplan_json_path, dataset_dir)
+        runtime_plan_path = infer_runtime_plan_path(resplan_json_path, dataset_path)
     if runtime_plan_path is not None:
         runtime_plan = read_json(runtime_plan_path)
         encoded_resplan = runtime_plan.get("encoded_resplan")
@@ -241,7 +236,7 @@ def runtime_sample_from_resplan(
             "resplan_json_path": str(resplan_json_path).replace("\\", "/"),
             "global_floorplan_path": infer_global_floorplan_path(
                 resplan_json_path,
-                dataset_dir=dataset_dir,
+                dataset_path=dataset_path,
                 explicit_path=global_floorplan_path,
             ),
             "task_entity_counts": resplan.get("task_entity_counts")
@@ -500,7 +495,7 @@ def main() -> None:
     parser.add_argument("--global-floorplan", default=None, type=Path, help="Optional floorplan image override. If omitted, inferred from the ResPlan filename.")
     parser.add_argument("--sample", default=None, type=Path, help="Optional processed sample JSON for debug comparison only.")
     parser.add_argument("--checkpoint", required=True, type=Path)
-    parser.add_argument("--dataset-dir", default="processed_data", type=Path)
+    parser.add_argument("--dataset-path", default="processed_data", type=Path)
     parser.add_argument("--model-config", default="model_configs/primitive_action_policy.json", type=Path)
     parser.add_argument("--model-name", default="default_params")
     parser.add_argument("--calibration", default="configs/vectorworks_grounding_template.json", type=Path)
@@ -530,20 +525,20 @@ def main() -> None:
     sample = runtime_sample_from_resplan(
         args.resplan_json,
         runtime_plan_path=args.runtime_plan,
-        dataset_dir=args.dataset_dir,
+        dataset_path=args.dataset_path,
         global_floorplan_path=args.global_floorplan,
         grounding_config=read_json(args.calibration),
     )
     debug_sample = read_json(args.sample) if args.sample is not None else None
     dataset = PrimitiveActionDataset(
-        dataset_dir=args.dataset_dir,
+        dataset_path=args.dataset_path,
         split=None,
         image_size=(args.image_size, args.image_size),
         history_length=args.history_length,
         load_images=False,
     )
     image_loader = ScreenshotImageLoader(image_size=(args.image_size, args.image_size))
-    model = load_primitive_model(args.checkpoint, args.model_config, args.model_name, args.dataset_dir, device)
+    model = load_primitive_model(args.checkpoint, args.model_config, args.model_name, args.dataset_path, device)
     executor = VectorworksExecutor(args.calibration, dry_run=args.dry_run)
     args.run_dir.mkdir(parents=True, exist_ok=True)
 

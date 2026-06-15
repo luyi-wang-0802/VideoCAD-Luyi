@@ -6,18 +6,32 @@ import random
 from typing import Any, Iterable
 
 import torch
+from tqdm import tqdm
 from torch.utils.data import RandomSampler
 
 
-def move_to_device(value: Any, device: torch.device | str) -> Any:
+def move_to_device(
+    value: Any,
+    device: torch.device | str,
+    memo: dict[int, list[tuple[torch.Tensor, Any]]] | None = None,
+) -> Any:
+    if memo is None:
+        memo = {}
     if torch.is_tensor(value):
-        return value.to(device, non_blocking=True)
+        key = id(value)
+        bucket = memo.setdefault(key, [])
+        for source, moved in bucket:
+            if source is value:
+                return moved
+        moved = value.to(device, non_blocking=True)
+        bucket.append((value, moved))
+        return moved
     if isinstance(value, dict):
-        return {key: move_to_device(item, device) for key, item in value.items()}
+        return {key: move_to_device(item, device, memo) for key, item in value.items()}
     if isinstance(value, list):
-        return [move_to_device(item, device) for item in value]
+        return [move_to_device(item, device, memo) for item in value]
     if isinstance(value, tuple):
-        return tuple(move_to_device(item, device) for item in value)
+        return tuple(move_to_device(item, device, memo) for item in value)
     return value
 
 
@@ -43,11 +57,19 @@ class DeviceCachedDataLoader:
         cls,
         loader: Iterable[Any],
         device: torch.device | str,
+        desc: str | None = None,
     ) -> "DeviceCachedDataLoader":
         if not hasattr(loader, "dataset"):
             raise TypeError("DeviceCachedDataLoader.from_loader expects a torch DataLoader with a dataset")
         dataset = loader.dataset
-        samples = [move_to_device(dataset[index], device) for index in range(len(dataset))]
+        memo: dict[int, list[tuple[torch.Tensor, Any]]] = {}
+        indices = tqdm(
+            range(len(dataset)),
+            desc=desc or f"Caching dataset on {device}",
+            unit="sample",
+            dynamic_ncols=True,
+        )
+        samples = [move_to_device(dataset[index], device, memo) for index in indices]
         shuffle_samples = isinstance(getattr(loader, "sampler", None), RandomSampler)
         return cls(
             samples=samples,

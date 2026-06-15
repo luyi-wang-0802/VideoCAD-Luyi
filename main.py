@@ -66,6 +66,7 @@ def cache_packet_on_device(packet, device, split_name):
     cached_loader = DeviceCachedDataLoader.from_loader(
         packet["loader"],
         device=device,
+        desc=f"Caching {split_name} on {device}",
     )
     print(f"Cached {len(cached_loader)} {split_name} batches on {device}")
     return {"loader": cached_loader, "sampler": None}
@@ -148,6 +149,8 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'wandb_project': args.wandb_project,
         'wandb_entity': args.wandb_entity,
         'wandb_run_name': args.wandb_run_name,
+        'load_global_floorplan': args.load_global_floorplan,
+        'image_dtype': args.image_dtype,
         'command_line_overrides': {
             'early_stopping_enabled': args.early_stopping_enabled,
             'early_stopping_patience': args.early_stopping_patience,
@@ -183,6 +186,8 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         enable_random=args.enable_random,
         sequence_retriever=args.sequence_retriever,
         overfit=args.overfit_data,
+        load_global_floorplan=args.load_global_floorplan,
+        image_dtype=args.image_dtype,
     )
     if args.cache_dataset_on_device:
         train_packet = cache_packet_on_device(train_packet, device, "train")
@@ -254,6 +259,8 @@ if __name__ == "__main__":
     parser.add_argument("--enable_parallel", type=str2bool, default=True)
     parser.add_argument("--overfit_data", type=str2bool, default=False)
     parser.add_argument("--cache_dataset_on_device", type=str2bool, default=False)
+    parser.add_argument("--load_global_floorplan", type=str2bool, default=False)
+    parser.add_argument("--image_dtype", type=str, choices=["float32", "float16"], default="float32")
     parser.add_argument("--early_stopping_enabled", type=str2bool, default=None)
     parser.add_argument("--early_stopping_patience", type=int, default=None)
     parser.add_argument("--early_stopping_min_delta", type=float, default=None)

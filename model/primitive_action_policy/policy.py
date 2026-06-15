@@ -143,9 +143,12 @@ class PrimitiveActionPolicyModel(nn.Module):
 
         candidate_logits = torch.full_like(fallback_logits, -1.0e4)
         safe_ids = entity_vocab_ids.long().clamp(min=0, max=self.config.num_target_entities - 1)
-        candidate_logits.scatter_reduce_(1, safe_ids, scores, reduce="amax", include_self=True)
-        candidate_logits[:, 0] = fallback_logits[:, 0]
-        return candidate_logits
+        candidate_logits = candidate_logits.scatter_reduce(1, safe_ids, scores, reduce="amax", include_self=True)
+        class_ids = torch.arange(
+            self.config.num_target_entities,
+            device=candidate_logits.device,
+        ).unsqueeze(0)
+        return torch.where(class_ids == 0, fallback_logits, candidate_logits)
 
     def encode_history(self, history: dict[str, torch.Tensor]) -> torch.Tensor:
         primitive = history["primitive_action"].float().clone()
@@ -180,9 +183,10 @@ class PrimitiveActionPolicyModel(nn.Module):
         return self.history_projection(torch.cat(pieces, dim=-1))
 
     def forward(self, batch: dict[str, Any]) -> dict[str, torch.Tensor]:
-        observation = batch.get("observation", batch.get("observation_before"))
+        observation = batch.get("observation")
         if observation is None:
-            raise KeyError("PrimitiveActionPolicyModel expects batch['observation'] or batch['observation_before']")
+            raise KeyError("PrimitiveActionPolicyModel expects batch['observation']")
+        observation = observation.to(dtype=self.plan_token.dtype)
         plan = batch["plan"]
         history = batch["history"]
 
@@ -233,6 +237,7 @@ class PrimitiveActionPolicyModel(nn.Module):
         query_hidden = self.final_norm(hidden[:, -1])
         global_floorplan = batch.get("global_floorplan")
         if global_floorplan is not None:
+            global_floorplan = global_floorplan.to(dtype=self.plan_token.dtype)
             floorplan_embedding = self.global_floorplan_encoder(global_floorplan)
             floorplan_available = batch.get("global_floorplan_available")
             if floorplan_available is None:

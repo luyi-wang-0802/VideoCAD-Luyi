@@ -1541,13 +1541,24 @@ class MultiClassesTrainer(BaseTrainer):
             print(f"Command {i}: {metrics[f'cmd_accuracy_{i}']:.2f}%")
 
 
-def move_to_device(value, device):
+def move_to_device(value, device, memo=None):
+    if memo is None:
+        memo = {}
     if torch.is_tensor(value):
-        return value.to(device)
+        key = id(value)
+        bucket = memo.setdefault(key, [])
+        for source, moved in bucket:
+            if source is value:
+                return moved
+        moved = value.to(device)
+        bucket.append((value, moved))
+        return moved
     if isinstance(value, dict):
-        return {key: move_to_device(item, device) for key, item in value.items()}
+        return {key: move_to_device(item, device, memo) for key, item in value.items()}
     if isinstance(value, list):
-        return [move_to_device(item, device) for item in value]
+        return [move_to_device(item, device, memo) for item in value]
+    if isinstance(value, tuple):
+        return tuple(move_to_device(item, device, memo) for item in value)
     return value
 
 

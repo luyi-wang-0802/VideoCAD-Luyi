@@ -44,6 +44,8 @@ from PIL import Image, ImageOps
 MISSING = -1
 DEFAULT_KEY_INTERVAL_MS = 100.0
 DEFAULT_PROCESSED_IMAGE_SIZE = (384, 216)
+SPLIT_RATIOS = {"train": 0.7, "val": 0.2, "test": 0.1}
+SPLIT_ORDER = ("train", "val", "test")
 PROGRESS_ENTITY_KEYS = [
     "exterior_walls",
     "interior_walls",
@@ -133,11 +135,7 @@ def relpath_if_exists(path: Path | None, repo_root: Path) -> str | None:
 
 
 def sequence_root(raw_data_dir: Path) -> Path:
-    for name in ("bim_sequences", "bim_sequence"):
-        candidate = raw_data_dir / name
-        if candidate.exists():
-            return candidate
-    return raw_data_dir / "bim_sequences"
+    return raw_data_dir / "bim_sequence"
 
 
 def stable_mapping(names: list[str], include_none: bool = True) -> dict[str, int]:
@@ -153,23 +151,6 @@ def plan_suffix_from_run_dir(run_dir: Path) -> str:
     return run_dir.name.removeprefix("plan_")
 
 
-def source_suffix_candidates(run_suffix: str) -> list[str]:
-    candidates = [run_suffix]
-    stripped = run_suffix.lstrip("0")
-    if stripped:
-        candidates.append(stripped.zfill(3))
-        candidates.append(stripped)
-    seen = set()
-    return [candidate for candidate in candidates if not (candidate in seen or seen.add(candidate))]
-
-
-def first_existing_path(candidates: list[Path]) -> Path:
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate
-    return candidates[0]
-
-
 def discover_runs(raw_data_dir: Path) -> list[dict[str, Path | str]]:
     trajectory_root = raw_data_dir / "trajectory_data"
     resplan_root = raw_data_dir / "resplan_to_JSON"
@@ -182,11 +163,8 @@ def discover_runs(raw_data_dir: Path) -> list[dict[str, Path | str]]:
     runs = []
     for run_dir in run_dirs:
         suffix = plan_suffix_from_run_dir(run_dir)
-        suffixes = source_suffix_candidates(suffix)
-        resplan_path = first_existing_path([resplan_root / f"resplan_to_JSON_{item}.json" for item in suffixes])
-        sequence_dir = first_existing_path(
-            [sequence_root_dir / f"resplan_to_JSON_{item}_bim_sequence" for item in suffixes]
-        )
+        resplan_path = resplan_root / f"resplan_to_JSON_{suffix}.json"
+        sequence_dir = sequence_root_dir / f"resplan_to_JSON_{suffix}_bim_sequence"
         paths = {
             "run_id": run_dir.name,
             "suffix": suffix,
@@ -835,22 +813,131 @@ def sequence_stats(high_sequence: dict[str, Any], gui_sequence: dict[str, Any], 
     }
 
 
-def split_for_index(index: int, total: int) -> str:
-    if total <= 1:
-        return "train"
-    if total == 10:
-        # Keep whole trajectories intact. With only 10 plans, reserve validation
-        # trajectories for model selection and defer a held-out test split until
-        # the dataset is larger or the final model is frozen.
-        if index in {1, 8}:
-            return "val"
-        return "train"
-    ratio = index / total
-    if ratio < 0.7:
-        return "train"
-    if ratio < 0.85:
-        return "val"
-    return "test"
+def target_split_counts(total: int, split_ratios: dict[str, float] | None = None) -> dict[str, int]:
+    ratios = split_ratios or SPLIT_RATIOS
+    if total <= 0:
+        return {split: 0 for split in SPLIT_ORDER}
+
+    normalized_total = sum(ratios.get(split, 0.0) for split in SPLIT_ORDER)
+    if normalized_total <= 0:
+        raise ValueError("Split ratios must sum to a positive value")
+
+    raw_counts = {split: total * ratios.get(split, 0.0) / normalized_total for split in SPLIT_ORDER}
+    counts = {split: int(raw_counts[split]) for split in SPLIT_ORDER}
+    remainder = total - sum(counts.values())
+    fractions = sorted(
+        SPLIT_ORDER,
+        key=lambda split: (raw_counts[split] - counts[split], ratios.get(split, 0.0)),
+        reverse=True,
+    )
+    for split in fractions[:remainder]:
+        counts[split] += 1
+    return counts
+
+
+def build_run_split_stats(run: dict[str, Path | str]) -> dict[str, Any]:
+    actions = condense_key_repeats(read_jsonl(Path(run["imitation_path"])))
+    feature_counts: Counter[str] = Counter()
+    for action in actions:
+        feature_counts[f"action_type:{action.get('type') or '<none>'}"] += 1
+        feature_counts[f"high_level_action:{high_level_name(action)}"] += 1
+        feature_counts[f"gui_action:{gui_action_name(action)}"] += 1
+        feature_counts[f"target_entity:{action_target_entity(action)}"] += 1
+        feature_counts[f"point_role:{action_point_role(action)}"] += 1
+    return {
+        "run_id": str(run["run_id"]),
+        "num_steps": len(actions),
+        "feature_counts": feature_counts,
+    }
+
+
+def split_assignment_score(
+    run_stats: dict[str, Any],
+    split: str,
+    target_run_counts: dict[str, int],
+    target_step_counts: dict[str, float],
+    target_feature_shares: dict[str, float],
+    assigned_run_counts: dict[str, int],
+    assigned_step_counts: dict[str, int],
+    assigned_feature_counts: dict[str, Counter[str]],
+    global_feature_counts: Counter[str],
+) -> float:
+    projected_run_count = assigned_run_counts[split] + 1
+    projected_step_count = assigned_step_counts[split] + int(run_stats["num_steps"])
+    run_fill = projected_run_count / max(target_run_counts[split], 1)
+    step_fill = projected_step_count / max(target_step_counts[split], 1.0)
+
+    score = 0.45 * run_fill + 0.45 * step_fill
+    run_feature_counts: Counter[str] = run_stats["feature_counts"]
+    for feature, count in run_feature_counts.items():
+        global_count = global_feature_counts[feature]
+        if global_count <= 0:
+            continue
+        projected_feature_count = assigned_feature_counts[split][feature] + count
+        projected_share = projected_feature_count / global_count
+        over_target_share = max(0.0, projected_share - target_feature_shares[split])
+        score += 0.10 * over_target_share * over_target_share
+    return score
+
+
+def assign_balanced_splits(run_stats: list[dict[str, Any]]) -> dict[str, str]:
+    target_run_counts = target_split_counts(len(run_stats))
+    total_steps = sum(int(stats["num_steps"]) for stats in run_stats)
+    global_feature_counts: Counter[str] = Counter()
+    for stats in run_stats:
+        global_feature_counts.update(stats["feature_counts"])
+
+    target_feature_shares = {
+        split: target_run_counts[split] / max(len(run_stats), 1) for split in SPLIT_ORDER
+    }
+    target_step_counts = {
+        split: total_steps * target_feature_shares[split] for split in SPLIT_ORDER
+    }
+    assigned_run_counts = {split: 0 for split in SPLIT_ORDER}
+    assigned_step_counts = {split: 0 for split in SPLIT_ORDER}
+    assigned_feature_counts = {split: Counter() for split in SPLIT_ORDER}
+    split_by_run: dict[str, str] = {}
+
+    def rarity_score(stats: dict[str, Any]) -> float:
+        return sum(
+            count / max(global_feature_counts[feature], 1)
+            for feature, count in stats["feature_counts"].items()
+        )
+
+    ordered_stats = sorted(
+        run_stats,
+        key=lambda stats: (-rarity_score(stats), -int(stats["num_steps"]), str(stats["run_id"])),
+    )
+    for stats in ordered_stats:
+        candidates = [
+            split for split in SPLIT_ORDER if assigned_run_counts[split] < target_run_counts[split]
+        ]
+        if not candidates:
+            raise RuntimeError("No split has remaining capacity")
+        split = min(
+            candidates,
+            key=lambda candidate: split_assignment_score(
+                stats,
+                candidate,
+                target_run_counts,
+                target_step_counts,
+                target_feature_shares,
+                assigned_run_counts,
+                assigned_step_counts,
+                assigned_feature_counts,
+                global_feature_counts,
+            ),
+        )
+        split_by_run[str(stats["run_id"])] = split
+        assigned_run_counts[split] += 1
+        assigned_step_counts[split] += int(stats["num_steps"])
+        assigned_feature_counts[split].update(stats["feature_counts"])
+
+    return split_by_run
+
+
+def build_balanced_split_map(runs: list[dict[str, Path | str]]) -> dict[str, str]:
+    return assign_balanced_splits([build_run_split_stats(run) for run in runs])
 
 
 def build_split_distribution(index: list[dict[str, Any]], repo_root: Path) -> dict[str, Any]:
@@ -1212,9 +1299,10 @@ def transform_dataset(
     high_level_to_id, gui_action_to_id, key_to_id, target_entity_to_id, point_role_to_id, vocab = build_vocab(runs)
     write_json(output_dir / "action_vocab.json", vocab)
 
+    split_by_run = build_balanced_split_map(runs)
     index = []
-    for run_index, run in enumerate(runs):
-        split = split_for_index(run_index, len(runs))
+    for run in runs:
+        split = split_by_run[str(run["run_id"])]
         index.append(
             transform_run(
                 run=run,
@@ -1238,6 +1326,15 @@ def transform_dataset(
         "num_raw_steps": sum(item["num_raw_steps"] for item in index),
         "num_training_steps": sum(item["num_training_steps"] for item in index),
         "split_distribution": build_split_distribution(index, repo_root),
+        "split_policy": {
+            "unit": "trajectory_run",
+            "target_ratios": SPLIT_RATIOS,
+            "target_run_counts": target_split_counts(len(runs)),
+            "strategy": (
+                "greedy stratified assignment by condensed primitive action type, "
+                "high-level action, GUI action, target entity, point role, and step count"
+            ),
+        },
         "primitive_action_dim": 6,
         "flat_action_dim": 8,
         "progress_feature_dim": len(PROGRESS_ENTITY_KEYS) * 3,
