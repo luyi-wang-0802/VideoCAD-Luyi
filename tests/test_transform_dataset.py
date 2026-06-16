@@ -108,8 +108,6 @@ def test_transform_run_uses_current_action_screenshot_as_observation(tmp_path: P
         high_level_to_id={"draw": 1},
         gui_action_to_id={"move": 1, "click": 2},
         key_to_id={},
-        target_entity_to_id={"<none>": 0},
-        point_role_to_id={"<none>": 0},
         split="train",
         image_size=(16, 9),
     )

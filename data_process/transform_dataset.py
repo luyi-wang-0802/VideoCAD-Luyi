@@ -428,8 +428,6 @@ def summarize_resplan_for_model(
     insertions = build_insertion_features(walls, coordinate_system, compression_scale)
     execution_walls = build_execution_wall_features(walls, coordinate_system, compression_scale)
     execution_coordinate_policy = build_execution_coordinate_policy(coordinate_system, compression)
-    entity_points = build_entity_points(execution_walls, insertions, primitive_plan)
-    add_resplan_entity_points(entity_points, resplan, coordinate_system, compression_scale)
     rooms = resplan.get("rooms") or []
     return {
         "metadata": resplan.get("metadata", {}),
@@ -445,7 +443,6 @@ def summarize_resplan_for_model(
         "walls": walls,
         "execution_walls": execution_walls,
         "insertions": insertions,
-        "entity_points": entity_points,
     }
 
 
@@ -632,62 +629,6 @@ def build_execution_coordinate_policy(
     }
 
 
-def build_entity_points(
-    execution_walls: list[dict[str, Any]],
-    insertions: list[dict[str, Any]],
-    primitive_plan: dict[str, Any] | None = None,
-) -> dict[str, dict[str, Any]]:
-    entity_points: dict[str, dict[str, Any]] = {}
-    for wall in execution_walls:
-        wall_id = wall.get("wall_id")
-        if not wall_id:
-            continue
-        entity_points[str(wall_id)] = {
-            "entity_type": "wall",
-            "start_mm": wall.get("execution_start"),
-            "end_mm": wall.get("execution_end"),
-            "source_start": wall.get("source_start"),
-            "source_end": wall.get("source_end"),
-        }
-    for insertion in insertions:
-        opening_id = insertion.get("opening_id")
-        if not opening_id:
-            continue
-        entity_points[str(opening_id)] = {
-            "entity_type": insertion.get("opening_type") or "opening",
-            "intersection_point": insertion.get("execution_click_point"),
-            "insertion_point": insertion.get("execution_click_point"),
-            "centerline_insertion_point": insertion.get("insertion_point"),
-            "source_insertion_point": insertion.get("source_insertion_point"),
-            "source_click_point": insertion.get("source_click_point"),
-            "host_wall_id": insertion.get("host_wall_id"),
-        }
-    if primitive_plan:
-        for primitive in primitive_plan.get("primitives", []) or []:
-            entity_id = primitive.get("target_entity")
-            point_role = primitive.get("point_role")
-            model_point = primitive.get("model_point_mm")
-            if not entity_id or not point_role or not isinstance(model_point, list) or len(model_point) < 2:
-                continue
-            record = entity_points.setdefault(str(entity_id), {"entity_type": str(entity_id).split("_", 1)[0]})
-            record[str(point_role)] = [round(float(model_point[0]), 6), round(float(model_point[1]), 6)]
-    return entity_points
-
-
-def add_resplan_entity_points(
-    entity_points: dict[str, dict[str, Any]],
-    resplan: dict[str, Any],
-    coordinate_system: dict[str, Any],
-    compression_scale: list[float],
-) -> None:
-    slab_point = resplan.get("slab_generate_point")
-    if isinstance(slab_point, list) and len(slab_point) >= 2:
-        entity_points.setdefault("slab_0000", {"entity_type": "slab"})["slab_generate_point"] = apply_axis_compression(
-            normalize_source_point_for_json(slab_point, coordinate_system),
-            compression_scale,
-        )
-
-
 def build_execution_wall_features(
     walls: list[dict[str, Any]],
     coordinate_system: dict[str, Any],
@@ -842,8 +783,6 @@ def build_run_split_stats(run: dict[str, Path | str]) -> dict[str, Any]:
         feature_counts[f"action_type:{action.get('type') or '<none>'}"] += 1
         feature_counts[f"high_level_action:{high_level_name(action)}"] += 1
         feature_counts[f"gui_action:{gui_action_name(action)}"] += 1
-        feature_counts[f"target_entity:{action_target_entity(action)}"] += 1
-        feature_counts[f"point_role:{action_point_role(action)}"] += 1
     return {
         "run_id": str(run["run_id"]),
         "num_steps": len(actions),
@@ -973,19 +912,9 @@ def build_split_distribution(index: list[dict[str, Any]], repo_root: Path) -> di
     return distribution
 
 
-def action_target_entity(action: dict[str, Any]) -> str:
-    entity = action.get("target_entity")
-    return str(entity) if entity else "<none>"
-
-
-def action_point_role(action: dict[str, Any]) -> str:
-    role = action.get("point_role")
-    return str(role) if role else "<none>"
-
-
 def build_vocab(
     runs: list[dict[str, Path | str]],
-) -> tuple[dict[str, int], dict[str, int], dict[str, int], dict[str, int], dict[str, int], dict[str, Any]]:
+) -> tuple[dict[str, int], dict[str, int], dict[str, int], dict[str, Any]]:
     all_actions = []
     for run in runs:
         all_actions.extend(condense_key_repeats(read_jsonl(Path(run["imitation_path"]))))
@@ -993,14 +922,10 @@ def build_vocab(
     high_levels = [high_level_name(action) for action in all_actions]
     gui_actions = [gui_action_name(action) for action in all_actions]
     keys = collect_key_names(all_actions)
-    target_entities = [action_target_entity(action) for action in all_actions]
-    point_roles = [action_point_role(action) for action in all_actions]
 
     high_level_to_id = stable_mapping(high_levels)
     gui_action_to_id = stable_mapping(gui_actions)
     key_to_id = stable_mapping(keys, include_none=False)
-    target_entity_to_id = stable_mapping(target_entities)
-    point_role_to_id = stable_mapping(point_roles)
 
     vocab = {
         "action_type_to_id": ACTION_TYPE_TO_ID,
@@ -1009,18 +934,14 @@ def build_vocab(
         "high_level_to_id": high_level_to_id,
         "gui_action_to_id": gui_action_to_id,
         "key_to_id": key_to_id,
-        "target_entity_to_id": target_entity_to_id,
-        "point_role_to_id": point_role_to_id,
         "counts": {
             "action_type": dict(Counter(action.get("type") for action in all_actions)),
             "high_level_action": dict(Counter(high_levels)),
             "gui_action": dict(Counter(gui_actions)),
             "key": dict(Counter(keys)),
-            "target_entity": dict(Counter(target_entities)),
-            "point_role": dict(Counter(point_roles)),
         },
     }
-    return high_level_to_id, gui_action_to_id, key_to_id, target_entity_to_id, point_role_to_id, vocab
+    return high_level_to_id, gui_action_to_id, key_to_id, vocab
 
 
 def transform_run(
@@ -1030,8 +951,6 @@ def transform_run(
     high_level_to_id: dict[str, int],
     gui_action_to_id: dict[str, int],
     key_to_id: dict[str, int],
-    target_entity_to_id: dict[str, int],
-    point_role_to_id: dict[str, int],
     split: str,
     image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
     grounding_config: dict[str, Any] | None = None,
@@ -1064,8 +983,6 @@ def transform_run(
     high_level_ids = []
     gui_action_ids = []
     coordinate_frame_ids = []
-    target_entity_ids = []
-    point_role_ids = []
     flat_actions = []
     progress_vectors = []
     for step_index, action in enumerate(actions):
@@ -1075,10 +992,6 @@ def transform_run(
         gui_action_id = gui_action_to_id.get(gui_name, 0)
         primitive_action, coordinate_frame = encode_primitive_action(action, key_to_id)
         coordinate_frame_id = COORDINATE_FRAME_TO_ID[coordinate_frame]
-        target_entity = action_target_entity(action)
-        point_role = action_point_role(action)
-        target_entity_id = target_entity_to_id.get(target_entity, 0)
-        point_role_id = point_role_to_id.get(point_role, 0)
         flat_action = [float(high_level_id), float(gui_action_id), *primitive_action]
         task_progress = progress_by_step[step_index]
         raw_action_screenshot_path = resolve_screenshot_path(action.get("screenshot_path"), run_dir, repo_root)
@@ -1097,8 +1010,6 @@ def transform_run(
         high_level_ids.append(high_level_id)
         gui_action_ids.append(gui_action_id)
         coordinate_frame_ids.append(coordinate_frame_id)
-        target_entity_ids.append(target_entity_id)
-        point_role_ids.append(point_role_id)
         flat_actions.append(flat_action)
         progress_vectors.append(task_progress["vector"])
 
@@ -1121,10 +1032,6 @@ def transform_run(
                 "gui_action_id": gui_action_id,
                 "coordinate_frame": coordinate_frame,
                 "coordinate_frame_id": coordinate_frame_id,
-                "target_entity": target_entity,
-                "target_entity_id": target_entity_id,
-                "point_role": point_role,
-                "point_role_id": point_role_id,
                 "primitive_action": primitive_action,
                 "flat_action": flat_action,
                 "progress_vector": task_progress["vector"],
@@ -1134,8 +1041,6 @@ def transform_run(
                 "key": key_name(action),
                 "parent_high_level_index": action.get("parent_high_level_index"),
                 "parent_entity": action.get("parent_entity"),
-                "target_entity": action.get("target_entity"),
-                "point_role": action.get("point_role"),
                 "model_point_mm": action.get("model_point_mm"),
                 "source_insertion_point": action.get("source_insertion_point"),
                 "source_click_point": action.get("source_click_point"),
@@ -1208,8 +1113,6 @@ def transform_run(
             "high_level_ids": high_level_ids,
             "gui_action_ids": gui_action_ids,
             "coordinate_frame_ids": coordinate_frame_ids,
-            "target_entity_ids": target_entity_ids,
-            "point_role_ids": point_role_ids,
             "flat_actions": flat_actions,
             "progress": progress_vectors,
         },
@@ -1232,8 +1135,7 @@ def transform_run(
             "task_entity_counts": task_entity_counts,
             "encoded_resplan": sample["model_inputs"]["encoded_resplan"],
             "execution_coordinate_policy": sample["model_inputs"]["encoded_resplan"]["execution_coordinate_policy"],
-            "entity_points": sample["model_inputs"]["encoded_resplan"]["entity_points"],
-            "note": "Runtime coordinate metadata only. It contains coordinate transforms and entity point lookup, not the action sequence.",
+            "note": "Runtime coordinate metadata only. It contains coordinate transforms, not the action sequence.",
         },
     )
     tensor_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1243,8 +1145,6 @@ def transform_run(
         high_level_ids=np.asarray(high_level_ids, dtype=np.int64),
         gui_action_ids=np.asarray(gui_action_ids, dtype=np.int64),
         coordinate_frame_ids=np.asarray(coordinate_frame_ids, dtype=np.int64),
-        target_entity_ids=np.asarray(target_entity_ids, dtype=np.int64),
-        point_role_ids=np.asarray(point_role_ids, dtype=np.int64),
         flat_actions=np.asarray(flat_actions, dtype=np.float32),
         progress=np.asarray(progress_vectors, dtype=np.float32),
     )
@@ -1296,7 +1196,7 @@ def transform_dataset(
     output_dir.mkdir(parents=True, exist_ok=True)
     grounding_config = read_optional_json(repo_root / grounding_config_path, {}) if grounding_config_path else {}
 
-    high_level_to_id, gui_action_to_id, key_to_id, target_entity_to_id, point_role_to_id, vocab = build_vocab(runs)
+    high_level_to_id, gui_action_to_id, key_to_id, vocab = build_vocab(runs)
     write_json(output_dir / "action_vocab.json", vocab)
 
     split_by_run = build_balanced_split_map(runs)
@@ -1311,8 +1211,6 @@ def transform_dataset(
                 high_level_to_id=high_level_to_id,
                 gui_action_to_id=gui_action_to_id,
                 key_to_id=key_to_id,
-                target_entity_to_id=target_entity_to_id,
-                point_role_to_id=point_role_to_id,
                 split=split,
                 image_size=image_size,
                 grounding_config=grounding_config,
@@ -1332,7 +1230,7 @@ def transform_dataset(
             "target_run_counts": target_split_counts(len(runs)),
             "strategy": (
                 "greedy stratified assignment by condensed primitive action type, "
-                "high-level action, GUI action, target entity, point role, and step count"
+                "high-level action, GUI action, and step count"
             ),
         },
         "primitive_action_dim": 6,
@@ -1345,7 +1243,7 @@ def transform_dataset(
         "missing_global_floorplans": sum(item["missing_global_floorplan"] for item in index),
         "training_contract": {
             "inference_inputs": [
-                "resplan_json_or_encoded_sequence_entities",
+                "resplan_json_or_encoded_plan",
                 "global_floorplan_image",
                 "current_screenshot",
                 "historical_actions",
@@ -1354,8 +1252,6 @@ def transform_dataset(
                 "next_high_level_id",
                 "next_gui_action_id",
                 "next_primitive_action",
-                "next_target_entity_id",
-                "next_point_role_id",
             ],
             "sequence_files_are": "supervision/provenance, not model inputs",
         },

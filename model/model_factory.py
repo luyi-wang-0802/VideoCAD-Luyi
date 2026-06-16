@@ -29,16 +29,12 @@ def _load_vocab_counts(model_config: dict[str, Any]) -> dict[str, int]:
     gui_action_to_id = vocab.get("gui_action_to_id", {})
     key_to_id = vocab.get("key_to_id", {})
     coordinate_frame_to_id = vocab.get("coordinate_frame_to_id", {})
-    target_entity_to_id = vocab.get("target_entity_to_id", {})
-    point_role_to_id = vocab.get("point_role_to_id", {})
     return {
         "num_action_types": max(action_type_to_id.values(), default=0) + 1,
         "num_high_level_actions": max(high_level_to_id.values(), default=0) + 1,
         "num_gui_actions": max(gui_action_to_id.values(), default=0) + 1,
         "num_keys": len(key_to_id),
         "num_coordinate_frames": max(coordinate_frame_to_id.values(), default=0) + 1,
-        "num_target_entities": max(target_entity_to_id.values(), default=0) + 1,
-        "num_point_roles": max(point_role_to_id.values(), default=0) + 1,
     }
 
 

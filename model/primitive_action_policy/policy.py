@@ -42,13 +42,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             nn.Linear(h, h),
             nn.LayerNorm(h),
         )
-        self.entity_encoder = nn.Sequential(
-            nn.Linear(config.entity_feature_dim, h),
-            nn.GELU(),
-            nn.Linear(h, h),
-            nn.LayerNorm(h),
-        )
-        self.entity_score_norm = nn.LayerNorm(h)
         self.plan_projection = nn.Sequential(nn.Linear(h * 2, h), nn.GELU(), nn.LayerNorm(h))
         self.progress_encoder = nn.Sequential(
             nn.Linear(config.progress_feature_dim, h),
@@ -61,14 +54,12 @@ class PrimitiveActionPolicyModel(nn.Module):
         self.gui_action_embedding = nn.Embedding(config.num_gui_actions, h)
         self.key_embedding = nn.Embedding(config.num_keys + 1, h)
         self.coordinate_frame_embedding = nn.Embedding(config.num_coordinate_frames, h)
-        self.target_entity_embedding = nn.Embedding(config.num_target_entities, h)
-        self.point_role_embedding = nn.Embedding(config.num_point_roles, h)
         self.primitive_projection = nn.Sequential(
             nn.Linear(config.primitive_action_dim, h),
             nn.GELU(),
             nn.LayerNorm(h),
         )
-        self.history_projection = nn.Sequential(nn.Linear(h * 8, h), nn.GELU(), nn.LayerNorm(h))
+        self.history_projection = nn.Sequential(nn.Linear(h * 6, h), nn.GELU(), nn.LayerNorm(h))
 
         self.plan_token = nn.Parameter(torch.zeros(1, 1, h))
         self.observation_token = nn.Parameter(torch.zeros(1, 1, h))
@@ -93,13 +84,10 @@ class PrimitiveActionPolicyModel(nn.Module):
         self.high_level_head = nn.Linear(h, config.num_high_level_actions)
         self.gui_action_head = nn.Linear(h, config.num_gui_actions)
         self.coordinate_frame_head = nn.Linear(h, config.num_coordinate_frames)
-        self.target_entity_head = nn.Linear(h, config.num_target_entities)
-        self.point_role_head = nn.Linear(h, config.num_point_roles)
         self.xy_head = nn.Linear(h, 2)
         self.key_head = nn.Linear(h, config.num_keys)
         self.repeat_head = nn.Linear(h, config.max_repeat_count + 1)
         self.interval_head = nn.Linear(h, 1)
-        self.param_bin_head = nn.Linear(h, config.primitive_param_dim * config.num_param_bins)
 
         self.apply(self._init_weights)
 
@@ -128,28 +116,6 @@ class PrimitiveActionPolicyModel(nn.Module):
         insertion_context = masked_mean(insertion_features, insertion_mask)
         return self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1))
 
-    def entity_target_logits(self, query_hidden: torch.Tensor, plan: dict[str, torch.Tensor]) -> torch.Tensor:
-        fallback_logits = self.target_entity_head(query_hidden)
-        entities = plan.get("entities")
-        entity_mask = plan.get("entity_mask")
-        entity_vocab_ids = plan.get("entity_vocab_ids")
-        if entities is None or entity_mask is None or entity_vocab_ids is None or entities.shape[1] == 0:
-            return fallback_logits
-
-        entity_features = self.entity_encoder(entities.float())
-        query = self.entity_score_norm(query_hidden).unsqueeze(1)
-        scores = (entity_features * query).sum(dim=-1) / (self.config.hidden_size ** 0.5)
-        scores = scores.masked_fill(~entity_mask.bool(), -1.0e4)
-
-        candidate_logits = torch.full_like(fallback_logits, -1.0e4)
-        safe_ids = entity_vocab_ids.long().clamp(min=0, max=self.config.num_target_entities - 1)
-        candidate_logits = candidate_logits.scatter_reduce(1, safe_ids, scores, reduce="amax", include_self=True)
-        class_ids = torch.arange(
-            self.config.num_target_entities,
-            device=candidate_logits.device,
-        ).unsqueeze(0)
-        return torch.where(class_ids == 0, fallback_logits, candidate_logits)
-
     def encode_history(self, history: dict[str, torch.Tensor]) -> torch.Tensor:
         primitive = history["primitive_action"].float().clone()
         primitive[..., 0] = primitive[..., 0].clamp(min=0) / max(self.config.num_action_types - 1, 1)
@@ -161,15 +127,6 @@ class PrimitiveActionPolicyModel(nn.Module):
         gui_action = history["gui_action_id"].clamp(min=0, max=self.config.num_gui_actions - 1)
         key = history["key_id"].clamp(min=-1, max=self.config.num_keys - 1) + 1
         coordinate_frame = history["coordinate_frame_id"].clamp(min=0, max=self.config.num_coordinate_frames - 1)
-        target_entity = history.get("target_entity_id")
-        if target_entity is None:
-            target_entity = torch.zeros_like(action_type)
-        target_entity = target_entity.clamp(min=0, max=self.config.num_target_entities - 1)
-        point_role = history.get("point_role_id")
-        if point_role is None:
-            point_role = torch.zeros_like(action_type)
-        point_role = point_role.clamp(min=0, max=self.config.num_point_roles - 1)
-
         pieces = [
             self.primitive_projection(primitive),
             self.action_type_embedding(action_type),
@@ -177,8 +134,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             self.gui_action_embedding(gui_action),
             self.key_embedding(key),
             self.coordinate_frame_embedding(coordinate_frame),
-            self.target_entity_embedding(target_entity),
-            self.point_role_embedding(point_role),
         ]
         return self.history_projection(torch.cat(pieces, dim=-1))
 
@@ -257,87 +212,11 @@ class PrimitiveActionPolicyModel(nn.Module):
             "high_level_logits": self.high_level_head(query_hidden),
             "gui_action_logits": self.gui_action_head(query_hidden),
             "coordinate_frame_logits": self.coordinate_frame_head(query_hidden),
-            "target_entity_logits": self.entity_target_logits(query_hidden, plan),
-            "point_role_logits": self.point_role_head(query_hidden),
             "xy": self.xy_head(query_hidden),
             "key_logits": self.key_head(query_hidden),
             "repeat_logits": self.repeat_head(query_hidden),
             "key_interval": self.interval_head(query_hidden).squeeze(-1),
-            "param_bin_logits": self.param_bin_head(query_hidden).reshape(
-                batch_size, self.config.primitive_param_dim, self.config.num_param_bins
-            ),
         }
-
-    def bin_to_model_coord(self, bins: torch.Tensor) -> torch.Tensor:
-        cfg = self.config
-        return bins.float() / max(cfg.num_param_bins - 1, 1) * (cfg.model_coord_max - cfg.model_coord_min) + cfg.model_coord_min
-
-    def key_bin_to_id(self, bins: torch.Tensor) -> torch.Tensor:
-        return torch.round(bins.float() / max(self.config.key_bin_size, 1)).long().clamp(min=0, max=self.config.num_keys - 1)
-
-    def repeat_bin_to_count(self, bins: torch.Tensor) -> torch.Tensor:
-        return torch.round(bins.float() / max(self.config.repeat_bin_size, 1)).long().clamp(
-            min=0, max=self.config.max_repeat_count
-        )
-
-    def soft_bin_cross_entropy(
-        self,
-        logits: torch.Tensor,
-        targets: torch.Tensor,
-        tolerance: int,
-        sigma: float,
-    ) -> torch.Tensor:
-        valid = targets != -1
-        if not valid.any():
-            return logits.sum() * 0.0
-        logits = logits[valid]
-        targets = targets[valid].long()
-        classes = torch.arange(logits.shape[-1], device=logits.device).unsqueeze(0)
-        distance = (classes - targets.unsqueeze(1)).abs().float()
-        soft_targets = torch.exp(-0.5 * (distance / max(float(sigma), 1e-6)) ** 2)
-        soft_targets = soft_targets.masked_fill(distance > tolerance, 0.0)
-        soft_targets = soft_targets / soft_targets.sum(dim=1, keepdim=True).clamp_min(1e-8)
-        log_probs = F.log_softmax(logits, dim=-1)
-        return -(soft_targets * log_probs).sum(dim=-1).mean()
-
-    def binned_param_loss(self, outputs: dict[str, torch.Tensor], param_bins: torch.Tensor) -> dict[str, torch.Tensor]:
-        cfg = self.config
-        logits = outputs["param_bin_logits"]
-        zero = logits.sum() * 0.0
-        losses: dict[str, torch.Tensor] = {}
-        if cfg.soft_xy_bin_loss:
-            losses["loss_x_bin"] = self.soft_bin_cross_entropy(
-                logits[:, 0], param_bins[:, 0].long(), cfg.xy_bin_tolerance, cfg.xy_bin_soft_sigma
-            )
-            losses["loss_y_bin"] = self.soft_bin_cross_entropy(
-                logits[:, 1], param_bins[:, 1].long(), cfg.xy_bin_tolerance, cfg.xy_bin_soft_sigma
-            )
-        else:
-            for index, name in [(0, "loss_x_bin"), (1, "loss_y_bin")]:
-                target = param_bins[:, index].long()
-                valid = target != -1
-                losses[name] = F.cross_entropy(logits[:, index][valid], target[valid]) if valid.any() else zero
-
-        for index, name in [(2, "loss_key_bin"), (3, "loss_repeat_bin")]:
-            target = param_bins[:, index].long()
-            valid = target != -1
-            losses[name] = F.cross_entropy(logits[:, index][valid], target[valid]) if valid.any() else zero
-
-        if cfg.ignore_interval_bin_loss:
-            losses["loss_interval_bin"] = zero
-        else:
-            target = param_bins[:, 4].long()
-            valid = target != -1
-            losses["loss_interval_bin"] = F.cross_entropy(logits[:, 4][valid], target[valid]) if valid.any() else zero
-
-        losses["loss_param_bins"] = (
-            losses["loss_x_bin"]
-            + losses["loss_y_bin"]
-            + losses["loss_key_bin"]
-            + losses["loss_repeat_bin"]
-            + losses["loss_interval_bin"]
-        )
-        return losses
 
     def compute_loss(self, batch: dict[str, Any], outputs: dict[str, torch.Tensor] | None = None) -> dict[str, torch.Tensor]:
         if outputs is None:
@@ -352,37 +231,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             "loss_high_level": F.cross_entropy(outputs["high_level_logits"], target["high_level_id"].long()),
             "loss_gui_action": F.cross_entropy(outputs["gui_action_logits"], target["gui_action_id"].long()),
         }
-        valid_target_entity = target["has_target_entity"].bool()
-        losses["loss_target_entity"] = (
-            F.cross_entropy(
-                outputs["target_entity_logits"][valid_target_entity],
-                target["target_entity_id"][valid_target_entity].long(),
-            )
-            if valid_target_entity.any()
-            else zero
-        )
-        valid_point_role = target["has_point_role"].bool()
-        losses["loss_point_role"] = (
-            F.cross_entropy(
-                outputs["point_role_logits"][valid_point_role],
-                target["point_role_id"][valid_point_role].long(),
-            )
-            if valid_point_role.any()
-            else zero
-        )
-        if cfg.use_binned_primitive_params:
-            param_bins = target.get("primitive_param_bins")
-            if param_bins is not None:
-                losses.update(self.binned_param_loss(outputs, param_bins))
-            losses["loss"] = (
-                cfg.loss_action_type_weight * losses["loss_action_type"]
-                + cfg.loss_high_level_weight * losses["loss_high_level"]
-                + cfg.loss_gui_action_weight * losses["loss_gui_action"]
-                + cfg.loss_param_bins_weight * losses.get("loss_param_bins", zero)
-                + cfg.loss_target_entity_weight * losses["loss_target_entity"]
-                + cfg.loss_point_role_weight * losses["loss_point_role"]
-            )
-            return losses
 
         is_move = target["is_move"].bool()
         is_key_action = target["is_key_action"].bool()
@@ -427,8 +275,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             + cfg.loss_key_weight * losses["loss_key"]
             + cfg.loss_repeat_weight * losses["loss_repeat"]
             + cfg.loss_interval_weight * losses["loss_interval"]
-            + cfg.loss_target_entity_weight * losses["loss_target_entity"]
-            + cfg.loss_point_role_weight * losses["loss_point_role"]
         )
         return losses
 
@@ -438,25 +284,14 @@ class PrimitiveActionPolicyModel(nn.Module):
         high_level_id = outputs["high_level_logits"].argmax(dim=-1)
         gui_action_id = outputs["gui_action_logits"].argmax(dim=-1)
         coordinate_frame_id = outputs["coordinate_frame_logits"].argmax(dim=-1)
-        target_entity_id = outputs["target_entity_logits"].argmax(dim=-1)
-        point_role_id = outputs["point_role_logits"].argmax(dim=-1)
-        if self.config.use_binned_primitive_params:
-            param_bins = outputs["param_bin_logits"].argmax(dim=-1)
-            x = self.bin_to_model_coord(param_bins[:, 0])
-            y = self.bin_to_model_coord(param_bins[:, 1])
-            key_id = self.key_bin_to_id(param_bins[:, 2])
-            repeat_count = self.repeat_bin_to_count(param_bins[:, 3])
-            key_interval = param_bins[:, 4].float()
+        x = outputs["xy"][:, 0]
+        y = outputs["xy"][:, 1]
+        key_id = outputs["key_logits"].argmax(dim=-1)
+        repeat_count = outputs["repeat_logits"].argmax(dim=-1)
+        if self.config.ignore_interval_loss:
+            key_interval = torch.full_like(outputs["key_interval"], float(self.config.default_key_interval_ms))
         else:
-            param_bins = None
-            x = outputs["xy"][:, 0]
-            y = outputs["xy"][:, 1]
-            key_id = outputs["key_logits"].argmax(dim=-1)
-            repeat_count = outputs["repeat_logits"].argmax(dim=-1)
-            if self.config.ignore_interval_loss:
-                key_interval = torch.full_like(outputs["key_interval"], float(self.config.default_key_interval_ms))
-            else:
-                key_interval = outputs["key_interval"] * 1000.0
+            key_interval = outputs["key_interval"] * 1000.0
         primitive_action = torch.stack(
             [action_type_id.float(), x, y, key_id.float(), repeat_count.float(), key_interval],
             dim=-1,
@@ -471,9 +306,5 @@ class PrimitiveActionPolicyModel(nn.Module):
             "high_level_id": high_level_id,
             "gui_action_id": gui_action_id,
             "coordinate_frame_id": coordinate_frame_id,
-            "target_entity_id": target_entity_id,
-            "point_role_id": point_role_id,
         }
-        if param_bins is not None:
-            decoded["primitive_param_bins"] = param_bins
         return decoded

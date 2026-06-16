@@ -1571,13 +1571,9 @@ class PrimitiveActionTrainer(BaseTrainer):
         "loss_xy",
         "loss_key",
         "loss_repeat",
-        "loss_target_entity",
-        "loss_point_role",
         "action_type_acc",
         "high_level_acc",
         "gui_action_acc",
-        "target_entity_acc",
-        "point_role_acc",
         "xy_mae",
         "key_acc",
         "repeat_acc",
@@ -1604,16 +1600,10 @@ class PrimitiveActionTrainer(BaseTrainer):
             "loss_key": 0.0,
             "loss_repeat": 0.0,
             "loss_interval": 0.0,
-            "loss_target_entity": 0.0,
-            "loss_point_role": 0.0,
             "action_type_correct": 0,
             "high_level_correct": 0,
             "gui_action_correct": 0,
             "coordinate_frame_correct": 0,
-            "target_entity_correct": 0,
-            "target_entity_count": 0,
-            "point_role_correct": 0,
-            "point_role_count": 0,
             "xy_abs_error": 0.0,
             "xy_count": 0,
             "key_correct": 0,
@@ -1646,12 +1636,6 @@ class PrimitiveActionTrainer(BaseTrainer):
         averaged["high_level_acc"] = metrics["high_level_correct"] / count
         averaged["gui_action_acc"] = metrics["gui_action_correct"] / count
         averaged["coordinate_frame_acc"] = metrics["coordinate_frame_correct"] / count
-        averaged["target_entity_acc"] = metrics.get("target_entity_correct", 0) / max(
-            int(metrics.get("target_entity_count", 0)), 1
-        )
-        averaged["point_role_acc"] = metrics.get("point_role_correct", 0) / max(
-            int(metrics.get("point_role_count", 0)), 1
-        )
         averaged["xy_mae"] = metrics.get("xy_abs_error", 0.0) / max(int(metrics.get("xy_count", 0)), 1)
         averaged["key_acc"] = metrics.get("key_correct", 0) / max(int(metrics.get("key_count", 0)), 1)
         averaged["repeat_acc"] = metrics.get("repeat_correct", 0) / max(int(metrics.get("repeat_count", 0)), 1)
@@ -1662,12 +1646,8 @@ class PrimitiveActionTrainer(BaseTrainer):
         high_pred = outputs["high_level_logits"].argmax(dim=-1)
         gui_pred = outputs["gui_action_logits"].argmax(dim=-1)
         frame_pred = outputs["coordinate_frame_logits"].argmax(dim=-1)
-        entity_pred = outputs["target_entity_logits"].argmax(dim=-1)
-        role_pred = outputs["point_role_logits"].argmax(dim=-1)
         is_move = target["is_move"].bool()
         is_key_action = target["is_key_action"].bool()
-        valid_target_entity = target["has_target_entity"].bool()
-        valid_point_role = target["has_point_role"].bool()
         xy_error = (
             (outputs["xy"][is_move] - target["xy"][is_move]).abs().sum().item()
             if is_move.any()
@@ -1701,18 +1681,12 @@ class PrimitiveActionTrainer(BaseTrainer):
                     "loss_key",
                     "loss_repeat",
                     "loss_interval",
-                    "loss_target_entity",
-                    "loss_point_role",
                 }
             },
             "action_type_correct": (action_pred == target["action_type_id"]).sum().item(),
             "high_level_correct": (high_pred == target["high_level_id"]).sum().item(),
             "gui_action_correct": (gui_pred == target["gui_action_id"]).sum().item(),
             "coordinate_frame_correct": (frame_pred == target["coordinate_frame_id"]).sum().item(),
-            "target_entity_correct": ((entity_pred == target["target_entity_id"]) & valid_target_entity).sum().item(),
-            "target_entity_count": valid_target_entity.sum().item(),
-            "point_role_correct": ((role_pred == target["point_role_id"]) & valid_point_role).sum().item(),
-            "point_role_count": valid_point_role.sum().item(),
             **metric_values,
             "count": target["action_type_id"].shape[0],
         }

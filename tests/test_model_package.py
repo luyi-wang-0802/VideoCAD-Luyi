@@ -19,7 +19,6 @@ def minimal_batch() -> dict:
         },
         "history": {
             "primitive_action": torch.zeros(2, 2, 6),
-            "primitive_param_bins": torch.full((2, 2, 5), -1),
             "action_type_id": torch.zeros(2, 2, dtype=torch.long),
             "xy": torch.zeros(2, 2, 2),
             "key_id": torch.full((2, 2), -1, dtype=torch.long),
@@ -28,10 +27,6 @@ def minimal_batch() -> dict:
             "high_level_id": torch.zeros(2, 2, dtype=torch.long),
             "gui_action_id": torch.zeros(2, 2, dtype=torch.long),
             "coordinate_frame_id": torch.zeros(2, 2, dtype=torch.long),
-            "target_entity_id": torch.zeros(2, 2, dtype=torch.long),
-            "point_role_id": torch.zeros(2, 2, dtype=torch.long),
-            "has_target_entity": torch.zeros(2, 2, dtype=torch.bool),
-            "has_point_role": torch.zeros(2, 2, dtype=torch.bool),
             "is_move": torch.zeros(2, 2, dtype=torch.bool),
             "is_key_action": torch.zeros(2, 2, dtype=torch.bool),
             "mask": torch.tensor([[False, False], [True, False]]),
@@ -40,7 +35,6 @@ def minimal_batch() -> dict:
             "primitive_action": torch.tensor(
                 [[1.0, 0.1, 0.2, -1.0, -1.0, -1.0], [2.0, -1.0, -1.0, -1.0, -1.0, -1.0]]
             ),
-            "primitive_param_bins": torch.full((2, 5), -1),
             "action_type_id": torch.tensor([1, 2]),
             "xy": torch.tensor([[0.1, 0.2], [-1.0, -1.0]]),
             "key_id": torch.tensor([-1, -1]),
@@ -49,10 +43,6 @@ def minimal_batch() -> dict:
             "high_level_id": torch.tensor([1, 2]),
             "gui_action_id": torch.tensor([1, 3]),
             "coordinate_frame_id": torch.tensor([1, 0]),
-            "target_entity_id": torch.tensor([1, 0]),
-            "point_role_id": torch.tensor([1, 0]),
-            "has_target_entity": torch.tensor([True, False]),
-            "has_point_role": torch.tensor([True, False]),
             "is_move": torch.tensor([True, False]),
             "is_key_action": torch.tensor([False, False]),
         },
@@ -70,8 +60,6 @@ def test_primitive_policy_package_import_and_forward() -> None:
             num_high_level_actions=3,
             num_gui_actions=4,
             num_keys=2,
-            num_target_entities=2,
-            num_point_roles=2,
         )
     )
     batch = minimal_batch()
@@ -80,6 +68,8 @@ def test_primitive_policy_package_import_and_forward() -> None:
     losses = model.compute_loss(batch, outputs)
 
     assert outputs["action_type_logits"].shape == torch.Size([2, 6])
+    assert "target_entity_logits" not in outputs
+    assert "point_role_logits" not in outputs
     assert torch.isfinite(losses["loss"])
 
 
@@ -94,8 +84,6 @@ def test_primitive_policy_forward_without_global_floorplan() -> None:
             num_high_level_actions=3,
             num_gui_actions=4,
             num_keys=2,
-            num_target_entities=2,
-            num_point_roles=2,
         )
     )
     batch = minimal_batch()
@@ -109,7 +97,7 @@ def test_primitive_policy_forward_without_global_floorplan() -> None:
     assert torch.isfinite(losses["loss"])
 
 
-def test_primitive_policy_entity_target_loss_backward() -> None:
+def test_primitive_policy_xy_loss_backward() -> None:
     model = PrimitiveActionPolicyModel(
         PrimitiveActionPolicyConfig(
             hidden_size=32,
@@ -120,16 +108,9 @@ def test_primitive_policy_entity_target_loss_backward() -> None:
             num_high_level_actions=3,
             num_gui_actions=4,
             num_keys=2,
-            num_target_entities=105,
-            num_point_roles=2,
         )
     )
     batch = minimal_batch()
-    batch["plan"]["entities"] = torch.randn(2, 2, 11)
-    batch["plan"]["entity_mask"] = torch.tensor([[True, True], [True, False]])
-    batch["plan"]["entity_vocab_ids"] = torch.tensor([[1, 7], [2, 0]])
-    batch["target"]["target_entity_id"] = torch.tensor([7, 2])
-    batch["target"]["has_target_entity"] = torch.tensor([True, True])
 
     outputs = model(batch)
     losses = model.compute_loss(batch, outputs)
@@ -150,8 +131,6 @@ def test_model_factory_only_creates_current_primitive_policy() -> None:
             "num_high_level_actions": 3,
             "num_gui_actions": 4,
             "num_keys": 2,
-            "num_target_entities": 2,
-            "num_point_roles": 2,
         },
         "cpu",
     )

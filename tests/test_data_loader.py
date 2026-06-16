@@ -17,8 +17,6 @@ def minimal_loader_item() -> dict:
         "plan": {
             "walls": torch.zeros((1, 5), dtype=torch.float32),
             "insertions": torch.zeros((0, 5), dtype=torch.float32),
-            "entities": torch.zeros((0, 11), dtype=torch.float32),
-            "entity_vocab_ids": torch.zeros((0,), dtype=torch.long),
         },
         "progress": torch.zeros((18,), dtype=torch.float32),
         "history": {
