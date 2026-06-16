@@ -31,6 +31,7 @@ references and provenance, not as model input answers.
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import json
 import shutil
 from collections import Counter
@@ -1182,6 +1183,10 @@ def transform_run(
     }
 
 
+def transform_run_worker(args: dict[str, Any]) -> dict[str, Any]:
+    return transform_run(**args)
+
+
 def transform_dataset(
     raw_data_dir: Path,
     output_dir: Path,
@@ -1189,6 +1194,7 @@ def transform_dataset(
     overwrite: bool = False,
     image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
     grounding_config_path: Path | None = DEFAULT_GROUNDING_CONFIG_PATH,
+    num_workers: int = 1,
 ) -> None:
     runs = discover_runs(raw_data_dir)
     if output_dir.exists() and overwrite:
@@ -1200,22 +1206,27 @@ def transform_dataset(
     write_json(output_dir / "action_vocab.json", vocab)
 
     split_by_run = build_balanced_split_map(runs)
-    index = []
-    for run in runs:
-        split = split_by_run[str(run["run_id"])]
-        index.append(
-            transform_run(
-                run=run,
-                output_dir=output_dir,
-                repo_root=repo_root,
-                high_level_to_id=high_level_to_id,
-                gui_action_to_id=gui_action_to_id,
-                key_to_id=key_to_id,
-                split=split,
-                image_size=image_size,
-                grounding_config=grounding_config,
-            )
-        )
+    worker_count = max(int(num_workers), 1)
+    run_args = [
+        {
+            "run": run,
+            "output_dir": output_dir,
+            "repo_root": repo_root,
+            "high_level_to_id": high_level_to_id,
+            "gui_action_to_id": gui_action_to_id,
+            "key_to_id": key_to_id,
+            "split": split_by_run[str(run["run_id"])],
+            "image_size": image_size,
+            "grounding_config": grounding_config,
+        }
+        for run in runs
+    ]
+    if worker_count == 1 or len(run_args) <= 1:
+        index = [transform_run_worker(args) for args in run_args]
+    else:
+        print(f"Processing {len(run_args)} runs with {worker_count} workers...")
+        with concurrent.futures.ProcessPoolExecutor(max_workers=worker_count) as executor:
+            index = list(executor.map(transform_run_worker, run_args))
 
     summary = {
         "raw_data_dir": relpath(raw_data_dir, repo_root),
@@ -1284,6 +1295,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--image-width", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[0])
     parser.add_argument("--image-height", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[1])
     parser.add_argument("--grounding-config", type=Path, default=DEFAULT_GROUNDING_CONFIG_PATH)
+    parser.add_argument("--num-workers", type=int, default=1, help="Number of parallel worker processes for run preprocessing.")
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -1298,6 +1310,7 @@ def main() -> None:
         overwrite=args.overwrite,
         image_size=(args.image_width, args.image_height),
         grounding_config_path=args.grounding_config,
+        num_workers=args.num_workers,
     )
 
 
