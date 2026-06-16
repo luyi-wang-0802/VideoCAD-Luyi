@@ -58,6 +58,7 @@ class Experiment:
                 'lr': 1e-4,
                 'num_workers': self.num_workers,
                 'save_frequency': 10,
+                'checkpoint_frequency': 100,
                 'val_frequency': 4,
                 'sequential': True,
                 'seq_val_frequency': 110,

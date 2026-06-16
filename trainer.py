@@ -227,9 +227,10 @@ class CheckpointHandler:
         if not self.is_master:
             return
         checkpoint = self.build_checkpoint(epoch, loss, model, optimizer, scheduler, training_config)
-        if kind not in {"best", "last"}:
+        if kind not in {"best", "last", "epoch"}:
             raise ValueError(f"Unsupported checkpoint kind: {kind}")
-        path = self._save_atomic(checkpoint, f"{kind}.pt")
+        filename = f"epoch_{epoch + 1:04d}.pt" if kind == "epoch" else f"{kind}.pt"
+        path = self._save_atomic(checkpoint, filename)
         if path is not None:
             print(f"Saved {kind} checkpoint for epoch {epoch+1}: {path}")
         return checkpoint
@@ -381,6 +382,10 @@ class BaseTrainer:
         )
         return ckpt
 
+    @staticmethod
+    def _should_save_periodic_checkpoint(epoch, frequency):
+        return frequency > 0 and (epoch + 1) % frequency == 0
+
     def _build_lr_scheduler(self):
         if self.training_config.get('disable_lr_scheduler', False):
             return None
@@ -481,6 +486,7 @@ class BaseTrainer:
         best_metric_value = float('inf') if self.early_stopping_mode == 'min' else float('-inf')
         best_model_state = None
         patience_counter = 0
+        checkpoint_frequency = int(self.training_config.get('checkpoint_frequency', 100))
         start_time = time.time()
         for epoch in range(epochs):
             self.log(f"Epoch [{epoch + 1}/{epochs}] started")
@@ -493,6 +499,8 @@ class BaseTrainer:
             if epoch_metrics:
                 self.log_wandb(epoch_metrics, step=(epoch + 1) * len(self.train_loader))
             self.save_checkpoint(epoch, avg_loss, kind="last")
+            if self._should_save_periodic_checkpoint(epoch, checkpoint_frequency):
+                self.save_checkpoint(epoch, avg_loss, kind="epoch")
             
             # Validation phase
             val_metrics = self._run_validation(epoch)
@@ -703,9 +711,6 @@ class BaseTrainer:
 
     def _handle_early_stopping(self, epoch, avg_loss, val_metrics, best_metric_value, patience_counter, best_model_state):
         """Handle early stopping logic."""
-        if not self.early_stopping_enabled:
-            return best_metric_value, patience_counter, best_model_state, False
-
         current_metric = self._get_current_metric(avg_loss, val_metrics)
         improved = self._check_metric_improvement(current_metric, best_metric_value)
         
@@ -716,9 +721,10 @@ class BaseTrainer:
             best_model_state = self.save_checkpoint(epoch, avg_loss, kind="best")
             self.log(f"Saved best model checkpoint at epoch {epoch+1}")
         else:
-            patience_counter += 1
-            self.log(f"Validation {self.early_stopping_metric} did not improve. Patience: {patience_counter}/{self.early_stopping_patience}")
-        should_stop_local = patience_counter >= self.early_stopping_patience
+            if self.early_stopping_enabled:
+                patience_counter += 1
+                self.log(f"Validation {self.early_stopping_metric} did not improve. Patience: {patience_counter}/{self.early_stopping_patience}")
+        should_stop_local = self.early_stopping_enabled and patience_counter >= self.early_stopping_patience
         if dist.is_initialized():
             flag = torch.tensor([int(should_stop_local)], device=self.device)
             dist.all_reduce(flag, op=torch.distributed.ReduceOp.MIN)

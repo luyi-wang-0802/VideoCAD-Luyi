@@ -123,6 +123,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'override_lr': args.lr,
         'num_workers': args.num_workers,
         'save_frequency': 20,
+        'checkpoint_frequency': 100,
         'output_dir': output_dir,
         'training_runs_dir': training_runs_dir,
         'model_config_path': args.model_config,
