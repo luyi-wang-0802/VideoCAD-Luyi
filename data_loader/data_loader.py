@@ -198,6 +198,12 @@ class PrimitiveActionDataset(Dataset):
         action_type_id = int(primitive_action[0].item())
         key_id = int(primitive_action[3].item())
         repeat_count = int(primitive_action[4].item()) if primitive_action[4].item() >= 0 else -1
+        high_level_action = str(target.get("high_level_action", ""))
+        gui_action = str(target.get("gui_action", ""))
+        is_wall_move = action_type_id == 1 and (
+            high_level_action in {"CREATE_EXTERIOR_WALL", "CREATE_INTERIOR_WALL"}
+            or gui_action == "DRAW_WALL_FROM_ENTITY_GEOMETRY"
+        )
         return {
             "primitive_action": primitive_action,
             "action_type_id": torch.tensor(action_type_id, dtype=torch.long),
@@ -209,6 +215,7 @@ class PrimitiveActionDataset(Dataset):
             "gui_action_id": torch.tensor(int(target["gui_action_id"]), dtype=torch.long),
             "coordinate_frame_id": torch.tensor(int(target["coordinate_frame_id"]), dtype=torch.long),
             "is_move": torch.tensor(action_type_id == 1, dtype=torch.bool),
+            "is_wall_move": torch.tensor(is_wall_move, dtype=torch.bool),
             "is_key_action": torch.tensor(action_type_id in {3, 4}, dtype=torch.bool),
         }
 
@@ -225,6 +232,7 @@ class PrimitiveActionDataset(Dataset):
             "gui_action_id": torch.tensor(0, dtype=torch.long),
             "coordinate_frame_id": torch.tensor(0, dtype=torch.long),
             "is_move": torch.tensor(False, dtype=torch.bool),
+            "is_wall_move": torch.tensor(False, dtype=torch.bool),
             "is_key_action": torch.tensor(False, dtype=torch.bool),
         }
 

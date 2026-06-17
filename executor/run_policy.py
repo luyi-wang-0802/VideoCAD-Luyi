@@ -406,6 +406,10 @@ def encode_decoded_action(dataset: PrimitiveActionDataset, decoded_action: dict[
     key_id = int(action[3].item())
     repeat_count = int(action[4].item()) if action[4].item() >= 0 else -1
     raw = decoded_action["raw_prediction"]
+    is_wall_move = action_type_id == 1 and (
+        decoded_action.get("high_level_action") in {"CREATE_EXTERIOR_WALL", "CREATE_INTERIOR_WALL"}
+        or decoded_action.get("gui_action") == "DRAW_WALL_FROM_ENTITY_GEOMETRY"
+    )
     return {
         "primitive_action": action,
         "action_type_id": torch.tensor(action_type_id, dtype=torch.long),
@@ -417,6 +421,7 @@ def encode_decoded_action(dataset: PrimitiveActionDataset, decoded_action: dict[
         "gui_action_id": torch.tensor(int(raw["gui_action_id"]), dtype=torch.long),
         "coordinate_frame_id": torch.tensor(int(raw["coordinate_frame_id"]), dtype=torch.long),
         "is_move": torch.tensor(action_type_id == 1, dtype=torch.bool),
+        "is_wall_move": torch.tensor(is_wall_move, dtype=torch.bool),
         "is_key_action": torch.tensor(action_type_id in {3, 4}, dtype=torch.bool),
     }
 

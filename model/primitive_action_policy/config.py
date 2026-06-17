@@ -25,6 +25,7 @@ class PrimitiveActionPolicyConfig:
     insertion_feature_dim: int = 5
     progress_feature_dim: int = 18
     primitive_action_dim: int = 6
+    xy_output_activation: str = "sigmoid"
     ignore_interval_loss: bool = True
     default_key_interval_ms: float = 100.0
     xy_smooth_l1_beta: float = 0.02
@@ -32,6 +33,11 @@ class PrimitiveActionPolicyConfig:
     loss_high_level_weight: float = 1.0
     loss_gui_action_weight: float = 1.0
     loss_xy_weight: float = 200.0
+    loss_wall_orthogonal_weight: float = 25.0
+    loss_wall_length_weight: float = 25.0
+    loss_wall_endpoint_weight: float = 50.0
     loss_key_weight: float = 1.0
     loss_repeat_weight: float = 0.5
     loss_interval_weight: float = 0.0
+    wall_endpoint_epsilon: float = 0.01
+    wall_min_segment_length: float = 0.04
