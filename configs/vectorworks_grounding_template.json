@@ -117,22 +117,15 @@
     },
     "coordinate_mapping": {
       "method": "centered_canvas_range_uniform",
-      "description": "Map normalized model coordinates to the calibrated canvas with one uniform pixel scale for x and y. This preserves plan aspect ratio while keeping the model centered away from Vectorworks auto-pan/auto-expand edges.",
+      "description": "Map normalized model coordinates to the calibrated canvas with one uniform pixel scale for x and y. The model range center maps to model_center_screen, preserving plan aspect ratio while keeping the model away from Vectorworks auto-pan/auto-expand edges.",
       "model_center_screen": {
         "x": 885,
         "y": 630
       },
-      "edge_margin_px": 40,
+      "edge_margin_px": 85,
       "scale_multiplier": 2.0,
-      "model_output_range": {
-        "description": "Primitive policy MOVE_TO outputs were trained in this effective normalized model range. The executor applies scale_multiplier=2.0 to map +/-0.25 to the calibrated canvas safe bounds.",
-        "x_min": -0.25,
-        "x_max": 0.25,
-        "y_min": -0.25,
-        "y_max": 0.25
-      },
       "auto_compress_primitive_model_points": true,
-      "safe_region_note": "Uniform-scale mapping keeps the model centered. scale_multiplier can be increased after zooming Vectorworks out, as long as all mapped points stay comfortably inside the canvas.",
+      "safe_region_note": "Uniform-scale mapping keeps the model centered. Keep enough margin for Vectorworks insertion previews and wall endpoints so live actions do not trigger canvas auto-pan.",
       "canvas_corners": {
         "top_left": {
           "x": 250,
@@ -152,19 +145,19 @@
         }
       },
       "formula": {
-        "x_screen": "center_x + model_x * pixels_per_unit",
-        "y_screen": "center_y - model_y * pixels_per_unit"
+        "x_screen": "center_x + (model_x - model_center_x) * pixels_per_unit",
+        "y_screen": "center_y - (model_y - model_center_y) * pixels_per_unit"
       }
     },
     "model_range_mm": {
-      "x_min": -0.5,
-      "x_max": 0.5,
-      "y_min": -0.5,
-      "y_max": 0.5
+      "x_min": 0,
+      "x_max": 1,
+      "y_min": 0,
+      "y_max": 1
     },
     "mapping": {
-      "x_screen": "center_x + model_x * pixels_per_unit",
-      "y_screen": "center_y - model_y * pixels_per_unit"
+      "x_screen": "center_x + (model_x - model_center_x) * pixels_per_unit",
+      "y_screen": "center_y - (model_y - model_center_y) * pixels_per_unit"
     },
     "coordinate_readout": {
       "description": "Optional bottom status-bar coordinate display area for OCR verification of the current cursor model X/Y.",

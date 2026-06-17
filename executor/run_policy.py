@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import argparse
+import ctypes
 import json
 import re
 import sys
+import threading
 import time
 from pathlib import Path
 from typing import Any
@@ -39,6 +41,51 @@ HIGH_LEVEL_TO_PROGRESS_KEY = {
     "CREATE_SLAB": "slabs",
     "CREATE_ROOF": "roofs",
 }
+
+
+class RolloutAbortMonitor:
+    VK_C = 0x43
+    VK_CONTROL = 0x11
+    VK_LCONTROL = 0xA2
+    VK_RCONTROL = 0xA3
+
+    def __init__(self, enabled: bool = True, poll_interval_s: float = 0.05) -> None:
+        self.enabled = enabled and sys.platform.startswith("win")
+        self.poll_interval_s = poll_interval_s
+        self.abort_event = threading.Event()
+        self.stop_event = threading.Event()
+        self.reason: str | None = None
+        self.thread: threading.Thread | None = None
+
+    def __enter__(self) -> "RolloutAbortMonitor":
+        if self.enabled:
+            self.thread = threading.Thread(target=self._poll_hotkey, name="rollout-abort-monitor", daemon=True)
+            self.thread.start()
+        return self
+
+    def __exit__(self, exc_type: Any, exc: Any, traceback: Any) -> None:
+        self.stop_event.set()
+        if self.thread is not None:
+            self.thread.join(timeout=0.2)
+
+    def _key_down(self, virtual_key: int) -> bool:
+        return bool(ctypes.windll.user32.GetAsyncKeyState(virtual_key) & 0x8000)
+
+    def _poll_hotkey(self) -> None:
+        while not self.stop_event.is_set() and not self.abort_event.is_set():
+            control_down = (
+                self._key_down(self.VK_CONTROL)
+                or self._key_down(self.VK_LCONTROL)
+                or self._key_down(self.VK_RCONTROL)
+            )
+            if control_down and self._key_down(self.VK_C):
+                self.reason = "ctrl+c"
+                self.abort_event.set()
+                break
+            self.stop_event.wait(self.poll_interval_s)
+
+    def requested(self) -> bool:
+        return self.abort_event.is_set()
 
 
 def move_to_device(value: Any, device: torch.device) -> Any:
@@ -535,51 +582,68 @@ def main() -> None:
     log_path = args.run_dir / "policy_events.jsonl"
     log_handle = log_path.open("w", encoding="utf-8")
     sample_steps = debug_sample.get("steps", []) if debug_sample is not None else []
+    abort_monitor = RolloutAbortMonitor(enabled=not args.dry_run)
     try:
-        for step_index in range(args.max_steps):
-            if args.use_recorded_observations and step_index < len(sample_steps):
-                screenshot = sample_steps[step_index]["model_input"].get("observation_screenshot_path")
-            if screenshot is None and not args.dry_run:
-                screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
+        with abort_monitor:
+            for step_index in range(args.max_steps):
+                if abort_monitor.requested():
+                    print(f"Abort requested by {abort_monitor.reason}; stopping before step {step_index}.")
+                    break
+                if args.use_recorded_observations and step_index < len(sample_steps):
+                    screenshot = sample_steps[step_index]["model_input"].get("observation_screenshot_path")
+                if screenshot is None and not args.dry_run:
+                    screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
+                if abort_monitor.requested():
+                    print(f"Abort requested by {abort_monitor.reason}; stopping before inference at step {step_index}.")
+                    break
 
-            batch = make_batch(
-                dataset,
-                sample,
-                screenshot,
-                encoded_history,
-                progress_state,
-                image_loader,
-                device,
-                step_index,
-                load_global_floorplan=load_global_floorplan,
-            )
-            with torch.no_grad():
-                outputs = model(batch)
-            decoded_action = decode_action(outputs, model, dataset)
-            event = execute_decoded_action(executor, decoded_action)
-            event["screenshot_before"] = screenshot
-            if args.compare_sample and step_index < len(sample_steps):
-                event["sample_comparison"] = compare_to_sample(decoded_action, sample_steps[step_index])
+                batch = make_batch(
+                    dataset,
+                    sample,
+                    screenshot,
+                    encoded_history,
+                    progress_state,
+                    image_loader,
+                    device,
+                    step_index,
+                    load_global_floorplan=load_global_floorplan,
+                )
+                with torch.no_grad():
+                    outputs = model(batch)
+                decoded_action = decode_action(outputs, model, dataset)
+                if abort_monitor.requested():
+                    print(f"Abort requested by {abort_monitor.reason}; stopping before execution at step {step_index}.")
+                    break
 
-            screenshot_after = executor.capture_screenshot(args.run_dir, step_index * 2 + 1)
-            event["screenshot_after"] = screenshot_after
-            compact = compact_event(event, step_index, decoded_action, screenshot, screenshot_after)
-            compact["task_progress"] = {
-                "entity_order": PROGRESS_ENTITY_KEYS,
-                "task_entity_counts": dict(progress_state["task_counts"]),
-                "done_entity_counts_before": dict(progress_state["done_counts"]),
-                "vector": progress_vector(progress_state["task_counts"], progress_state["done_counts"]),
-            }
-            log_handle.write(json.dumps(compact, ensure_ascii=False) + "\n")
-            log_handle.flush()
-            print(json.dumps(compact, ensure_ascii=False, indent=2))
+                event = execute_decoded_action(executor, decoded_action)
+                event["screenshot_before"] = screenshot
+                if args.compare_sample and step_index < len(sample_steps):
+                    event["sample_comparison"] = compare_to_sample(decoded_action, sample_steps[step_index])
 
-            if args.teacher_force_history and step_index < len(sample_steps):
-                encoded_history.append(dataset._encode_step(sample_steps[step_index]))
-            else:
-                encoded_history.append(encode_decoded_action(dataset, decoded_action))
-            update_progress_state(progress_state, decoded_action)
-            screenshot = screenshot_after or screenshot
+                screenshot_after = executor.capture_screenshot(args.run_dir, step_index * 2 + 1)
+                event["screenshot_after"] = screenshot_after
+                compact = compact_event(event, step_index, decoded_action, screenshot, screenshot_after)
+                compact["task_progress"] = {
+                    "entity_order": PROGRESS_ENTITY_KEYS,
+                    "task_entity_counts": dict(progress_state["task_counts"]),
+                    "done_entity_counts_before": dict(progress_state["done_counts"]),
+                    "vector": progress_vector(progress_state["task_counts"], progress_state["done_counts"]),
+                }
+                log_handle.write(json.dumps(compact, ensure_ascii=False) + "\n")
+                log_handle.flush()
+                print(json.dumps(compact, ensure_ascii=False, indent=2))
+
+                if abort_monitor.requested():
+                    print(f"Abort requested by {abort_monitor.reason}; stopping after step {step_index}.")
+                    break
+                if args.teacher_force_history and step_index < len(sample_steps):
+                    encoded_history.append(dataset._encode_step(sample_steps[step_index]))
+                else:
+                    encoded_history.append(encode_decoded_action(dataset, decoded_action))
+                update_progress_state(progress_state, decoded_action)
+                screenshot = screenshot_after or screenshot
+    except KeyboardInterrupt:
+        print("Abort requested by console KeyboardInterrupt; stopping rollout.")
     finally:
         log_handle.close()
     print(f"Wrote {log_path}")

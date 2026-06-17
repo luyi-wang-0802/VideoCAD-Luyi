@@ -45,20 +45,26 @@ def resolve_model_point(point: list[float], calibration: dict[str, Any]) -> tupl
     x_max = float(model_range["x_max"])
     y_min = float(model_range["y_min"])
     y_max = float(model_range["y_max"])
+    model_center_x = (x_min + x_max) / 2
+    model_center_y = (y_min + y_max) / 2
 
     left_x = (float(corners["top_left"]["x"]) + float(corners["bottom_left"]["x"])) / 2 + edge_margin_px
     right_x = (float(corners["top_right"]["x"]) + float(corners["bottom_right"]["x"])) / 2 - edge_margin_px
     top_y = (float(corners["top_left"]["y"]) + float(corners["top_right"]["y"])) / 2 + edge_margin_px
     bottom_y = (float(corners["bottom_left"]["y"]) + float(corners["bottom_right"]["y"])) / 2 - edge_margin_px
+    available_left = center_x - left_x
+    available_right = right_x - center_x
+    available_top = center_y - top_y
+    available_bottom = bottom_y - center_y
     pixels_per_unit = min(
-        (center_x - left_x) / abs(x_min),
-        (right_x - center_x) / x_max,
-        (center_y - top_y) / y_max,
-        (bottom_y - center_y) / abs(y_min),
+        available_left / abs(model_center_x - x_min),
+        available_right / abs(x_max - model_center_x),
+        available_top / abs(y_max - model_center_y),
+        available_bottom / abs(model_center_y - y_min),
     ) * scale_multiplier
 
-    x = center_x + model_x * pixels_per_unit
-    y = center_y - model_y * pixels_per_unit
+    x = center_x + (model_x - model_center_x) * pixels_per_unit
+    y = center_y - (model_y - model_center_y) * pixels_per_unit
     return int(round(x)), int(round(y))
 
 
