@@ -272,17 +272,11 @@ def runtime_sample_from_resplan(
     global_floorplan_path: Path | None = None,
     grounding_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    if runtime_plan_path is None:
-        runtime_plan_path = infer_runtime_plan_path(resplan_json_path, dataset_path)
     if runtime_plan_path is not None:
         runtime_plan = read_json(runtime_plan_path)
         encoded_resplan = runtime_plan.get("encoded_resplan")
         if not encoded_resplan:
             raise ValueError(f"{runtime_plan_path} does not contain encoded_resplan")
-        compression = encoded_resplan.get("execution_coordinate_policy", {}).get("model_point_axis_compression", {})
-        if grounding_config and not compression.get("enabled"):
-            resplan = read_json(resplan_json_path)
-            encoded_resplan = summarize_resplan_for_model(resplan, primitive_plan={}, grounding_config=grounding_config)
         return {
             "sample_id": runtime_plan.get("sample_id") or resplan_json_path.stem,
             "model_inputs": {
@@ -299,7 +293,7 @@ def runtime_sample_from_resplan(
         }
 
     resplan = read_json(resplan_json_path)
-    encoded_resplan = summarize_resplan_for_model(resplan, primitive_plan={}, grounding_config=grounding_config)
+    encoded_resplan = summarize_resplan_for_model(resplan, primitive_plan={}, grounding_config=None)
     return {
         "sample_id": resplan_json_path.stem,
         "model_inputs": {
@@ -453,6 +447,50 @@ def compare_to_sample(decoded_action: dict[str, Any], sample_step: dict[str, Any
     }
 
 
+def inspect_step_trajectory(
+    sample_step: dict[str, Any],
+    decoded_action: dict[str, Any],
+    predicted_screen_point: dict[str, int] | None,
+    executor: VectorworksExecutor,
+) -> dict[str, Any] | None:
+    expected = sample_step["supervision_target"]
+    expected_xy = expected["primitive_action"][1:3]
+    predicted_xy = decoded_action["primitive_action"][1:3]
+    if len(expected_xy) < 2 or len(predicted_xy) < 2:
+        return None
+
+    expected_xy = [float(expected_xy[0]), float(expected_xy[1])]
+    predicted_xy = [float(predicted_xy[0]), float(predicted_xy[1])]
+    expected_have_xy = expected_xy[0] != -1 and expected_xy[1] != -1
+    predicted_have_xy = predicted_xy[0] != -1 and predicted_xy[1] != -1
+    expected_screen_point = None
+    if expected_have_xy:
+        expected_screen_point = executor.resolve_action_point(
+            {
+                "action_type": "CLICK",
+                "target": {"model_point": expected_xy},
+            }
+        )
+
+    xy_error = None
+    if expected_have_xy and predicted_have_xy:
+        dx = predicted_xy[0] - expected_xy[0]
+        dy = predicted_xy[1] - expected_xy[1]
+        xy_error = (dx * dx + dy * dy) ** 0.5
+
+    return {
+        "gt_xy": expected_xy if expected_have_xy else None,
+        "pred_xy": predicted_xy if predicted_have_xy else None,
+        "gt_screen_xy": {"x": expected_screen_point[0], "y": expected_screen_point[1]} if expected_screen_point else None,
+        "pred_screen_xy": predicted_screen_point,
+        "xy_error": xy_error,
+        "gt_frame": expected.get("coordinate_frame"),
+        "pred_frame": decoded_action.get("coordinate_frame"),
+        "gt_action_type": expected.get("high_level_action") or "<none>",
+        "pred_action_type": decoded_action.get("high_level_action"),
+    }
+
+
 def execute_decoded_action(executor: VectorworksExecutor, decoded_action: dict[str, Any]) -> dict[str, Any]:
     action = decoded_action["executor_action"]
     if action["action_type"] == "MOVE_TO":
@@ -505,13 +543,20 @@ def compact_event(
         }
     if "sample_comparison" in event:
         compact["sample_comparison"] = event["sample_comparison"]
+    if "trajectory_inspect" in event:
+        compact["trajectory_inspect"] = event["trajectory_inspect"]
     return compact
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--resplan-json", required=True, type=Path, help="Raw ResPlan JSON used as the global plan input.")
-    parser.add_argument("--runtime-plan", default=None, type=Path, help="Runtime coordinate metadata generated under processed_data/runtime_plans.")
+    parser.add_argument(
+        "--runtime-plan",
+        default=None,
+        type=Path,
+        help="Optional legacy encoded plan override. If omitted, rollout uses only --resplan-json as the plan input.",
+    )
     parser.add_argument("--global-floorplan", default=None, type=Path, help="Optional floorplan image override. If omitted, inferred from the ResPlan filename.")
     parser.add_argument("--sample", default=None, type=Path, help="Optional processed sample JSON for debug comparison only.")
     parser.add_argument("--checkpoint", required=True, type=Path)
@@ -531,20 +576,33 @@ def main() -> None:
     parser.add_argument("--history-length", default=32, type=int)
     parser.add_argument("--image-size", default=224, type=int)
     parser.add_argument("--device", default="cuda")
+    parser.add_argument(
+        "--no-global-floorplan",
+        action="store_true",
+        help="Disable loading the global floorplan image during rollout, regardless of checkpoint command args.",
+    )
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--use-recorded-observations", action="store_true")
     parser.add_argument("--teacher-force-history", action="store_true")
     parser.add_argument("--compare-sample", action="store_true")
     parser.add_argument("--live-primitive-actions", action="store_true")
     parser.add_argument("--countdown", default=5, type=int)
+    parser.add_argument(
+        "--inspect-step",
+        type=int,
+        default=None,
+        help="Print a one-step coordinate path trace: gt xy, pred xy, gt/pred screen points (requires --sample).",
+    )
     args = parser.parse_args()
 
     if (args.use_recorded_observations or args.teacher_force_history or args.compare_sample) and args.sample is None:
         raise ValueError("--sample is required when using recorded observations, teacher-forced history, or comparison.")
+    if args.inspect_step is not None and args.sample is None:
+        raise ValueError("--inspect-step requires --sample.")
 
     device = torch.device(args.device if torch.cuda.is_available() and args.device.startswith("cuda") else "cpu")
     action_vocab_path = infer_action_vocab_path(args.checkpoint, args.action_vocab)
-    load_global_floorplan = infer_checkpoint_load_global_floorplan(args.checkpoint)
+    load_global_floorplan = (not args.no_global_floorplan) and infer_checkpoint_load_global_floorplan(args.checkpoint)
     sample = runtime_sample_from_resplan(
         args.resplan_json,
         runtime_plan_path=args.runtime_plan,
@@ -622,8 +680,43 @@ def main() -> None:
 
                 event = execute_decoded_action(executor, decoded_action)
                 event["screenshot_before"] = screenshot
-                if args.compare_sample and step_index < len(sample_steps):
-                    event["sample_comparison"] = compare_to_sample(decoded_action, sample_steps[step_index])
+                if step_index < len(sample_steps):
+                    sample_step = sample_steps[step_index]
+                    if args.compare_sample:
+                        event["sample_comparison"] = compare_to_sample(decoded_action, sample_step)
+                    if args.inspect_step is not None and step_index == args.inspect_step:
+                        event["trajectory_inspect"] = inspect_step_trajectory(
+                            sample_step,
+                            decoded_action,
+                            event.get("resolved_screen_point"),
+                            executor,
+                        )
+
+                if args.inspect_step is not None and step_index == args.inspect_step:
+                    if args.inspect_step >= len(sample_steps):
+                        print(f"[inspect-step {step_index}] sample has no corresponding step for comparison.")
+                    else:
+                        inspect_info = event.get("trajectory_inspect")
+                        if inspect_info is None:
+                            print(f"[inspect-step {step_index}] no valid xy values to compare.")
+                        else:
+                            print(
+                                json.dumps(
+                                    {
+                                        "step": step_index,
+                                        "gt_xy": inspect_info["gt_xy"],
+                                        "pred_xy": inspect_info["pred_xy"],
+                                        "gt_screen_xy": inspect_info["gt_screen_xy"],
+                                        "pred_screen_xy": inspect_info["pred_screen_xy"],
+                                        "xy_error": inspect_info["xy_error"],
+                                        "gt_action_type": inspect_info["gt_action_type"],
+                                        "pred_action_type": inspect_info["pred_action_type"],
+                                        "gt_frame": inspect_info["gt_frame"],
+                                        "pred_frame": inspect_info["pred_frame"],
+                                    },
+                                    ensure_ascii=False,
+                                )
+                            )
 
                 screenshot_after = executor.capture_screenshot(args.run_dir, step_index * 2 + 1)
                 event["screenshot_after"] = screenshot_after

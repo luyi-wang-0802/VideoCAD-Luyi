@@ -20,6 +20,8 @@
     "loss_high_level_weight": 2.0,
     "loss_gui_action_weight": 2.0,
     "loss_xy_weight": 200.0,
+    "loss_aux_wall_weight": 1.0,
+    "loss_aux_point_role_weight": 1.0,
     "loss_key_weight": 1.0,
     "loss_repeat_weight": 0.5,
     "loss_interval_weight": 0.0,

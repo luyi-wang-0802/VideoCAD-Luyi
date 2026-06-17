@@ -33,6 +33,8 @@ class PrimitiveActionPolicyConfig:
     loss_high_level_weight: float = 1.0
     loss_gui_action_weight: float = 1.0
     loss_xy_weight: float = 200.0
+    loss_aux_wall_weight: float = 1.0
+    loss_aux_point_role_weight: float = 1.0
     loss_key_weight: float = 1.0
     loss_repeat_weight: float = 0.5
     loss_interval_weight: float = 0.0

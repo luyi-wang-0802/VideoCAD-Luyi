@@ -1575,12 +1575,16 @@ class PrimitiveActionTrainer(BaseTrainer):
         "loss_high_level",
         "loss_gui_action",
         "loss_xy",
+        "loss_aux_wall",
+        "loss_aux_point_role",
         "loss_key",
         "loss_repeat",
         "action_type_acc",
         "high_level_acc",
         "gui_action_acc",
         "xy_mae",
+        "aux_wall_acc",
+        "aux_point_role_acc",
         "key_acc",
         "repeat_acc",
     )
@@ -1603,6 +1607,8 @@ class PrimitiveActionTrainer(BaseTrainer):
             "loss_gui_action": 0.0,
             "loss_coordinate_frame": 0.0,
             "loss_xy": 0.0,
+            "loss_aux_wall": 0.0,
+            "loss_aux_point_role": 0.0,
             "loss_key": 0.0,
             "loss_repeat": 0.0,
             "loss_interval": 0.0,
@@ -1612,6 +1618,10 @@ class PrimitiveActionTrainer(BaseTrainer):
             "coordinate_frame_correct": 0,
             "xy_abs_error": 0.0,
             "xy_count": 0,
+            "aux_wall_correct": 0,
+            "aux_wall_count": 0,
+            "aux_point_role_correct": 0,
+            "aux_point_role_count": 0,
             "key_correct": 0,
             "key_count": 0,
             "repeat_correct": 0,
@@ -1643,6 +1653,10 @@ class PrimitiveActionTrainer(BaseTrainer):
         averaged["gui_action_acc"] = metrics["gui_action_correct"] / count
         averaged["coordinate_frame_acc"] = metrics["coordinate_frame_correct"] / count
         averaged["xy_mae"] = metrics.get("xy_abs_error", 0.0) / max(int(metrics.get("xy_count", 0)), 1)
+        averaged["aux_wall_acc"] = metrics.get("aux_wall_correct", 0) / max(int(metrics.get("aux_wall_count", 0)), 1)
+        averaged["aux_point_role_acc"] = metrics.get("aux_point_role_correct", 0) / max(
+            int(metrics.get("aux_point_role_count", 0)), 1
+        )
         averaged["key_acc"] = metrics.get("key_correct", 0) / max(int(metrics.get("key_count", 0)), 1)
         averaged["repeat_acc"] = metrics.get("repeat_correct", 0) / max(int(metrics.get("repeat_count", 0)), 1)
         return averaged
@@ -1665,9 +1679,29 @@ class PrimitiveActionTrainer(BaseTrainer):
         repeat_target = target["key_repeat_count"].long()
         valid_repeat = is_key_action & (repeat_target >= 0)
         repeat_pred = outputs["repeat_logits"].argmax(dim=-1)
+        has_wall_target = target.get("aux_has_wall_target")
+        if has_wall_target is not None and "aux_wall_logits" in outputs:
+            has_wall_target = has_wall_target.bool()
+            aux_wall_pred = outputs["aux_wall_logits"].argmax(dim=-1)
+            aux_point_role_pred = outputs["aux_point_role_logits"].argmax(dim=-1)
+            aux_wall_correct = ((aux_wall_pred == target["aux_wall_index"].long()) & has_wall_target).sum().item()
+            aux_point_role_correct = (
+                (aux_point_role_pred == target["aux_point_role_id"].long()) & has_wall_target
+            ).sum().item()
+            aux_wall_count = has_wall_target.sum().item()
+            aux_point_role_count = aux_wall_count
+        else:
+            aux_wall_correct = 0
+            aux_point_role_correct = 0
+            aux_wall_count = 0
+            aux_point_role_count = 0
         metric_values = {
             "xy_abs_error": xy_error,
             "xy_count": int(is_move.sum().item()) * 2,
+            "aux_wall_correct": aux_wall_correct,
+            "aux_wall_count": aux_wall_count,
+            "aux_point_role_correct": aux_point_role_correct,
+            "aux_point_role_count": aux_point_role_count,
             "key_correct": ((key_pred == key_target) & valid_key).sum().item(),
             "key_count": valid_key.sum().item(),
             "repeat_correct": ((repeat_pred == repeat_target) & valid_repeat).sum().item(),
@@ -1684,6 +1718,8 @@ class PrimitiveActionTrainer(BaseTrainer):
                     "loss_high_level",
                     "loss_gui_action",
                     "loss_xy",
+                    "loss_aux_wall",
+                    "loss_aux_point_role",
                     "loss_key",
                     "loss_repeat",
                     "loss_interval",

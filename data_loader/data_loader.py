@@ -17,6 +17,7 @@ LOCATION_TO_ID = {"exterior": 0, "interior": 1, "unknown": 2}
 OPENING_TO_ID = {"door": 0, "window": 1, "front_door": 2, "unknown": 3}
 PRIMITIVE_ACTION_DIM = 6
 PROGRESS_FEATURE_DIM = 18
+AUX_WALL_MATCH_THRESHOLD = 0.035
 
 
 def read_json(path: Path) -> Any:
@@ -139,7 +140,7 @@ class PrimitiveActionDataset(Dataset):
                         "sample_path": str(sample_path),
                         "step": step,
                         "global_floorplan_path": step_global_floorplan_path or global_floorplan_path,
-                        "target": encoded_steps[step_index],
+                        "target": self._add_plan_aux_targets(encoded_steps[step_index], plan_tensors),
                         "history": self._build_history(encoded_steps, step_index),
                         "plan": plan_tensors,
                         "progress": self._encode_progress(step),
@@ -221,6 +222,36 @@ class PrimitiveActionDataset(Dataset):
             "is_wall_move": torch.tensor(is_wall_move, dtype=torch.bool),
             "is_key_action": torch.tensor(action_type_id in {3, 4}, dtype=torch.bool),
         }
+
+    @staticmethod
+    def _add_plan_aux_targets(
+        encoded_step: dict[str, torch.Tensor],
+        plan_tensors: dict[str, torch.Tensor],
+    ) -> dict[str, torch.Tensor]:
+        target = dict(encoded_step)
+        target["aux_wall_index"] = torch.tensor(0, dtype=torch.long)
+        target["aux_point_role_id"] = torch.tensor(0, dtype=torch.long)
+        target["aux_has_wall_target"] = torch.tensor(False, dtype=torch.bool)
+        if not bool(encoded_step["is_wall_move"].item()):
+            return target
+
+        walls = plan_tensors.get("walls")
+        if walls is None or walls.shape[0] == 0:
+            return target
+        xy = encoded_step["xy"].float()
+        if bool((xy < 0).any().item()):
+            return target
+
+        endpoints = walls[:, :4].reshape(-1, 2)
+        distances = torch.linalg.vector_norm(endpoints - xy.unsqueeze(0), dim=-1)
+        min_distance, endpoint_index = torch.min(distances, dim=0)
+        if float(min_distance.item()) > AUX_WALL_MATCH_THRESHOLD:
+            return target
+
+        target["aux_wall_index"] = (endpoint_index // 2).to(torch.long)
+        target["aux_point_role_id"] = torch.tensor(1 if int(endpoint_index.item()) % 2 == 0 else 2, dtype=torch.long)
+        target["aux_has_wall_target"] = torch.tensor(True, dtype=torch.bool)
+        return target
 
     @staticmethod
     def _empty_encoded_step() -> dict[str, torch.Tensor]:

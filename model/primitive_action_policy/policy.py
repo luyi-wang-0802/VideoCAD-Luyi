@@ -85,6 +85,8 @@ class PrimitiveActionPolicyModel(nn.Module):
         self.gui_action_head = nn.Linear(h, config.num_gui_actions)
         self.coordinate_frame_head = nn.Linear(h, config.num_coordinate_frames)
         self.xy_head = nn.Linear(h, 2)
+        self.aux_wall_query = nn.Linear(h, h)
+        self.aux_point_role_head = nn.Linear(h, 3)
         self.key_head = nn.Linear(h, config.num_keys)
         self.repeat_head = nn.Linear(h, config.max_repeat_count + 1)
         self.interval_head = nn.Linear(h, 1)
@@ -100,7 +102,7 @@ class PrimitiveActionPolicyModel(nn.Module):
         elif isinstance(module, nn.Embedding):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
-    def encode_plan(self, plan: dict[str, torch.Tensor]) -> torch.Tensor:
+    def encode_plan(self, plan: dict[str, torch.Tensor]) -> tuple[torch.Tensor, torch.Tensor]:
         walls = plan["walls"]
         wall_mask = plan["wall_mask"]
         insertions = plan["insertions"]
@@ -114,7 +116,7 @@ class PrimitiveActionPolicyModel(nn.Module):
         )
         wall_context = masked_mean(wall_features, wall_mask)
         insertion_context = masked_mean(insertion_features, insertion_mask)
-        return self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1))
+        return self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1)), wall_features
 
     def encode_history(self, history: dict[str, torch.Tensor]) -> torch.Tensor:
         primitive = history["primitive_action"].float().clone()
@@ -146,7 +148,8 @@ class PrimitiveActionPolicyModel(nn.Module):
         history = batch["history"]
 
         batch_size = observation.shape[0]
-        plan_embedding = self.encode_plan(plan) + self.plan_token.squeeze(1)
+        plan_context, wall_features = self.encode_plan(plan)
+        plan_embedding = plan_context + self.plan_token.squeeze(1)
         observation_embedding = self.image_encoder(observation) + self.observation_token.squeeze(1)
         progress = batch.get("progress")
         if progress is None:
@@ -219,6 +222,8 @@ class PrimitiveActionPolicyModel(nn.Module):
             "gui_action_logits": self.gui_action_head(query_hidden),
             "coordinate_frame_logits": self.coordinate_frame_head(query_hidden),
             "xy": xy,
+            "aux_wall_logits": torch.bmm(wall_features, self.aux_wall_query(query_hidden).unsqueeze(-1)).squeeze(-1),
+            "aux_point_role_logits": self.aux_point_role_head(query_hidden),
             "key_logits": self.key_head(query_hidden),
             "repeat_logits": self.repeat_head(query_hidden),
             "key_interval": self.interval_head(query_hidden).squeeze(-1),
@@ -245,6 +250,26 @@ class PrimitiveActionPolicyModel(nn.Module):
             if is_move.any()
             else zero
         )
+
+        has_wall_target = target.get("aux_has_wall_target")
+        if has_wall_target is None:
+            losses["loss_aux_wall"] = zero
+            losses["loss_aux_point_role"] = zero
+        else:
+            has_wall_target = has_wall_target.bool()
+            if has_wall_target.any() and outputs["aux_wall_logits"].shape[1] > 0:
+                wall_logits = outputs["aux_wall_logits"].masked_fill(~batch["plan"]["wall_mask"].bool(), -1e9)
+                losses["loss_aux_wall"] = F.cross_entropy(
+                    wall_logits[has_wall_target],
+                    target["aux_wall_index"].long()[has_wall_target],
+                )
+                losses["loss_aux_point_role"] = F.cross_entropy(
+                    outputs["aux_point_role_logits"][has_wall_target],
+                    target["aux_point_role_id"].long()[has_wall_target],
+                )
+            else:
+                losses["loss_aux_wall"] = zero
+                losses["loss_aux_point_role"] = zero
 
         key_target = target["key_id"].long()
         valid_key = is_key_action & (key_target >= 0)
@@ -278,6 +303,8 @@ class PrimitiveActionPolicyModel(nn.Module):
             + cfg.loss_high_level_weight * losses["loss_high_level"]
             + cfg.loss_gui_action_weight * losses["loss_gui_action"]
             + cfg.loss_xy_weight * losses["loss_xy"]
+            + cfg.loss_aux_wall_weight * losses["loss_aux_wall"]
+            + cfg.loss_aux_point_role_weight * losses["loss_aux_point_role"]
             + cfg.loss_key_weight * losses["loss_key"]
             + cfg.loss_repeat_weight * losses["loss_repeat"]
             + cfg.loss_interval_weight * losses["loss_interval"]
