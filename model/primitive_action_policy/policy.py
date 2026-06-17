@@ -13,14 +13,14 @@ from model.primitive_action_policy.layers import make_image_encoder, masked_mean
 
 
 class PrimitiveActionPolicyModel(nn.Module):
-    """Predict the next primitive action from plan, screenshot, floorplan, and action history."""
+    """Predict the next primitive action from plan, optional screenshot, floorplan, and action history."""
 
     def __init__(self, config: PrimitiveActionPolicyConfig) -> None:
         super().__init__()
         self.config = config
         h = config.hidden_size
 
-        self.image_encoder = make_image_encoder(config.image_channels, h)
+        self.image_encoder = make_image_encoder(config.image_channels, h) if config.use_observation else None
         self.global_floorplan_encoder = make_image_encoder(config.image_channels, h)
         self.floorplan_cross_attention = nn.MultiheadAttention(
             embed_dim=h,
@@ -62,11 +62,11 @@ class PrimitiveActionPolicyModel(nn.Module):
         self.history_projection = nn.Sequential(nn.Linear(h * 6, h), nn.GELU(), nn.LayerNorm(h))
 
         self.plan_token = nn.Parameter(torch.zeros(1, 1, h))
-        self.observation_token = nn.Parameter(torch.zeros(1, 1, h))
+        self.observation_token = nn.Parameter(torch.zeros(1, 1, h)) if config.use_observation else None
         self.progress_token = nn.Parameter(torch.zeros(1, 1, h))
         self.step_token = nn.Parameter(torch.zeros(1, 1, h))
         self.query_token = nn.Parameter(torch.zeros(1, 1, h))
-        self.position_embedding = nn.Embedding(config.history_length + 5, h)
+        self.position_embedding = nn.Embedding(config.history_length + config.max_wall_tokens + 8, h)
         self.step_index_embedding = nn.Embedding(config.max_step_index + 1, h)
 
         encoder_layer = nn.TransformerEncoderLayer(
@@ -102,21 +102,23 @@ class PrimitiveActionPolicyModel(nn.Module):
         elif isinstance(module, nn.Embedding):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
-    def encode_plan(self, plan: dict[str, torch.Tensor]) -> tuple[torch.Tensor, torch.Tensor]:
+    def encode_plan(self, plan: dict[str, torch.Tensor]) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         walls = plan["walls"]
         wall_mask = plan["wall_mask"]
         insertions = plan["insertions"]
         insertion_mask = plan["insertion_mask"]
 
-        wall_features = self.wall_encoder(walls) if walls.shape[1] else torch.zeros(
+        wall_features_all = self.wall_encoder(walls) if walls.shape[1] else torch.zeros(
             walls.shape[0], 0, self.config.hidden_size, device=walls.device, dtype=walls.dtype
         )
         insertion_features = self.insertion_encoder(insertions) if insertions.shape[1] else torch.zeros(
             insertions.shape[0], 0, self.config.hidden_size, device=insertions.device, dtype=insertions.dtype
         )
-        wall_context = masked_mean(wall_features, wall_mask)
+        wall_context = masked_mean(wall_features_all, wall_mask)
         insertion_context = masked_mean(insertion_features, insertion_mask)
-        return self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1)), wall_features
+        wall_features = wall_features_all[:, : self.config.max_wall_tokens]
+        wall_token_mask = wall_mask[:, : self.config.max_wall_tokens]
+        return self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1)), wall_features, wall_token_mask
 
     def encode_history(self, history: dict[str, torch.Tensor]) -> torch.Tensor:
         primitive = history["primitive_action"].float().clone()
@@ -140,28 +142,23 @@ class PrimitiveActionPolicyModel(nn.Module):
         return self.history_projection(torch.cat(pieces, dim=-1))
 
     def forward(self, batch: dict[str, Any]) -> dict[str, torch.Tensor]:
-        observation = batch.get("observation")
-        if observation is None:
-            raise KeyError("PrimitiveActionPolicyModel expects batch['observation']")
-        observation = observation.to(dtype=self.plan_token.dtype)
         plan = batch["plan"]
         history = batch["history"]
 
-        batch_size = observation.shape[0]
-        plan_context, wall_features = self.encode_plan(plan)
+        batch_size = plan["walls"].shape[0]
+        plan_context, wall_features, wall_token_mask = self.encode_plan(plan)
         plan_embedding = plan_context + self.plan_token.squeeze(1)
-        observation_embedding = self.image_encoder(observation) + self.observation_token.squeeze(1)
         progress = batch.get("progress")
         if progress is None:
             progress = torch.zeros(
                 (batch_size, self.config.progress_feature_dim),
-                dtype=observation.dtype,
-                device=observation.device,
+                dtype=plan_embedding.dtype,
+                device=plan_embedding.device,
             )
         progress_embedding = self.progress_encoder(progress.float()) + self.progress_token.squeeze(1)
         step_index = batch.get("step_index")
         if step_index is None:
-            step_index = torch.zeros((batch_size,), dtype=torch.long, device=observation.device)
+            step_index = torch.zeros((batch_size,), dtype=torch.long, device=plan_embedding.device)
         step_embedding = (
             self.step_index_embedding(step_index.long().clamp(min=0, max=self.config.max_step_index))
             + self.step_token.squeeze(1)
@@ -169,28 +166,38 @@ class PrimitiveActionPolicyModel(nn.Module):
         history_embeddings = self.encode_history(history)
         query_embedding = self.query_token.expand(batch_size, -1, -1).squeeze(1)
 
-        tokens = torch.cat(
+        token_pieces = [plan_embedding.unsqueeze(1)]
+        key_padding_pieces = [torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device)]
+        if self.config.use_observation:
+            observation = batch.get("observation")
+            if observation is None:
+                raise KeyError("PrimitiveActionPolicyModel expects batch['observation'] when use_observation=True")
+            observation = observation.to(dtype=self.plan_token.dtype)
+            observation_embedding = self.image_encoder(observation) + self.observation_token.squeeze(1)
+            token_pieces.append(observation_embedding.unsqueeze(1))
+            key_padding_pieces.append(torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device))
+        token_pieces.extend(
             [
-                plan_embedding.unsqueeze(1),
-                observation_embedding.unsqueeze(1),
                 progress_embedding.unsqueeze(1),
                 step_embedding.unsqueeze(1),
                 history_embeddings,
+                wall_features,
                 query_embedding.unsqueeze(1),
-            ],
-            dim=1,
+            ]
         )
+        key_padding_pieces.extend(
+            [
+                torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device),
+                torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device),
+                ~history["mask"].to(torch.bool),
+                ~wall_token_mask.to(torch.bool),
+                torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device),
+            ]
+        )
+        tokens = torch.cat(token_pieces, dim=1)
         positions = torch.arange(tokens.shape[1], device=tokens.device).unsqueeze(0)
         tokens = tokens + self.position_embedding(positions)
-
-        key_padding_mask = torch.cat(
-            [
-                torch.zeros((batch_size, 4), dtype=torch.bool, device=tokens.device),
-                ~history["mask"].to(torch.bool),
-                torch.zeros((batch_size, 1), dtype=torch.bool, device=tokens.device),
-            ],
-            dim=1,
-        )
+        key_padding_mask = torch.cat(key_padding_pieces, dim=1)
         hidden = self.transformer(tokens, src_key_padding_mask=key_padding_mask)
         query_hidden = self.final_norm(hidden[:, -1])
         global_floorplan = batch.get("global_floorplan")

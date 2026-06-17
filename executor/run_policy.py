@@ -195,15 +195,19 @@ def make_batch(
     image_loader: ScreenshotImageLoader,
     device: torch.device,
     step_index: int,
+    load_observation: bool,
     load_global_floorplan: bool,
 ) -> dict[str, Any]:
     plan = dataset._encode_plan(sample["model_inputs"]["encoded_resplan"])
     history = dataset._build_history(encoded_history, len(encoded_history))
-    observation, available = image_loader.load(screenshot_path)
+    observation = None
+    available = False
+    if load_observation:
+        observation, available = image_loader.load(screenshot_path)
     batch = {
         "sample_id": [sample["sample_id"]],
         "step_index": torch.tensor([step_index], dtype=torch.long),
-        "observation": observation.unsqueeze(0),
+        "observation": observation.unsqueeze(0) if observation is not None else None,
         "observation_available": torch.tensor([available], dtype=torch.bool),
         "global_floorplan": None,
         "global_floorplan_available": torch.tensor([False], dtype=torch.bool),
@@ -628,6 +632,7 @@ def main() -> None:
         action_vocab_path,
         device,
     )
+    load_observation = bool(getattr(model.config, "use_observation", True))
     executor = VectorworksExecutor(args.calibration, dry_run=args.dry_run)
     args.run_dir.mkdir(parents=True, exist_ok=True)
 
@@ -654,7 +659,7 @@ def main() -> None:
                     break
                 if args.use_recorded_observations and step_index < len(sample_steps):
                     screenshot = sample_steps[step_index]["model_input"].get("observation_screenshot_path")
-                if screenshot is None and not args.dry_run:
+                if load_observation and screenshot is None and not args.dry_run:
                     screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
                 if abort_monitor.requested():
                     print(f"Abort requested by {abort_monitor.reason}; stopping before inference at step {step_index}.")
@@ -669,6 +674,7 @@ def main() -> None:
                     image_loader,
                     device,
                     step_index,
+                    load_observation=load_observation,
                     load_global_floorplan=load_global_floorplan,
                 )
                 with torch.no_grad():

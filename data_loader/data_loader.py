@@ -86,6 +86,7 @@ class PrimitiveActionDataset(Dataset):
         action_vocab_path: str | Path | None = None,
         image_size: tuple[int, int] = DEFAULT_IMAGE_SIZE,
         history_length: int = 32,
+        load_observation: bool = True,
         load_images: bool = True,
         load_global_floorplan: bool = False,
         normalize_images: bool = True,
@@ -97,6 +98,7 @@ class PrimitiveActionDataset(Dataset):
         self.split = split
         self.history_length = history_length
         self.include_raw = include_raw
+        self.load_observation = load_observation
         self.load_global_floorplan = load_global_floorplan
         if isinstance(image_dtype, str):
             dtype_map = {"float32": torch.float32, "float16": torch.float16}
@@ -284,8 +286,11 @@ class PrimitiveActionDataset(Dataset):
     def __getitem__(self, index: int) -> dict[str, Any]:
         item = self.steps[index]
         step = item["step"]
-        screenshot_path = step["model_input"].get("observation_screenshot_path")
-        observation, observation_available = self.image_loader.load(screenshot_path)
+        observation = None
+        observation_available = False
+        if self.load_observation:
+            screenshot_path = step["model_input"].get("observation_screenshot_path")
+            observation, observation_available = self.image_loader.load(screenshot_path)
         global_floorplan = None
         global_floorplan_available = False
         if self.load_global_floorplan:
@@ -350,11 +355,12 @@ class PrimitiveActionDataset(Dataset):
         history_keys = batch[0]["history"].keys()
         walls, wall_mask = cls._pad_tensor_list([item["plan"]["walls"] for item in batch])
         insertions, insertion_mask = cls._pad_tensor_list([item["plan"]["insertions"] for item in batch])
+        observations = [item.get("observation") for item in batch]
         result: dict[str, Any] = {
             "sample_id": [item["sample_id"] for item in batch],
             "split": [item["split"] for item in batch],
             "step_index": torch.stack([item["step_index"] for item in batch]),
-            "observation": torch.stack([item["observation"] for item in batch]),
+            "observation": torch.stack(observations) if all(torch.is_tensor(item) for item in observations) else None,
             "observation_available": torch.stack([item["observation_available"] for item in batch]),
             "global_floorplan_available": torch.stack([item["global_floorplan_available"] for item in batch]),
             "plan": {
@@ -415,6 +421,7 @@ def create_dataset_from_config(
         "action_vocab_path",
         "image_size",
         "history_length",
+        "load_observation",
         "load_images",
         "load_global_floorplan",
         "image_dtype",

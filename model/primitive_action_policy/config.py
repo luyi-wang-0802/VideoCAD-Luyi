@@ -9,7 +9,9 @@ from dataclasses import dataclass
 class PrimitiveActionPolicyConfig:
     hidden_size: int = 256
     image_channels: int = 1
+    use_observation: bool = True
     history_length: int = 32
+    max_wall_tokens: int = 256
     num_transformer_layers: int = 4
     num_attention_heads: int = 4
     dim_feedforward: int = 512
