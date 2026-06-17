@@ -33,11 +33,6 @@ class PrimitiveActionPolicyConfig:
     loss_high_level_weight: float = 1.0
     loss_gui_action_weight: float = 1.0
     loss_xy_weight: float = 200.0
-    loss_wall_orthogonal_weight: float = 25.0
-    loss_wall_length_weight: float = 25.0
-    loss_wall_endpoint_weight: float = 50.0
     loss_key_weight: float = 1.0
     loss_repeat_weight: float = 0.5
     loss_interval_weight: float = 0.0
-    wall_endpoint_epsilon: float = 0.01
-    wall_min_segment_length: float = 0.04

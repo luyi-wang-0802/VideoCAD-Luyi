@@ -224,105 +224,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             "key_interval": self.interval_head(query_hidden).squeeze(-1),
         }
 
-    def _latest_history_wall_move_xy(
-        self,
-        batch: dict[str, Any],
-    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
-        history = batch["history"]
-        wall_move = history.get("is_wall_move")
-        if wall_move is None:
-            batch_size = history["mask"].shape[0]
-            xy = history["xy"].new_zeros((batch_size, 2))
-            empty = torch.zeros((batch_size,), dtype=torch.bool, device=xy.device)
-            return xy, empty, empty
-
-        valid = wall_move.bool() & history["mask"].bool()
-        has_previous = valid.any(dim=1)
-        positions = torch.arange(valid.shape[1], device=valid.device).view(1, -1)
-        latest_index = (valid.long() * positions).max(dim=1).values
-        gather_index = latest_index.view(-1, 1, 1).expand(-1, 1, 2)
-        previous_xy = history["xy"].gather(dim=1, index=gather_index).squeeze(1)
-
-        history_valid = history["mask"].bool()
-        has_immediate_previous = history_valid.any(dim=1)
-        immediate_index = (history_valid.long() * positions).max(dim=1).values
-        immediate_action = history["action_type_id"].gather(dim=1, index=immediate_index.view(-1, 1)).squeeze(1)
-        previous_action_was_click = has_immediate_previous & (immediate_action == 2)
-        return previous_xy, has_previous, previous_action_was_click
-
-    def _wall_geometry_losses(
-        self,
-        batch: dict[str, Any],
-        outputs: dict[str, torch.Tensor],
-        zero: torch.Tensor,
-    ) -> dict[str, torch.Tensor]:
-        target = batch["target"]
-        current_wall_move = target.get("is_wall_move")
-        if current_wall_move is None:
-            return {
-                "loss_wall_orthogonal": zero,
-                "loss_wall_length": zero,
-                "loss_wall_endpoint": zero,
-            }
-
-        previous_xy, has_previous, previous_action_was_click = self._latest_history_wall_move_xy(batch)
-        current_wall_move = current_wall_move.bool()
-        pair_mask = current_wall_move & has_previous
-        if not pair_mask.any():
-            return {
-                "loss_wall_orthogonal": zero,
-                "loss_wall_length": zero,
-                "loss_wall_endpoint": zero,
-            }
-
-        cfg = self.config
-        target_delta = target["xy"] - previous_xy
-        target_length = torch.linalg.vector_norm(target_delta, dim=-1)
-        endpoint_mask = pair_mask & (target_length <= cfg.wall_endpoint_epsilon)
-        segment_mask = pair_mask & previous_action_was_click & (target_length > cfg.wall_endpoint_epsilon)
-
-        losses = {
-            "loss_wall_orthogonal": zero,
-            "loss_wall_length": zero,
-            "loss_wall_endpoint": zero,
-        }
-        if endpoint_mask.any():
-            losses["loss_wall_endpoint"] = F.smooth_l1_loss(
-                outputs["xy"][endpoint_mask],
-                previous_xy[endpoint_mask],
-                beta=cfg.xy_smooth_l1_beta,
-            )
-
-        if segment_mask.any():
-            pred_delta = outputs["xy"] - previous_xy
-            horizontal = target_delta[:, 0].abs() >= target_delta[:, 1].abs()
-            orthogonal_error = torch.where(horizontal, pred_delta[:, 1], pred_delta[:, 0])
-            losses["loss_wall_orthogonal"] = F.smooth_l1_loss(
-                orthogonal_error[segment_mask],
-                torch.zeros_like(orthogonal_error[segment_mask]),
-                beta=cfg.xy_smooth_l1_beta,
-            )
-
-            pred_length = torch.linalg.vector_norm(pred_delta, dim=-1)
-            target_segment_length = target_length[segment_mask]
-            pred_segment_length = pred_length[segment_mask]
-            length_match = F.smooth_l1_loss(
-                pred_segment_length,
-                target_segment_length,
-                beta=cfg.xy_smooth_l1_beta,
-            )
-            required_length = torch.maximum(
-                target_segment_length * 0.85,
-                torch.full_like(target_segment_length, cfg.wall_min_segment_length),
-            )
-            short_wall_penalty = F.smooth_l1_loss(
-                torch.clamp(pred_segment_length, max=required_length),
-                required_length,
-                beta=cfg.xy_smooth_l1_beta,
-            )
-            losses["loss_wall_length"] = length_match + short_wall_penalty
-        return losses
-
     def compute_loss(self, batch: dict[str, Any], outputs: dict[str, torch.Tensor] | None = None) -> dict[str, torch.Tensor]:
         if outputs is None:
             outputs = self.forward(batch)
@@ -344,7 +245,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             if is_move.any()
             else zero
         )
-        losses.update(self._wall_geometry_losses(batch, outputs, zero))
 
         key_target = target["key_id"].long()
         valid_key = is_key_action & (key_target >= 0)
@@ -378,9 +278,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             + cfg.loss_high_level_weight * losses["loss_high_level"]
             + cfg.loss_gui_action_weight * losses["loss_gui_action"]
             + cfg.loss_xy_weight * losses["loss_xy"]
-            + cfg.loss_wall_orthogonal_weight * losses["loss_wall_orthogonal"]
-            + cfg.loss_wall_length_weight * losses["loss_wall_length"]
-            + cfg.loss_wall_endpoint_weight * losses["loss_wall_endpoint"]
             + cfg.loss_key_weight * losses["loss_key"]
             + cfg.loss_repeat_weight * losses["loss_repeat"]
             + cfg.loss_interval_weight * losses["loss_interval"]
