@@ -33,8 +33,11 @@ def resolve_path(path: str | Path, repo_root: Path) -> Path:
 def normalize_source_point(point: list[float] | None, coordinate_system: dict[str, Any]) -> list[float]:
     if not point:
         return [0.0, 0.0]
-    if coordinate_system.get("input_coordinates") in {"model_units", "normalized", "centered_normalized"}:
+    input_coordinates = coordinate_system.get("input_coordinates")
+    if input_coordinates in {"model_units", "normalized", "normalized_model", "model_point"}:
         return [float(point[0]), float(point[1])]
+    if input_coordinates == "centered_normalized":
+        return [float(point[0]) + 0.5, float(point[1]) + 0.5]
 
     bbox = coordinate_system.get("source_bbox", {})
     x_range = coordinate_system.get("x_range", [0, 1])
@@ -52,8 +55,8 @@ def normalize_source_point(point: list[float] | None, coordinate_system: dict[st
     center_x = (min_x + max_x) / 2
     center_y = (min_y + max_y) / 2
     return [
-        (float(point[0]) - center_x) / source_span,
-        (float(point[1]) - center_y) / source_span,
+        (float(point[0]) - center_x) / source_span + 0.5,
+        (float(point[1]) - center_y) / source_span + 0.5,
     ]
 
 

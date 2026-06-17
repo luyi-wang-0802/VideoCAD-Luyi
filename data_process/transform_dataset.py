@@ -519,11 +519,23 @@ def model_point_axis_compression_scale(primitive_plan: dict[str, Any]) -> list[f
     return [1.0, 1.0]
 
 
-def apply_axis_compression(point: list[float], scale: list[float]) -> list[float]:
-    return [round(float(point[0]) * float(scale[0]), 6), round(float(point[1]) * float(scale[1]), 6)]
+def resplan_coordinates_are_model_points(coordinate_system: dict[str, Any]) -> bool:
+    return coordinate_system.get("input_coordinates") in {"normalized_model", "model_point"}
 
 
-def model_axis_safe_limits(grounding_config: dict[str, Any] | None) -> tuple[float, float] | None:
+def apply_axis_compression(
+    point: list[float],
+    scale: list[float],
+    center: list[float] | None = None,
+) -> list[float]:
+    center = center or [0.5, 0.5]
+    return [
+        round(float(center[0]) + (float(point[0]) - float(center[0])) * float(scale[0]), 6),
+        round(float(center[1]) + (float(point[1]) - float(center[1])) * float(scale[1]), 6),
+    ]
+
+
+def model_axis_safe_limits(grounding_config: dict[str, Any] | None) -> tuple[float, float, float, float] | None:
     if not grounding_config:
         return None
     canvas = grounding_config.get("canvas", {})
@@ -535,13 +547,19 @@ def model_axis_safe_limits(grounding_config: dict[str, Any] | None) -> tuple[flo
     if scale_multiplier <= 0:
         return None
     try:
-        x_limit = min(abs(float(model_range["x_min"])), abs(float(model_range["x_max"]))) / scale_multiplier
-        y_limit = min(abs(float(model_range["y_min"])), abs(float(model_range["y_max"]))) / scale_multiplier
+        x_min = float(model_range["x_min"])
+        x_max = float(model_range["x_max"])
+        y_min = float(model_range["y_min"])
+        y_max = float(model_range["y_max"])
     except KeyError:
         return None
+    x_center = (x_min + x_max) / 2
+    y_center = (y_min + y_max) / 2
+    x_limit = min(abs(x_center - x_min), abs(x_max - x_center)) / scale_multiplier
+    y_limit = min(abs(y_center - y_min), abs(y_max - y_center)) / scale_multiplier
     if x_limit <= 0 or y_limit <= 0:
         return None
-    return x_limit, y_limit
+    return x_center, y_center, x_limit, y_limit
 
 
 def resplan_model_points_for_compression(resplan: dict[str, Any], coordinate_system: dict[str, Any]) -> list[list[float]]:
@@ -568,11 +586,23 @@ def infer_model_point_axis_compression(
     primitive_plan: dict[str, Any],
     grounding_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    coordinate_system = resplan.get("coordinate_system", {})
+    if resplan_coordinates_are_model_points(coordinate_system):
+        return {
+            "enabled": False,
+            "center": [0.5, 0.5],
+            "scale": [1.0, 1.0],
+            "source": "resplan_json_already_contains_model_points",
+            "raw": coordinate_system.get("model_point_axis_compression", {}),
+        }
+
     primitive_compression = primitive_plan.get("execution_policy", {}).get("model_point_axis_compression") or {}
     primitive_scale = primitive_compression.get("scale")
     if isinstance(primitive_scale, list) and len(primitive_scale) >= 2:
+        primitive_center = primitive_compression.get("center", [0.5, 0.5])
         return {
             "enabled": bool(primitive_compression.get("enabled", True)),
+            "center": [float(primitive_center[0]), float(primitive_center[1])],
             "scale": [float(primitive_scale[0]), float(primitive_scale[1])],
             "source": "primitive_plan.execution_policy.model_point_axis_compression",
             "raw": primitive_compression,
@@ -580,22 +610,23 @@ def infer_model_point_axis_compression(
 
     limits = model_axis_safe_limits(grounding_config)
     if not limits:
-        return {"enabled": False, "scale": [1.0, 1.0], "source": "none", "raw": {}}
-    coordinate_system = resplan.get("coordinate_system", {})
+        return {"enabled": False, "center": [0.5, 0.5], "scale": [1.0, 1.0], "source": "none", "raw": {}}
     points = resplan_model_points_for_compression(resplan, coordinate_system)
     if not points:
-        return {"enabled": False, "scale": [1.0, 1.0], "source": "none", "raw": {}}
+        return {"enabled": False, "center": [0.5, 0.5], "scale": [1.0, 1.0], "source": "none", "raw": {}}
 
-    x_limit, y_limit = limits
-    max_abs_x = max(abs(float(point[0])) for point in points)
-    max_abs_y = max(abs(float(point[1])) for point in points)
+    x_center, y_center, x_limit, y_limit = limits
+    max_abs_x = max(abs(float(point[0]) - x_center) for point in points)
+    max_abs_y = max(abs(float(point[1]) - y_center) for point in points)
     scale_x = x_limit / max_abs_x if max_abs_x > x_limit else 1.0
     scale_y = y_limit / max_abs_y if max_abs_y > y_limit else 1.0
     compression = {
         "enabled": scale_x < 0.999999 or scale_y < 0.999999,
+        "center": [round(x_center, 6), round(y_center, 6)],
         "scale": [round(scale_x, 6), round(scale_y, 6)],
         "source": "grounding_config.canvas.coordinate_mapping.auto_compress_primitive_model_points",
         "raw": {
+            "center": [round(x_center, 6), round(y_center, 6)],
             "safe_abs_limit": [round(x_limit, 6), round(y_limit, 6)],
             "original_max_abs": [round(max_abs_x, 6), round(max_abs_y, 6)],
         },
@@ -608,9 +639,9 @@ def build_execution_coordinate_policy(
     compression: dict[str, Any],
 ) -> dict[str, Any]:
     return {
-        "coordinate_space": "centered_normalized_execution_model",
+        "coordinate_space": "normalized_model",
         "normalization": {
-            "method": "source_bbox_center_span",
+            "method": "source_bbox_center_span_plus_0.5",
             "source_bbox": coordinate_system.get("source_bbox"),
             "source_span": coordinate_system.get("source_span"),
             "x_range": coordinate_system.get("x_range"),
@@ -623,6 +654,7 @@ def build_execution_coordinate_policy(
         },
         "model_point_axis_compression": {
             "enabled": bool(compression.get("enabled", bool(compression))),
+            "center": compression.get("center", [0.5, 0.5]),
             "scale": compression.get("scale", [1.0, 1.0]),
             "source": compression.get("source", "none"),
             "raw": compression.get("raw", {}),
@@ -635,6 +667,7 @@ def build_execution_wall_features(
     coordinate_system: dict[str, Any],
     compression_scale: list[float],
 ) -> list[dict[str, Any]]:
+    compression_center = coordinate_system.get("model_point_axis_compression", {}).get("center", [0.5, 0.5])
     execution_walls = []
     for wall in walls:
         geometry = wall.get("geometry", {})
@@ -652,8 +685,8 @@ def build_execution_wall_features(
                 "source_end": [round(float(end[0]), 6), round(float(end[1]), 6)],
                 "start": start_model,
                 "end": end_model,
-                "execution_start": apply_axis_compression(start_model, compression_scale),
-                "execution_end": apply_axis_compression(end_model, compression_scale),
+                "execution_start": apply_axis_compression(start_model, compression_scale, compression_center),
+                "execution_end": apply_axis_compression(end_model, compression_scale, compression_center),
             }
         )
     return execution_walls
@@ -689,6 +722,7 @@ def build_insertion_features(
     coordinate_system: dict[str, Any],
     compression_scale: list[float],
 ) -> list[dict[str, Any]]:
+    compression_center = coordinate_system.get("model_point_axis_compression", {}).get("center", [0.5, 0.5])
     insertions = []
     for wall in walls:
         wall_id = wall.get("wall_id")
@@ -707,7 +741,9 @@ def build_insertion_features(
                     "insertion_point": normalize_source_point_for_json(centerline, coordinate_system),
                     "click_point": normalize_source_point_for_json(click_point, coordinate_system),
                     "execution_click_point": apply_axis_compression(
-                        normalize_source_point_for_json(click_point, coordinate_system), compression_scale
+                        normalize_source_point_for_json(click_point, coordinate_system),
+                        compression_scale,
+                        compression_center,
                     ),
                     "click_point_rule": (
                         "source opening insertion point, matching rule-base primitive target_click_point_source"
@@ -718,8 +754,11 @@ def build_insertion_features(
 
 
 def normalize_source_point_for_json(point: list[float], coordinate_system: dict[str, Any]) -> list[float]:
-    if coordinate_system.get("input_coordinates") in {"model_units", "normalized", "centered_normalized"}:
+    input_coordinates = coordinate_system.get("input_coordinates")
+    if input_coordinates in {"model_units", "normalized", "normalized_model", "model_point"}:
         return [round(float(point[0]), 6), round(float(point[1]), 6)]
+    if input_coordinates == "centered_normalized":
+        return [round(float(point[0]) + 0.5, 6), round(float(point[1]) + 0.5, 6)]
 
     bbox = coordinate_system.get("source_bbox", {})
     x_range = coordinate_system.get("x_range", [0, 1])
@@ -737,8 +776,8 @@ def normalize_source_point_for_json(point: list[float], coordinate_system: dict[
     center_x = (min_x + max_x) / 2
     center_y = (min_y + max_y) / 2
     return [
-        round((float(point[0]) - center_x) / source_span, 6),
-        round((float(point[1]) - center_y) / source_span, 6),
+        round((float(point[0]) - center_x) / source_span + 0.5, 6),
+        round((float(point[1]) - center_y) / source_span + 0.5, 6),
     ]
 
 
