@@ -187,6 +187,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         enable_random=args.enable_random,
         sequence_retriever=args.sequence_retriever,
         overfit=args.overfit_data,
+        history_length=selected_model_params.get("history_length", 32),
         load_observation=selected_model_params.get("use_observation", True),
         load_global_floorplan=args.load_global_floorplan,
         image_dtype=args.image_dtype,

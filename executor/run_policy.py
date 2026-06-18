@@ -577,7 +577,12 @@ def main() -> None:
     parser.add_argument("--run-dir", default="outputs/policy_rollouts/manual_run", type=Path)
     parser.add_argument("--initial-screenshot", default=None, type=str)
     parser.add_argument("--max-steps", default=20, type=int)
-    parser.add_argument("--history-length", default=32, type=int)
+    parser.add_argument(
+        "--history-length",
+        default=None,
+        type=int,
+        help="History window for rollout. Defaults to the checkpoint/model config history_length.",
+    )
     parser.add_argument("--image-size", default=224, type=int)
     parser.add_argument("--device", default="cuda")
     parser.add_argument(
@@ -615,15 +620,6 @@ def main() -> None:
         grounding_config=read_json(args.calibration),
     )
     debug_sample = read_json(args.sample) if args.sample is not None else None
-    dataset = PrimitiveActionDataset(
-        dataset_path=args.dataset_path,
-        action_vocab_path=action_vocab_path,
-        split=None,
-        image_size=(args.image_size, args.image_size),
-        history_length=args.history_length,
-        load_images=False,
-    )
-    image_loader = ScreenshotImageLoader(image_size=(args.image_size, args.image_size))
     model = load_primitive_model(
         args.checkpoint,
         args.model_config,
@@ -633,6 +629,16 @@ def main() -> None:
         device,
     )
     load_observation = bool(getattr(model.config, "use_observation", True))
+    history_length = args.history_length if args.history_length is not None else int(model.config.history_length)
+    dataset = PrimitiveActionDataset(
+        dataset_path=args.dataset_path,
+        action_vocab_path=action_vocab_path,
+        split=None,
+        image_size=(args.image_size, args.image_size),
+        history_length=history_length,
+        load_images=False,
+    )
+    image_loader = ScreenshotImageLoader(image_size=(args.image_size, args.image_size))
     executor = VectorworksExecutor(args.calibration, dry_run=args.dry_run)
     args.run_dir.mkdir(parents=True, exist_ok=True)
 

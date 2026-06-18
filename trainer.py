@@ -183,13 +183,26 @@ class CheckpointHandler:
         if self.is_master:
             os.makedirs(self.checkpoint_dir, exist_ok=True)
 
-    def build_checkpoint(self, epoch, loss, model, optimizer, scheduler=None, training_config=None):
+    def build_checkpoint(
+        self,
+        epoch,
+        loss,
+        model,
+        optimizer,
+        scheduler=None,
+        training_config=None,
+        metric_name=None,
+        metric_value=None,
+    ):
         checkpoint = {
             'epoch': epoch + 1,
             'model_state_dict': model.state_dict(),
             'optimizer_state_dict': optimizer.state_dict(),
             'loss': loss,
         }
+        if metric_name is not None:
+            checkpoint['best_metric_name'] = metric_name
+            checkpoint['best_metric_value'] = metric_value
         if scheduler is not None:
             checkpoint['scheduler_state_dict'] = scheduler.state_dict()
         if training_config is not None:
@@ -223,10 +236,30 @@ class CheckpointHandler:
             )
         return None
 
-    def save_checkpoint(self, epoch, loss, model, optimizer, scheduler=None, training_config=None, kind="last"):
+    def save_checkpoint(
+        self,
+        epoch,
+        loss,
+        model,
+        optimizer,
+        scheduler=None,
+        training_config=None,
+        kind="last",
+        metric_name=None,
+        metric_value=None,
+    ):
         if not self.is_master:
             return
-        checkpoint = self.build_checkpoint(epoch, loss, model, optimizer, scheduler, training_config)
+        checkpoint = self.build_checkpoint(
+            epoch,
+            loss,
+            model,
+            optimizer,
+            scheduler,
+            training_config,
+            metric_name=metric_name,
+            metric_value=metric_value,
+        )
         if kind not in {"best", "last", "epoch"}:
             raise ValueError(f"Unsupported checkpoint kind: {kind}")
         filename = f"epoch_{epoch + 1:04d}.pt" if kind == "epoch" else f"{kind}.pt"
@@ -370,7 +403,7 @@ class BaseTrainer:
         )
         return masked_params
 
-    def save_checkpoint(self, epoch, loss, kind="last"):
+    def save_checkpoint(self, epoch, loss, kind="last", metric_name=None, metric_value=None):
         ckpt = self.checkpoint_handler.save_checkpoint(
             epoch,
             loss,
@@ -379,6 +412,8 @@ class BaseTrainer:
             scheduler=self.scheduler,
             training_config=self.training_config,
             kind=kind,
+            metric_name=metric_name,
+            metric_value=metric_value,
         )
         return ckpt
 
@@ -718,7 +753,13 @@ class BaseTrainer:
             self.log(f"Validation {self.early_stopping_metric} improved from {best_metric_value:.4f} to {current_metric:.4f}")
             best_metric_value = current_metric
             patience_counter = 0
-            best_model_state = self.save_checkpoint(epoch, avg_loss, kind="best")
+            best_model_state = self.save_checkpoint(
+                epoch,
+                avg_loss,
+                kind="best",
+                metric_name=self.early_stopping_metric,
+                metric_value=current_metric,
+            )
             self.log(f"Saved best model checkpoint at epoch {epoch+1}")
         else:
             if self.early_stopping_enabled:
@@ -736,6 +777,14 @@ class BaseTrainer:
 
     def _get_current_metric(self, avg_loss, val_metrics):
         """Get the current metric value for early stopping."""
+        val_metrics = val_metrics or {}
+        metric_name = str(self.early_stopping_metric)
+        if metric_name.startswith("val/"):
+            metric_name = metric_name[4:]
+        if metric_name == 'loss':
+            return float(val_metrics.get('loss', avg_loss))
+        if metric_name in val_metrics:
+            return float(val_metrics[metric_name])
         if self.early_stopping_metric == 'loss':
             return avg_loss
         elif self.early_stopping_metric == 'accuracy' and 'correct_predictions' in val_metrics:
