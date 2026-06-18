@@ -122,8 +122,8 @@
         "x": 885,
         "y": 630
       },
-      "edge_margin_px": 85,
-      "scale_multiplier": 2.0,
+      "edge_margin_px": 65,
+      "scale_multiplier": 2.25,
       "auto_compress_primitive_model_points": true,
       "safe_region_note": "Uniform-scale mapping keeps the model centered. Keep enough margin for Vectorworks insertion previews and wall endpoints so live actions do not trigger canvas auto-pan.",
       "canvas_corners": {
