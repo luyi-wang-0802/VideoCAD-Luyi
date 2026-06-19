@@ -14,9 +14,9 @@ REMOVED_WALL_LOSS_TERMS = (
 def test_wall_geometry_losses_are_not_part_of_training_strategy() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     checked_files = [
-        repo_root / "model/primitive_action_policy/config.py",
-        repo_root / "model/primitive_action_policy/policy.py",
-        repo_root / "model_configs/primitive_action_policy.json",
+        repo_root / "model/structured_primitive_action_policy/config.py",
+        repo_root / "model/structured_primitive_action_policy/policy.py",
+        repo_root / "model_configs/structured_primitive_action_policy.json",
         repo_root / "trainer.py",
     ]
 

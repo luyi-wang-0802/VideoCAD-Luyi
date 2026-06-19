@@ -1,4 +1,4 @@
-"""Primitive-action policy model for ResPlan-conditioned autoregressive training."""
+"""Structured primitive-action policy model for ResPlan-conditioned autoregressive training."""
 
 from __future__ import annotations
 
@@ -8,27 +8,17 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from model.primitive_action_policy.config import PrimitiveActionPolicyConfig
-from model.primitive_action_policy.layers import make_image_encoder, masked_mean
+from model.structured_primitive_action_policy.config import StructuredPrimitiveActionPolicyConfig
+from model.structured_primitive_action_policy.layers import masked_mean
 
 
-class PrimitiveActionPolicyModel(nn.Module):
-    """Predict the next primitive action from plan, optional screenshot, floorplan, and action history."""
+class StructuredPrimitiveActionPolicyModel(nn.Module):
+    """Predict the next primitive action from structured plan features and action history."""
 
-    def __init__(self, config: PrimitiveActionPolicyConfig) -> None:
+    def __init__(self, config: StructuredPrimitiveActionPolicyConfig) -> None:
         super().__init__()
         self.config = config
         h = config.hidden_size
-
-        self.image_encoder = make_image_encoder(config.image_channels, h) if config.use_observation else None
-        self.global_floorplan_encoder = make_image_encoder(config.image_channels, h)
-        self.floorplan_cross_attention = nn.MultiheadAttention(
-            embed_dim=h,
-            num_heads=config.num_attention_heads,
-            dropout=config.dropout,
-            batch_first=True,
-        )
-        self.floorplan_cross_norm = nn.LayerNorm(h)
 
         self.wall_encoder = nn.Sequential(
             nn.Linear(config.wall_feature_dim, h),
@@ -53,20 +43,21 @@ class PrimitiveActionPolicyModel(nn.Module):
         self.high_level_embedding = nn.Embedding(config.num_high_level_actions, h)
         self.gui_action_embedding = nn.Embedding(config.num_gui_actions, h)
         self.key_embedding = nn.Embedding(config.num_keys + 1, h)
-        self.coordinate_frame_embedding = nn.Embedding(config.num_coordinate_frames, h)
         self.primitive_projection = nn.Sequential(
             nn.Linear(config.primitive_action_dim, h),
             nn.GELU(),
             nn.LayerNorm(h),
         )
-        self.history_projection = nn.Sequential(nn.Linear(h * 6, h), nn.GELU(), nn.LayerNorm(h))
+        self.history_projection = nn.Sequential(nn.Linear(h * 5, h), nn.GELU(), nn.LayerNorm(h))
 
         self.plan_token = nn.Parameter(torch.zeros(1, 1, h))
-        self.observation_token = nn.Parameter(torch.zeros(1, 1, h)) if config.use_observation else None
         self.progress_token = nn.Parameter(torch.zeros(1, 1, h))
         self.step_token = nn.Parameter(torch.zeros(1, 1, h))
         self.query_token = nn.Parameter(torch.zeros(1, 1, h))
-        self.position_embedding = nn.Embedding(config.history_length + config.max_wall_tokens + 8, h)
+        self.position_embedding = nn.Embedding(
+            config.history_length + config.max_wall_tokens + config.max_insertion_tokens + 8,
+            h,
+        )
         self.step_index_embedding = nn.Embedding(config.max_step_index + 1, h)
 
         encoder_layer = nn.TransformerEncoderLayer(
@@ -83,7 +74,6 @@ class PrimitiveActionPolicyModel(nn.Module):
         self.action_type_head = nn.Linear(h, config.num_action_types)
         self.high_level_head = nn.Linear(h, config.num_high_level_actions)
         self.gui_action_head = nn.Linear(h, config.num_gui_actions)
-        self.coordinate_frame_head = nn.Linear(h, config.num_coordinate_frames)
         self.xy_head = nn.Linear(h, 2)
         self.aux_wall_query = nn.Linear(h, h)
         self.aux_point_role_head = nn.Linear(h, 3)
@@ -102,7 +92,10 @@ class PrimitiveActionPolicyModel(nn.Module):
         elif isinstance(module, nn.Embedding):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
 
-    def encode_plan(self, plan: dict[str, torch.Tensor]) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    def encode_plan(
+        self,
+        plan: dict[str, torch.Tensor],
+    ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
         walls = plan["walls"]
         wall_mask = plan["wall_mask"]
         insertions = plan["insertions"]
@@ -111,14 +104,22 @@ class PrimitiveActionPolicyModel(nn.Module):
         wall_features_all = self.wall_encoder(walls) if walls.shape[1] else torch.zeros(
             walls.shape[0], 0, self.config.hidden_size, device=walls.device, dtype=walls.dtype
         )
-        insertion_features = self.insertion_encoder(insertions) if insertions.shape[1] else torch.zeros(
+        insertion_features_all = self.insertion_encoder(insertions) if insertions.shape[1] else torch.zeros(
             insertions.shape[0], 0, self.config.hidden_size, device=insertions.device, dtype=insertions.dtype
         )
         wall_context = masked_mean(wall_features_all, wall_mask)
-        insertion_context = masked_mean(insertion_features, insertion_mask)
+        insertion_context = masked_mean(insertion_features_all, insertion_mask)
         wall_features = wall_features_all[:, : self.config.max_wall_tokens]
         wall_token_mask = wall_mask[:, : self.config.max_wall_tokens]
-        return self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1)), wall_features, wall_token_mask
+        insertion_features = insertion_features_all[:, : self.config.max_insertion_tokens]
+        insertion_token_mask = insertion_mask[:, : self.config.max_insertion_tokens]
+        return (
+            self.plan_projection(torch.cat([wall_context, insertion_context], dim=-1)),
+            wall_features,
+            wall_token_mask,
+            insertion_features,
+            insertion_token_mask,
+        )
 
     def encode_history(self, history: dict[str, torch.Tensor]) -> torch.Tensor:
         primitive = history["primitive_action"].float().clone()
@@ -130,14 +131,12 @@ class PrimitiveActionPolicyModel(nn.Module):
         high_level = history["high_level_id"].clamp(min=0, max=self.config.num_high_level_actions - 1)
         gui_action = history["gui_action_id"].clamp(min=0, max=self.config.num_gui_actions - 1)
         key = history["key_id"].clamp(min=-1, max=self.config.num_keys - 1) + 1
-        coordinate_frame = history["coordinate_frame_id"].clamp(min=0, max=self.config.num_coordinate_frames - 1)
         pieces = [
             self.primitive_projection(primitive),
             self.action_type_embedding(action_type),
             self.high_level_embedding(high_level),
             self.gui_action_embedding(gui_action),
             self.key_embedding(key),
-            self.coordinate_frame_embedding(coordinate_frame),
         ]
         return self.history_projection(torch.cat(pieces, dim=-1))
 
@@ -146,7 +145,7 @@ class PrimitiveActionPolicyModel(nn.Module):
         history = batch["history"]
 
         batch_size = plan["walls"].shape[0]
-        plan_context, wall_features, wall_token_mask = self.encode_plan(plan)
+        plan_context, wall_features, wall_token_mask, insertion_features, insertion_token_mask = self.encode_plan(plan)
         plan_embedding = plan_context + self.plan_token.squeeze(1)
         progress = batch.get("progress")
         if progress is None:
@@ -168,20 +167,13 @@ class PrimitiveActionPolicyModel(nn.Module):
 
         token_pieces = [plan_embedding.unsqueeze(1)]
         key_padding_pieces = [torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device)]
-        if self.config.use_observation:
-            observation = batch.get("observation")
-            if observation is None:
-                raise KeyError("PrimitiveActionPolicyModel expects batch['observation'] when use_observation=True")
-            observation = observation.to(dtype=self.plan_token.dtype)
-            observation_embedding = self.image_encoder(observation) + self.observation_token.squeeze(1)
-            token_pieces.append(observation_embedding.unsqueeze(1))
-            key_padding_pieces.append(torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device))
         token_pieces.extend(
             [
                 progress_embedding.unsqueeze(1),
                 step_embedding.unsqueeze(1),
                 history_embeddings,
                 wall_features,
+                insertion_features,
                 query_embedding.unsqueeze(1),
             ]
         )
@@ -191,6 +183,7 @@ class PrimitiveActionPolicyModel(nn.Module):
                 torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device),
                 ~history["mask"].to(torch.bool),
                 ~wall_token_mask.to(torch.bool),
+                ~insertion_token_mask.to(torch.bool),
                 torch.zeros((batch_size, 1), dtype=torch.bool, device=plan_embedding.device),
             ]
         )
@@ -200,22 +193,6 @@ class PrimitiveActionPolicyModel(nn.Module):
         key_padding_mask = torch.cat(key_padding_pieces, dim=1)
         hidden = self.transformer(tokens, src_key_padding_mask=key_padding_mask)
         query_hidden = self.final_norm(hidden[:, -1])
-        global_floorplan = batch.get("global_floorplan")
-        if global_floorplan is not None:
-            global_floorplan = global_floorplan.to(dtype=self.plan_token.dtype)
-            floorplan_embedding = self.global_floorplan_encoder(global_floorplan)
-            floorplan_available = batch.get("global_floorplan_available")
-            if floorplan_available is None:
-                floorplan_available = torch.ones((batch_size,), dtype=torch.bool, device=floorplan_embedding.device)
-            floorplan_available_f = floorplan_available.to(floorplan_embedding.dtype).view(batch_size, 1)
-            floorplan_embedding = floorplan_embedding * floorplan_available_f
-            floorplan_context, _ = self.floorplan_cross_attention(
-                query=query_hidden.unsqueeze(1),
-                key=floorplan_embedding.unsqueeze(1),
-                value=floorplan_embedding.unsqueeze(1),
-                need_weights=False,
-            )
-            query_hidden = self.floorplan_cross_norm(query_hidden + floorplan_context.squeeze(1) * floorplan_available_f)
 
         xy = self.xy_head(query_hidden)
         if self.config.xy_output_activation == "sigmoid":
@@ -227,7 +204,6 @@ class PrimitiveActionPolicyModel(nn.Module):
             "action_type_logits": self.action_type_head(query_hidden),
             "high_level_logits": self.high_level_head(query_hidden),
             "gui_action_logits": self.gui_action_head(query_hidden),
-            "coordinate_frame_logits": self.coordinate_frame_head(query_hidden),
             "xy": xy,
             "aux_wall_logits": torch.bmm(wall_features, self.aux_wall_query(query_hidden).unsqueeze(-1)).squeeze(-1),
             "aux_point_role_logits": self.aux_point_role_head(query_hidden),
@@ -323,7 +299,6 @@ class PrimitiveActionPolicyModel(nn.Module):
         action_type_id = outputs["action_type_logits"].argmax(dim=-1)
         high_level_id = outputs["high_level_logits"].argmax(dim=-1)
         gui_action_id = outputs["gui_action_logits"].argmax(dim=-1)
-        coordinate_frame_id = outputs["coordinate_frame_logits"].argmax(dim=-1)
         x = outputs["xy"][:, 0]
         y = outputs["xy"][:, 1]
         key_id = outputs["key_logits"].argmax(dim=-1)
@@ -345,6 +320,5 @@ class PrimitiveActionPolicyModel(nn.Module):
             "action_type_id": action_type_id,
             "high_level_id": high_level_id,
             "gui_action_id": gui_action_id,
-            "coordinate_frame_id": coordinate_frame_id,
         }
         return decoded

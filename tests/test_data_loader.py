@@ -68,4 +68,5 @@ def test_collate_keeps_vector_masks_on_sample_device() -> None:
 
     batch = PrimitiveActionDataset.collate_fn(items)
 
-    assert batch["plan"]["entity_mask"].device == device
+    assert batch["plan"]["wall_mask"].device == device
+    assert batch["plan"]["insertion_mask"].device == device

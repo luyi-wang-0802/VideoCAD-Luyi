@@ -1,4 +1,4 @@
-"""Roll out a trained primitive-action policy."""
+"""Roll out a trained structured primitive-action policy."""
 
 from __future__ import annotations
 
@@ -19,7 +19,6 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from data_loader.data_loader import PrimitiveActionDataset, read_json
-from data_loader.image_loader import ScreenshotImageLoader
 from data_process.transform_dataset import summarize_resplan_for_model
 from executor.vectorworks_executor import VectorworksExecutor
 from model.model_factory import ModelFactory, _strip_wrappers
@@ -159,7 +158,8 @@ def load_primitive_model(
 
     checkpoint = torch.load(checkpoint_path, map_location=device)
     state_dict = checkpoint["model_state_dict"] if "model_state_dict" in checkpoint else checkpoint
-    model, _ = ModelFactory().create_model("primitive_action_policy", model_config, device)
+    resolved_model_name = model_config.get("model_name", model_name)
+    model, _ = ModelFactory().create_model(resolved_model_name, model_config, device)
     model.load_state_dict(_strip_wrappers(state_dict), strict=False)
     model.eval()
     return model
@@ -177,40 +177,19 @@ def infer_action_vocab_path(checkpoint_path: Path, explicit_path: Path | None = 
     )
 
 
-def infer_checkpoint_load_global_floorplan(checkpoint_path: Path) -> bool:
-    run_dir = checkpoint_path.parent.parent
-    command_args_path = run_dir / "configs" / "command_args.json"
-    if not command_args_path.exists():
-        return True
-    command_args = read_json(command_args_path)
-    return bool(command_args.get("load_global_floorplan", True))
-
-
 def make_batch(
     dataset: PrimitiveActionDataset,
     sample: dict[str, Any],
-    screenshot_path: str | None,
     encoded_history: list[dict[str, torch.Tensor]],
     progress_state: dict[str, dict[str, int]],
-    image_loader: ScreenshotImageLoader,
     device: torch.device,
     step_index: int,
-    load_observation: bool,
-    load_global_floorplan: bool,
 ) -> dict[str, Any]:
     plan = dataset._encode_plan(sample["model_inputs"]["encoded_resplan"])
     history = dataset._build_history(encoded_history, len(encoded_history))
-    observation = None
-    available = False
-    if load_observation:
-        observation, available = image_loader.load(screenshot_path)
     batch = {
         "sample_id": [sample["sample_id"]],
         "step_index": torch.tensor([step_index], dtype=torch.long),
-        "observation": observation.unsqueeze(0) if observation is not None else None,
-        "observation_available": torch.tensor([available], dtype=torch.bool),
-        "global_floorplan": None,
-        "global_floorplan_available": torch.tensor([False], dtype=torch.bool),
         "progress": torch.tensor(
             [progress_vector(progress_state["task_counts"], progress_state["done_counts"])],
             dtype=torch.float32,
@@ -223,12 +202,6 @@ def make_batch(
         },
         "history": {key: value.unsqueeze(0) for key, value in history.items()},
     }
-    if load_global_floorplan:
-        global_floorplan, global_floorplan_available = image_loader.load(
-            sample["model_inputs"].get("global_floorplan_path")
-        )
-        batch["global_floorplan"] = global_floorplan.unsqueeze(0)
-        batch["global_floorplan_available"] = torch.tensor([global_floorplan_available], dtype=torch.bool)
     return move_to_device(batch, device)
 
 
@@ -366,17 +339,16 @@ def decode_action(outputs: dict[str, torch.Tensor], model: torch.nn.Module, data
     high_level_by_id = inverse_mapping(dataset.high_level_to_id)
     gui_action_by_id = inverse_mapping(dataset.gui_action_to_id)
     key_by_id = inverse_mapping(dataset.key_to_id)
-    frame_by_id = inverse_mapping(dataset.coordinate_frame_to_id)
     action_type_id = int(decoded["action_type_id"][0].item())
     high_level_id = int(decoded["high_level_id"][0].item())
     gui_action_id = int(decoded["gui_action_id"][0].item())
-    frame_id = int(decoded["coordinate_frame_id"][0].item())
     key_id = int(round(primitive_action[3])) if primitive_action[3] >= 0 else -1
 
     primitive_action_type_id = int(round(float(primitive_action[0])))
     action_type = action_type_by_id.get(primitive_action_type_id, "<unknown>")
     key_name = key_by_id.get(key_id)
     coordinate_frame = "model" if action_type == "MOVE_TO" and primitive_action[1] != -1 and primitive_action[2] != -1 else "none"
+    frame_id = dataset.coordinate_frame_to_id.get(coordinate_frame, 0)
 
     return {
         "policy_level": "primitive_action",
@@ -571,7 +543,7 @@ def main() -> None:
         type=Path,
         help="Optional vocab override. Defaults to checkpoint_dir/action_vocab.json.",
     )
-    parser.add_argument("--model-config", default="model_configs/primitive_action_policy.json", type=Path)
+    parser.add_argument("--model-config", default="model_configs/structured_primitive_action_policy.json", type=Path)
     parser.add_argument("--model-name", default="default_params")
     parser.add_argument("--calibration", default="configs/vectorworks_grounding_template.json", type=Path)
     parser.add_argument("--run-dir", default="outputs/policy_rollouts/manual_run", type=Path)
@@ -585,11 +557,7 @@ def main() -> None:
     )
     parser.add_argument("--image-size", default=224, type=int)
     parser.add_argument("--device", default="cuda")
-    parser.add_argument(
-        "--no-global-floorplan",
-        action="store_true",
-        help="Disable loading the global floorplan image during rollout, regardless of checkpoint command args.",
-    )
+    parser.add_argument("--no-global-floorplan", action="store_true", help=argparse.SUPPRESS)
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--use-recorded-observations", action="store_true")
     parser.add_argument("--teacher-force-history", action="store_true")
@@ -611,7 +579,6 @@ def main() -> None:
 
     device = torch.device(args.device if torch.cuda.is_available() and args.device.startswith("cuda") else "cpu")
     action_vocab_path = infer_action_vocab_path(args.checkpoint, args.action_vocab)
-    load_global_floorplan = (not args.no_global_floorplan) and infer_checkpoint_load_global_floorplan(args.checkpoint)
     sample = runtime_sample_from_resplan(
         args.resplan_json,
         runtime_plan_path=args.runtime_plan,
@@ -628,7 +595,6 @@ def main() -> None:
         action_vocab_path,
         device,
     )
-    load_observation = bool(getattr(model.config, "use_observation", True))
     history_length = args.history_length if args.history_length is not None else int(model.config.history_length)
     dataset = PrimitiveActionDataset(
         dataset_path=args.dataset_path,
@@ -638,7 +604,6 @@ def main() -> None:
         history_length=history_length,
         load_images=False,
     )
-    image_loader = ScreenshotImageLoader(image_size=(args.image_size, args.image_size))
     executor = VectorworksExecutor(args.calibration, dry_run=args.dry_run)
     args.run_dir.mkdir(parents=True, exist_ok=True)
 
@@ -665,8 +630,6 @@ def main() -> None:
                     break
                 if args.use_recorded_observations and step_index < len(sample_steps):
                     screenshot = sample_steps[step_index]["model_input"].get("observation_screenshot_path")
-                if load_observation and screenshot is None and not args.dry_run:
-                    screenshot = executor.capture_screenshot(args.run_dir, step_index * 2)
                 if abort_monitor.requested():
                     print(f"Abort requested by {abort_monitor.reason}; stopping before inference at step {step_index}.")
                     break
@@ -674,14 +637,10 @@ def main() -> None:
                 batch = make_batch(
                     dataset,
                     sample,
-                    screenshot,
                     encoded_history,
                     progress_state,
-                    image_loader,
                     device,
                     step_index,
-                    load_observation=load_observation,
-                    load_global_floorplan=load_global_floorplan,
                 )
                 with torch.no_grad():
                     outputs = model(batch)

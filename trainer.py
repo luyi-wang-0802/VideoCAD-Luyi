@@ -457,7 +457,9 @@ class BaseTrainer:
         if self.scheduler is None:
             return
         if isinstance(self.scheduler, torch.optim.lr_scheduler.ReduceLROnPlateau):
-            metric = self._get_current_metric(avg_loss, val_metrics or {})
+            if val_metrics is None and not str(self.early_stopping_metric).startswith("train/"):
+                return
+            metric = self._get_current_metric(avg_loss, val_metrics)
             self.scheduler.step(metric)
         else:
             self.scheduler.step()
@@ -746,6 +748,9 @@ class BaseTrainer:
 
     def _handle_early_stopping(self, epoch, avg_loss, val_metrics, best_metric_value, patience_counter, best_model_state):
         """Handle early stopping logic."""
+        if val_metrics is None and not str(self.early_stopping_metric).startswith("train/"):
+            return best_metric_value, patience_counter, best_model_state, False
+
         current_metric = self._get_current_metric(avg_loss, val_metrics)
         improved = self._check_metric_improvement(current_metric, best_metric_value)
         
@@ -779,17 +784,26 @@ class BaseTrainer:
         """Get the current metric value for early stopping."""
         val_metrics = val_metrics or {}
         metric_name = str(self.early_stopping_metric)
+        if metric_name.startswith("train/"):
+            train_metric_name = metric_name[6:]
+            if train_metric_name == "loss":
+                return float(avg_loss)
+            raise KeyError(f"Training metric {train_metric_name!r} is not available for early stopping")
         if metric_name.startswith("val/"):
             metric_name = metric_name[4:]
         if metric_name == 'loss':
-            return float(val_metrics.get('loss', avg_loss))
+            if 'loss' not in val_metrics:
+                raise KeyError("Validation metric 'loss' is not available for early stopping")
+            return float(val_metrics['loss'])
         if metric_name in val_metrics:
             return float(val_metrics[metric_name])
-        if self.early_stopping_metric == 'loss':
-            return avg_loss
-        elif self.early_stopping_metric == 'accuracy' and 'correct_predictions' in val_metrics:
+        if metric_name == 'accuracy' and 'correct_predictions' in val_metrics:
             return val_metrics['correct_predictions'] / val_metrics['total_predictions']
-        return avg_loss
+        available = ", ".join(sorted(val_metrics.keys()))
+        raise KeyError(
+            f"Validation metric {metric_name!r} is not available for early stopping. "
+            f"Available metrics: {available or '<none>'}"
+        )
 
     def _check_metric_improvement(self, current_metric, best_metric_value):
         """Check if the metric has improved."""
@@ -1654,7 +1668,6 @@ class PrimitiveActionTrainer(BaseTrainer):
             "loss_action_type": 0.0,
             "loss_high_level": 0.0,
             "loss_gui_action": 0.0,
-            "loss_coordinate_frame": 0.0,
             "loss_xy": 0.0,
             "loss_aux_wall": 0.0,
             "loss_aux_point_role": 0.0,
@@ -1664,7 +1677,6 @@ class PrimitiveActionTrainer(BaseTrainer):
             "action_type_correct": 0,
             "high_level_correct": 0,
             "gui_action_correct": 0,
-            "coordinate_frame_correct": 0,
             "xy_abs_error": 0.0,
             "xy_count": 0,
             "aux_wall_correct": 0,
@@ -1700,7 +1712,6 @@ class PrimitiveActionTrainer(BaseTrainer):
         averaged["action_type_acc"] = metrics["action_type_correct"] / count
         averaged["high_level_acc"] = metrics["high_level_correct"] / count
         averaged["gui_action_acc"] = metrics["gui_action_correct"] / count
-        averaged["coordinate_frame_acc"] = metrics["coordinate_frame_correct"] / count
         averaged["xy_mae"] = metrics.get("xy_abs_error", 0.0) / max(int(metrics.get("xy_count", 0)), 1)
         averaged["aux_wall_acc"] = metrics.get("aux_wall_correct", 0) / max(int(metrics.get("aux_wall_count", 0)), 1)
         averaged["aux_point_role_acc"] = metrics.get("aux_point_role_correct", 0) / max(
@@ -1714,7 +1725,6 @@ class PrimitiveActionTrainer(BaseTrainer):
         action_pred = outputs["action_type_logits"].argmax(dim=-1)
         high_pred = outputs["high_level_logits"].argmax(dim=-1)
         gui_pred = outputs["gui_action_logits"].argmax(dim=-1)
-        frame_pred = outputs["coordinate_frame_logits"].argmax(dim=-1)
         is_move = target["is_move"].bool()
         is_key_action = target["is_key_action"].bool()
         xy_error = (
@@ -1777,7 +1787,6 @@ class PrimitiveActionTrainer(BaseTrainer):
             "action_type_correct": (action_pred == target["action_type_id"]).sum().item(),
             "high_level_correct": (high_pred == target["high_level_id"]).sum().item(),
             "gui_action_correct": (gui_pred == target["gui_action_id"]).sum().item(),
-            "coordinate_frame_correct": (frame_pred == target["coordinate_frame_id"]).sum().item(),
             **metric_values,
             "count": target["action_type_id"].shape[0],
         }
@@ -1796,7 +1805,7 @@ class PrimitiveActionTrainer(BaseTrainer):
 
     @torch.no_grad()
     def evaluate(self, model, mode="val", epoch=None, ablation=False):
-        del epoch, ablation
+        del ablation
         loader = self.val_loader if mode.startswith("val") else self.test_loader
         model.eval()
         metrics = self.init_metrics()
@@ -1809,6 +1818,8 @@ class PrimitiveActionTrainer(BaseTrainer):
             self.update_metrics(metrics, self._batch_metrics(outputs, batch_dict["target"], loss_dict))
         avg = self._average_metrics(metrics)
         avg["loss"] = total_loss / max(len(loader), 1)
+        if epoch is not None and self.is_master:
+            self.metrics_handler.save_metrics(avg, f"{mode}_epoch_{epoch + 1}")
         model.train()
         return avg
 
@@ -1885,7 +1896,7 @@ class PrimitiveActionTrainer(BaseTrainer):
 
 # Factory function to create the appropriate trainer
 def create_trainer(train_loader, val_loader, test_loader, model, training_config, device, model_type: ModelType, rank=0):
-    if model_type == ModelType.PRIMITIVE_ACTION_POLICY:
+    if model_type == ModelType.STRUCTURED_PRIMITIVE_ACTION_POLICY:
         return PrimitiveActionTrainer(train_loader, val_loader, test_loader, model, training_config, device, rank)
     return MultiClassesTrainer(train_loader, val_loader, test_loader, model, training_config, device, rank)
     

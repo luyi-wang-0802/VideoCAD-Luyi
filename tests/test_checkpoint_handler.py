@@ -1,6 +1,11 @@
 import ast
 from pathlib import Path
 
+import pytest
+import torch
+
+from trainer import BaseTrainer
+
 
 TRAINER_SOURCE = Path(__file__).resolve().parents[1] / "trainer.py"
 
@@ -43,3 +48,45 @@ def test_training_loop_saves_periodic_checkpoint_every_hundred_epochs() -> None:
     assert "checkpoint_frequency = int(self.training_config.get('checkpoint_frequency', 100))" in source
     assert "self._should_save_periodic_checkpoint(epoch, checkpoint_frequency)" in source
     assert 'self.save_checkpoint(epoch, avg_loss, kind="epoch")' in source
+
+
+def test_early_stopping_skips_best_update_when_validation_did_not_run() -> None:
+    trainer = object.__new__(BaseTrainer)
+    trainer.early_stopping_enabled = True
+    trainer.early_stopping_patience = 3
+    trainer.early_stopping_metric = "xy_mae"
+    trainer.early_stopping_mode = "min"
+    trainer.early_stopping_min_delta = 0.0
+    trainer.device = torch.device("cpu")
+    trainer.log = lambda _message: None
+
+    saved = []
+
+    def save_checkpoint(*args, **kwargs):
+        saved.append((args, kwargs))
+        return {"model_state_dict": {}, "epoch": args[0] + 1}
+
+    trainer.save_checkpoint = save_checkpoint
+
+    best_metric, patience, best_state, should_stop = trainer._handle_early_stopping(
+        epoch=0,
+        avg_loss=12.3,
+        val_metrics=None,
+        best_metric_value=float("inf"),
+        patience_counter=2,
+        best_model_state=None,
+    )
+
+    assert best_metric == float("inf")
+    assert patience == 2
+    assert best_state is None
+    assert should_stop is False
+    assert saved == []
+
+
+def test_validation_metric_must_exist_when_early_stopping_metric_is_named() -> None:
+    trainer = object.__new__(BaseTrainer)
+    trainer.early_stopping_metric = "xy_mae"
+
+    with pytest.raises(KeyError, match="xy_mae"):
+        trainer._get_current_metric(avg_loss=1.23, val_metrics={"loss": 9.87})

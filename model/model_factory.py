@@ -7,11 +7,14 @@ from typing import Any
 
 import torch
 
-from model.primitive_action_policy import PrimitiveActionPolicyConfig, PrimitiveActionPolicyModel
+from model.structured_primitive_action_policy import (
+    StructuredPrimitiveActionPolicyConfig,
+    StructuredPrimitiveActionPolicyModel,
+)
 
 
 class ModelType(Enum):
-    PRIMITIVE_ACTION_POLICY = "primitive_action_policy"
+    STRUCTURED_PRIMITIVE_ACTION_POLICY = "structured_primitive_action_policy"
 
 
 def _load_vocab_counts(model_config: dict[str, Any]) -> dict[str, int]:
@@ -28,13 +31,11 @@ def _load_vocab_counts(model_config: dict[str, Any]) -> dict[str, int]:
     high_level_to_id = vocab.get("high_level_to_id", {})
     gui_action_to_id = vocab.get("gui_action_to_id", {})
     key_to_id = vocab.get("key_to_id", {})
-    coordinate_frame_to_id = vocab.get("coordinate_frame_to_id", {})
     return {
         "num_action_types": max(action_type_to_id.values(), default=0) + 1,
         "num_high_level_actions": max(high_level_to_id.values(), default=0) + 1,
         "num_gui_actions": max(gui_action_to_id.values(), default=0) + 1,
         "num_keys": len(key_to_id),
-        "num_coordinate_frames": max(coordinate_frame_to_id.values(), default=0) + 1,
     }
 
 
@@ -65,17 +66,19 @@ class ModelFactory:
         device: str | torch.device,
         state_dict: dict[str, torch.Tensor] | None = None,
     ):
-        if model_name == "primitive_action_policy":
+        if model_name == "structured_primitive_action_policy":
             config_kwargs = dict(model_config)
             config_kwargs.update({k: v for k, v in _load_vocab_counts(model_config).items() if v})
-            allowed_keys = set(PrimitiveActionPolicyConfig.__dataclass_fields__.keys())
-            config = PrimitiveActionPolicyConfig(**{k: v for k, v in config_kwargs.items() if k in allowed_keys})
-            model = PrimitiveActionPolicyModel(config).to(device)
-            model_type = ModelType.PRIMITIVE_ACTION_POLICY
+            allowed_keys = set(StructuredPrimitiveActionPolicyConfig.__dataclass_fields__.keys())
+            config = StructuredPrimitiveActionPolicyConfig(
+                **{k: v for k, v in config_kwargs.items() if k in allowed_keys}
+            )
+            model = StructuredPrimitiveActionPolicyModel(config).to(device)
+            model_type = ModelType.STRUCTURED_PRIMITIVE_ACTION_POLICY
         else:
             raise ValueError(
                 f"Unsupported model_name={model_name!r}. "
-                "This project currently keeps only model_name='primitive_action_policy'."
+                "This project currently keeps only model_name='structured_primitive_action_policy'."
             )
 
         if state_dict:

@@ -150,7 +150,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'wandb_project': args.wandb_project,
         'wandb_entity': args.wandb_entity,
         'wandb_run_name': args.wandb_run_name,
-        'load_global_floorplan': args.load_global_floorplan,
+        'load_global_floorplan': False,
         'image_dtype': args.image_dtype,
         'command_line_overrides': {
             'early_stopping_enabled': args.early_stopping_enabled,
@@ -188,8 +188,8 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         sequence_retriever=args.sequence_retriever,
         overfit=args.overfit_data,
         history_length=selected_model_params.get("history_length", 32),
-        load_observation=selected_model_params.get("use_observation", True),
-        load_global_floorplan=args.load_global_floorplan,
+        load_observation=False,
+        load_global_floorplan=False,
         image_dtype=args.image_dtype,
     )
     if args.cache_dataset_on_device:
@@ -250,8 +250,8 @@ if __name__ == "__main__":
     parser.add_argument("--device", type=str, default="cuda")
     parser.add_argument("--epochs", type=int, default=1000)
     parser.add_argument("--view_ids", type=list, default=["05", "09", "20"])
-    parser.add_argument("--model_config", type=str, default="model_configs/primitive_action_policy.json")
-    parser.add_argument("--model_name", type=str, default="primitive_action_policy")
+    parser.add_argument("--model_config", type=str, default="model_configs/structured_primitive_action_policy.json")
+    parser.add_argument("--model_name", type=str, default="structured_primitive_action_policy")
     parser.add_argument("--num_workers", type=int, default=2)
     parser.add_argument("--batch_size", type=int, default=2)
     parser.add_argument("--lr", type=float, default=None, help="Override the initial learning rate from model config.")

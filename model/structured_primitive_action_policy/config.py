@@ -1,4 +1,4 @@
-"""Configuration for the primitive-action policy model."""
+"""Configuration for the structured primitive-action policy model."""
 
 from __future__ import annotations
 
@@ -6,12 +6,11 @@ from dataclasses import dataclass
 
 
 @dataclass
-class PrimitiveActionPolicyConfig:
+class StructuredPrimitiveActionPolicyConfig:
     hidden_size: int = 256
-    image_channels: int = 1
-    use_observation: bool = True
     history_length: int = 32
     max_wall_tokens: int = 256
+    max_insertion_tokens: int = 64
     num_transformer_layers: int = 4
     num_attention_heads: int = 4
     dim_feedforward: int = 512
@@ -20,7 +19,6 @@ class PrimitiveActionPolicyConfig:
     num_high_level_actions: int = 8
     num_gui_actions: int = 16
     num_keys: int = 16
-    num_coordinate_frames: int = 4
     max_step_index: int = 512
     max_repeat_count: int = 8
     wall_feature_dim: int = 5

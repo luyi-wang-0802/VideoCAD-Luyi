@@ -1,13 +1,12 @@
 {
   "default_params": {
-    "model_name": "primitive_action_policy",
+    "model_name": "structured_primitive_action_policy",
     "dataset_path": "processed_data",
     "action_vocab_path": "processed_data/action_vocab.json",
     "hidden_size": 384,
-    "image_channels": 1,
-    "use_observation": true,
     "history_length": 32,
     "max_wall_tokens": 256,
+    "max_insertion_tokens": 64,
     "num_transformer_layers": 6,
     "num_attention_heads": 6,
     "dim_feedforward": 1024,
@@ -36,7 +35,7 @@
       "early_stopping_enabled": true,
       "early_stopping_patience": 20,
       "early_stopping_min_delta": 0.0,
-      "early_stopping_metric": "loss",
+      "early_stopping_metric": "xy_mae",
       "early_stopping_mode": "min"
     }
   }
