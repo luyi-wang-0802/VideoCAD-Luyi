@@ -184,7 +184,7 @@ def plot_sequence_length_scatter(seq_lengths, output_path_basename, output_dir):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset_path", type=str, default="processed_data")
+    parser.add_argument("--dataset_path", type=str, default="processed_data/structured_primitive_action_policy")
     parser.add_argument("--config_path", type=str, default=None)
     parser.add_argument("--multiview_dir", type=str, default="multi_view_images")
     parser.add_argument("--device", type=str, default="cuda:0")

@@ -170,6 +170,18 @@ pip install -r requirements.txt
 
 ### Training
 
+Prepare the structured no-screenshot dataset:
+
+```bash
+python data_process/transform_dataset.py \
+  --raw-data-dir raw_data \
+  --dataset-profile structured_primitive_action_policy \
+  --output-dir processed_data/structured_primitive_action_policy \
+  --grounding-config configs/vectorworks_grounding_template.json \
+  --num-workers 8 \
+  --overwrite
+```
+
 Train the VideoCADFormer model using the default configuration:
 
 ```bash
@@ -180,10 +192,11 @@ Or customize the training parameters:
 
 ```bash
 python main.py \
-  --dataset_path processed_data \
+  --dataset_path processed_data/structured_primitive_action_policy \
   --model_config model_configs/structured_primitive_action_policy.json \
   --model_name structured_primitive_action_policy \
-  --checkpoint_dir checkpoints \
+  --output_dir outputs \
+  --training_runs_dir training_runs \
   --epochs 1000 \
   --batch_size 2 \
   --num_workers 2
@@ -205,7 +218,7 @@ Or specify a custom checkpoint path:
 python test.py \
   --checkpoint_folder my_experiment \
   --checkpoint_path checkpoints/my_experiment/best_model.pt \
-  --dataset_path processed_data \
+  --dataset_path processed_data/structured_primitive_action_policy \
   --model_config model_configs/structured_primitive_action_policy.json \
   --model_name structured_primitive_action_policy \
   --output_root_dir evaluation_results

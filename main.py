@@ -238,7 +238,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--gpu_ids", type=str, default="0", help="Comma-separated list of GPU IDs to use (e.g., '0,1,2,3')")
-    parser.add_argument("--dataset_path", type=str, default="processed_data")
+    parser.add_argument("--dataset_path", type=str, default="processed_data/structured_primitive_action_policy")
     parser.add_argument("--compile", type=str2bool, default=False)
     parser.add_argument("--enable_random", type=str2bool, default=True)
     parser.add_argument("--image_dir", type=str, default="data/data_raw/images")

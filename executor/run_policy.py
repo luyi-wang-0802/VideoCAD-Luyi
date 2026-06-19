@@ -245,7 +245,7 @@ def infer_runtime_plan_path(resplan_json_path: Path, dataset_path: Path) -> Path
 def runtime_sample_from_resplan(
     resplan_json_path: Path,
     runtime_plan_path: Path | None = None,
-    dataset_path: Path = Path("processed_data"),
+    dataset_path: Path = Path("processed_data/structured_primitive_action_policy"),
     global_floorplan_path: Path | None = None,
     grounding_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
@@ -536,7 +536,7 @@ def main() -> None:
     parser.add_argument("--global-floorplan", default=None, type=Path, help="Optional floorplan image override. If omitted, inferred from the ResPlan filename.")
     parser.add_argument("--sample", default=None, type=Path, help="Optional processed sample JSON for debug comparison only.")
     parser.add_argument("--checkpoint", required=True, type=Path)
-    parser.add_argument("--dataset-path", default="processed_data", type=Path)
+    parser.add_argument("--dataset-path", default="processed_data/structured_primitive_action_policy", type=Path)
     parser.add_argument(
         "--action-vocab",
         default=None,

@@ -20,7 +20,7 @@ class ModelType(Enum):
 def _load_vocab_counts(model_config: dict[str, Any]) -> dict[str, int]:
     vocab_path = model_config.get("action_vocab_path")
     if not vocab_path:
-        dataset_path = model_config.get("dataset_path") or "processed_data"
+        dataset_path = model_config.get("dataset_path") or "processed_data/structured_primitive_action_policy"
         vocab_path = Path(dataset_path) / "action_vocab.json"
     vocab_path = Path(vocab_path)
     if not vocab_path.exists():

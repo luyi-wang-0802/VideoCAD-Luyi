@@ -45,6 +45,9 @@ from PIL import Image, ImageOps
 MISSING = -1
 DEFAULT_KEY_INTERVAL_MS = 100.0
 DEFAULT_PROCESSED_IMAGE_SIZE = (384, 216)
+DATASET_PROFILE_STRUCTURED = "structured_primitive_action_policy"
+DATASET_PROFILE_VISUAL = "visual_primitive_action_policy"
+DATASET_PROFILES = {DATASET_PROFILE_STRUCTURED, DATASET_PROFILE_VISUAL}
 SPLIT_RATIOS = {"train": 0.7, "val": 0.2, "test": 0.1}
 SPLIT_ORDER = ("train", "val", "test")
 PROGRESS_ENTITY_KEYS = [
@@ -83,6 +86,18 @@ COORDINATE_FRAME_TO_ID = {
 DEFAULT_WINDOW_EDGE_OFFSET_SOURCE_UNITS = 1.5
 DEFAULT_DOOR_EDGE_OFFSET_SOURCE_UNITS = 1.0
 DEFAULT_GROUNDING_CONFIG_PATH = Path("configs/vectorworks_grounding_template.json")
+
+
+def default_output_dir_for_profile(dataset_profile: str) -> Path:
+    if dataset_profile not in DATASET_PROFILES:
+        raise ValueError(f"Unsupported dataset_profile={dataset_profile!r}")
+    return Path("processed_data") / dataset_profile
+
+
+def profile_materializes_images(dataset_profile: str) -> bool:
+    if dataset_profile not in DATASET_PROFILES:
+        raise ValueError(f"Unsupported dataset_profile={dataset_profile!r}")
+    return dataset_profile == DATASET_PROFILE_VISUAL
 
 
 def read_json(path: Path) -> Any:
@@ -994,7 +1009,11 @@ def transform_run(
     split: str,
     image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
     grounding_config: dict[str, Any] | None = None,
+    dataset_profile: str = DATASET_PROFILE_VISUAL,
+    materialize_images: bool | None = None,
 ) -> dict[str, Any]:
+    if materialize_images is None:
+        materialize_images = profile_materializes_images(dataset_profile)
     run_id = str(run["run_id"])
     run_dir = Path(run["trajectory_dir"])
     raw_actions = read_jsonl(Path(run["imitation_path"]))
@@ -1007,15 +1026,20 @@ def transform_run(
     progress_by_step = build_progress_by_step(actions, task_entity_counts)
     image_cache: dict[str, str | None] = {}
     global_floorplan_raw_path = resolve_global_floorplan_path(run, repo_root)
-    global_floorplan_path = materialize_training_image(
-        global_floorplan_raw_path,
-        output_dir=output_dir,
-        repo_root=repo_root,
-        run_id=run_id,
-        image_group="global_floorplan",
-        image_size=image_size,
-        cache=image_cache,
+    global_floorplan_path = (
+        materialize_training_image(
+            global_floorplan_raw_path,
+            output_dir=output_dir,
+            repo_root=repo_root,
+            run_id=run_id,
+            image_group="global_floorplan",
+            image_size=image_size,
+            cache=image_cache,
+        )
+        if materialize_images
+        else None
     )
+    encoded_resplan = summarize_resplan_for_model(resplan, primitive_plan, grounding_config)
 
     steps = []
     trajectory_rows = []
@@ -1035,16 +1059,19 @@ def transform_run(
         flat_action = [float(high_level_id), float(gui_action_id), *primitive_action]
         task_progress = progress_by_step[step_index]
         raw_action_screenshot_path = resolve_screenshot_path(action.get("screenshot_path"), run_dir, repo_root)
-        action_screenshot_path = materialize_training_image(
-            raw_action_screenshot_path,
-            output_dir=output_dir,
-            repo_root=repo_root,
-            run_id=run_id,
-            image_group="screenshots",
-            image_size=image_size,
-            cache=image_cache,
+        action_screenshot_path = (
+            materialize_training_image(
+                raw_action_screenshot_path,
+                output_dir=output_dir,
+                repo_root=repo_root,
+                run_id=run_id,
+                image_group="screenshots",
+                image_size=image_size,
+                cache=image_cache,
+            )
+            if materialize_images
+            else None
         )
-        observation_screenshot_path = action_screenshot_path
 
         primitive_actions.append(primitive_action)
         high_level_ids.append(high_level_id)
@@ -1053,18 +1080,21 @@ def transform_run(
         flat_actions.append(flat_action)
         progress_vectors.append(task_progress["vector"])
 
+        model_input = {
+            "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
+            "task_progress": task_progress,
+            "history_policy": "use previous steps in this sample only; do not include future sequence labels",
+        }
+        if materialize_images:
+            model_input["global_floorplan_path"] = global_floorplan_path
+            model_input["observation_screenshot_path"] = action_screenshot_path
+
         step = {
             "step_index": step_index,
             "run_id": run_id,
             "primitive_id": action.get("primitive_id"),
             "condensed_primitive_ids": action.get("condensed_primitive_ids"),
-            "model_input": {
-                "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
-                "global_floorplan_path": global_floorplan_path,
-                "observation_screenshot_path": observation_screenshot_path,
-                "task_progress": task_progress,
-                "history_policy": "use previous steps in this sample only; do not include future sequence labels",
-            },
+            "model_input": model_input,
             "supervision_target": {
                 "high_level_action": high_name,
                 "high_level_id": high_level_id,
@@ -1106,17 +1136,40 @@ def transform_run(
             }
         )
 
-    teacher_forcing = {
-        "mode": "autoregressive_next_step",
-        "global_input": "model_input.resplan_json_path or encoded_resplan + global_floorplan_path",
-        "per_step_input": "observation_screenshot_path + previous primitive/high/gui history",
-        "target": "supervision_target at the current step",
-        "no_leakage_rule": "Do not feed future trajectory rows or optional sequence/provenance files as model input.",
+    if materialize_images:
+        teacher_forcing = {
+            "mode": "autoregressive_next_step",
+            "global_input": "model_input.resplan_json_path or encoded_resplan + global_floorplan_path",
+            "per_step_input": "observation_screenshot_path + previous primitive/high/gui history",
+            "target": "supervision_target at the current step",
+            "no_leakage_rule": "Do not feed future trajectory rows or optional sequence/provenance files as model input.",
+        }
+    else:
+        teacher_forcing = {
+            "mode": "autoregressive_next_step",
+            "global_input": "model_input.resplan_json_path or encoded_resplan",
+            "per_step_input": "task_progress + previous primitive/high/gui history",
+            "target": "supervision_target at the current step",
+            "no_leakage_rule": "Do not feed current or future trajectory targets, screenshots, or optional sequence/provenance files as model input.",
+        }
+    model_inputs = {
+        "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
+        "task_entity_counts": task_entity_counts,
+        "encoded_resplan": encoded_resplan,
     }
+    if materialize_images:
+        model_inputs.update(
+            {
+                "global_floorplan_path": global_floorplan_path,
+                "global_floorplan_raw_path": global_floorplan_raw_path,
+                "processed_image_size": list(image_size),
+            }
+        )
     sample = {
         "sample_id": run_id,
         "run_id": run_id,
         "split": split,
+        "dataset_profile": dataset_profile,
         "schema": {
             "primitive_action": ["action_type", "x", "y", "key_pressed", "key_repeat_count", "key_interval"],
             "flat_action": [
@@ -1130,14 +1183,7 @@ def transform_run(
                 "key_interval",
             ],
         },
-        "model_inputs": {
-            "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
-            "global_floorplan_path": global_floorplan_path,
-            "global_floorplan_raw_path": global_floorplan_raw_path,
-            "processed_image_size": list(image_size),
-            "task_entity_counts": task_entity_counts,
-            "encoded_resplan": summarize_resplan_for_model(resplan, primitive_plan, grounding_config),
-        },
+        "model_inputs": model_inputs,
         "supervision_sources": {
             "high_level_sequence_path": relpath_if_exists(Path(run["high_level_sequence_path"]), repo_root),
             "gui_action_sequence_path": relpath_if_exists(Path(run["gui_action_sequence_path"]), repo_root),
@@ -1164,20 +1210,23 @@ def transform_run(
     runtime_plan_path = output_dir / "runtime_plans" / f"{run_id}_runtime_plan.json"
     write_json(sample_path, sample)
     write_jsonl(trajectory_path, trajectory_rows)
-    write_json(
-        runtime_plan_path,
-        {
-            "sample_id": run_id,
-            "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
-            "global_floorplan_path": global_floorplan_path,
-            "global_floorplan_raw_path": global_floorplan_raw_path,
-            "processed_image_size": list(image_size),
-            "task_entity_counts": task_entity_counts,
-            "encoded_resplan": sample["model_inputs"]["encoded_resplan"],
-            "execution_coordinate_policy": sample["model_inputs"]["encoded_resplan"]["execution_coordinate_policy"],
-            "note": "Runtime coordinate metadata only. It contains coordinate transforms, not the action sequence.",
-        },
-    )
+    runtime_plan = {
+        "sample_id": run_id,
+        "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
+        "task_entity_counts": task_entity_counts,
+        "encoded_resplan": sample["model_inputs"]["encoded_resplan"],
+        "execution_coordinate_policy": sample["model_inputs"]["encoded_resplan"]["execution_coordinate_policy"],
+        "note": "Runtime coordinate metadata only. It contains coordinate transforms, not the action sequence.",
+    }
+    if materialize_images:
+        runtime_plan.update(
+            {
+                "global_floorplan_path": global_floorplan_path,
+                "global_floorplan_raw_path": global_floorplan_raw_path,
+                "processed_image_size": list(image_size),
+            }
+        )
+    write_json(runtime_plan_path, runtime_plan)
     tensor_path.parent.mkdir(parents=True, exist_ok=True)
     np.savez_compressed(
         tensor_path,
@@ -1189,24 +1238,26 @@ def transform_run(
         progress=np.asarray(progress_vectors, dtype=np.float32),
     )
 
-    observation_missing = sum(
-        1 for row in trajectory_rows if not row["model_input"].get("observation_screenshot_path")
+    observation_missing = (
+        sum(1 for row in trajectory_rows if not row["model_input"].get("observation_screenshot_path"))
+        if materialize_images
+        else 0
     )
-    global_floorplan_missing = 0 if global_floorplan_path else 1
-    action_screenshot_missing = sum(
-        1 for row in trajectory_rows if not row["debug_provenance"].get("action_screenshot_path")
+    global_floorplan_missing = 0 if (not materialize_images or global_floorplan_path) else 1
+    action_screenshot_missing = (
+        sum(1 for row in trajectory_rows if not row["debug_provenance"].get("action_screenshot_path"))
+        if materialize_images
+        else 0
     )
-    return {
+    index_record = {
         "sample_id": run_id,
         "split": split,
+        "dataset_profile": dataset_profile,
         "path": relpath(sample_path, repo_root),
         "trajectory_path": relpath(trajectory_path, repo_root),
         "tensor_path": relpath(tensor_path, repo_root),
         "runtime_plan_path": relpath(runtime_plan_path, repo_root),
         "resplan_json_path": relpath(Path(run["resplan_path"]), repo_root),
-        "global_floorplan_path": global_floorplan_path,
-        "global_floorplan_raw_path": global_floorplan_raw_path,
-        "processed_image_size": list(image_size),
         "task_entity_counts": task_entity_counts,
         "supervision_sources": {
             "high_level_sequence_path": relpath_if_exists(Path(run["high_level_sequence_path"]), repo_root),
@@ -1220,6 +1271,15 @@ def transform_run(
         "missing_action_screenshots": action_screenshot_missing,
         "missing_action_after_screenshots": action_screenshot_missing,
     }
+    if materialize_images:
+        index_record.update(
+            {
+                "global_floorplan_path": global_floorplan_path,
+                "global_floorplan_raw_path": global_floorplan_raw_path,
+                "processed_image_size": list(image_size),
+            }
+        )
+    return index_record
 
 
 def transform_run_worker(args: dict[str, Any]) -> dict[str, Any]:
@@ -1234,7 +1294,11 @@ def transform_dataset(
     image_size: tuple[int, int] = DEFAULT_PROCESSED_IMAGE_SIZE,
     grounding_config_path: Path | None = DEFAULT_GROUNDING_CONFIG_PATH,
     num_workers: int = 1,
+    dataset_profile: str = DATASET_PROFILE_STRUCTURED,
+    materialize_images: bool | None = None,
 ) -> None:
+    if materialize_images is None:
+        materialize_images = profile_materializes_images(dataset_profile)
     runs = discover_runs(raw_data_dir)
     if output_dir.exists() and overwrite:
         shutil.rmtree(output_dir)
@@ -1257,6 +1321,8 @@ def transform_dataset(
             "split": split_by_run[str(run["run_id"])],
             "image_size": image_size,
             "grounding_config": grounding_config,
+            "dataset_profile": dataset_profile,
+            "materialize_images": materialize_images,
         }
         for run in runs
     ]
@@ -1268,6 +1334,8 @@ def transform_dataset(
             index = list(executor.map(transform_run_worker, run_args))
 
     summary = {
+        "dataset_profile": dataset_profile,
+        "materialize_images": materialize_images,
         "raw_data_dir": relpath(raw_data_dir, repo_root),
         "output_dir": relpath(output_dir, repo_root),
         "num_runs": len(index),
@@ -1286,18 +1354,25 @@ def transform_dataset(
         "primitive_action_dim": 6,
         "flat_action_dim": 8,
         "progress_feature_dim": len(PROGRESS_ENTITY_KEYS) * 3,
-        "processed_image_size": list(image_size),
         "grounding_config_path": relpath_if_exists(repo_root / grounding_config_path, repo_root)
         if grounding_config_path
         else None,
         "missing_global_floorplans": sum(item["missing_global_floorplan"] for item in index),
         "training_contract": {
-            "inference_inputs": [
-                "resplan_json_or_encoded_plan",
-                "global_floorplan_image",
-                "current_screenshot",
-                "historical_actions",
-            ],
+            "inference_inputs": (
+                [
+                    "resplan_json_or_encoded_plan",
+                    "global_floorplan_image",
+                    "current_screenshot",
+                    "historical_actions",
+                ]
+                if materialize_images
+                else [
+                    "resplan_json_or_encoded_plan",
+                    "task_progress",
+                    "historical_actions",
+                ]
+            ),
             "training_targets": [
                 "next_high_level_id",
                 "next_gui_action_id",
@@ -1319,6 +1394,8 @@ def transform_dataset(
             ],
         },
     }
+    if materialize_images:
+        summary["processed_image_size"] = list(image_size)
     write_json(output_dir / "dataset_index.json", index)
     write_json(output_dir / "summary.json", summary)
     print(
@@ -1330,7 +1407,13 @@ def transform_dataset(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--raw-data-dir", type=Path, default=Path("raw_data"))
-    parser.add_argument("--output-dir", type=Path, default=Path("processed_data"))
+    parser.add_argument("--output-dir", type=Path, default=None)
+    parser.add_argument(
+        "--dataset-profile",
+        choices=sorted(DATASET_PROFILES),
+        default=DATASET_PROFILE_STRUCTURED,
+        help="Dataset variant to produce. Structured profile omits materialized image inputs.",
+    )
     parser.add_argument("--image-width", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[0])
     parser.add_argument("--image-height", type=int, default=DEFAULT_PROCESSED_IMAGE_SIZE[1])
     parser.add_argument("--grounding-config", type=Path, default=DEFAULT_GROUNDING_CONFIG_PATH)
@@ -1342,14 +1425,16 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     repo_root = Path.cwd().resolve()
+    output_dir = args.output_dir or default_output_dir_for_profile(args.dataset_profile)
     transform_dataset(
         raw_data_dir=(repo_root / args.raw_data_dir).resolve(),
-        output_dir=(repo_root / args.output_dir).resolve(),
+        output_dir=(repo_root / output_dir).resolve(),
         repo_root=repo_root,
         overwrite=args.overwrite,
         image_size=(args.image_width, args.image_height),
         grounding_config_path=args.grounding_config,
         num_workers=args.num_workers,
+        dataset_profile=args.dataset_profile,
     )
 
 

@@ -80,7 +80,7 @@ class PrimitiveActionDataset(Dataset):
 
     def __init__(
         self,
-        dataset_path: str | Path = "processed_data",
+        dataset_path: str | Path = "processed_data/structured_primitive_action_policy",
         split: str | None = None,
         repo_root: str | Path = ".",
         action_vocab_path: str | Path | None = None,
@@ -386,7 +386,7 @@ class PrimitiveActionDataset(Dataset):
 
 
 def create_dataloader(
-    dataset_path: str | Path = "processed_data",
+    dataset_path: str | Path = "processed_data/structured_primitive_action_policy",
     split: str | None = "train",
     batch_size: int = 8,
     shuffle: bool | None = None,
@@ -407,7 +407,7 @@ def create_dataloader(
 
 
 def create_dataset_from_config(
-    dataset_path: str | Path = "processed_data",
+    dataset_path: str | Path = "processed_data/structured_primitive_action_policy",
     config: str | Path | None = None,
     batch_size: int = 8,
     num_workers: int = 0,
