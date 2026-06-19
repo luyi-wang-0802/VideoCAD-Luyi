@@ -6,7 +6,7 @@
     "hidden_size": 384,
     "image_channels": 1,
     "use_observation": false,
-    "history_length": 16,
+    "history_length": 32,
     "max_wall_tokens": 256,
     "num_transformer_layers": 6,
     "num_attention_heads": 6,
