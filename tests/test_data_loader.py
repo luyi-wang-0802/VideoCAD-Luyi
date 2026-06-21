@@ -1,8 +1,19 @@
+import inspect
+import json
+from pathlib import Path
+
 import torch
 import pytest
 
 import data_loader.data_loader as data_loader_module
 from data_loader.data_loader import PrimitiveActionDataset
+from data_loader.primitive_action import (
+    StructuredPrimitiveActionDataset,
+    VisualPrimitiveActionDataset,
+    create_structured_dataset_from_config,
+    create_structured_dataloader,
+    create_visual_dataloader,
+)
 
 
 def minimal_loader_item() -> dict:
@@ -29,6 +40,50 @@ def minimal_loader_item() -> dict:
     }
 
 
+def write_minimal_processed_dataset(dataset_path: Path) -> None:
+    sample_path = dataset_path / "samples" / "plan_0001.json"
+    sample = {
+        "sample_id": "plan_0001",
+        "split": "train",
+        "model_inputs": {
+            "encoded_resplan": {
+                "coordinate_system": {"input_coordinates": "normalized"},
+                "execution_walls": [],
+                "insertions": [],
+            },
+            "task_entity_counts": {},
+        },
+        "steps": [
+            {
+                "step_index": 0,
+                "model_input": {"task_progress": {"vector": [0.0] * 18}},
+                "supervision_target": {
+                    "primitive_action": [2.0, -1.0, -1.0, -1.0, -1.0, -1.0],
+                    "high_level_id": 0,
+                    "gui_action_id": 0,
+                    "coordinate_frame_id": 0,
+                    "high_level_action": "<none>",
+                    "gui_action": "<none>",
+                },
+            }
+        ],
+    }
+    vocab = {
+        "action_type_to_id": {"CLICK": 2},
+        "high_level_to_id": {"<none>": 0},
+        "gui_action_to_id": {"<none>": 0},
+        "key_to_id": {},
+        "coordinate_frame_to_id": {"none": 0},
+    }
+    sample_path.parent.mkdir(parents=True)
+    sample_path.write_text(json.dumps(sample), encoding="utf-8")
+    (dataset_path / "dataset_index.json").write_text(
+        json.dumps([{"sample_id": "plan_0001", "split": "train", "path": str(sample_path)}]),
+        encoding="utf-8",
+    )
+    (dataset_path / "action_vocab.json").write_text(json.dumps(vocab), encoding="utf-8")
+
+
 def test_collate_keeps_global_floorplan_disabled() -> None:
     batch = PrimitiveActionDataset.collate_fn([minimal_loader_item(), minimal_loader_item()])
 
@@ -46,6 +101,58 @@ def test_collate_omits_compatibility_aliases() -> None:
 def test_dataset_module_does_not_export_legacy_dataset_aliases() -> None:
     assert not hasattr(data_loader_module, "OnlineGuiPolicyDataset")
     assert not hasattr(data_loader_module, "LowLevelGuiDataset")
+
+
+def test_primitive_action_dataset_defaults_to_structured_inputs() -> None:
+    signature = inspect.signature(PrimitiveActionDataset)
+
+    assert signature.parameters["load_observation"].default is False
+    assert signature.parameters["load_images"].default is False
+    assert signature.parameters["load_global_floorplan"].default is False
+
+
+def test_primitive_action_dataset_docstring_describes_structured_inputs() -> None:
+    docstring = inspect.getdoc(PrimitiveActionDataset) or ""
+
+    assert "structured" in docstring.lower()
+    assert "current observation screenshot" not in docstring
+
+
+def test_profile_specific_dataset_wrappers_set_input_defaults() -> None:
+    structured_signature = inspect.signature(StructuredPrimitiveActionDataset)
+    visual_signature = inspect.signature(VisualPrimitiveActionDataset)
+
+    assert structured_signature.parameters["load_observation"].default is False
+    assert structured_signature.parameters["load_images"].default is False
+    assert structured_signature.parameters["load_global_floorplan"].default is False
+    assert visual_signature.parameters["load_observation"].default is True
+    assert visual_signature.parameters["load_images"].default is True
+    assert visual_signature.parameters["load_global_floorplan"].default is True
+
+
+def test_profile_specific_dataloader_factories_use_profile_dataset_classes(tmp_path: Path) -> None:
+    write_minimal_processed_dataset(tmp_path)
+
+    structured_loader = create_structured_dataloader(dataset_path=tmp_path, split="train", batch_size=1)
+    visual_loader = create_visual_dataloader(dataset_path=tmp_path, split="train", batch_size=1)
+
+    assert isinstance(structured_loader.dataset, StructuredPrimitiveActionDataset)
+    assert isinstance(visual_loader.dataset, VisualPrimitiveActionDataset)
+
+
+def test_structured_dataset_from_config_ignores_unrelated_legacy_loader_kwargs(tmp_path: Path) -> None:
+    write_minimal_processed_dataset(tmp_path)
+
+    [packet] = create_structured_dataset_from_config(
+        dataset_path=tmp_path,
+        splits=("train",),
+        batch_size=1,
+        multiview_dir="unused",
+        view_ids=["05"],
+        frame_transform=object(),
+    )
+
+    assert isinstance(packet["loader"].dataset, StructuredPrimitiveActionDataset)
 
 
 def test_image_dtype_rejects_legacy_short_names() -> None:

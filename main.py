@@ -8,7 +8,7 @@ warnings.filterwarnings("ignore", message="Unable to import Axes3D")
 warnings.filterwarnings("ignore", message="'has_cuda' is deprecated")
 
 import argparse
-from data_loader.data_loader import create_dataloader, create_dataset_from_config
+from data_loader.primitive_action import create_structured_dataset_from_config as create_dataset_from_config
 from data_loader.device_cached_loader import DeviceCachedDataLoader
 from model.model_factory import ModelFactory, ModelType
 from trainer import create_trainer

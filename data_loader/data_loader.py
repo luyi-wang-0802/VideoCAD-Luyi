@@ -62,20 +62,23 @@ def normalize_source_point(point: list[float] | None, coordinate_system: dict[st
 
 
 class PrimitiveActionDataset(Dataset):
-    """Step-level dataset for autoregressive next-action training.
+    """Structured step-level dataset for autoregressive next-action training.
 
     Each item is one training step:
 
     Inputs:
-    - ResPlan-derived plan tensors
-    - current observation screenshot
+    - ResPlan-derived plan tensors for walls and insertion/click points
+    - task progress features
     - fixed-length history of previous primitive/high-level/GUI labels
 
     Targets:
     - next high-level id
     - next GUI action id
     - next primitive action vector
-    - next coordinate frame id
+
+    Visual tensors are opt-in compatibility fields. Set both
+    load_observation=True and load_images=True when a future visual policy
+    needs screenshots.
     """
 
     def __init__(
@@ -86,8 +89,8 @@ class PrimitiveActionDataset(Dataset):
         action_vocab_path: str | Path | None = None,
         image_size: tuple[int, int] = DEFAULT_IMAGE_SIZE,
         history_length: int = 32,
-        load_observation: bool = True,
-        load_images: bool = True,
+        load_observation: bool = False,
+        load_images: bool = False,
         load_global_floorplan: bool = False,
         normalize_images: bool = True,
         image_dtype: str | torch.dtype = torch.float32,

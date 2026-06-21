@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from torchvision import transforms
 from model.model_factory import ModelFactory
-from data_loader.data_loader import create_dataset_from_config
+from data_loader.primitive_action import create_structured_dataset_from_config as create_dataset_from_config
 from trainer import create_trainer
 from utils import load_json
 

@@ -1879,6 +1879,11 @@ class PrimitiveActionTrainer(BaseTrainer):
             return {}
         return self._filtered_wandb_metrics(val_metrics, "val")
 
+    def _final_wandb_metrics(self, metrics, split):
+        if not metrics:
+            return {}
+        return self._filtered_wandb_metrics(metrics, split)
+
     def log_epoch_metrics(self, epoch, epochs, avg_loss, metrics):
         averaged = self._average_metrics(metrics)
         self.log(

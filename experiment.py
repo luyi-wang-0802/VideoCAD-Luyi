@@ -174,7 +174,12 @@ class Experiment:
         model = trainer.train(training_config["epochs"])
         final_eval_split = "test" if len(trainer.test_loader) > 0 else "val"
         results = trainer.evaluate(model, mode=final_eval_split)
-        trainer.log_wandb({f"{final_eval_split}/{key}": value for key, value in results.items() if isinstance(value, (int, float))})
+        final_wandb_metrics = (
+            trainer._final_wandb_metrics(results, final_eval_split)
+            if hasattr(trainer, "_final_wandb_metrics")
+            else {f"{final_eval_split}/{key}": value for key, value in results.items() if isinstance(value, (int, float))}
+        )
+        trainer.log_wandb(final_wandb_metrics)
         if self.rank == 0:
             print(f"{final_eval_split.title()} Results:")
             print(results)

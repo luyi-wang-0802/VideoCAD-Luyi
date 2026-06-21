@@ -18,7 +18,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from data_loader.data_loader import PrimitiveActionDataset, read_json
+from data_loader.data_loader import read_json
+from data_loader.primitive_action import StructuredPrimitiveActionDataset
 from data_process.transform_dataset import summarize_resplan_for_model
 from executor.vectorworks_executor import VectorworksExecutor
 from model.model_factory import ModelFactory, _strip_wrappers
@@ -178,7 +179,7 @@ def infer_action_vocab_path(checkpoint_path: Path, explicit_path: Path | None = 
 
 
 def make_batch(
-    dataset: PrimitiveActionDataset,
+    dataset: StructuredPrimitiveActionDataset,
     sample: dict[str, Any],
     encoded_history: list[dict[str, torch.Tensor]],
     progress_state: dict[str, dict[str, int]],
@@ -331,7 +332,11 @@ def primitive_action_to_executor_action(
     return action
 
 
-def decode_action(outputs: dict[str, torch.Tensor], model: torch.nn.Module, dataset: PrimitiveActionDataset) -> dict[str, Any]:
+def decode_action(
+    outputs: dict[str, torch.Tensor],
+    model: torch.nn.Module,
+    dataset: StructuredPrimitiveActionDataset,
+) -> dict[str, Any]:
     decoded = model.decode_action(outputs)
     primitive_action = decoded["primitive_action"][0].detach().cpu().tolist()
 
@@ -370,7 +375,10 @@ def decode_action(outputs: dict[str, torch.Tensor], model: torch.nn.Module, data
     }
 
 
-def encode_decoded_action(dataset: PrimitiveActionDataset, decoded_action: dict[str, Any]) -> dict[str, torch.Tensor]:
+def encode_decoded_action(
+    dataset: StructuredPrimitiveActionDataset,
+    decoded_action: dict[str, Any],
+) -> dict[str, torch.Tensor]:
     action = torch.tensor(decoded_action["primitive_action"], dtype=torch.float32)
     action_type_id = int(action[0].item())
     key_id = int(action[3].item())
@@ -596,13 +604,12 @@ def main() -> None:
         device,
     )
     history_length = args.history_length if args.history_length is not None else int(model.config.history_length)
-    dataset = PrimitiveActionDataset(
+    dataset = StructuredPrimitiveActionDataset(
         dataset_path=args.dataset_path,
         action_vocab_path=action_vocab_path,
         split=None,
         image_size=(args.image_size, args.image_size),
         history_length=history_length,
-        load_images=False,
     )
     executor = VectorworksExecutor(args.calibration, dry_run=args.dry_run)
     args.run_dir.mkdir(parents=True, exist_ok=True)

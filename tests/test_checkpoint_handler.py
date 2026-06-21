@@ -5,6 +5,7 @@ import pytest
 import torch
 
 from trainer import BaseTrainer
+from trainer import PrimitiveActionTrainer
 
 
 TRAINER_SOURCE = Path(__file__).resolve().parents[1] / "trainer.py"
@@ -90,3 +91,23 @@ def test_validation_metric_must_exist_when_early_stopping_metric_is_named() -> N
 
     with pytest.raises(KeyError, match="xy_mae"):
         trainer._get_current_metric(avg_loss=1.23, val_metrics={"loss": 9.87})
+
+
+def test_primitive_action_final_wandb_metrics_are_filtered_to_plottable_keys() -> None:
+    trainer = object.__new__(PrimitiveActionTrainer)
+    metrics = {
+        "loss": 1.0,
+        "xy_mae": 0.12,
+        "action_type_acc": 0.5,
+        "action_type_correct": 10,
+        "count": 20,
+        "xy_count": 8,
+    }
+
+    logged = trainer._final_wandb_metrics(metrics, "test")
+
+    assert logged == {
+        "test/loss": 1.0,
+        "test/action_type_acc": 0.5,
+        "test/xy_mae": 0.12,
+    }

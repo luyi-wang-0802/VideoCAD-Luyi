@@ -33,7 +33,7 @@
       "log_frequency": 10,
       "val_frequency": 5,
       "early_stopping_enabled": true,
-      "early_stopping_patience": 20,
+      "early_stopping_patience": 50,
       "early_stopping_min_delta": 0.0,
       "early_stopping_metric": "xy_mae",
       "early_stopping_mode": "min"
