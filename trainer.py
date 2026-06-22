@@ -300,6 +300,7 @@ class BaseTrainer:
         # Early stopping parameters
         self.early_stopping_enabled = training_config.get('early_stopping_enabled', False)
         self.early_stopping_patience = training_config.get('early_stopping_patience', 100)
+        self.early_stopping_start_epoch = int(training_config.get('early_stopping_start_epoch', 0) or 0)
         self.early_stopping_min_delta = training_config.get('early_stopping_min_delta', 0.0)
         self.early_stopping_metric = training_config.get('early_stopping_metric', 'accuracy')
         self.early_stopping_mode = training_config.get('early_stopping_mode', 'max')  # 'min' for loss, 'max' for accuracy
@@ -767,7 +768,7 @@ class BaseTrainer:
             )
             self.log(f"Saved best model checkpoint at epoch {epoch+1}")
         else:
-            if self.early_stopping_enabled:
+            if self.early_stopping_enabled and epoch + 1 >= self.early_stopping_start_epoch:
                 patience_counter += 1
                 self.log(f"Validation {self.early_stopping_metric} did not improve. Patience: {patience_counter}/{self.early_stopping_patience}")
         should_stop_local = self.early_stopping_enabled and patience_counter >= self.early_stopping_patience

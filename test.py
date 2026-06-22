@@ -8,6 +8,7 @@ from model.model_factory import ModelFactory
 from data_loader.primitive_action import create_structured_dataset_from_config as create_dataset_from_config
 from trainer import create_trainer
 from utils import load_json
+from data_paths import DEFAULT_RAW_IMAGE_DIR, DEFAULT_STRUCTURED_DATASET_PATH
 
 
 def compute_confusion_matrix(errors, shape, scale=1, row_norm=True):
@@ -184,13 +185,13 @@ def plot_sequence_length_scatter(seq_lengths, output_path_basename, output_dir):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset_path", type=str, default="processed_data/structured_primitive_action_policy")
+    parser.add_argument("--dataset_path", type=str, default=str(DEFAULT_STRUCTURED_DATASET_PATH))
     parser.add_argument("--config_path", type=str, default=None)
     parser.add_argument("--multiview_dir", type=str, default="multi_view_images")
     parser.add_argument("--device", type=str, default="cuda:0")
     parser.add_argument("--epochs", type=int, default=1000)
     parser.add_argument("--view_ids", type=list, default=["05", "09", "20"])
-    parser.add_argument("--image_dir", type=str, default="data/data_raw/images")
+    parser.add_argument("--image_dir", type=str, default=str(DEFAULT_RAW_IMAGE_DIR))
     parser.add_argument("--model_config", type=str, default="model_configs/structured_primitive_action_policy.json")
     parser.add_argument("--model_name", type=str, default="structured_primitive_action_policy")
     parser.add_argument("--checkpoint_folder", type=str, required=True, help="Checkpoint folder name")

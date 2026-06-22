@@ -37,10 +37,10 @@ def test_target_split_counts_use_7_2_1_ratio() -> None:
 
 def test_dataset_profile_default_output_dirs_are_separate() -> None:
     assert default_output_dir_for_profile(DATASET_PROFILE_STRUCTURED) == Path(
-        "processed_data/structured_primitive_action_policy"
+        "/home/ray/data/vectorworks/processed_data/structured_primitive_action_policy"
     )
     assert default_output_dir_for_profile(DATASET_PROFILE_VISUAL) == Path(
-        "processed_data/visual_primitive_action_policy"
+        "/home/ray/data/vectorworks/processed_data/visual_primitive_action_policy"
     )
 
 

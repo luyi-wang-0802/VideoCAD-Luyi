@@ -1,0 +1,9 @@
+from pathlib import Path
+
+
+VECTORWORKS_DATA_ROOT = Path("/home/ray/data/vectorworks")
+DEFAULT_RAW_DATA_DIR = VECTORWORKS_DATA_ROOT / "raw_data"
+DEFAULT_PROCESSED_DATA_ROOT = VECTORWORKS_DATA_ROOT / "processed_data"
+DEFAULT_STRUCTURED_DATASET_PATH = DEFAULT_PROCESSED_DATA_ROOT / "structured_primitive_action_policy"
+DEFAULT_VISUAL_DATASET_PATH = DEFAULT_PROCESSED_DATA_ROOT / "visual_primitive_action_policy"
+DEFAULT_RAW_IMAGE_DIR = DEFAULT_RAW_DATA_DIR / "images"

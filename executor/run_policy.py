@@ -20,6 +20,7 @@ if str(REPO_ROOT) not in sys.path:
 
 from data_loader.data_loader import read_json
 from data_loader.primitive_action import StructuredPrimitiveActionDataset
+from data_paths import DEFAULT_RAW_DATA_DIR, DEFAULT_STRUCTURED_DATASET_PATH
 from data_process.transform_dataset import summarize_resplan_for_model
 from executor.vectorworks_executor import VectorworksExecutor
 from model.model_factory import ModelFactory, _strip_wrappers
@@ -227,7 +228,7 @@ def infer_global_floorplan_path(
 
     candidates = [
         dataset_path / "images" / run_id / "global_floorplan" / "floorplan_before_roof.png",
-        Path("raw_data") / "trajectory_data" / run_id / "global_floorplan" / "floorplan_before_roof.png",
+        DEFAULT_RAW_DATA_DIR / "trajectory_data" / run_id / "global_floorplan" / "floorplan_before_roof.png",
     ]
     for candidate in candidates:
         if candidate.exists():
@@ -246,7 +247,7 @@ def infer_runtime_plan_path(resplan_json_path: Path, dataset_path: Path) -> Path
 def runtime_sample_from_resplan(
     resplan_json_path: Path,
     runtime_plan_path: Path | None = None,
-    dataset_path: Path = Path("processed_data/structured_primitive_action_policy"),
+    dataset_path: Path = DEFAULT_STRUCTURED_DATASET_PATH,
     global_floorplan_path: Path | None = None,
     grounding_config: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
@@ -544,7 +545,7 @@ def main() -> None:
     parser.add_argument("--global-floorplan", default=None, type=Path, help="Optional floorplan image override. If omitted, inferred from the ResPlan filename.")
     parser.add_argument("--sample", default=None, type=Path, help="Optional processed sample JSON for debug comparison only.")
     parser.add_argument("--checkpoint", required=True, type=Path)
-    parser.add_argument("--dataset-path", default="processed_data/structured_primitive_action_policy", type=Path)
+    parser.add_argument("--dataset-path", default=DEFAULT_STRUCTURED_DATASET_PATH, type=Path)
     parser.add_argument(
         "--action-vocab",
         default=None,

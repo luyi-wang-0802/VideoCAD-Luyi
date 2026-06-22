@@ -1,8 +1,8 @@
 {
   "default_params": {
     "model_name": "structured_primitive_action_policy",
-    "dataset_path": "processed_data/structured_primitive_action_policy",
-    "action_vocab_path": "processed_data/structured_primitive_action_policy/action_vocab.json",
+    "dataset_path": "/home/ray/data/vectorworks/processed_data/structured_primitive_action_policy",
+    "action_vocab_path": "/home/ray/data/vectorworks/processed_data/structured_primitive_action_policy/action_vocab.json",
     "hidden_size": 384,
     "history_length": 32,
     "max_wall_tokens": 256,
@@ -34,6 +34,7 @@
       "val_frequency": 5,
       "early_stopping_enabled": true,
       "early_stopping_patience": 50,
+      "early_stopping_start_epoch": 800,
       "early_stopping_min_delta": 0.0,
       "early_stopping_metric": "xy_mae",
       "early_stopping_mode": "min"

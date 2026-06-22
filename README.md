@@ -174,9 +174,9 @@ Prepare the structured no-screenshot dataset:
 
 ```bash
 python data_process/transform_dataset.py \
-  --raw-data-dir raw_data \
+  --raw-data-dir /home/ray/data/vectorworks/raw_data \
   --dataset-profile structured_primitive_action_policy \
-  --output-dir processed_data/structured_primitive_action_policy \
+  --output-dir /home/ray/data/vectorworks/processed_data/structured_primitive_action_policy \
   --grounding-config configs/vectorworks_grounding_template.json \
   --num-workers 8 \
   --overwrite
@@ -192,7 +192,7 @@ Or customize the training parameters:
 
 ```bash
 python main.py \
-  --dataset_path processed_data/structured_primitive_action_policy \
+  --dataset_path /home/ray/data/vectorworks/processed_data/structured_primitive_action_policy \
   --model_config model_configs/structured_primitive_action_policy.json \
   --model_name structured_primitive_action_policy \
   --output_dir outputs \
@@ -218,7 +218,7 @@ Or specify a custom checkpoint path:
 python test.py \
   --checkpoint_folder my_experiment \
   --checkpoint_path checkpoints/my_experiment/best_model.pt \
-  --dataset_path processed_data/structured_primitive_action_policy \
+  --dataset_path /home/ray/data/vectorworks/processed_data/structured_primitive_action_policy \
   --model_config model_configs/structured_primitive_action_policy.json \
   --model_name structured_primitive_action_policy \
   --output_root_dir evaluation_results

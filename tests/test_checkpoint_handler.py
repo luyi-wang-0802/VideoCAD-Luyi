@@ -93,6 +93,60 @@ def test_validation_metric_must_exist_when_early_stopping_metric_is_named() -> N
         trainer._get_current_metric(avg_loss=1.23, val_metrics={"loss": 9.87})
 
 
+def test_early_stopping_start_epoch_delays_patience_counting() -> None:
+    trainer = object.__new__(BaseTrainer)
+    trainer.early_stopping_enabled = True
+    trainer.early_stopping_patience = 1
+    trainer.early_stopping_start_epoch = 10
+    trainer.early_stopping_metric = "xy_mae"
+    trainer.early_stopping_mode = "min"
+    trainer.early_stopping_min_delta = 0.0
+    trainer.device = torch.device("cpu")
+    trainer.log = lambda _message: None
+    trainer.save_checkpoint = lambda *args, **kwargs: pytest.fail("checkpoint should not be saved")
+
+    best_metric, patience, best_state, should_stop = trainer._handle_early_stopping(
+        epoch=4,
+        avg_loss=12.3,
+        val_metrics={"xy_mae": 0.2},
+        best_metric_value=0.1,
+        patience_counter=0,
+        best_model_state=None,
+    )
+
+    assert best_metric == 0.1
+    assert patience == 0
+    assert best_state is None
+    assert should_stop is False
+
+
+def test_early_stopping_start_epoch_allows_stop_after_boundary() -> None:
+    trainer = object.__new__(BaseTrainer)
+    trainer.early_stopping_enabled = True
+    trainer.early_stopping_patience = 1
+    trainer.early_stopping_start_epoch = 10
+    trainer.early_stopping_metric = "xy_mae"
+    trainer.early_stopping_mode = "min"
+    trainer.early_stopping_min_delta = 0.0
+    trainer.device = torch.device("cpu")
+    trainer.log = lambda _message: None
+    trainer.save_checkpoint = lambda *args, **kwargs: pytest.fail("checkpoint should not be saved")
+
+    best_metric, patience, best_state, should_stop = trainer._handle_early_stopping(
+        epoch=9,
+        avg_loss=12.3,
+        val_metrics={"xy_mae": 0.2},
+        best_metric_value=0.1,
+        patience_counter=0,
+        best_model_state=None,
+    )
+
+    assert best_metric == 0.1
+    assert patience == 1
+    assert best_state is None
+    assert should_stop is True
+
+
 def test_primitive_action_final_wandb_metrics_are_filtered_to_plottable_keys() -> None:
     trainer = object.__new__(PrimitiveActionTrainer)
     metrics = {

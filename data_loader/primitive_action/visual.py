@@ -8,10 +8,9 @@ from typing import Any
 import torch
 from torch.utils.data import DataLoader
 
+from data_paths import DEFAULT_VISUAL_DATASET_PATH
 from data_loader.data_loader import DEFAULT_IMAGE_SIZE, PrimitiveActionDataset
 from data_loader.primitive_action.common import filter_dataset_kwargs
-
-DEFAULT_VISUAL_DATASET_PATH = "processed_data/visual_primitive_action_policy"
 
 
 class VisualPrimitiveActionDataset(PrimitiveActionDataset):

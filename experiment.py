@@ -66,6 +66,7 @@ class Experiment:
                 # Early stopping configuration
                 'early_stopping_enabled': True,
                 'early_stopping_patience': 10,
+                'early_stopping_start_epoch': 0,
                 'early_stopping_min_delta': 0.001,
                 'early_stopping_metric': 'loss',
                 'early_stopping_mode': 'min',

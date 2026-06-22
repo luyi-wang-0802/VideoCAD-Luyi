@@ -24,6 +24,8 @@ import os
 import logging
 import time
 
+from data_paths import DEFAULT_RAW_IMAGE_DIR, DEFAULT_STRUCTURED_DATASET_PATH
+
 
 # Enable TF32 for better performance on Ampere GPUs
 torch.set_float32_matmul_precision('high')
@@ -138,6 +140,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'enable_parallel': args.enable_parallel,
         'early_stopping_enabled': True,
         'early_stopping_patience': 10,
+        'early_stopping_start_epoch': 0,
         'early_stopping_min_delta': 0.001,
         'early_stopping_metric': 'loss',
         'early_stopping_mode': 'min',
@@ -155,6 +158,7 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
         'command_line_overrides': {
             'early_stopping_enabled': args.early_stopping_enabled,
             'early_stopping_patience': args.early_stopping_patience,
+            'early_stopping_start_epoch': args.early_stopping_start_epoch,
             'early_stopping_min_delta': args.early_stopping_min_delta,
             'early_stopping_metric': args.early_stopping_metric,
             'early_stopping_mode': args.early_stopping_mode,
@@ -238,10 +242,10 @@ def main(rank=None, world_size=None, gpu_ids=None, args=None):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--gpu_ids", type=str, default="0", help="Comma-separated list of GPU IDs to use (e.g., '0,1,2,3')")
-    parser.add_argument("--dataset_path", type=str, default="processed_data/structured_primitive_action_policy")
+    parser.add_argument("--dataset_path", type=str, default=str(DEFAULT_STRUCTURED_DATASET_PATH))
     parser.add_argument("--compile", type=str2bool, default=False)
     parser.add_argument("--enable_random", type=str2bool, default=True)
-    parser.add_argument("--image_dir", type=str, default="data/data_raw/images")
+    parser.add_argument("--image_dir", type=str, default=str(DEFAULT_RAW_IMAGE_DIR))
     parser.add_argument("--sequence_retriever", type=str, default="optimized")
     parser.add_argument("--config_path", type=str, default=None)
     parser.add_argument("--output_dir", type=str, default="outputs")
@@ -266,6 +270,7 @@ if __name__ == "__main__":
     parser.add_argument("--image_dtype", type=str, choices=["float32", "float16"], default="float32")
     parser.add_argument("--early_stopping_enabled", type=str2bool, default=None)
     parser.add_argument("--early_stopping_patience", type=int, default=None)
+    parser.add_argument("--early_stopping_start_epoch", type=int, default=None)
     parser.add_argument("--early_stopping_min_delta", type=float, default=None)
     parser.add_argument("--early_stopping_metric", type=str, default=None)
     parser.add_argument("--early_stopping_mode", type=str, choices=["min", "max"], default=None)

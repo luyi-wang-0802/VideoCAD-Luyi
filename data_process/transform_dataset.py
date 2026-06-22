@@ -41,6 +41,8 @@ from typing import Any
 import numpy as np
 from PIL import Image, ImageOps
 
+from data_paths import DEFAULT_PROCESSED_DATA_ROOT, DEFAULT_RAW_DATA_DIR
+
 
 MISSING = -1
 DEFAULT_KEY_INTERVAL_MS = 100.0
@@ -91,7 +93,7 @@ DEFAULT_GROUNDING_CONFIG_PATH = Path("configs/vectorworks_grounding_template.jso
 def default_output_dir_for_profile(dataset_profile: str) -> Path:
     if dataset_profile not in DATASET_PROFILES:
         raise ValueError(f"Unsupported dataset_profile={dataset_profile!r}")
-    return Path("processed_data") / dataset_profile
+    return DEFAULT_PROCESSED_DATA_ROOT / dataset_profile
 
 
 def profile_materializes_images(dataset_profile: str) -> bool:
@@ -1406,7 +1408,7 @@ def transform_dataset(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--raw-data-dir", type=Path, default=Path("raw_data"))
+    parser.add_argument("--raw-data-dir", type=Path, default=DEFAULT_RAW_DATA_DIR)
     parser.add_argument("--output-dir", type=Path, default=None)
     parser.add_argument(
         "--dataset-profile",
