@@ -34,12 +34,17 @@ import argparse
 import concurrent.futures
 import json
 import shutil
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
 import numpy as np
 from PIL import Image, ImageOps
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 from data_paths import DEFAULT_PROCESSED_DATA_ROOT, DEFAULT_RAW_DATA_DIR
 

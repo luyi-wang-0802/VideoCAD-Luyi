@@ -1,5 +1,8 @@
 from pathlib import Path
 import json
+import os
+import subprocess
+import sys
 
 
 def test_vectorworks_data_paths_point_to_external_data_root() -> None:
@@ -29,3 +32,18 @@ def test_structured_model_config_uses_external_processed_dataset() -> None:
         params["action_vocab_path"]
         == "/home/ray/data/vectorworks/processed_data/structured_primitive_action_policy/action_vocab.json"
     )
+
+
+def test_transform_dataset_script_runs_directly_from_repo_root() -> None:
+    env = os.environ.copy()
+    env.pop("PYTHONPATH", None)
+    result = subprocess.run(
+        [sys.executable, "data_process/transform_dataset.py", "--help"],
+        check=False,
+        capture_output=True,
+        text=True,
+        env=env,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert "--raw-data-dir" in result.stdout
