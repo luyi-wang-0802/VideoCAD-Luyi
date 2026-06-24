@@ -145,6 +145,16 @@ def update_progress_state(progress_state: dict[str, dict[str, int]], decoded_act
     done_counts[progress_key] = min(done_counts.get(progress_key, 0) + 1, max(task_counts.get(progress_key, 0), 1))
 
 
+def all_entities_complete(progress_state: dict[str, dict[str, int]]) -> bool:
+    task_counts = progress_state["task_counts"]
+    done_counts = progress_state["done_counts"]
+    for key in PROGRESS_ENTITY_KEYS:
+        total = max(int(task_counts.get(key, 0) or 0), 0)
+        if total > 0 and int(done_counts.get(key, 0) or 0) < total:
+            return False
+    return True
+
+
 def load_primitive_model(
     checkpoint_path: Path,
     model_config_path: Path,
@@ -572,6 +582,11 @@ def main() -> None:
     parser.add_argument("--teacher-force-history", action="store_true")
     parser.add_argument("--compare-sample", action="store_true")
     parser.add_argument("--live-primitive-actions", action="store_true")
+    parser.add_argument(
+        "--stop-when-complete",
+        action="store_true",
+        help="Stop rollout after predicted actions complete all target entity counts. --max-steps remains a safety cap.",
+    )
     parser.add_argument("--countdown", default=5, type=int)
     parser.add_argument(
         "--inspect-step",
@@ -718,6 +733,9 @@ def main() -> None:
                 else:
                     encoded_history.append(encode_decoded_action(dataset, decoded_action))
                 update_progress_state(progress_state, decoded_action)
+                if args.stop_when_complete and all_entities_complete(progress_state):
+                    print(f"All target entities complete after step {step_index}; stopping rollout.")
+                    break
                 screenshot = screenshot_after or screenshot
     except KeyboardInterrupt:
         print("Abort requested by console KeyboardInterrupt; stopping rollout.")

@@ -59,12 +59,13 @@
     }
   },
   "opening_insert": {
-    "double_click_interval_s": 0.3,
-    "move_duration_ms": 25,
+    "double_click_interval_s": 0.1,
+    "move_duration_ms": 7,
+    "locate_host_wall_move_duration_ms": 7,
     "pause_before_click_ms": 0
   },
   "slab_create": {
-    "move_duration_ms": 35
+    "move_duration_ms": 24
   },
   "file_create": {
     "pause_after_new_file_ms": 0,
@@ -98,7 +99,8 @@
   },
   "geometry_input": {
     "wall_mode": "screen_start_end",
-    "wall_move_duration_ms": 35,
+    "wall_start_move_duration_ms": 11,
+    "wall_move_duration_ms": 11,
     "use_shift_orthogonal_constraint": false,
     "reset_shift_ime_before_shift_hotkey": true,
     "short_exterior_wall_chain_threshold": 0.05,
@@ -122,10 +124,11 @@
         "x": 885,
         "y": 630
       },
-      "edge_margin_px": 65,
-      "scale_multiplier": 2.25,
+      "edge_margin_px": 40,
+      "scale_multiplier": 2.0,
       "auto_compress_primitive_model_points": true,
-      "safe_region_note": "Uniform-scale mapping keeps the model centered. Keep enough margin for Vectorworks insertion previews and wall endpoints so live actions do not trigger canvas auto-pan.",
+      "refit_primitive_model_points_to_safe_range": true,
+      "safe_region_note": "Uniform-scale mapping keeps the model centered. scale_multiplier can be increased after zooming Vectorworks out, as long as all mapped points stay comfortably inside the canvas.",
       "canvas_corners": {
         "top_left": {
           "x": 250,
@@ -173,7 +176,15 @@
     }
   },
   "timing": {
-    "pause_after_action_s": 0.05,
+    "pause_after_action_s": 0.03,
+    "pause_after_action_by_type_s": {
+      "HOTKEY": 0.05,
+      "PRESS_KEY": 0.05,
+      "MOVE_TO": 0.01,
+      "CLICK": 0.016,
+      "DOUBLE_CLICK": 0.01
+    },
+    "trajectory_flush_every": 25,
     "screenshot_after_each_primitive": true
   }
 }
